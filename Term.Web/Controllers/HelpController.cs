@@ -99,10 +99,11 @@ namespace Term.Web.Controllers
 
         public ActionResult Download()
         {
-
+            
             string id = _userService.getUserId();
             string urlPrice = Url.Action("Index", "PriceList");
             string urlPriceAllDep = Url.Action("RestsOnAllDepartments", "PriceList");
+            //urlAcc = $"/api/{Url.Action("accs", "xml", new { id = id })}";
             string urlAcc = "/api" + Url.Action("accs", "xml", new { id = id });
             string urlTyre = "/api" + Url.Action("tyre", "xml", new { id = id });
             string urlTyreOnlyYst = "/api" + Url.Action("tyre", "xml", new { id = id, typeofrests = 1 });
