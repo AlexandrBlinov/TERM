@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNet.Identity
+@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = @Header.MainPage;
+}
+
+@* {if (ViewBag.CountNewOrder != 0)
+    {
+        <a class="notifDiv" href="@Url.RouteUrl(new {@controller="orders",@action="list" })">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"> <span class="notifText">@Header.NewOrder (@ViewBag.CountNewOrder)</span></span>
+        </a>
+    }
+    }*@
+
+<input type="hidden" id="getPost">
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-xs-12 col-sm-4">
+        <a href="@Url.RouteUrl(new {@controller="home",@action="tyres" })"><img src="~/Content/img/tyre.jpg" class="img-responsive auto"></a>
+        <p class="text-center text_main top20">@Header.Tyres</p>
+        <p class="text-center text_sub">@ViewData["Tyre"] @Header.MoreThan</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        <a href="@Url.RouteUrl(new {@controller="home",@action="disks" })"><img src="~/Content/img/disk.jpg" class="img-responsive auto"></a>
+        <p class="text-center text_main top20">@Header.Wheels</p>
+        <p class="text-center text_sub">@ViewData["Disk"] @Header.MoreThan</p>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-xs-12 col-sm-4">
+        <a href="@Url.RouteUrl(new {@controller="home",@action="accs" })"><img src="~/Content/img/accs.jpg" class="img-responsive auto"></a>
+        <p class="text-center text_main top20">@Header.Accessories</p>
+        <p class="text-center text_sub">@ViewData["Acc"] @Header.MoreThan</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        <a href="@Url.RouteUrl(new {@controller="home",@action="akb" })"><img src="~/Content/img/akk.jpg" class="img-responsive auto"></a>
+        <p class="text-center text_main top20">@Header.CarBatteries</p>
+        <p class="text-center text_sub">@ViewData["Akb"] @Header.MoreThan</p>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+
+<div>
+    <p>@ViewBag.RestsImported</p>
+    <p>@ViewBag.OrdersImported</p>
+</div>
+
+@if (ViewBag.NewsId != 0)
+{
+    <div id="news" style="z-index: 1;
+    width: 400px;
+    position: fixed;
+    top: 66%;
+    left: 69%;
+    ">
+        <img style="width: 16px;
+        float: right;
+        padding-bottom: 2px;
+        cursor: pointer;" id="close_news" data-newsid="@ViewBag.NewsId" src="~/Content/img/close.png" />
+        <a href="@Url.Action("Details", "News",new { Id = ViewBag.NewsId})" class="icon-user">
+            <img id="news_details" src='@Url.Action("GetNewsImg", "News", new { Id = ViewBag.NewsId, ImgType = 1 })' data-newsid="@ViewBag.NewsId" class="img-responsive" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
+        </a>
+    </div>
+}
+
+
+@section Scripts {
+
+    <script>
+        function AddNotifications(newsId) {
+
+            $.post("/News/AddNotifications",
+                    {
+                        "Id": newsId
+                    }
+                );
+
+        }
+
+        $(document).on("click", "#close_news", function () {
+            var newsId = $(this).attr("data-newsId");
+            AddNotifications(newsId);
+            $("#news").addClass("invisible");
+        });
+
+        $(document).on("click", "#news_details", function () {
+            var newsId = $(this).attr("data-newsId");
+            AddNotifications(newsId);
+        });
+    </script>
+}

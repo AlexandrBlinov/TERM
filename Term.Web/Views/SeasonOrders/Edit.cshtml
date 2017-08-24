@@ -1,0 +1,205 @@
+﻿@model Term.DAL.SeasonOrder
+@using Term.Web.Views.Resources;
+@using Term.DAL;
+
+@{
+    ViewBag.Title = String.Concat(CartAndOrders.Order, Model.NumberIn1S);
+    bool IsForeign = ViewBag.IsForeign;
+    }
+ 
+<h2>@CartAndOrders.InfoOrder</h2>
+
+
+<fieldset>
+    <legend>
+        @(ViewBag.OrderInfo) @CartAndOrders.Order № @(Model.NumberIn1S)
+        @SeasonOrdersTexts.From  @Model.OrderDate
+    </legend>
+
+    <dl class="dl-horizontal doc_definitions">
+        <dt>@CartAndOrders.NumberInDatabase:</dt>
+        <dd>@Html.DisplayFor(model => model.NumberIn1S)</dd>
+        <dt>@CartAndOrders.Status:</dt>
+        <dd>@Html.OrderStatusWithColor(Model.OrderStatus)</dd>
+        @if (!ViewBag.IsForeign)
+        {
+            <dt>Дата действия (по):</dt>
+            <dd>@Html.DisplayFor(model => model.DeliveryDate)</dd>
+
+        }
+        <dt>@CartAndOrders.Comment:</dt>
+        <dd>@Html.DisplayFor(model => model.Comments)</dd>
+    </dl>
+
+</fieldset>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="doc_buttons">
+            @using (Html.BeginForm("edit", "seasonorders", FormMethod.Post, new { id = "change_season_order" , @class="display_inline-block" }))
+            {
+                @Html.HiddenFor(p => p.OrderGuid);
+                <button class="btn btn-large btn-primary doc_buttons__button" type="submit">@CartAndOrders.ApplyChanges</button>
+            }
+            <button class="btn btn-large btn-primary doc_buttons__button" onclick="javascript:history.back();">@ForSearchResult.Back</button>
+        </div>
+    </div>
+</div>
+
+            <table class="table table_original top20 change_season-order">
+                <thead class="thead_styles">
+                    <tr>
+                        <th>
+                            №
+                        </th>
+                        <th>
+                            @ForSearchResult.StockNumber
+                        </th>
+                        <th>
+                            @CartAndOrders.Item
+                        </th>
+                        <th>
+                            @ForSearchResult.Available
+                        </th>
+                        <th>
+                            @ForSearchResult.Price
+                        </th>
+                        <th>
+                            @CartAndOrders.TotalSum
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @{int counter = 0; int Count = 0; }
+                @foreach (var item in Model.OrderDetails)
+                {
+
+                    int numbertoorder = item.Count;
+                    if (ViewBag.IsForeign ?? false)
+                    { 
+                    var product = item.Product;
+
+                  //  if (product.WheelType == WheelType.Alloy) { numbertoorder = 60; }
+                  //  else if (product.WheelType == WheelType.Steel) { numbertoorder = 200; }
+                        }
+                    
+                    counter++;
+                    <tr data-id="@item.ProductId">
+                        <td class="counter">
+                            
+                            @counter
+                        </td>
+                        <td class="Code">
+                            @(item.ProductId)
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Product.Name, "Details", "Home", new { id = item.ProductId }, new { @class = "a_text" })
+                        </td>
+                        <td class="Count">
+                            @{Count += item.Count;}
+                            <div class="input-group bootstrap-touchspin max-width">
+                                @Html.TextBox("count-" + @item.ProductId, @item.Count, new { @class = "count count_change_seasonorder form-control count-change", @type = "text", @max = @item.Count })
+                            </div>
+                        </td>
+
+                        <td>
+                            @item.Price
+                        </td>
+                        <td id="item-sum-@item.ProductId">
+                            <span class="price">@(item.Count * item.Price) </span>
+                        </td>
+                        <td>
+                            <a href="#" class="removeitem_seasonorder"><span class="glyphicon glyphicon-remove btn-lg" aria-hidden="true"></span></a>
+                        </td>
+
+                    </tr>
+                }
+                <tfoot>
+                    <tr class="bg_grey">
+                        <td class="text_bold" colspan="3">
+                            <b>@CartAndOrders.Total:</b>
+                        </td>
+                        <td class="text_bold">
+                            <b>@Count</b>
+                        </td>
+                        <td />
+                        <td class="text_bold">
+                            <span class="price">@Model.Total </span>
+                        </td>
+
+
+                    </tr>
+                </tfoot>
+            </table>
+<div id="idModalToNotifySuccessDocumentChanged" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert-success">
+                <h4 class="modal-title"><span class="glyphicon glyphicon-ok-circle"> </span> @SeasonOrdersTexts.OrderChanged</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+            @section Scripts {
+                <script>
+
+                    $(function () {
+                        //remove item from season order and reset counters on page
+                        $('a.removeitem_seasonorder').click(function () {
+                            $(this).closest('tr').remove();
+                            var counter = 0;
+                            $('.counter').each(function () { $(this).text(++counter) });
+                        })
+
+                        //
+                        //post changed season order (gather items and post them to /seasonorder/edit)
+                        //
+                        $('form#change_season_order').submit(function () {
+
+                            var orderGuid = $('#OrderGuid').val(), action = $(this).attr('action'), productdetails = [];
+
+                            $('.change_season-order td .count-change').each(function () {
+
+                                var productId = $(this).closest('tr').data('id');
+                                var count = $(this).val();
+                                if ($.isNumeric(productId) && $.isNumeric(count))
+                                    productdetails.push({
+                                        'ProductId': productId,
+                                        'Count': count
+                                    });
+
+
+                            });
+                            var seasonOrderChanged = {
+                                OrderGuid: orderGuid,
+                                SeasonOrderDetailsDTO: productdetails,
+                            }
+
+                            if (productdetails.length && orderGuid.length)
+
+                                $.ajax({
+                                    url: action,
+                                    type: "POST",
+                                    data: JSON.stringify(seasonOrderChanged),
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        //    $("#idModalToNotifySuccessDocumentChanged").modal();
+                                        if (data.Success)
+                                            location.assign("/SeasonOrders/Details?guid=" + data.OrderGuid);
+                                        
+
+                                    }
+                                });
+
+                            return false;
+                        });
+
+
+                    });
+
+                </script>
+            }
+

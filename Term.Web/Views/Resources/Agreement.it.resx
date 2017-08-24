@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agreement1" xml:space="preserve">
+    <value>ACCORDO DI LICENZA</value>
+  </data>
+  <data name="Agreement10" xml:space="preserve">
+    <value>1.7. Questo accordo è un'offerta pubblica. Accedendo ai materiali del sito di servizio online «TERMINALE YST» l'utente aderisce all'Accordo.</value>
+  </data>
+  <data name="Agreement11" xml:space="preserve">
+    <value>1.8. Tutte le controversie eventuali derivanti dal presente Accordo o relative ad esso sono considerate, anche per quanto riguarda la creazione, la correzione, la cinsuzione, la violazione, la risoluzione, scioglimento, annullamento o non concluse, vanno presentate per la decisione finale alla Corte Arbitrale permanente presso l'organizzazione autonoma no-profit «Centro per l'arbitrato e la mediazione» (BIN numero 1.147.600,000866, l'ufficio principale: 150014, regione di Yaroslavl, Yaroslavl, via Saltykov-Shchedrin, 21, of.420.) in conformità con i regolamenti della Corte di arbitrato dell'organizzazione autonoma non-profit «Centro per l'arbitrato e la mediazione» (di seguito - Definizioni) e le regole di arbitrato nella corte di arbitrato della organizzazione autonoma no-profit «Centro per l'arbitrato e la mediazione» (in seguito - Regolamento). Le parti hanno convenuto che: Definizioni e Regolamento sono considerati come parte integrante della convenzione d'arbitrato. Le parti hanno familiarità con Definizioni e Regolamento, e sono d'accordo con essi. La decisione della Corte Arbitrale presso l'organizzazione autonoma no-profit «Centro per l'arbitrato e la mediazione» in una determinata controversia è definitiva e accertata non oggetto di contestazione.</value>
+  </data>
+  <data name="Agreement12" xml:space="preserve">
+    <value>1.9. Nessuna disposizione dell'accordo non può essere intesa come la statuizione tra l'utente e S.p.A.modello chiuso «YST Group», del rapporto di agenzia, rapporti di partnership, le relazioni sulle attività congiunte, le relazioni dell'assunzione personale, o di qualsiasi altro rapporto, non espressamente previsto dal Accordo.</value>
+  </data>
+  <data name="Agreement13" xml:space="preserve">
+    <value>1.10. Il riconoscimento da parte del giudice di qualsiasi disposizione dell'Accordo non valida o non applicabile non comporta l'annullamento delle altre disposizioni dell'Accordo.</value>
+  </data>
+  <data name="Agreement14" xml:space="preserve">
+    <value>1.11. L'inattività da parte della società «YST Group» in caso di violazione di qualsiasi disposizioni da uno dei membri dell'Accordo non preclude alla società «YST Group» il diritto di intraprendere le azioni appropriate in futuro in difesa dei propri interessi e diritti in conformità alla legge.</value>
+  </data>
+  <data name="Agreement15" xml:space="preserve">
+    <value>1.12. L'utilizzo del servizio online «TERMINAL YST»  è consentito solo dopo la registrazione e l'autorizzazione dell'utente nel servizio online «TERMINAL YST» secondo la procedura stabilita.</value>
+  </data>
+  <data name="Agreement16" xml:space="preserve">
+    <value>1.13. Condizioni tecniche, organizzative e commerciali di utilizzo del servizio online «TERMINAL YST», compresa la sua funzionalità sono presenti nell'Accordo, e comunicate ai membri tramite il sito.</value>
+  </data>
+  <data name="Agreement17" xml:space="preserve">
+    <value>2. Informazioni sul prodotto.</value>
+  </data>
+  <data name="Agreement18" xml:space="preserve">
+    <value>2.1. Ogni foto è accompagnata da un campo di informazioni con testo: prezzo e descrizione del prodotto. Le impostazioni di qualità e le caratteristiche dello schermo del computer dell'utente possono distorcere i colori del prodotto. L'utente ha il diritto di utilizzare il modulo di feedback per chiarire le informazioni su prodotto che lo interessa.</value>
+  </data>
+  <data name="Agreement19" xml:space="preserve">
+    <value>2.2.Il prezzo del prodotto nel servizio online «TERMINAL YST» può essere modificato unilateralmente. Il prezzo dei prodotti già pagati non possono essere modificati.</value>
+  </data>
+  <data name="Agreement2" xml:space="preserve">
+    <value>L'utilizzo del servizio online «TERMINAL YST»</value>
+  </data>
+  <data name="Agreement20" xml:space="preserve">
+    <value>3. I diritti, le responsabilità e gli obblighi degli utenti.</value>
+  </data>
+  <data name="Agreement21" xml:space="preserve">
+    <value>3.1. L'utente è obbligato a riconoscere la validità delle informazioni pubblicate sul servizio online «TERMINAL YST», nel corso della durata dell'Accordo, compreso il prezzo delle merci, assortimento, termini e condizioni di fornitura, ecc; così come riconoscere la validità di tutti gli atti fatti da se sotto il nome dell'utente e password, nel servizio online «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement22" xml:space="preserve">
+    <value>3.2. L'utente non può trasferire ai terzi  le informazioni presenti nel programma «TERMINAL YST», tra cui, ma non solo: gamma di prodotti, condizioni di prezzo, le condizioni della consegna, altre informazioni.</value>
+  </data>
+  <data name="Agreement23" xml:space="preserve">
+    <value>3.3. Utente si impegna a non prendere alcuna azione che può essere considerata come violazione della legge russa o il diritto internazionale, anche nel campo della proprietà intellettuale, diritto d'autore e/o diritti connessi, nonché le eventuali azioni che portano o possono portare a malfunzionamenti del Sito e dei servizi del Sito.</value>
+  </data>
+  <data name="Agreement24" xml:space="preserve">
+    <value>3.4. Il login e la password selezionati dall'utente sono le informazioni necessarie e sufficienti per l'accesso dell'utente al Sito. L'utente non ha il diritto di passare il proprio login e password a terzi, e deve essere pienamente responsabile della sicurezza di login e password, scegliendo il proprio modo tenerli.</value>
+  </data>
+  <data name="Agreement25" xml:space="preserve">
+    <value>3.5. L'utente può creare ordini, riservare articoli nel servizio online «TERMINAL YST», ricevere una conferma d'ordine, cambiarlo, seguire lo stato degli ordini e la circolazione delle merci.</value>
+  </data>
+  <data name="Agreement26" xml:space="preserve">
+    <value>L'utente può personalizzare il prezzo a sua discrezione:</value>
+  </data>
+  <data name="Agreement27" xml:space="preserve">
+    <value>rispetto al prezzo base</value>
+  </data>
+  <data name="Agreement28" xml:space="preserve">
+    <value>relativa ai prezzi di input</value>
+  </data>
+  <data name="Agreement29" xml:space="preserve">
+    <value>rispetto ai prezzi raccomandati</value>
+  </data>
+  <data name="Agreement3" xml:space="preserve">
+    <value>1. Disposizioni di base.</value>
+  </data>
+  <data name="Agreement30" xml:space="preserve">
+    <value>3.6. L'utente può impostare l'indirizzo di consegna della merce, aggiungere commenti all'ordine.</value>
+  </data>
+  <data name="Agreement31" xml:space="preserve">
+    <value>3.7.  L'utilizzo dei materiali del servizio online «TERMINAL YST» senza il consenso della società «YST Group» è proibito.</value>
+  </data>
+  <data name="Agreement32" xml:space="preserve">
+    <value>3.8. I commenti ed altre appunti dell'utente nel servizio online «TERMINAL YST» non devono entrare in conflitto con la legislazione russa e le norme generalmente accettate di moralità e di etica.</value>
+  </data>
+  <data name="Agreement33" xml:space="preserve">
+    <value>3.9. L'utente viene avvertito che S.p.A.modello chiuso «YST Group» non è responsabile per la visita e l'utilizzo dei siti esterni, collegamenti a cui potrebbero essere presenti nel servizio online «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement34" xml:space="preserve">
+    <value>3.10. L'utente prende la posizione che tutti i materiali del servizio online «TERMINAL YST» o la parte di esso possono essere accompagnati dalla pubblicità. L'utente accetta che la società «YST Group» non si assume alcuna responsabilità e non ha alcuna responsabilità in relazione a tali annunci.</value>
+  </data>
+  <data name="Agreement35" xml:space="preserve">
+    <value>3.11. L'utente conferma che lui è al corrente di tutte le clausole del presente Accordo e le accetta incondizionatamente.</value>
+  </data>
+  <data name="Agreement36" xml:space="preserve">
+    <value>4.Diritti, obblighi e limitazioni di responsabilità di S.p.A modello chiuso «YST Group»</value>
+  </data>
+  <data name="Agreement37" xml:space="preserve">
+    <value>4.1. S.p.A.modello chiuso «YST Group» ha il diritto di sospendere o terminare l'accesso di un utente al servizio online «TERMINAL YST» in caso di violazione da parte dell'utente dell'Accordo per gli utento o delle condizioni del relativo contratto di consegna.</value>
+  </data>
+  <data name="Agreement38" xml:space="preserve">
+    <value>4.2. S.p.A.modello chiuso «YST Group» non è responsabile dei seguenti cambiamenti nei parametri della batteria installati dal costruttore, cioè la corrente di spunto, l'aspetto, il marchio del produttore.</value>
+  </data>
+  <data name="Agreement39" xml:space="preserve">
+    <value>4.3. S.p.A.modello chiuso «YST Group» non è responsabile per i prodotti scelti in modo errato, dato che le informazioni sulla scelta di merci è un riferimento.</value>
+  </data>
+  <data name="Agreement4" xml:space="preserve">
+    <value>1.1. Questo Accordo è concluso tra l'utente e la società «YST Group» al fine di utilizzare il servizio online «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement40" xml:space="preserve">
+    <value>4.4. Tutte le condizioni impostate nell'ordine dall'utente (i prodotti selezionati, la data e l'indirizzo di consegna) S.p.A.modello chiuso «YST Group» accetta come le condizioie da fare. La societa «YST Group» non è responsabile per gli errori fatti nell'ordine dall'utente.</value>
+  </data>
+  <data name="Agreement41" xml:space="preserve">
+    <value>4.5. S.p.A.modello chiuso «YST Group» non è responsabile per i prezzi della rivendita definiti dall'utente nel programma «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement42" xml:space="preserve">
+    <value>4.6. In assenza di prodotti ordinati nei magazzini, S.p.A.modello chiuso «YST Group» è obbligato a mettere gli utenti a parte (per telefono o tramite e-mail).</value>
+  </data>
+  <data name="Agreement43" xml:space="preserve">
+    <value>4.7. Gli ordini ricevuti da parte degli utenti tramite un servizio online «TERMINAL YST» fino alle 13-00, per le regioni: Mosca e provincia di Mosca, San Pietroburgo e provincia di San Pietroburgo, Ivanovo e provincia di Ivanovo, Vladimir e provincia di Vladimir, Kostroma e provincia di Kostroma, Vologda e provincia di Vologda, saranno consegnati per la spedizione il giorno stesso. Gli ordini ricevuti dalle 13-00 fino alle 13-00 del prossimo giorno saranno consegnati per la spedizione il giorno successivo dopo aver ricevuto l'ordine.</value>
+  </data>
+  <data name="Agreement44" xml:space="preserve">
+    <value>4.8. Gli ordini ricevuti dagli utenti attraverso il servizio online «TERMINAL YST» dalle regioni di Rostov, Krasnodar e Stavropol si spediscono tre volte alla settimana con la societa di trasporto «YST Group». Gli ordini ricevuti da parte dell'utente attraverso il servizio «TERMINAL YST» on-line a Ekaterinburg e nella regione di Sverdlovsk, la spedizione saranno consegnati il 1 ° giorno alla settimana. Consegna in altre regioni da concordare a parte.</value>
+  </data>
+  <data name="Agreement45" xml:space="preserve">
+    <value>4.9. La societa «YST Group» CJSC non è responsabile per eventuali danni ricevuti dall'Utente a causa di un uso improprio dei beni ordinati tramite il servizio online «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement46" xml:space="preserve">
+    <value>4.10. La societa «YST Group» non è responsabile e non ha responsabilità diretta o indiretta per eventuali o attuali perdite o danni associati a qualsiasi contenuto del servizio online «TERMINAL YST», alla registrazione del copyright e alle informazioni su tale registrazione, ai beni o ai servizi disponibili sui siti o risorse esterni, o dagli altri contatti dell'utente, in cui l'utente è entrato, utilizzando le informazioni pubblicate sul Sito o i link a risorse esterne.</value>
+  </data>
+  <data name="Agreement47" xml:space="preserve">
+    <value>Accetto i termini del contratto</value>
+  </data>
+  <data name="Agreement5" xml:space="preserve">
+    <value>1.2. Il servizio online «TERMINAL YST» è di proprietà di S.p.A.modello chuiso «YST Group» ed è disponibile all'indirizzo: http://terminal.yst.ru (di seguito - il sito di servizio online «TERMINAL YST»).</value>
+  </data>
+  <data name="Agreement6" xml:space="preserve">
+    <value>1.3. L'utente può essere una persona giuridica, imprenditore individuale o persona fisica che può accettare e pagare la merce ordinata nei modi e alle condizioni stabilite dalla legislazione della Federazione Russa, dal presente Accordo.</value>
+  </data>
+  <data name="Agreement7" xml:space="preserve">
+    <value>1.4. La societa «YST Group» potrà in qualsiasi momento modificare unilateralmente i termini del presente Accordo. Tali modifiche entrano in vigore dopo la pubblicazione di una nuova versione dell'accordo. Se l'utente non acconsente a tali modifiche, deve rifiutare l'accesso a «TERMINAL YST» e smettere di usare il servizio online «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement8" xml:space="preserve">
+    <value>1.5.  Il presente Accordo è considerato in tale modo in quanto è pubblicato sul sito del servizio online «TERMINAL YST», e deve essere applicato e interpretato in conformità alla legislazione russa.</value>
+  </data>
+  <data name="Agreement9" xml:space="preserve">
+    <value>1.6. L'utilizzo di materiali e servizi del sito servizio online «TERMINAL YST» è regolato dalle norme della legislazione russa.</value>
+  </data>
+</root>

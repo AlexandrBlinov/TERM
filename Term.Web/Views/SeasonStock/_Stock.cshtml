@@ -1,0 +1,16 @@
+﻿@model SeasonStockModelView
+<div data-ajax-target="#season-stock">
+    <div class="btn-group sort_row" role="group">
+        @foreach (var prod in Model.ActiveProducers)
+        {<div class="btn btn-default @(Model.ActiveProducerId == prod.ProducerId? "btn-primary":"")">@Html.ActionLink(@prod.Name, "index", new { @activeproducerid = @prod.ProducerId }) </div>
+        }
+    </div>
+
+
+    <table class="table table-bordered">
+        <tr><td>Код</td> <td>Наименование</td> </tr>
+        @foreach (var item in Model.SeasonOffers)
+        {
+            <tr> <td>@item.Product </td><td>@item.Product.Name</td> </tr>}
+    </table>
+</div>

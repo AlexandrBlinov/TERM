@@ -1,0 +1,113 @@
+﻿@model Yst.ViewModels.SaleViewWithDetails
+@using Term.Utils
+@using YstProject.Services;
+@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = String.Format("{0} {1} {2} {3} {4}", SalesTexts.Sale, " № ", Model.SaleData.NumberIn1S, SalesTexts.From, Model.SaleData.SaleDate.ToShortDateString());
+}
+
+
+    <fieldset class="border-form-podbor">
+        <h2 class="border-form-podbor search-order-title">@ViewBag.Title</h2>
+
+        <dl class="dl-horizontal doc-info">
+            <dt>@CartAndOrders.Driver:</dt> <dd> @Html.DisplayFor(model => model.SaleData.Driver)</dd>
+            <dt>@Settings.PhoneNumber:</dt> <dd> @Html.DisplayFor(model => model.SaleData.PhoneNumberOfDriver)</dd>
+            <dt>@CartAndOrders.CarBrand:</dt> <dd> @Html.DisplayFor(model => model.SaleData.BrandOfAuto)</dd>
+            <dt>@CartAndOrders.CarNumber:</dt> <dd> @Html.DisplayFor(model => model.SaleData.RegNumOfAuto)</dd>
+            <dt>@CartAndOrders.Status:</dt><dd> @EnumDescriptionProvider.GetDescription(ViewBag.OrderStatus)</dd>
+            <dt>@CartAndOrders.Comment:</dt> <dd>@Html.DisplayFor(model => model.SaleData.Comments) </dd>
+            <dt>@CartAndOrders.PointDestination:</dt><dd>@Html.DisplayFor(model => model.SaleData.DischargePoint) </dd>
+            
+            @if (Model.SaleData.DpdDeliveryStatus.HasValue)
+            {
+                <dt>Статус Dpd:</dt> <dd>@Html.DisplayFor(model => model.SaleData.DpdDeliveryStatusName)</dd>
+                
+            }
+            </dl>
+</fieldset>
+
+<table class="data-table order-table details-table">
+
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                @ForSearchResult.StockNumber
+            </th>
+            <th>
+                @ForSearchResult.Name
+            </th>
+            <th>
+                @CartAndOrders.AmountShipped
+            </th>
+            @if (ViewBag.IsPartner)
+            {
+                <th>
+                    @ForSearchResult.Price
+                </th>
+                <th>
+                    @CartAndOrders.TotalSum
+                </th>
+            }
+        </tr>
+    </thead>
+    @{int countS = 0;}
+    @foreach (var item in Model.SaleDetails)
+    {
+
+        <tr>
+            <td>
+                @(item.RowNumber)
+
+            </td>
+            <td>
+                @(item.ProductId.ToString())
+            </td>
+            <td class="name-filds">
+                @(item.ProductName)
+            </td>
+            <td>
+                @{countS += item.Count;}
+                @(item.Count)
+            </td>
+            @if (ViewBag.IsPartner)
+            {
+                <td class="price-filds">
+                    @(item.Price)
+                </td>
+                <td class="price-filds">
+                    @(item.Count * item.Price)
+                </td>
+            }
+        </tr>
+    }
+    <tfoot>
+        <tr>
+            <td class="price-filds" colspan="3">@CartAndOrders.Total:</td>
+            <td class="price-filds">
+                @countS
+            </td>
+            @if (ViewBag.IsPartner)
+            {
+                <td></td>
+                <td class="price-filds">
+                    @Model.SaleData.Total
+                </td>
+            }
+        </tr>
+    </tfoot>
+</table>
+
+<div class="row m-t-15">
+    <div class="col-xs-12">
+        @Html.ActionLink("<< " + SalesTexts.ToSalesList, "List", "Sales", null, new { @class = "list-points-create-btn" })
+        @if (ViewBag.IsPartner && !ViewBag.IsForeign)
+        {
+            @Html.ActionLink("Печать счета", "Bill", "Sales", new { guid = @Model.SaleData.GuidIn1S }, new { @class = "list-points-create-btn", @target = "_blank" })
+        }
+
+    </div>
+</div>

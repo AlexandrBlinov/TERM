@@ -1,0 +1,193 @@
+﻿@model Term.DAL.SeasonOrder
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = String.Concat(CartAndOrders.Order, Model.NumberIn1S);
+  
+}
+
+<h2>@CartAndOrders.InfoOrder</h2>
+
+
+<fieldset>
+    <legend>
+        @(ViewBag.OrderInfo) @CartAndOrders.Order № @(Model.NumberIn1S)
+        @SeasonOrdersTexts.From @Model.OrderDate.ToShortDateString()
+    </legend>
+    
+    <dl class="dl-horizontal doc_definitions">
+        <dt>@CartAndOrders.NumberInDatabase:</dt>
+        <dd>@Html.DisplayFor(model => model.NumberIn1S)</dd>
+        <dt>@CartAndOrders.Status:</dt>
+        <dd>@Html.OrderStatusWithColor(Model.OrderStatus)</dd>
+        @if (!ViewBag.IsForeign)
+        {
+            <dt>Дата действия по:</dt>
+            <dd>@Html.DisplayFor(model => model.DeliveryDate)</dd>
+            
+        }
+        <dt>@CartAndOrders.Comment:</dt>
+        <dd>@Html.DisplayFor(model => model.Comments)</dd>
+    </dl>
+    
+</fieldset>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="doc_buttons">
+            @if (ViewBag.CanModify)
+            {
+                <button type="button" class="btn btn-danger btn-large doc_buttons__button" data-toggle="modal" data-target="#modalChancelSeasonOrder">
+                   @CartAndOrders.Cancel
+                </button>
+
+
+                @Html.ActionLink(@CartAndOrders.EditOrder, "Edit", "seasonorders", new { guid = @Model.OrderGuid }, new { @class = "btn btn-primary btn-large doc_buttons__button" })
+
+            }
+                @Html.ActionLink(@CartAndOrders.BackToList, "Index", "seasonorders", new{FromOnWay=@Model.FromOnWay}, new { @class = "btn btn-primary btn-large doc_buttons__button" })
+
+            <button type="button" class="btn btn-primary btn-large doc_buttons__button" id="analyse-season_order" data-guid="@Model.OrderGuid">
+                @SeasonOrdersTexts.Analyse
+            </button>
+        </div>
+    </div>
+</div>
+
+<table class="data-table order-table details-table">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                @ForSearchResult.StockNumber
+            </th>
+            <th>
+                @CartAndOrders.Item
+            </th>
+            <th>
+                @ForSearchResult.Available
+            </th>
+            <th>
+                @ForSearchResult.Price
+            </th>
+            <th>
+                @CartAndOrders.TotalSum
+            </th>
+
+        </tr>
+    </thead>
+    @{int counter = 0; int Count = 0; }
+    @foreach (var item in Model.OrderDetails)
+    {
+        counter++;
+        <tr id="row-@item.ProductId">
+            <td>
+                @counter
+            </td>
+            <td class="Code">
+                @(item.ProductId)
+            </td>
+            <td>
+                @Html.ActionLink(item.Product.Name, "Details", "Home", new { id = item.ProductId }, new { @class = "data-table-a-text" })
+            </td>
+            <td class="Count">
+                @{Count += item.Count;}
+                @item.Count
+            </td>
+
+            <td>
+                @item.Price
+            </td>
+            <td id="item-sum-@item.ProductId">
+                <span class="data-table-price">@(item.Count * item.Price) </span>
+            </td>
+
+
+        </tr>
+    }
+    <tfoot>
+        <tr class="bg_grey">
+            <td class="text_bold" colspan="3">
+                <b>@CartAndOrders.Total:</b>
+            </td>
+            <td class="text_bold">
+                <b>@Count</b>
+            </td>
+            <td />
+            <td class="text_bold">
+                <span class="data-table-price">@Model.Total </span>
+            </td>
+
+
+        </tr>
+    </tfoot>
+</table>
+
+
+
+<div class="modal fade" id="modalChancelSeasonOrder" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">@ModalWindows.Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>@ModalWindows.SeasonOrderWillBeCancelled</p>
+            </div>
+            <div class="modal-footer">
+                <form action="@Url.Action("Cancel", "seasonorders")" method="post" novalidate="novalidate">
+                    <input type="hidden" name="Guid" value="@Model.OrderGuid">
+                    <button type="submit" class="btn btn-danger" name="action" value="1">@ModalWindows.Yes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">@ModalWindows.Cancel</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="modalAnalyseSeasonOrder" role="dialog">
+    <div class="modal-dialog extend-to-window">
+        <div class="modal-content  extend-to-window">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <a href="@Url.Action("analyseprint", new { @guid = @Model.OrderGuid })" class="btn btn-default btn-analyse__print" role="button">@SeasonOrdersTexts.Print</a>
+                <h4 class="modal-title">@SeasonOrdersTexts.AnalysisOfOrder № @(Model.NumberIn1S)</h4>
+            </div>
+            <div class="modal-body pad-5 seasonorder-analyse__show">
+                <div class="loader"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+<script>
+
+    $(function () {
+        //remove item from season order and reset counters on page
+        $('#analyse-season_order').click(function () {
+            var $modal = $('#modalAnalyseSeasonOrder');
+            var $parent_container = $modal.find('.modal-body');
+            $modal.modal("show");
+            debugger;
+            var guid = $(this).data('guid');
+            if (!guid) return;
+            var path = '/SeasonOrders/analyse?guid=' + guid;
+            $.get(path, function (result) {
+
+                $parent_container.html(result);
+               
+            });
+        });
+
+     
+    });
+                    </script>
+    }

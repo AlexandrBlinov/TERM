@@ -1,0 +1,108 @@
+﻿
+@model Yst.ViewModels.SaleViewWithDetails
+@{
+    ViewBag.Title = "Счет на оплату";
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+<div> Внимание! оплата данного счета означает согласие с условиями поставки товара. Уведомление об оплате обязательно, в противном случае не гарантируется наличие товара на складе</div>
+<table class="table table-bill">
+    <tr>
+        <td rowspan="2" colspan="2">
+            <div>СЕВЕРНЫЙ БАНК СБЕРБАНКА РОССИИ Г. ЯРОСЛАВЛЬ </div> <div class="rel-bottom"> Банк получателя </div>
+        </td>
+        <td class="w100"> БИК</td>
+        <td class="w230">047888670 </td>
+    </tr>
+    <tr>
+        <td class="w100"> Сч№</td>
+        <td class="w230">30101810500000000670</td>
+    </tr>
+    <tr>
+        <td> ИНН 7604069216</td>
+        <td> КПП 760201001</td>
+        <td rowspan="2">Сч№ </td>
+        <td rowspan="2">40702810377030102956</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <div>ЗАО ТК ЯРШИНТОРГ </div>
+            <div class="rel-bottom"> Получатель </div>
+        </td>
+    </tr>
+
+</table>
+
+<h3>
+    Счет на оплату @(Model.SaleData.NumberIn1S)
+    от @Html.DateFormat(Model.SaleData.SaleDate)
+</h3>
+
+<hr class="bill" />
+
+<table class="table text_bold">
+    <tr> <td class="w100">Поставщик:</td><td> ИНН 7604069216, КПП 760201001, Закрытое акционерное общество Торговая компания "Яршинторг", 150044, Ярославская обл, Ярославль г, Базовая ул, дом № 3, стр.2, тел.: (4852) 200-200, 67-11-67</td></tr>
+    <tr> <td class="w100">Покупатель:</td><td>@ViewBag.PartnerInfo</td></tr>
+
+</table>
+
+<table class="table table-bill">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Код</th>
+            <th>Товар</th>
+            <th>Кол-во</th>
+            <th>Ед.</th>
+            <th class="w100">Цена</th>
+            <th class="w100">Сумма</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+
+        @{int counter = 0; int Count = 0; }
+        @foreach (var item in Model.SaleDetails)
+        {
+            counter++;
+            <tr>
+                <td>@counter</td>
+                <td>@(item.ProductId.ToString().PadLeft(7, '0'))</td>
+                <td>
+                    @{item.ProductName = item.ProductName != "" ? item.ProductName : "---";}
+                @item.ProductName
+            </td>
+            <td class="text-right">@{Count += item.Count;} @item.Count</td>
+            <td>шт</td>
+            <td class="text-right">@item.Price</td>
+            <td class="text-right">@(item.Count * item.Price)</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<table class="table border-none text-right text_bold">
+    <tr>
+        <td colspan="5" class="border-none"></td>
+        <td class="w100">Итого:</td>
+        <td class="w100">@Model.SaleData.Total</td>
+    </tr>
+    <tr>
+        <td colspan="3" class="border-none"></td>
+        <td colspan="3" class="w100">В том числе НДС:</td>
+        <td class="w100">@( String.Format("{0:0.00}", Model.SaleData.Total / 118 * 18))</td>
+    </tr>
+
+
+</table>
+<div>
+    Всего наименований @Count на сумму @Model.SaleData.Total руб.
+</div>
+<hr class="bill" />
+
+<table class="table border-none">
+    <tr> <td class="w100 text_bold">Руководитель</td><td class="w100 border-bottom"></td> <td>/Малышев И.И./ </td></tr>
+    <tr> <td class="w100 text_bold">Бухгалтер</td><td class="w100 border-bottom"></td> <td>/Яковлева Н.А./ </td></tr>
+
+</table>
+<script type="text/javascript">
+    window.print();
+</script>

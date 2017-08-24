@@ -1,0 +1,403 @@
+﻿@using Term.Web.HtmlHelpers
+@using YstTerm.Models
+@using Term.Web.Views.Resources;
+
+
+@model  AkbPodborView
+
+@{
+    ViewBag.Title = Header.CarBatteries;
+}
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.CarBatteries })
+
+
+@using (Html.BeginForm("Akb", "Home", FormMethod.Get, new { @id = "akb-podbor", @data_name = "akb" }))
+{
+
+    @Html.Hidden("SortBy", Model.SortBy)
+    @Html.Hidden("PriceMin", Model.PriceMin)
+    @Html.Hidden("PriceMax", Model.PriceMax)
+    @Html.Hidden("SortBy", Model.SortBy)
+    @Html.Hidden("DisplayView", Model.DisplayView)
+    @Html.Hidden("ItemsPerPage", Model.ItemsPerPage) 
+    <div class="row border-form-podbor">
+        <img class="podbor-tyres-title-img" src="~/Content/img/img-akb-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseBattery</span>
+        @{Html.RenderPartial("_AkbSpecialOffer");}
+    </div>
+
+    <div class="row m-t-15">
+      
+        @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
+    </div>
+    <div class="row m-t-15">
+        <div class="col-xs-9 ">
+            <span class="podbor-tyres-param">@ForSearchResult.Param</span>
+        </div>
+        <div class="col-xs-3">
+            <span class="podbor-tyres-param">@ForSearchResult.Price</span>
+        </div>
+    </div>
+
+    <!------------------------------>
+    <div class="row">
+        <div class="col-xs-9">
+            <div class="row m-t-15">
+                <div class="col-xs-12 col-md-4 m-b-10">
+                    @*Html.DropDownListFor(p => p.Brand, new SelectList(Model.Brands), @ForSearchResult.Brand, new {@class = "form-control", @multiple = "multiple"}) *@
+                    @Html.ListBoxFor(p => p.Brand, new SelectList(Model.Brands)) 
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+                    @Html.DropDownListFor(p => p.Volume, new SelectList(Model.Volumes), @ForSearchResult.Capacity, new {@class = "form-control"})
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+                    @Html.DropDownListFor(p => p.Polarity, new SelectList(Model.Polarities), @ForSearchResult.Polarity, new {@class = "form-control akb-podbor-form-control"})
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+                    @Html.DropDownListFor(p => p.Inrush_Current, new SelectList(Model.InrushCurrents), @ForSearchResult.CrankCurrent, new {@class = "form-control akb-podbor-form-control"})
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+                    @Html.DropDownListFor(p => p.Size, new SelectList(Model.Sizes), @ForSearchResult.Dimensions, new {@class = "form-control"})
+                </div>
+           <!-- </div>
+
+            <div class="row m-t-15"> -->
+                <div class="col-xs-12 col-md-4 m-b-10">
+                    @Html.DropDownListFor(p => p.Producer, new SelectList(Model.Producers), @ForSearchResult.ProducerName, new {@class = "form-control"})
+                </div>
+                <div class="col-xs-12 col-md-4 m-b-10">
+                    @Html.DropDownListFor(p => p.AkbType, new SelectList(Model.AkbTypes), "Тип", new { @class = "form-control" })
+                </div>
+            
+                    <div class="col-xs-12 m-b-10">
+                        @Html.CheckBoxFor(p => p.OnlySale) <label class="m-r-20" for="OnlySale"><span class="radio-label-span">@ForSearchResult.Sale</span></label>
+
+                    </div>
+                </div>
+            </div>
+        <div class="col-xs-3">
+            <div class="form-inline m-t-15">
+                <div class="form-group">
+                    @ForSearchResult.From <input type="text" class="form-control input-price-range m-b-10" id="price-slider-min" /> &mdash;
+                </div>
+                <div class="form-group">
+                    @ForSearchResult.To <input type="text" class="form-control input-price-range m-b-10" id="price-slider-max" />
+                </div>
+            </div>
+            <div class="m-t-15">
+                <div id="slider-range"></div>
+                <p>
+                    <span class="slider-price-const-min">0</span>
+                    <span id="MaxPrice" class="slider-price-const-max">@ViewBag.MaxPrice</span>
+                    <span id="PriceStepSlide" class="invisible">@ViewBag.PriceStepSlide</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center border-form-podbor">
+        <button type="submit" class="form-podbor-btn-submit">@ForSearchResult.ChooseBattery</button>
+    </div>
+    <!------------------------------>
+
+}
+
+<div class="m-t-15">
+    @{
+        string brandsurl = null;
+        if (Model.Brand!=null)
+        {
+            brandsurl ="&"+string.Join("&", Model.Brand.ToList().Select(x => "Brand=" + Url.Encode(x)));
+         
+        }
+    }
+    <span class="podbor-tyres-title">@Header.CarBatteries (@Model.SearchResults.TotalItemCount)</span>
+    @Html.PagedListPager(Model.SearchResults, page => Url.Action("Akb", new
+    {
+        page,
+        ProducerId = Model.ProducerId,
+        Article = Model.Article,
+        Name = Model.Name,
+        Volume = Model.Volume,
+        Polarity = Model.Polarity,
+        Inrush_Current = Model.Inrush_Current,
+        Size = Model.Size,
+     //   Brand = brandsurl,
+        Producer = Model.Producer,
+        AkbType = Model.AkbType,
+        ItemsPerPage = Model.ItemsPerPage,
+        PriceMin = Model.PriceMin,
+        PriceMax = Model.PriceMax,
+        SortBy = Model.SortBy
+    }) + brandsurl, new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+
+
+</div>
+
+<div class="row m-t-15">
+    <div class="col-xs-8">
+
+        <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
+
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            <a class="sort-btn-a" href="@(Url.Action("Akb","Home", new
+                {ProducerId=Model.ProducerId,
+                    Article=Model.Article,
+                    Name=Model.Name,
+                 Volume = Model.Volume,
+                    Polarity = Model.Polarity,
+                    Inrush_Current = Model.Inrush_Current,
+                 Size = Model.Size,
+                 Producer = Model.Producer,
+                 AkbType = Model.AkbType,
+                 ItemsPerPage = Model.ItemsPerPage,
+                 PriceMin = Model.PriceMin,
+                 PriceMax = Model.PriceMax,
+                 SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
+                })+brandsurl)">@ForSearchResult.Name</a> 
+    
+    
+                @{
+                if (Model.SortBy == SortBy.NameAsc || Model.SortBy == SortBy.NameDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.NameAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+                }
+</div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+
+            <a class="sort-btn-a" href="@(Url.Action("Akb","Home", new
+                                          {
+                                              ProducerId = Model.ProducerId,
+                                              Article = Model.Article,
+                                              Name = Model.Name,
+                                              Volume = Model.Volume,
+                                              Polarity = Model.Polarity,
+                                              Inrush_Current = Model.Inrush_Current,
+                                              Size = Model.Size,
+                                              Producer = Model.Producer,
+                                              AkbType = Model.AkbType,
+                                              ItemsPerPage = Model.ItemsPerPage,
+                                              PriceMin = Model.PriceMin,
+                                              PriceMax = Model.PriceMax,
+                                              SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
+                                          }) + brandsurl)">@ForSearchResult.DeliveryTime</a>
+
+           
+            @{
+                if (Model.SortBy == SortBy.DeliveryAsc || Model.SortBy == SortBy.DeliveryDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.DeliveryAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+
+            <a class="sort-btn-a" href="@(Url.Action("Akb","Home", new
+                                          {
+                                              ProducerId = Model.ProducerId,
+                                              Article = Model.Article,
+                                              Name = Model.Name,
+                                              Volume = Model.Volume,
+                                              Polarity = Model.Polarity,
+                                              Inrush_Current = Model.Inrush_Current,
+                                              Size = Model.Size,
+                                              Producer = Model.Producer,
+                                              AkbType = Model.AkbType,
+                                              ItemsPerPage = Model.ItemsPerPage,
+                                              PriceMin = Model.PriceMin,
+                                              PriceMax = Model.PriceMax,
+                                              SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
+                                          }) + brandsurl)">@ForSearchResult.Amount</a>
+            
+            @{
+                if (Model.SortBy == SortBy.AmountAsc || Model.SortBy == SortBy.AmountDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.AmountAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+
+            <a class="sort-btn-a" href="@(Url.Action("Akb", "Home", new
+                                          {
+                                              ProducerId = Model.ProducerId,
+                                              Article = Model.Article,
+                                              Name = Model.Name,
+                                              Volume = Model.Volume,
+                                              Polarity = Model.Polarity,
+                                              Inrush_Current = Model.Inrush_Current,
+                                              Size = Model.Size,
+                                              Producer = Model.Producer,
+                                              AkbType = Model.AkbType,
+                                              ItemsPerPage = Model.ItemsPerPage,
+                                              PriceMin = Model.PriceMin,
+                                              PriceMax = Model.PriceMax,
+                                              SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
+                                          }) + brandsurl)">@ForSearchResult.Price</a>
+            
+            @{
+                if (Model.SortBy == SortBy.PriceAsc || Model.SortBy == SortBy.PriceDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.PriceAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+
+    </div>
+    <div class="col-xs-4">
+        <div class="row">
+            <div class="col-xs-4">
+
+            </div>
+            <div class="col-xs-8">
+                <div class="psevdo-select">
+                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                    <select class="form-control" id="ItemsPerPageForm">
+                        <option @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
+                        <option @(Model.ItemsPerPage == 20 ? "selected" : "")>20</option>
+                        <option @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
+                        <option @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
+                        <option @(Model.ItemsPerPage == 200 ? "selected" : "")>200</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<table class="data-table">
+    <thead>
+    <tr>
+        <th>@ForSearchResult.Photo</th>
+        <!--<th>№</th>-->
+        <th>@ForSearchResult.StockNumber</th>
+        <th class="product-name">
+            @ForSearchResult.Name
+        </th>
+        <th>
+            @ForSearchResult.Amount
+        </th>
+        <th>
+            @ForSearchResult.DeliveryTime
+        </th>
+        <th>
+            @ForSearchResult.Price
+        </th>
+        <th class="product-count">@ForSearchResult.Available</th>
+        <th>@ForSearchResult.Action</th>
+    </tr>
+    </thead>
+
+
+    @foreach (var item in Model.SearchResults as IPagedList<AkbSearchResult>)
+    {
+        <tr>
+            <td>
+                @{
+                    string saleImgClass = item.IsSaleProduct ? "sale-img" : "";
+                }
+                <span class="@saleImgClass"></span>
+                <a class="fancybox-btn" href="@Html.FullPathToImage("akb", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("akb", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+
+            </td>
+            <!--<td>
+                @*Html.DisplayFor(modelItem => item.row_number) *@
+            </td> -->
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
+            </td>
+            <td>
+                @Html.ActionLink(item.Name, "Details", new {id = item.ProductId}, new {@id = "ProductName-" + @item.ProductId, @class = "data-table-a-text"})
+            </td>
+            @if (item.Rest != 50)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rest)
+                </td>
+            }
+            else
+            {
+                <td>
+                    > @Html.DisplayFor(modelItem => item.Rest)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysToDepartment) @ForSearchResult.Days
+            </td>
+
+            <td>
+                @Html.Price(item.PriceOfClient ?? 0)
+            </td>
+
+            <td>
+                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new {@id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200})
+
+            </td>
+            <td>
+                <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div class="row m-t-15">
+    <div class="col-xs-12">
+     @Html.PagedListPager(Model.SearchResults, page => Url.Action("Akb", new
+    {
+        page,
+        ProducerId = Model.ProducerId,
+        Article = Model.Article,
+        Name = Model.Name,
+        Volume = Model.Volume,
+        Polarity = Model.Polarity,
+        Inrush_Current = Model.Inrush_Current,
+        Size = Model.Size,
+        //   Brand = brandsurl,
+        Producer = Model.Producer,
+        AkbType = Model.AkbType,
+        ItemsPerPage = Model.ItemsPerPage,
+        PriceMin = Model.PriceMin,
+        PriceMax = Model.PriceMax,
+        SortBy = Model.SortBy
+    }) + brandsurl, new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+
+    </div>
+</div>
+@section Scripts {
+    <script>
+        // Подключаем iCheck Для radiobutton в корзине
+        $('[type=radio],[type=checkbox]').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue'
+        });
+
+        $('#Brand').multiselect(
+          { nSelectedText: 'брендов аккумуляторов выбрано',
+              nonSelectedText: 'Бренды аккумуляторов (выберите)'
+          }
+        ); 
+    </script>
+}

@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DistanceMatrixResponse>
+  <status>OK</status>
+  <origin_address>Базовая ул., 4, Ярославль, Ярославская обл., Россия, 150003</origin_address>
+  <destination_address>ул. Чкалова, 47, Обнинск, Калужская обл., Россия, 249037</destination_address>
+  <destination_address>пер. Аэропортовский, Калуга, Калужская обл., Россия, 248926</destination_address>
+  <destination_address>ул. Чкалова, 36, Козельск, Калужская обл., Россия, 249720</destination_address>
+  <destination_address>ул. Рязанская, 15, Тула, Тульская обл., Россия, 300045</destination_address>
+  <row>
+    <element>
+      <status>OK</status>
+      <duration>
+        <value>19200</value>
+        <text>5 ч. 20 мин.</text>
+      </duration>
+      <distance>
+        <value>390449</value>
+        <text>390 км</text>
+      </distance>
+      <duration_in_traffic>
+        <value>20827</value>
+        <text>5 ч. 47 мин.</text>
+      </duration_in_traffic>
+    </element>
+    <element>
+      <status>OK</status>
+      <duration>
+        <value>22260</value>
+        <text>6 ч. 11 мин.</text>
+      </duration>
+      <distance>
+        <value>463676</value>
+        <text>464 км</text>
+      </distance>
+      <duration_in_traffic>
+        <value>23857</value>
+        <text>6 ч. 38 мин.</text>
+      </duration_in_traffic>
+    </element>
+    <element>
+      <status>OK</status>
+      <duration>
+        <value>25518</value>
+        <text>7 ч. 5 мин.</text>
+      </duration>
+      <distance>
+        <value>538779</value>
+        <text>539 км</text>
+      </distance>
+      <duration_in_traffic>
+        <value>27020</value>
+        <text>7 ч. 30 мин.</text>
+      </duration_in_traffic>
+    </element>
+    <element>
+      <status>OK</status>
+      <duration>
+        <value>22059</value>
+        <text>6 ч. 8 мин.</text>
+      </duration>
+      <distance>
+        <value>477325</value>
+        <text>477 км</text>
+      </distance>
+      <duration_in_traffic>
+        <value>23887</value>
+        <text>6 ч. 38 мин.</text>
+      </duration_in_traffic>
+    </element>
+  </row>
+</DistanceMatrixResponse>

@@ -1,0 +1,12 @@
+﻿
+@model Yst.ViewModels.SearchResult
+
+<div class="item">
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        @Html.HiddenFor(x => Model.ProductId)
+        
+        <input type="submit" value="+ Add to cart" />
+    }
+    
+</div>

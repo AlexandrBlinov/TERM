@@ -1,0 +1,148 @@
+﻿@model YstTerm.Models.PartnerPointDTO
+@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = Settings.EditSettings;
+    bool IsDisabledDepartment = (Model.DepartmentId == null || Model.DepartmentId == -1) ? true : false;
+    string invisVat = Model.IsForeignAndMainTerminal ? "" : "invisible";
+    string classInvisible = "invisible";
+    bool showDutyAndVat = Model.VatVal > 0 || Model.CustomDutyVal > 0;
+    string invisAddStock = "";
+    bool RusUser = true;
+    if (!ViewBag.AddStock) { invisAddStock = "invisibleAddStock"; RusUser = false; }
+
+}
+
+<!--<h2>Edit</h2>-->
+
+<div id="update-message">
+</div>
+
+<div id="alert-container">
+</div>
+
+@using (Html.BeginForm("CreateOwnPost", "Partner", FormMethod.Post, new { @id = "CreateOwnProfile" }))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        @Html.ValidationSummary()
+    </div>
+    <input type="hidden" value=@Model.UserName name="PointName" id="PointName" />
+    <input type="hidden" name="pricingrules" value="">
+    <input type="hidden" name="SaleDirection" value="">
+    <input type="hidden" value="@Model.LatLng" name="LatLng" id="LatLng" />
+    <input type="hidden" value="false" name="AddressIsValid" id="AddressIsValid" />
+    <legend>@Settings.SettingsTermClient @Model.UserName </legend>
+    <h4> 1.@Settings.ContactDetails</h4>
+
+    <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.CompName</label>
+        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <label><span aria-hidden="true"></span>Email</label>
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <label><span aria-hidden="true"></span>@Settings.WebSite</label>
+        @Html.TextBoxFor(m => m.WebSite, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <label><span aria-hidden="true"></span>@Settings.Language</label>
+        @Html.DropDownListFor(p => p.Language, new SelectList(Model.Languages, "LanguageName", "LanguageDescription", Model.Language), new { @class = "form-control" })
+
+    </div>
+    <br /><br /><br />
+
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+
+        <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.ContactPersonEdit</label>
+        @Html.TextBoxFor(m => m.ContactFIO, new { @class = "fio form-control" })
+        <br />
+        <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.PhoneNumber</label>
+        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "phone-number form-control" })
+
+        <br />
+
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        @{
+            Html.RenderPartial("_SalesMarketSettings", Model);
+        }
+    </div>
+
+
+    <div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.AddressForEditForm. @Settings.AddressForEditForm2</label>
+        <br />
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                @Html.DropDownListFor(p => p.Country, new SelectList(Model.Countries, "Id", "Name"), new { @class = "form-control top10" })
+            </div>
+            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control top10", id = "Address" })
+            </div>
+        </div>
+        <br />
+        <div id="map_canvas" class="for_gmaps" style="height:330px">
+
+        </div>
+        <br />
+    </div>
+    <div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <label><span aria-hidden="true"></span>@Settings.AddressForDelivery</label>
+        @Html.TextBoxFor(m => m.AddressForDelivery, new { @class = "form-control", id = "AddressForDelivery" })
+    </div>
+    Html.RenderPartial("_DepartmentsSettings", Model);
+    <br />
+    
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <label>@Settings.PasswordToSettings</label>
+        @Html.TextBoxFor(m => m.KeyWord, new { @class = "form-control" })
+        <br />
+    </div>
+
+    <div class="form-inline bottom50 @invisVat col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group vat-padding">
+            @Html.CheckBox("checkboxVAT", @showDutyAndVat, new { @class = "checkbox-vat", @id = "checkboxVAT" })
+            <label class="checkbox-vat-label no-select" for="checkboxVAT">Include VAT and custom duty?</label>
+        </div>
+        <div class="form-group span20 toggle_visible_onVat @(showDutyAndVat ? "" : @classInvisible)">
+            <label>Custom duty</label>
+            <div class="input-group">
+                <input class="form-control" id="custom_duty_val" name="custom_duty_val" max="100" min="0" type="number" value="@Model.CustomDutyVal">
+                <div class="input-group-addon">%</div>
+            </div>
+        </div>
+        <div class="form-group span20 toggle_visible_onVat @(showDutyAndVat ? "" : @classInvisible)">
+            <label>VAT</label>
+            <div class="input-group">
+                <input class="form-control" id="vat_val" name="vat_val" max="100" min="0" type="number" value="@Model.VatVal">
+                <div class="input-group-addon">%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4>@Settings.PriceSettings</h4>
+        <br />
+    </div>
+    Html.RenderPartial("_PriceTableSettings", Model);
+            //----------------------------------------------------------------------------------------------------------------
+    <div class="abs_dispos2">
+        <input class="btn btn-primary btn-large" type="submit" value="@Settings.Save" id="SavePointProfile" name="SavePointProfile" />
+    </div>
+
+    @Html.Partial("_ModalNotification", new ViewDataDictionary { { "ModalBodyText", Settings.TooltipSalesMarket }, { "id", "modalNotification" }, { "ModalTitle", ModalWindows.Attention } })
+
+}
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#modalNotification').modal();
+        })
+    </script>
+
+}
+
+

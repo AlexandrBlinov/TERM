@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Редактор";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model PhotoViewModel
+<h2>Загрузка дополнительных фото к товарам</h2>
+@using (Html.BeginForm("Index", "Photo", null, FormMethod.Post))
+{
+    <fieldset>
+        <div class="form-group col-xs-7">
+            <label>Введите путь к основной картинке товара</label>
+            @Html.TextBoxFor(model => model.NamePhoto, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-xs-3">
+            <label>Номер дополнительного фото</label>
+            @Html.TextBoxFor(model => model.NumberPhoto, new { @class = "form-control" })
+        </div>
+
+        <div class="form-group col-xs-2">
+            <input style="margin-top: 24px;" class="btn btn-primary btn-default" data-type="submit" type="submit" value="Перейти к фото" />
+        </div>
+    </fieldset>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+
+        <div class="col-sm-4 col-md-3 m-b-20">
+
+        </div>
+
+    </div>
+</div>
+@if (ViewBag.CountPhoto > 0)
+{
+    <span style="font-weight:bold;font-size:14px;">Уже добавленные фото</span>
+    <div class="row">
+        <table style="width: 230px;">
+            @for (int i = 1; i <= ViewBag.CountPhoto; i++)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td><img src='@Url.Action("GetProductPhoto", "Photo", new { namePhoto = Model.NamePhoto, number = i })' class="img-responsive" style="width: 80px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+                    <td><a href="@Url.Action("RemoveProductPhoto", "Photo", new { namePhoto = Model.NamePhoto, number = i })">Удалить</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+}
+
+@if (Model.NamePhoto != String.Empty && Model.NumberPhoto > ViewBag.CountPhoto)
+{
+
+    using (Html.BeginForm("UploadImg", "Photo", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="form-group">
+                    @Html.Hidden("namePhoto", Model.NamePhoto)
+                    @Html.Hidden("number", Model.NumberPhoto)
+                </div>
+                <div class="col-md-10">
+                    <input type="file" id="upload" name="upload" class="hidden" multiple accept='image/*' />
+                    <a href="javascript:void(0)" id="upload-file__link" class="attachdoc__link">Прикрепить фото</a>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+@section Scripts {
+
+    <script>
+$("#upload-file__link").on('click', function (e) {
+e.preventDefault();
+$("#upload").trigger('click');
+});
+
+$('#upload').change(function () {
+$(this).closest('form').submit();
+});
+
+
+$("#IsActive").on('click', function () {
+var isChecked = $(".checkbox").is(':checked');
+if (isChecked) $("#Active").val(true);
+else $("#Active").val(false);
+});
+    </script>
+}

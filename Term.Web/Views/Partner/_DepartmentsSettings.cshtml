@@ -1,0 +1,39 @@
+﻿@model YstTerm.Models.PartnerPointDTO
+@using Term.Web.Views.Resources;
+@{
+    string invisAddStock = "";
+    bool RusUser = true;
+    if (!ViewBag.AddStock) { invisAddStock = "invisibleAddStock"; RusUser = false; }
+    bool IsDisabledDepartment = (Model.DepartmentId == null || Model.DepartmentId == -1) ? true : false;
+}
+
+<div class="row">
+    <div class="top10 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @Html.CheckBox("MainDepartmentId", true, new { @class = "checkbox-addstock", @id = "MainDepartmentId" }).DisabledIf(true)
+            <label class="checkbox-addstock-label no-select" for="MainDepartmentId">@Settings.CentralStock</label>
+        </div>
+        <div class="form-group col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.Stock</label>
+            <select class="form-control"><option>@Settings.MainStock</option></select>
+        </div>
+        <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4 box_for_number">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.DeliveryFrom</label>
+            @Html.TextBoxFor(m => m.DaysToMainDepartment, new { @class = "form-control touchspih_number", id = "DaysToMainDepartment" })
+        </div>
+    </div>
+    <div class="top10 col-xs-6 col-sm-6 col-md-6 col-lg-6 @invisAddStock">
+        <div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            @Html.CheckBox("UseDepartmentId", !IsDisabledDepartment, new { @class = "checkbox-addstock", @id = "UseDepartmentId" })
+            <label class="checkbox-addstock-label no-select" for="UseDepartmentId">Дополнительный склад</label>
+        </div>
+        <div class="form-group col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>Подразделение</label>
+            @Html.DropDownListFor(p => p.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name", Model.DepartmentId ?? -1), new { @class = "form-control" })
+        </div>
+        <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4 box_for_number checkbox-text">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>Срок доставки</label>
+            @Html.TextBoxFor(model => model.DaysToDepartment, new { @class = "form-control touchspih_number", id = "DaysToDepartment" })
+        </div>
+    </div>
+</div>

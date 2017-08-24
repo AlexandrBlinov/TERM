@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ProductSeasonOrderAnalized>
+@using Term.Web.Views.Resources
+
+
+<table class="table table_original top20">
+    <thead class="thead_styles">
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                @SeasonOrdersTexts.Code
+            </th>
+            <th>
+               @SeasonOrdersTexts.ProductName
+            </th>
+            <th>
+                @SeasonOrdersTexts.Quantity
+            </th>
+            <th>
+                @SeasonOrdersTexts.InReserve
+            </th>
+            <th>
+                @SeasonOrdersTexts.Shipped
+            </th>
+            <th>
+                @SeasonOrdersTexts.RestToShip
+            </th>
+            <th>
+                @SeasonOrdersTexts.QuantityOnWay
+            </th>
+
+        </tr>
+    </thead>
+    @{int counter = 0; 
+      int Quantity = 0; 
+      int Reserve = 0;
+      int QuantityFact = 0;
+      int Rest = 0;
+      }
+    @foreach (var item in Model)
+    {
+        counter++;
+        <tr data-id="@item.ProductId">
+            <td>
+                @counter
+            </td>
+            <td class="Code">
+                @item.ProductId
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @{Quantity += item.Quantity;}
+                @item.Quantity
+
+            </td>
+            <td class="Count">
+               
+                @{Reserve += item.Reserve;}
+                @item.Reserve
+            </td>
+
+            <td>
+                @{QuantityFact += item.QuantityFact;}
+               @item.QuantityFact
+            </td>
+            <td>
+                @{Rest += item.Rest;}
+                @item.Rest
+            </td>
+            <td>   
+                @if (item.QuantityOnWayToDisplay!="0")
+                {<span class="productonway-hint" data-id="@item.ProductId"> 
+                @item.QuantityOnWayToDisplay                   
+                </span>             
+                }else
+                {@item.QuantityOnWayToDisplay}
+
+
+                
+                                    
+                
+            </td>
+
+
+        </tr>
+    }
+    <tfoot>
+        <tr class="bg_grey text_bold">
+            <td colspan="3">
+                <b>@CartAndOrders.Total:</b>
+            </td>
+            <td class="text_bold">
+                @Quantity
+            </td>
+            <td>@Reserve</td>
+            <td>@QuantityFact</td>
+            <td>@Rest</td>
+            
+        </tr>
+    </tfoot> 
+</table>

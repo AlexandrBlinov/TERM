@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "KeyWordEnter";
+}
+
+
+
+@using (Html.BeginForm("KeyWordEnter", "Partner", FormMethod.Post, new { @class = "form-signin" }))
+{
+    @Html.AntiForgeryToken()
+ 
+                <h3 class="form-signin-heading text-center">Ввод пароля для входа в настройки</h3>
+                <hr />
+                 
+                @*Html.TextBox("KeyWord", null,new {@class="form-control" }) *@
+    @Html.Password("KeyWord", null,new {@class="form-control" }) 
+                        
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Ввести" name="EnterKeyWord" />
+
+        
+
+        @Html.Hidden("ReturnUrl",(string)ViewBag.ReturnUrl)
+
+
+
+  
+}

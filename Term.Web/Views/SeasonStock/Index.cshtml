@@ -1,0 +1,108 @@
+﻿@using YstTerm.Models
+@using Term.DAL
+@model SeasonStockModelView
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Ассортимент для сезонных заказов</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+        <input class="form-control" name="findelementsInStock" />
+            </div>
+    </div>
+    <div class="col-md-8">
+       <div class="pull-right"> @Html.ActionLink("Добавить новые товары", "upload", null, new { @class = "btn btn-primary btn-lg text-uppercase" })</div>
+    </div>
+</div>
+
+
+@{
+    int counter = 0;
+}
+
+    <ul class="nav nav-tabs" role="tablist">
+
+        @foreach (var seasonItem in Model.SeasonStockItemsPerProducers.Keys)
+        {
+            var linkname = "#id" + @seasonItem.Id;
+            
+
+            <li class="@(counter==0?"active":"")"> <a href="@linkname" role="tab" data-toggle="tab">@seasonItem.Producer.Name </a> </li>
+            counter++;
+        }
+
+        <!-- <li class="active"><a href="#home"  role="tab" data-toggle="tab">Alcasta</a></li>
+         <li><a href="#profile" role="tab" data-toggle="tab">Contyre</a></li>
+         <li><a href="#messages" role="tab" data-toggle="tab">Amtel</a></li>
+         <li><a href="#settings" role="tab" data-toggle="tab">Nz</a></li>
+            -->
+    </ul>
+
+@{counter = 0;}
+    <!-- Tab panes -->
+    <div class="tab-content">
+    @foreach (var seasonProducer in Model.SeasonStockItemsPerProducers.Keys)
+        {
+            var linkname = "id" + seasonProducer.Id;
+        @:<div class="tab-pane @(counter==0?"active":"")" id="@linkname">
+        counter++;
+          @:  <table class="table table-responsive elements_in_stock">
+            @:    <thead>
+              @:      <tr>
+                @:        <th>Код товара</th>
+                  @:      <th>Наименование товара</th>
+                     @:     <th>До</th>  
+                    @:</tr>
+                @:</thead>
+                @:<tbody>
+
+                    foreach (var seasonStockItem in Model.SeasonStockItemsPerProducers[seasonProducer])
+                    {
+                    @:<tr>
+                      @:        <td>@seasonStockItem.Product</td>
+                        @:      <td>@seasonStockItem.Product.Name</td>
+                        @:      <td>@seasonProducer.EndDate</td> 
+                          @:</tr>
+                    }
+                    
+         @:</tbody>
+          @:</table>
+          @:</div>
+                    }
+        </div>
+        <!--  <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="id1">
+                  <table class="table table-responsive elements_in_stock">
+                      <thead>
+                          <tr>
+                              <th>Код товара</th>
+                              <th>Наименование товара</th>
+
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>1</td>
+                              <td>John</td>
+
+                          </tr>
+
+                      </tbody>
+                  </table>
+
+              </div>
+              <div role="tabpanel" class="tab-pane" id="id2">profile</div>
+              <div role="tabpanel" class="tab-pane" id="id3">messages</div>
+              <div role="tabpanel" class="tab-pane" id="id4">settings</div>
+          </div>
+            -->
+    </div>
+
+<div id="season-stock">
+    @*Html.Partial("_Stock", Model); *@
+</div>
+

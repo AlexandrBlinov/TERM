@@ -1,0 +1,67 @@
+﻿
+@model Dictionary<string,decimal>
+@using Term.Web.Views.Resources
+
+@{
+    string specifier = "#,#.";
+    decimal limit, debt, orderedsum, expireddebt;
+    limit = debt = orderedsum = expireddebt = default(decimal);
+    if (Model.ContainsKey("limit")) { limit = Model["limit"]; }
+    if (Model.ContainsKey("debt")) { debt = Model["debt"]; }
+    if (Model.ContainsKey("orderedsum")) { orderedsum = Model["orderedsum"]; }
+    if (Model.ContainsKey("expireddebt")) { expireddebt = Model["expireddebt"];
+
+        expireddebt = expireddebt < 0 ? 0 : expireddebt;
+    }
+
+
+    decimal limitrest = limit - debt - orderedsum;
+
+}
+
+<a href="#" class="dropdown-toggle yst-limit-link" data-toggle="dropdown" role="button" aria-expanded="false">
+
+    <span class="limit-rest-title">@limitrest.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></span> <span class="caret"></span>
+</a>
+<ul class="dropdown-menu yst-limit-menu" role="menu">
+
+    <li class="yst-limit-submenu clearfix">
+
+        <div class="limit-label pull-left"> @LimitDataTexts.Limit</div>
+        <div class="limit-value pull-right"> @limit.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+
+    </li>
+    <li class="yst-limit-submenu clearfix">
+
+        <div class="limit-label pull-left"> @LimitDataTexts.Debt</div>
+        <div class="limit-value pull-right"> @debt.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+        
+    </li>
+       
+
+    <li class="yst-limit-submenu  clearfix">
+        <div class="limit-label pull-left"> @LimitDataTexts.OrderedSum</div>
+        <div class="limit-value pull-right"> @orderedsum.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+    </li>
+
+    <li class="yst-limit-submenu  clearfix">
+
+        <div class="limit-label pull-left"> @LimitDataTexts.RestOfLimit</div>
+        <div class="limit-value pull-right"> @limitrest.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+
+    </li>
+
+    @if (expireddebt > 0) { 
+    <li class="yst-limit-submenu alert-danger hr-line clearfix">
+        <div class="limit-label pull-left"> @LimitDataTexts.ExpiredDebt</div>
+        <div class="limit-value pull-right"> @expireddebt.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+    </li>
+        }
+
+   <li>
+        <div class="menu-disk-dropdown-text">
+            
+            <a href="@Url.Action("GetDetailedData","LimitData")">@LimitDataTexts.PaymentSchedule</a>
+        </div>
+    </li> 
+</ul>

@@ -1,0 +1,58 @@
+﻿@using Term.Web.HtmlHelpers
+@using Yst.ViewModels
+@model  YstTerm.Models.TyresPodborView
+@using Term.Web.Views.Resources;
+
+
+    <div class="top20">
+        <table class="table table_original">
+            <thead class="thead_styles">
+                <tr>
+                    <th>№</th>
+                    <th>@ForSearchResult.Photo</th>
+                    <th>@ForSearchResult.Name</th>
+                    <th>@ForSearchResult.Season</th>
+                    <th>@ForSearchResult.Price</th>
+                    <th>@ForSearchResult.Available</th>
+                    <th class="th_cart_min_width">@ForSearchResult.Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{int counter = @Model.SearchResults.FirstItemOnPage;}
+                @foreach (var item in Model.SearchResults)
+                {
+                    <tr>
+                        <td>
+                            @(counter++)
+                        </td>
+                        <td>
+                            <img class="open_popup2 min_img" src="@Html.ThumbnailNew("tyre", item.PathToImage)" data-src="@Html.FullPathToImage("tyre", item.PathToImage)" />
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new {@id = "ProductName-" + @item.ProductId, @class = "a_text" })
+                        </td>
+                                               
+                        <td>
+                            @Html.SeasonImage(item.Season)
+                        </td>
+                        <td>
+                            <span class="price"><span>@ForSearchResult.MoneyEn</span>@item.Price </span><span>@ForSearchResult.MoneyRu</span>
+                        </td>
+                        <td>
+                            <div class="input-group bootstrap-touchspin max-width">
+
+                                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control", @type = "text", @min = 1, @max = 200 })
+
+                            </div>
+                        </td>
+                        <td>
+                            <a href="javascript:AddToSeasonCart(@item.ProductId);" class="AddLink open_popup a_text" data-id="@item.ProductId" data-name="@item.Name">@ForSearchResult.ToCart</a>
+                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+

@@ -1,0 +1,181 @@
+﻿@using Yst.Utils;
+@using Term.DAL;
+@using Term.Web.Views.Resources;
+@model SeasonCartViewModel
+@{
+    ViewBag.Title = @CartAndOrders.SeasonCart;
+    ViewBag.Title += Model.CartCount == 0 ? " empty" : String.Format(" ({0})",Model.CartCount);
+    
+}
+
+<h2>@ViewBag.Title</h2>
+@if (Model.CartCount == 0) { return; }
+
+
+
+@{bool showFirst=true;}
+<div class="row">
+    
+    <div class="col-md-8">
+        <div class="form-group">
+            <label for="Comments">Comments:</label>
+            <textarea name="Comments" class="form-control noresize" placeholder="" rows="3"></textarea>
+
+        </div>
+    </div>
+    <div class="col-md-4">
+        <section class="form-group bottom50">
+            @using (Html.BeginForm("createorder", "seasonshoppingcart", FormMethod.Post, new { @id = "seasoncart" }))
+            {
+
+                <div class="col-md-4 text-center">
+                    <label>&nbsp;</label>
+                    @Html.HiddenFor(model => model.ActiveWheelType)
+                    <div class="form-group">
+
+                        <input class="btn btn-primary btn-lg" type="submit" value="Make production order" name="CreateSeasonOrder" />
+
+                    </div>
+                </div>
+
+            }
+
+        </section>
+    </div>
+</div>
+<div class="row">
+    <div class="btn-group sort_row" role="group">
+        <div class="btn btn-default active">
+            @Html.ActionLink(" ", "Index", new
+        {
+            Display = DisplaySeasonCart.Plain
+        }, new { @class = "glyphicon glyphicon-th-list fs15px", title = "plain" })
+            </div>
+        <div class="btn btn-default active">
+            @Html.ActionLink(" ", "Index", new
+        {
+            Display = DisplaySeasonCart.GroupedByFactory
+        }, new { @class = "glyphicon glyphicon-th fs15px", title = "grouped by factory" })
+        </div>
+        </div>
+</div>
+@if (Model.ItemsByWheelType.Count > 1) { 
+    <ul class="nav nav-tabs yst-wheeltypes">
+        @foreach (var ItembyWheelType in Model.ItemsByWheelTypeAndFactory)
+        {
+            <li class="@(showFirst?"active":"")"><a data-toggle="tab" data-id="@ItembyWheelType.Key" href="#menu@(ItembyWheelType.Key)">@ItembyWheelType.Key <span class="badge">@Model.ItemsByWheelType[ItembyWheelType.Key].Count()</span></a></li>
+            showFirst = false;
+        }
+    </ul>
+}
+   
+<div class="tab-content">
+    @{ showFirst=true;}
+        @foreach (var ItembyWheelType in Model.ItemsByWheelTypeAndFactory)
+        {
+            <div id="menu@(ItembyWheelType.Key)" class="tab-pane @(showFirst?"active":"fade")">
+                <table class=" season-cart table table-bordered table-striped marg_top15">
+                    <thead class="thead_styles">
+                        <tr class="bg_grey">
+                            <th>
+                                №
+                            </th>
+                            <th> @CartAndOrders.Cart_Picture </th>
+                            <th> @CartAndOrders.Cart_Code </th>
+
+                            <th>
+                                @CartAndOrders.Cart_Name
+                            </th>
+                            <th>
+                                @CartAndOrders.Cart_Amount
+                            </th>
+                            <th>
+                                @CartAndOrders.Cart_Price
+                            </th>
+                            <th>
+                               @CartAndOrders.Cart_Totals
+                            </th>
+                            <th>
+
+                            </th>
+
+                        </tr>
+                    </thead>
+                    
+                    @{int counter = 0; showFirst = false;}
+                    @foreach (var itemFactory in Model.ItemsByWheelTypeAndFactory[ItembyWheelType.Key])
+                    {
+                        counter = 0;
+                        int numbertoorder = 4;
+                        if (Model.IsForeign)
+                        { numbertoorder = ItembyWheelType.Key == WheelType.Alloy ? 60 : 200; }
+                        <tr data-factory-totals="@itemFactory.Key"><td class="caption-factory" colspan="8"><h4>@itemFactory.Key</h4></td></tr>
+
+                        foreach (var item in itemFactory.Value)
+                        {
+                            counter++;
+                            <tr data-id="@item.Product.ProductId" data-factory="@itemFactory.Key">
+                                <td class="number_pp text-center">@counter</td>
+                                <td class="text-center">
+                                    <img class="min_img" src="@Html.Thumbnail(@item.Product)" />
+
+                                </td>
+                                <td>
+                                    @(item.Product)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(item.Product.Name, "Details", "Home", new { id = item.ProductId }, null)
+                                </td>
+                                <td id="item-count-@item.ProductId" class="item-count">
+                                    <div class=" input-group bootstrap-touchspin max-width">
+                                    @Html.TextBox("count-" + @item.ProductId, @item.Count, new { @id = "item-count-product-" + @item.ProductId, @class = "count count_add_to_seasoncart form-control change_in_seasoncart", @type = "text", @min = @numbertoorder })
+</div>
+                                </td>
+                                <td class="item-price text-right">
+                                    @Html.Price3(item.Price)
+                                </td>
+                                <td class="item-sum text-right">
+
+                                    @Html.Price3(item.Count * item.Price)
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:RemoveFromSeasonCart(@item.ProductId)" class="removefromseasoncart" data-id="@item.Product.ProductId"><span class="glyphicon glyphicon-remove btn-lg" aria-hidden="true"></span></a>
+                                </td>
+                            </tr>
+                        }
+                        <tr data-factory-totals="@itemFactory.Key" ><td class="grouped-result" colspan="4">Totals by @itemFactory.Key</td><td class="grouped-result count">@(((IEnumerable<SeasonCart>)itemFactory.Value).Sum(p => p.Count))</td><td class="grouped-result"></td><td class="grouped-result sum">@Html.Price3( (((IEnumerable<SeasonCart>)itemFactory.Value).Sum(p => p.Price * p.Count)))</td><td class="grouped-result"></td></tr>
+    <tr data-factory-totals="@itemFactory.Key"><td colspan="8">&nbsp;</td></tr>
+                    }
+                    
+                   
+                    
+                </table>
+            </div>
+        }
+</div>
+
+<div class="row season-cart totals">
+    <div class="col-sm-offset-4 col-sm-2">
+        <span class="cart_sum">@*Weight:*@</span><br>
+        <span id="cart-weight" class="cart_sum">@*Model.CartWeight*@ @*CartAndOrders.Kg*@</span><span class="cart_sum"> </span>
+    </div>
+    <div class="col-sm-2">
+        <span class="cart_sum">@*Volume:*@</span><br>
+        <span id="cart-volume" class="cart_sum">@*Model.CartVolume*@ @*CartAndOrders.CubicMeters*@</span><span class="cart_sum"> </span>
+    </div>
+    <div class="col-sm-2">
+        <span class="cart_sum">Total:</span><br>
+        <span id="cart-total" class="cart_sum_price">@Html.Price3(Model.CartTotal)</span><span></span>
+    </div>
+    <div class="col-sm-2">
+        <span class="cart_sum">Items:</span><br>
+        <span id="cart-count" class="cart_sum">@Model.CartCount </span><span class="cart_sum"> pc.</span>
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <!--<script src="~/Scripts/term-season-scripts.js"></script>-->
+@Scripts.Render("~/bundles/term_seasonscripts")
+}

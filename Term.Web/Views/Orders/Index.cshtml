@@ -1,0 +1,121 @@
+﻿@model Yst.ViewModels.OrdersViewModel
+
+@{
+    ViewBag.Title = "Список заказов";
+}
+
+<h2>Список заказов для клиента @ViewBag.PartnerName</h2>
+
+@using (Html.BeginForm("List", "Orders", FormMethod.Get))
+{ 
+<fieldset>
+    <div class="controls controls-row">
+        <div class="span2">
+            @Html.LabelFor(p => p.BeginDate)
+            @Html.TextBoxFor(p => p.BeginDate, new { @type = "date", @class = "w125" })
+        </div>
+        <div class="span2">
+            @Html.LabelFor(p => p.EndDate)
+            @Html.TextBoxFor(p => p.EndDate, new { @type = "date", @class = "w125" })
+        </div>
+        <div class="span2">
+            <label>Номер заказа</label>
+            @Html.TextBoxFor(p => p.OrderNumber, new { @class = "w125" })
+        </div>
+        <div class="span2">
+            <label>Статус</label>
+            @Html.DropDownListFor(p => p.StatusId, Model.Statuses, "Все заказы")
+        </div>
+        <div class="span2">
+            @Html.LabelFor(p => p.ItemsPerPage)
+            @Html.DropDownListFor(p => p.ItemsPerPage, new SelectList(Model.PagingInfo.PagerList), new { @class = "w85" })
+        </div>
+        <div class="span1">
+            <button style="margin-top: 25px;" class="btn btn-primary" type="submit">Отбор</button>
+        </div>
+    </div>
+    
+</fieldset>
+
+}
+
+<table class="shopping-cart table table-bordered table-striped">
+    <thead>
+        <tr style="background-color: darkgray;">
+            <th>
+                Внутр. номер
+            </th>
+            <th>
+                Номер в базе
+            </th>
+            <th>
+                Подразделение
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+                Сумма
+            </th>
+            <th>
+                Дата заказа
+            </th>
+            <th>
+                Дата отгрузки
+            </th>
+            <th>
+                Комментарий
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberIn1S)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderStatusName)
+                </td>
+
+                <td class="text-right">
+                    @Html.DisplayFor(modelItem => item.Total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @{ string DeliveryDate = item.DeliveryDate.HasValue ? ((DateTime)item.DeliveryDate).ToShortDateString() : String.Empty;}
+
+                    @(DeliveryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comments)
+                </td>
+                <td style="min-width:80px">
+                    @Html.ActionLink("Подробно", "Details", new { OrderId = item.OrderId }) 
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+        <div class="pager">
+
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index"))
+
+
+        </div>

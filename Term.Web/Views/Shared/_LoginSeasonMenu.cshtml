@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNet.Identity
+@using YstProject.Services
+@using Term.Web.Views.Resources;
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> @Header.Menu</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink(@Header.Settings, "Index", "Partner")</li>
+                    <li>@Html.ActionLink(@Header.Orders, "List", "Orders")</li>
+                    <li>@Html.ActionLink(@Header.Sales, "List", "Sales")</li>
+                    <li role="presentation" class="divider"></li>
+                    <li>@Html.ActionLink(@Header.Assistance, "Index", "Help")</li>
+                    <li>@Html.ActionLink(@Help.ColorDefinition, "ColorDefinition", "Help")</li>
+                    <li>@Html.ActionLink(@Help.WheelPhotos, "WheelsPhotos", "Help")</li>
+                    <li role="presentation" class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">@Header.Exit</a></li>
+                </ul>
+            </li>
+
+            <li>@{ Html.RenderAction("CartSummary", "SeasonShoppingCart"); } </li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(@Header.Signin, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+
+

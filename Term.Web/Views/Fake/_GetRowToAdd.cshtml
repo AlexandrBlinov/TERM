@@ -1,0 +1,56 @@
+﻿
+@using System.Web.UI.WebControls
+@using YstProject.Models
+@*model  PurchaseReturnDto*@
+
+    <div class="panel panel-primary" id="rowToAdd">
+
+        <div class="panel-heading">
+            <span class="pull-right yst-panel-close" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+        </div>
+        <div class="panel-body">
+            
+            <div class="col-lg-12">
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label">Номер документа</label>
+                            <input type="hidden" name="Items.Index" value="ItemToReplace" />
+                            @*Html.TextBoxFor(x => x.Items[0].SaleNumber, new {@class = "form-control claim-doc-number", autocomplete = "off"})*@
+                            <input autocomplete="off" class="form-control claim-doc-number" data-val="true" data-val-number="The field SaleNumber must be a number." data-val-required="Заполните номер реализации" name="Items[0].SaleNumber" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label">Дата документа</label> @*Html.TextBoxFor(x => x.Items[0].SaleDate, "{0:dd.MM.yyyy}", new { @class = "form-control claim-doc-date", autocomplete = "off" })*@
+                            <input autocomplete="off" class="form-control claim-doc-date" data-val="true" data-val-date="The field SaleDate must be a date." data-val-required="Заполните дату реализации" name="Items[0].SaleDate" type="text" value="@(Model.Items[0].SaleDate.ToString("dd.MM.yyyy"))">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label">Код товара</label>@*Html.TextBoxFor(x => x.Items[0].ProductId, new { @class = "form-control claim-product-autocomplete claim-product-id", autocomplete = "off" })*@
+                            <input autocomplete="off" class="form-control claim-product-autocomplete claim-product-id ui-autocomplete-input" data-val="true" data-val-number="The field ProductId must be a number." data-val-required="Заполните код товара" name="Items[0].ProductId" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Наименование товара</label> @*Html.TextBoxFor(x => x.Items[0].ProductName, new {@class = "form-control", @autocomplete = "off"}) *@
+                            <input autocomplete="off" class="form-control claim-product-name"  name="Items[0].ProductName" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label">Количество</label>@*Html.TextBoxFor(x => x.Items[0].Count, new {@class = "form-control claim-count", autocomplete = "off"})*@
+                            <input autocomplete="off" class="form-control claim-count" data-val="true" data-val-number="The field Count must be a number." data-val-required="Заполните количество" name="Items[0].Count" type="text" value="">
+                        </div>
+                    </div>
+                </div>
+
+           
+            </div>
+
+        </div>
+    </div>

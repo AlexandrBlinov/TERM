@@ -1,0 +1,75 @@
+﻿@using Yst.Utils;
+@model IEnumerable<Term.DAL.SeasonOrder>
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = CartAndOrders.CompleteOrder;
+}
+
+<div class="row">
+    <span class="text_main right20">@CartAndOrders.CompleteOrder</span>
+</div>
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Cart })
+
+@foreach (var  order in Model)
+{
+
+    <div class="row text-center">
+        <span class="glyphicon glyphicon-ok order_ok" aria-hidden="true"></span><br>
+        <!--<span class="order_ok_text">   </span> -->
+        <a class="order_ok_text" href="@Url.Action("details", "seasonorders", new  {@guid=@order.OrderGuid })">@CartAndOrders.MsgCreate1  @order.NumberIn1S  @CartAndOrders.MsgCreate3</a>
+</div>
+    <div class="row top20 bottom50">
+        <table class="table table_original">
+            <thead class="thead_styles">
+                <tr>
+                    <th>№</th>
+                    <th>@ForSearchResult.Photo</th>
+                    <th>@ForSearchResult.Name</th>
+                    <th>@ForSearchResult.Name</th>
+                    <th>@ForSearchResult.Price</th>
+                    <th>@CartAndOrders.Total</th>
+                </tr>
+            </thead>
+            @{int counter = 0; int Count = 0; }
+            @foreach (var item in order.OrderDetails)
+            {
+                counter++;
+                <tr id="row-@item.ProductId">
+                    <td>
+                        @counter
+                    </td>
+                    <td>
+                        <img class="min_img" src="@Html.RemotePicture(item.ProductId)" />
+                    </td>
+                    <td>
+                        
+                        @Html.ActionLink(item.Product.Name, "Details", "Home", new { id = item.ProductId }, new { @class = "a_text" })
+                    </td>
+                    <td>
+                        @{Count += item.Count;}
+                        @item.Count
+                        @Header.Pc
+                    </td>
+                    <td>
+                        <span class="price"><span>@ForSearchResult.MoneyEn</span>@item.Price </span><span>@ForSearchResult.MoneyRu</span>
+                    </td>
+                    <td>
+                        <span class="price"><span>@ForSearchResult.MoneyEn</span>@(item.Price * item.Count) </span><span>@ForSearchResult.MoneyRu</span>
+                    </td>
+
+
+
+                </tr>
+            }
+        </table>
+        <div class="row">
+            <div class="top10 col-xs-6 col-sm-3">
+                <span class="cart_sum">@CartAndOrders.Total:</span><br>
+                <span class="cart_sum">@order.Total</span><br>
+            </div>
+            
+        </div>
+    </div>
+
+}

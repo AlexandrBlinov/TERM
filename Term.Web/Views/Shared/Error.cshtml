@@ -1,0 +1,31 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@using System.Security.Principal
+@{bool showDetailed = false;}
+@if (Request.IsAuthenticated)
+{
+    IPrincipal currentUser = HttpContext.Current.User;
+
+    if (currentUser != null)
+    { showDetailed = currentUser.IsInRole("Admin"); }
+
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ошибка</title>
+</head>
+<body>
+    <hgroup>
+        <h1>Ошибка.</h1>
+        <h3>При обработке запроса произошла ошибка.</h3>
+        @( showDetailed ? Model.Exception.Message + " " + Model.Exception.InnerException : "")
+        @( showDetailed ? " StackTrace is " + Model.Exception.StackTrace : "")
+
+       
+           
+    </hgroup>
+</body>
+</html>

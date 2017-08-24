@@ -1,0 +1,52 @@
+﻿@model Yst.ViewModels.TestViewModel
+
+@{
+    ViewBag.Title = "TestCars";
+}
+
+<h2>TestCars</h2>
+ 
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>TestViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Message)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Message)
+            @*Html.ValidationMessageFor(model => model.Message) *@
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CartTotal)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CartTotal)
+            @*Html.ValidationMessageFor(model => model.CartTotal) *@
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CartCount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CartCount)
+            @*Html.ValidationMessageFor(model => model.CartCount) *@
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,150 @@
+﻿@using Term.Utils
+@model Yst.ViewModels.OrderViewWithDetails
+@{
+    ViewBag.Title = "Уведомление об отказе";
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+<style>
+    .clientdata td {
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .text-left {
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .text-right {
+        text-align: right;
+        font-size: 12px;
+    }
+
+    .text-center {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .block_mp {
+        width: 49%;
+        float: left;
+    }
+</style>
+
+<div style="text-align: center; font-size: 16px;">
+    Уведомление об отказе от товара № @Model.FildsForDpdForm.SaleNumber *
+</div>
+<div style="text-align: center; font-size: 16px;">
+    к соглашению к договору поставки № @Model.FildsForDpdForm.ContractNumber от @Model.FildsForDpdForm.ContractDate г.
+</div>
+<div style="text-align: center; font-size: 16px;">
+    Заключенного между Закрытое акционерное общество Торговая компания "Яршинторг"(ИНН 7604069216) и @Model.FildsForDpdForm.PartnerName (ИНН @Model.FildsForDpdForm.PartnerInnKpp) <br />
+</div>
+<div style="font-size: 16px;">
+    <span style="float: right;">@DateTime.Now.ToShortDateString()</span>
+</div>
+
+<div style="width: 100%; float: left;">
+    <br /><br />
+    <span style="font-size: 12px;">1. В соответствии с п.4 соглашения к договору поставки № @Model.FildsForDpdForm.ContractNumber от @Model.FildsForDpdForm.ContractDate г., <br />Покупатель уведомляет о неполучении товара Грузополучателем</span>
+</div>
+<div style="width: 100%; float: left;">
+    <br />
+    <table border="1" cellspacing="0" style="border-collapse: collapse; word-wrap: break-word;">
+        <tr>
+            <td class="text-center">№</td>
+            <td class="text-center">Заказ</td>
+            <td class="text-center">Код</td>
+            <td class="text-center">Товар</td>
+            <td class="text-center">Кол-во</td>
+            <td class="text-center">Ед. изм.</td>
+            <td class="text-center">Цена за шт. в рублях с НДС</td>
+            <td class="text-center">Ставка НДС</td>
+            <td class="text-center">Сумма НДС в т.ч.</td>
+            <td class="text-center">Сумма в рублях с НДС</td>
+        </tr>
+        @{int counter = 0; int Count = 0; decimal totalNds = 0; }
+        @foreach (var item in Model.OrderDetails)
+        {
+
+            <tr>
+                <td class="text-center">@(++counter)</td>
+                <td class="text-center">@Model.OrderData.NumberIn1S</td>
+                <td class="text-center">@(item.ProductId.ToString().PadLeft(7, '0'))</td>
+                <td class="text-center">
+                    @{item.ProductName = item.ProductName != "" ? item.ProductName : "---";}
+                    @item.ProductName
+                </td>
+                <td class="text-right">@{Count += item.Count;} @item.Count</td>
+                <td class="text-center">шт</td>
+                <td class="text-right">@item.Price</td>
+                <td class="text-center">18%</td>
+                @{
+                var rownds = item.Count * item.Price;
+                totalNds += Decimal.Round(rownds / 118 * 18, 2);
+                }
+                <td class="text-right">@(String.Format("{0:0.00}", rownds / 118 * 18))</td>
+                <td class="text-right">@(item.Count * item.Price)</td>
+
+
+            </tr>
+        }
+        <tr>
+            <td class="text-center" colspan="4">
+                ИТОГО
+            </td>
+            <td class="text-right">@Count</td>
+            <td></td>
+            <td></td>
+
+            <td></td>
+            <td class="text-right">@(String.Format("{0:0.00}", totalNds))</td>
+            <td class="text-right">@Model.OrderData.Total</td>
+        </tr>
+    </table>
+</div>
+<div style="width: 100%; float: left;">
+    <br/>
+    <span style="font-size: 12px;">Всего наименований @counter , на сумму @Model.OrderData.Total руб. (в т.ч. НДС @(String.Format("{0:0.00}", totalNds)) руб.)</span>
+    <br/><br/>
+    <span style="font-size: 12px;">2. О сроке направления корректировочной счет-фактуры уведомлён.</span>
+    <br/><br/>
+    <span style="font-size: 12px;">3. Гарантирую оплату транспортных услуг по заказу @Model.OrderData.NumberIn1S.</span>
+    <br/><br/>
+</div>
+<div>
+    <div class="block_mp">
+        <span style="font-size: 12px;">Поставщик</span><br />
+        <span style="font-size: 12px;">Закрытое акционерное общество Торговая компания "Яршинторг"</span><br /><br />
+        <span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>/Фролов А.И./</span>
+        <span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>/Гаричев Д.Н./</span>
+        <span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>/Цверава В.У./</span>
+        <br />
+        <br />
+        <br />
+        <span style="font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;М.П.</span>
+        <br />
+        <br />
+        <br />
+        <span style="font-size: 10px;">* - номер поставки (номер УПД)</span>
+        <br />
+        <span style="font-size: 10px;">Зав. складом Фролов А.И. приказ по ЗАО ТК "Яршинторг" №01-03/20/2 от 26.07.2011 г.</span><br />
+        <span style="font-size: 10px;">Старший кладовщик Гаричев Д.Н. приказ по ЗАО ТК "Яршинторг" №01-03/20/2 от 26.07.2011 г.</span><br />
+        <span style="font-size: 10px;">Старший кладовщик Цверава В.У. приказ по ЗАО ТК "Яршинторг" №01-03/25/1 от 31.05.2013 г.</span>
+    </div>
+    <div class="block_mp">
+        <span style="font-size: 12px;">Покупатель</span><br />
+        <span style="font-size: 12px;">@Model.FildsForDpdForm.PartnerName</span><br /><br />
+        <span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="text-decoration: underline;">/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</span>
+        <br />
+        <br />
+        <br />
+        <span style="font-size: 12px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;М.П.</span>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+        window.print();
+</script>

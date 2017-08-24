@@ -1,0 +1,24 @@
+﻿@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = "SendMailSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    if (@ViewBag.Err == false)
+    {
+        <p class="notif_ok">
+            @ViewBag.Notif
+        </p>
+    }
+    else
+    {
+        <p class="notif_err">
+            @ViewBag.Notif
+        </p>
+    }
+}
+
+<p>
+    @Help.Feedback10 @Html.ActionLink(Help.Feedback11, "Index", "Home", null, new { @class = "btn btn-default" }) @Help.Feedback12
+</p>

@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Azioni</value>
+  </data>
+  <data name="AdditionalStock" xml:space="preserve">
+    <value>Magazzino aggiuntivo</value>
+  </data>
+  <data name="AddPoint" xml:space="preserve">
+    <value>Aggiungere un punto</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Indirizzo</value>
+  </data>
+  <data name="AddressForEditForm" xml:space="preserve">
+    <value>Indirizzo del terminale</value>
+  </data>
+  <data name="AddressForEditForm2" xml:space="preserve">
+    <value>Per inserire l'indirizzo, impostate l'indicatore sulla mappa, o utilizzate la barra di ricerca</value>
+  </data>
+  <data name="ApplyAllBrands" xml:space="preserve">
+    <value>Installare per tutti i costruttori</value>
+  </data>
+  <data name="BasicPrice" xml:space="preserve">
+    <value>% della base</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Bloccare</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>Costruttore</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancellare</value>
+  </data>
+  <data name="CentralStock" xml:space="preserve">
+    <value>Magazzino principale</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Rimouvere</value>
+  </data>
+  <data name="ClearTheBrand" xml:space="preserve">
+    <value>Rimuovere costruttore</value>
+  </data>
+  <data name="ClearThePrice" xml:space="preserve">
+    <value>Rimuovere prezzo</value>
+  </data>
+  <data name="CompName" xml:space="preserve">
+    <value>Nome della società</value>
+  </data>
+  <data name="ConfDel" xml:space="preserve">
+    <value>Confermate l'eliminazione</value>
+  </data>
+  <data name="ConfDelAsk" xml:space="preserve">
+    <value>Seite sicuri di voler eliminare il punto di socio</value>
+  </data>
+  <data name="ConfDelText" xml:space="preserve">
+    <value>Quando si elimina un punto di socio, tutte le sue impostazioni andranno perse.</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Sì. Eliminare.</value>
+  </data>
+  <data name="ContactDetails" xml:space="preserve">
+    <value>Recapiti</value>
+  </data>
+  <data name="ContactPerson" xml:space="preserve">
+    <value>Nome completo</value>
+  </data>
+  <data name="ContactPersonEdit" xml:space="preserve">
+    <value>Persona di contatto in azienda</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Paese</value>
+  </data>
+  <data name="CreatePoint" xml:space="preserve">
+    <value>Creazione di un punto socio</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Scelta di valuta</value>
+  </data>
+  <data name="DeliveryFrom" xml:space="preserve">
+    <value>Periodo di consegna</value>
+  </data>
+  <data name="DeliveryFromAddStock" xml:space="preserve">
+    <value>Periodo di consegna dal magazzino aggiuntivo</value>
+  </data>
+  <data name="DeliveryFromCentralStock" xml:space="preserve">
+    <value>Periodo di consegna dal magazzino principale</value>
+  </data>
+  <data name="EditSettings" xml:space="preserve">
+    <value>Modificare le impostazioni</value>
+  </data>
+  <data name="EndCustomer" xml:space="preserve">
+    <value>Consumatore finale</value>
+  </data>
+  <data name="ErrorDays" xml:space="preserve">
+    <value>Il numero di giorni deve essere compreso tra 1 e 45.</value>
+  </data>
+  <data name="ErrorList" xml:space="preserve">
+    <value>Compilate i campi</value>
+  </data>
+  <data name="ErrorRangeDays" xml:space="preserve">
+    <value>Il numero di giorni deve essere compreso tra 1 e 45.</value>
+  </data>
+  <data name="ErrorSettingsSaved" xml:space="preserve">
+    <value>Errore! Impossibile salvare le impostazioni.</value>
+  </data>
+  <data name="ErrorToDelMainPoint" xml:space="preserve">
+    <value>Non è possibile rimuovere il proprio punto.</value>
+  </data>
+  <data name="ErrorToDelPointHaveOrder" xml:space="preserve">
+    <value>Ci sono ordini su questo punto. Non può essere rimosso.</value>
+  </data>
+  <data name="FillInAddress" xml:space="preserve">
+    <value>Inserite l'indirizzo</value>
+  </data>
+  <data name="FillInCompName" xml:space="preserve">
+    <value>Inserite il nome della società</value>
+  </data>
+  <data name="FillInName" xml:space="preserve">
+    <value>Inserite il nome completo</value>
+  </data>
+  <data name="FillInPhone" xml:space="preserve">
+    <value>Inserite il numero di telefono</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Selezionate lingua</value>
+  </data>
+  <data name="ListPoints" xml:space="preserve">
+    <value>Elenco dei punti</value>
+  </data>
+  <data name="LogoOrPhoto" xml:space="preserve">
+    <value>Logo o foto dell'azienda</value>
+  </data>
+  <data name="MainStock" xml:space="preserve">
+    <value>Sede principale</value>
+  </data>
+  <data name="NamePoint" xml:space="preserve">
+    <value>Nome del punto</value>
+  </data>
+  <data name="NotCreate" xml:space="preserve">
+    <value>Non è possibile creare il punto di socio.</value>
+  </data>
+  <data name="NotSelected" xml:space="preserve">
+    <value>Non selezionato</value>
+  </data>
+  <data name="OnlineShop" xml:space="preserve">
+    <value>Negozio online</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Aprire le impostazioni</value>
+  </data>
+  <data name="PasswordToSettings" xml:space="preserve">
+    <value>Password per accedere alle impostazioni</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Numero del telefono</value>
+  </data>
+  <data name="Point" xml:space="preserve">
+    <value>Punto</value>
+  </data>
+  <data name="PriceSettings" xml:space="preserve">
+    <value>Fissare i prezzi per il cliente finale sul vostro terminale</value>
+  </data>
+  <data name="PriceSettingsAcc" xml:space="preserve">
+    <value>Fissare i prezzi degli accessori per il cliente finale sul vostro terminale</value>
+  </data>
+  <data name="PriceSettingsBat" xml:space="preserve">
+    <value>Fissare i prezzi delle batterie per il cliente finale sul vostro terminale</value>
+  </data>
+  <data name="PriceSettingsTyres" xml:space="preserve">
+    <value>Fissare i prezzi dei pneumatici per il cliente finale sul vostro terminale</value>
+  </data>
+  <data name="PriceSettingsWheels" xml:space="preserve">
+    <value>Fissare i prezzi dei cerchi per il cliente finale sul vostro terminale</value>
+  </data>
+  <data name="PriceWholesale" xml:space="preserve">
+    <value>Fissare I prezzi all'ingrosso per il terminale</value>
+  </data>
+  <data name="PriceWholesaleAcc" xml:space="preserve">
+    <value>Fissare i prezzi all'ingrosso degli accessori sul vostro terminale</value>
+  </data>
+  <data name="PriceWholesaleBat" xml:space="preserve">
+    <value>Fissare i prezzi all'ingrosso delle batterie sul vostro terminale</value>
+  </data>
+  <data name="PriceWholesaleTyres" xml:space="preserve">
+    <value>Fissare i prezzi all'ingrosso dei pneumatici sul vostro terminale</value>
+  </data>
+  <data name="PriceWholesaleWheels" xml:space="preserve">
+    <value>Fissare i prezzi all'ingrosso dei cerchi sul vostro terminale</value>
+  </data>
+  <data name="PurchasePrice" xml:space="preserve">
+    <value>% del prezzo di acquisto</value>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>Raccomandato</value>
+  </data>
+  <data name="ResponsibleManager" xml:space="preserve">
+    <value>Dirigente preposto</value>
+  </data>
+  <data name="Retail" xml:space="preserve">
+    <value>al dettaglio</value>
+  </data>
+  <data name="SalesMarket" xml:space="preserve">
+    <value>Direzioni di vendita della vostra azienda</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvare</value>
+  </data>
+  <data name="SettingsChildClient" xml:space="preserve">
+    <value>Impostazioni del terminale aggiuntivo</value>
+  </data>
+  <data name="SettingsSaved" xml:space="preserve">
+    <value>Impostazioni salvate con successo</value>
+  </data>
+  <data name="SettingsTermClient" xml:space="preserve">
+    <value>Impostazioni del terminale principale</value>
+  </data>
+  <data name="Stock" xml:space="preserve">
+    <value>Sede</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TerminalClient" xml:space="preserve">
+    <value>Terminale principale</value>
+  </data>
+  <data name="TimeDeliveryAddStock" xml:space="preserve">
+    <value>Periodo di consegna dal magazzino aggiuntivo</value>
+  </data>
+  <data name="TimeDeliveryCentrStock" xml:space="preserve">
+    <value>Periodo di consegna dal magazzino principale (Yaroslavl)</value>
+  </data>
+  <data name="TooltipBasic" xml:space="preserve">
+    <value>Numero positivo - un rialzo, numero negativo - uno sconto sul prezzo di base</value>
+  </data>
+  <data name="TooltipBrand" xml:space="preserve">
+    <value>Il produttore per cui sono valide le regole di prezzo</value>
+  </data>
+  <data name="TooltipPhoto" xml:space="preserve">
+    <value>Questa immagine sarà visualizzata nella descrizione della vostra azienda sui siti della rete di vendita: NZ, Alcasta, LegeArtis, Yokatta, YST, X-Race,CrossStreet, Trebl, Contyre, Avatyre.</value>
+  </data>
+  <data name="TooltipSalesMarket" xml:space="preserve">
+    <value>Questi dati saranno visualizzati nella descrizione della vostra azienda sui siti della rete di vendita:: NZ, Alcasta, LegeArtis, Yokatta, YST, X-Race,CrossStreet, Trebl, Contyre, Avatyre.</value>
+  </data>
+  <data name="TooltipZakup" xml:space="preserve">
+    <value>Margine del prezzo di acquisto</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Sbloccare</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Nome utente</value>
+  </data>
+  <data name="UserPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Wholesale" xml:space="preserve">
+    <value>All'ingrosso</value>
+  </data>
+  <data name="YourPoint" xml:space="preserve">
+    <value>Vostro punto</value>
+  </data>
+</root>

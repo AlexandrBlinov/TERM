@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<Term.DAL.File>
+@{
+    ViewBag.Title = "Details";
+    
+}
+
+<h2>Details</h2>
+
+@using (Html.BeginForm("Upload", "Fake", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.Label("GuidIn1S", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="GuidIn1S" name="GuidIn1S" Value="@ViewBag.GuidIn1S"/>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Avatar", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="Avatar" name="upload" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+
+

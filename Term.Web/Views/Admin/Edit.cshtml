@@ -1,0 +1,88 @@
+﻿@model Yst.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    @Html.HiddenFor(model => model.UserName)
+
+
+  <fieldset class="form-horizontal">
+        <legend>Edit a user @Model.UserName</legend>
+    
+
+      <div style="margin-bottom:20px" class="controls controls-row">
+          <div class="span2">
+              Логин
+          </div>
+          <div class="span3">
+              @Html.DisplayFor(m => m.UserName)
+          </div>
+      </div>
+      <div style="margin-bottom:20px" class="controls controls-row">
+          <div class="span2">
+              ФИО
+          </div>
+          <div class="span3">
+              @Html.TextBoxFor(m => m.ContactFIO)
+          </div>
+      </div>
+
+      <div style="margin-bottom:20px" class="controls controls-row">
+          <div class="span2">
+              Партнер
+          </div>
+          <div class="span3">
+              @Html.CheckBoxFor(m => m.IsPartner)
+          </div>
+      </div>
+
+      <div style="margin-bottom:20px" class="controls controls-row">
+          <div class="span2">
+              ID Партнера
+          </div>
+          <div class="span3">
+              @Html.TextBoxFor(m => m.PartnerId)
+              @Html.DisplayFor(m => m.PartnerName)
+          </div>
+      </div>
+      <div style="margin-bottom:20px" class="controls controls-row">
+          <div class="span2">
+              ИНН/КПП
+          </div>
+          <div class="span3">
+             @Html.DisplayFor(m => m.INNKPP)
+          </div>
+      </div>
+
+      <div style="margin-bottom:20px" class="controls controls-row">
+          <div class="span2">
+              Подразделение
+          </div>
+          <div class="span3">
+              @Html.DropDownListFor(m => m.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name", Model.DepartmentId ?? 5))
+              @Html.ValidationMessageFor(m => m.DepartmentId)
+          </div>
+      </div>
+        <div class="form-actions no-color">
+            <input type="submit" value="Save" class="btn" />
+        </div>
+    </fieldset>
+    
+   
+        
+
+    
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

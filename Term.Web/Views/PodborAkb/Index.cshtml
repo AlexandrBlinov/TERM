@@ -1,0 +1,343 @@
+﻿@model PodborAkbViewModel
+@using Term.Web.Views.Resources;
+
+@{
+    string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+}
+@{
+    ViewBag.Title = ForSearchResult.ChooseAkbByCar;
+    string readonlyModels = Model.Models.Any() ? "" : "disabled";
+
+}
+
+
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.ByAuto })
+
+<div class="row border-form-podbor">
+    <img class="podbor-tyres-title-img" src="~/Content/img/img-auto-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseAkbByCar</span>
+</div>
+
+
+
+<div>
+
+
+    <div class="row ">
+        <div class="col-xs-12">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <span class="podbor-tyres-param">@ForSearchResult.CarParam</span>
+                </div>
+            </div>
+
+            <form class="form-horizontal podbor m-t-15" data-name="akb" id="podborakb">
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.brand, new SelectList(Model.Brands), @SearchByAuto.Brand, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.carModel, new SelectList(Model.Models), @SearchByAuto.Model, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.year, new SelectList(Model.Years), @SearchByAuto.YearOfIssue, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.engine, new SelectList(Model.Modifications), @SearchByAuto.Modification, new { @class = "form-control" })
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    @if (Model.ShowProps)
+    {
+        <div class="col-xs-12 border-form-podbor param-padding m-t-15">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <span class="podbor-tyres-param">@ForSearchResult.Capacity</span>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <span class="podbor-tyres-param">@ForSearchResult.Dimensions</span>
+                </div>
+            </div>
+            <div class="row">
+                <form id="podborakb_byvolumes">
+                    <div class="col-xs-6">
+                        <div class="checkbox-group">
+                            @foreach (var item in Model.GroupedResults)
+                            {
+                                if ((item.Value as IList<AkbSearchResult>).Any())
+                                {
+                                    if (Model.SelectedVolumes.Contains(item.Key))
+                                    {
+                                        <div class="col-xs-3 param-padding m-t-15">
+
+                                            <input type="checkbox" class="volume checkbox-form-podbor" checked="checked" value="@item.Key" id="@item.Key.GetHashCode()">
+                                            <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="@item.Key.GetHashCode()">&nbsp; @item.Key.ToString() (@((item.Value as IList<AkbSearchResult>).Count))</label>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-xs-3 param-padding m-t-15">
+
+                                            <input type="checkbox" class="volume checkbox-form-podbor" value="@item.Key" id="@item.Key.GetHashCode()">
+                                            <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="@item.Key.GetHashCode()">&nbsp; @item.Key.ToString() (@((item.Value as IList<AkbSearchResult>).Count))</label>
+                                        </div>
+                                    }
+                                }
+
+
+                            }
+                            @if (!Model.SelectedVolumes.Any())
+                            {
+                                <div class="col-xs-3 param-padding m-t-15">
+
+                                    <input type="checkbox" class="volume allitems checkbox-form-podbor" checked="checked" value="all" id="allvolumes">
+                                    <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="allvolumes">&nbsp; All</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-xs-3 param-padding m-t-15">
+
+                                    <input type="checkbox" class="volume allitems checkbox-form-podbor" value="all" id="allvolumes">
+                                    <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="allvolumes">&nbsp; All</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="checkbox-group">
+                            @foreach (var item in Model.Sizes)
+                            {
+                                if (Model.SelectedSz.Contains(item))
+                                {
+                                    <div class="col-xs-3 param-padding m-t-15">
+
+                                        <input type="checkbox" class="size checkbox-form-podbor" checked="checked" value="@item" id="@item.GetHashCode()">
+                                        <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="@item.GetHashCode()">&nbsp; @item</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-xs-3 param-padding m-t-15">
+
+                                        <input type="checkbox" class="size checkbox-form-podbor" value="@item" id="@item.GetHashCode()">
+                                        <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="@item.GetHashCode()">&nbsp; @item</label>
+                                    </div>
+                                }
+                            }
+                            @if (!Model.SelectedSz.Any())
+                            {
+                                <div class="col-xs-3 param-padding m-t-15">
+
+                                    <input type="checkbox" class="size allitems checkbox-form-podbor" checked="checked" value="all" id="allsizes">
+                                    <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="allsizes">&nbsp; All</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-xs-3 param-padding m-t-15">
+
+                                    <input type="checkbox" class="size allitems checkbox-form-podbor" value="all" id="allsizes">
+                                    <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="allsizes">&nbsp; All</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-xs-12 text-center m-t-15">
+
+                        <button class=" form-podbor-btn-submit" type="submit">@ForSearchResult.ChooseBattery</button>
+
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    }
+</div>
+
+@if (Model.ShowProps == null || !Model.ShowProps)
+{
+    <div id="view_tab" class="container">
+        <div class="row text-center">
+            @if (lang == "ru")
+            {
+                <img src="~/Content/img/car_text.png" class="img-responsive">
+            }
+            else
+            {
+                <img src="~/Content/img/car_text_en.png" class="img-responsive">
+            }
+        </div>
+    </div>
+}
+
+
+@if (Model.ShowProps)
+{
+    <table class="data-table akb-byauto-data-table">
+        <thead>
+            <tr>
+                <th>@ForSearchResult.Photo</th>
+                <th>@ForSearchResult.StockNumber</th>
+                <th class="product-name">
+                    @ForSearchResult.Name
+                </th>
+                <th>
+                    @ForSearchResult.Amount
+                </th>
+                <th>
+                    @ForSearchResult.Price
+                </th>
+                <th class="product-count">@ForSearchResult.Available</th>
+                <th>@ForSearchResult.Action</th>
+            </tr>
+        </thead>
+
+
+        @foreach (var item in Model.AkbSearchResults)
+        {
+            <tr>
+                <td>
+                    <img class="data-table-min-img" src="@Html.ThumbnailNew("akb", item.PathToImage)" data-src="@Html.FullPathToImage("akb", item.ProductIdTo7Simbols)" />
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Name, "Details","Home", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
+                </td>
+                @if (item.Rest != 50)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rest)
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        > @Html.DisplayFor(modelItem => item.Rest)
+                    </td>
+                }
+                <td>
+                    @if (lang == "en")
+                    {
+                        <img class="data-table-price-label" src="~/Content/img/usd.png" /><span class="data-table-price">@item.PriceOfClient </span>
+                    }
+                    else
+                    {
+                        <span class="data-table-price">@item.PriceOfClient </span><img class="data-table-price-label" src="~/Content/img/rub.png" />
+                    }
+                </td>
+
+                <td>
+                    @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
+
+                </td>
+                <td>
+                    <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                    <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+
+
+
+@section scripts {
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+                $('[name=clearcheckboxes]').on('click', function () {
+                    var $this = $(this), $form = $this.closest('form');
+
+                    $form.find('.checkbox-group').each(function () {
+                        var $checkbox_group = $(this);
+                        $checkbox_group.find('[type = checkbox]').each(function () {
+                            var $checkbox = $(this);
+                            if ($checkbox.hasClass('allitems')) $checkbox.prop('checked', true);
+                            else $checkbox.prop('checked', false);
+
+                        });
+                    })
+                });
+
+                $('.checkbox-group .allitems[type=checkbox]+label').on('click', function (event) {
+
+                    var $this = $(this);
+                    var $el_allitems = $this.prev();
+                    // if checked - prevent , otherwise do uncheck
+                    if ($el_allitems.is(':checked')) {
+                        event.stopPropagation();
+                        return false;
+                    } else $this.closest('.checkbox-group').find('[type=checkbox]:checked').not('.allitems').each(function () { $(this).prop('checked', false) });
+
+
+                });
+
+                $('.checkbox-group [type=checkbox]').on('change', function (event) {
+                    //debugger;
+
+                    var $this = $(this);
+                    var $checkbox_group = $this.closest('.checkbox-group');
+
+                    // not .allitems (filtered in previous code)
+                    if ($this.hasClass('allitems')) return;
+                    ;
+                    debugger;
+
+                    if ($checkbox_group.find('[type=checkbox]:checked').not('.allitems').length > 0) {
+                        var $el_allitems = $checkbox_group.find('.allitems[type=checkbox]');
+                        if ($el_allitems.length && $el_allitems.is(':checked')) {
+                            $el_allitems.prop('checked', false);
+
+                        }
+
+                    } else {
+                        var $el_allitems = $checkbox_group.find('.allitems[type=checkbox]');
+                        if ($el_allitems.length && !$el_allitems.is(':checked'))
+                            $el_allitems.prop('checked', true);
+                    }
+
+
+                });
+
+
+                $("#podborakb_byvolumes").submit(function (e) {
+                    e.preventDefault();
+                    var str_volumes = $('.volume[type=checkbox]:checked').not('.allitems').map(function () {
+                        return this.value;
+                    }).get().join(',');
+                    var str_sizes = $('.size[type=checkbox]:checked').not('.allitems').map(function () {
+                        return this.value;
+                    }).get().join(',');
+
+                    var url = '/PodborAkb/Index/?' + $('#podborakb select').serializeArray().map(function (p) { return p.value }).join('&');
+                    if (str_volumes && str_sizes) url += "?volumes=" + str_volumes + "&selectedsizes=" + str_sizes;
+                    if (str_volumes && !str_sizes) url += "?volumes=" + str_volumes;
+                    if (!str_volumes && str_sizes) url += "?selectedsizes=" + str_sizes;
+
+                    location.assign(url.toLowerCase());
+
+                }
+                );
+
+            });
+
+    </script>
+}
+
+
+
+
+

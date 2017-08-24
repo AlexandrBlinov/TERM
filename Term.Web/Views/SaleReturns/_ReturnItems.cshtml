@@ -1,0 +1,101 @@
+﻿@using System.Web.UI.WebControls
+@using YstProject.Models
+@model  PurchaseReturnDto
+
+
+@{
+    var modelErrors = new List<string>();
+    var modelStateDictionary = ViewContext.ViewData.ModelState;
+    if (!modelStateDictionary.IsValid)
+    {
+    
+    foreach (var modelState in modelStateDictionary.Values)
+    {
+        modelErrors.AddRange(modelState.Errors.Select(modelError => modelError.ErrorMessage));
+    }
+   
+    }
+  
+    
+    var errors = modelStateDictionary.Where(x => x.Value.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+    //modelStateDictionary.IsValidField()
+    }
+
+
+    @for (var i = 0; i < Model.Items.Count; i++)
+{
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="pull-right yst-panel-close" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Номер документа</label>
+                                <input type="hidden" name="Items.Index" value="@i" />
+                                @*Html.TextBoxFor(x => x.Items[i].SaleNumber, new { @class = "form-control claim-doc-number", @autocomplete = "off" })*@
+
+                                <input autocomplete="off" class="form-control returnItems-doc-number" oninput="doFillRecord(this);" data-val="true"  data-val-required="Заполните номер реализации" name="Items[@(i.ToString())].SaleNumber" type="text" value="@(Model.Items[i].SaleNumber)" placeholder="Введите номер УПД">
+                                @Html.ValidationMessageFor(model => model.Items[i].SaleNumber, String.Empty, new { @class = "returnItem-error" })
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Дата документа</label> @*Html.TextBoxFor(x => x.Items[i].SaleDate, "{0:dd.MM.yyyy}", new { @class = "form-control return-items-doc-date", @autocomplete = "off" }) *@
+                                <input autocomplete="off" class="form-control returnItems-doc-date date" oninput="doFillRecord(this);" data-val="true" data-val-date="Введите дату вида 01.01.2017" data-val-required="Заполните дату реализации" name="Items[@(i.ToString())].SaleDate" type="text" value=" @( Request.HttpMethod=="GET" ? "" : Model.Items[i].SaleDate.ToString("dd.MM.yyyy"))">
+                                @Html.ValidationMessageFor(model => model.Items[i].SaleDate, String.Empty, new { @class = "returnItem-error" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                                                    @{
+                        var saleDateStr = String.Format("Items[{0}].SaleDate", i);
+
+                        if (errors.ContainsKey(saleDateStr) && errors[saleDateStr].Length > 0)
+                        {
+                            <div class="alert alert-danger returnItems-error"> @errors[saleDateStr][0]</div>
+                        }}
+                            
+                        </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Код товара</label>
+
+                                        <input autocomplete="off" class="form-control returnItems-product-autocomplete returnItems-product-id ui-autocomplete-input" oninput="doFillRecord(this);" data-val="true" data-val-number="Код товара должен быть числом" data-val-required="Заполните код товара" name="Items[@(i.ToString())].ProductId" type="text" value="@(Model.Items[i].ProductId)">
+                                        @Html.ValidationMessageFor(model => model.Items[i].ProductId,String.Empty,new {@class="returnItem-error"})
+                                        @*@Html.TextBoxFor(x => x.Items[i].ProductId, new { @class = "form-control return-items-product-autocomplete return-items-product-id", @autocomplete = "off" })*@
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Наименование товара</label> @*Html.TextBoxFor(x => x.Items[i].ProductName, new { @class = "form-control returnItems-product-name", @autocomplete = "off" })*@
+                                        <input autocomplete="off" class="form-control returnItems-product-name" name="Items[@(i.ToString())].ProductName" type="text" value="@(Model.Items[i].ProductName)" readonly="true" placeholder="Данное поле заполняется автоматически при вводе кода товара">
+                                        @Html.ValidationMessageFor(model => model.Items[i].ProductName, String.Empty, new { @class = "returnItem-error" })
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label class="control-label">Количество</label>@*Html.TextBoxFor(x => x.Items[i].Count, new { @class = "form-control return-items-count", @autocomplete = "off" })*@
+                                        <input autocomplete="off" class="form-control returnItems-count" data-val="true" data-val-number="Количество должно быть числом." data-val-required="Заполните количество" name="Items[@(i.ToString())].Count" type="text" value="@(Model.Items[i].Count)">
+                                        @Html.ValidationMessageFor(model => model.Items[i].Count, String.Empty, new { @class = "returnItem-error" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+        </div>
+
+    }
+
+
+

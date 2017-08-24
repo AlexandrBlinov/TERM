@@ -1,0 +1,704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BK" xml:space="preserve">
+    <value>ЧЕРНЫЙ ГЛЯНЦЕВЫЙ</value>
+  </data>
+  <data name="BKBL" xml:space="preserve">
+    <value>ЧЕРНЫЙ+СИНИЙ</value>
+  </data>
+  <data name="BKBSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ C СИНЕЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKFBSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ C СИНЕЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKFFBKFBKFP" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="BKFL" xml:space="preserve">
+    <value>ЧЕРНЫЙ С ПОЛИРОВАННОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="BKFPL" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="BKFplastic" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С ПЛАСТИКОВЫМИ ВСТАВКАМИ</value>
+  </data>
+  <data name="BKFPSIBKFRSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ C ПОЛИРОВАННЫМИ ЛУЧАМИ И ПОЛИРОВАННОЙ ПОЛОСОЙ ВНУТРИ</value>
+  </data>
+  <data name="BKFPU" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ+ПОЛИРОВАННЫЙ ВЫСТУП ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKFR" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ+КРАСНЫЙ</value>
+  </data>
+  <data name="BKFRS" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="BKFRSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKFWSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С БЕЛОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKFYSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С ЖЕЛТОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKPL" xml:space="preserve">
+    <value>ЧЕРНЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="BKplastic" xml:space="preserve">
+    <value>ЧЕРНЫЙ+ПЛАСТИКОВЫЕ ВСТАВКИ</value>
+  </data>
+  <data name="BKPRS" xml:space="preserve">
+    <value>ЧЕРНЫЙ ПОЛИРОВАННЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="BKPS" xml:space="preserve">
+    <value>ЧЕРНЫЙ С ПОЛИРОВАННОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="BKR" xml:space="preserve">
+    <value>ЧЕРНЫЙ+КРАСНЫЙ</value>
+  </data>
+  <data name="BKRS" xml:space="preserve">
+    <value>ЧЕРНЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="BKRSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BKWS" xml:space="preserve">
+    <value>ЧЕРНЫЙ С БЕЛОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="BKY" xml:space="preserve">
+    <value>ЧЕРНЫЙ+ЖЕЛТЫЙ</value>
+  </data>
+  <data name="BKYS" xml:space="preserve">
+    <value>ЧЕРНЫЙ С ЖЕЛТОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="BLACK" xml:space="preserve">
+    <value>ЧЕРНЫЙ</value>
+  </data>
+  <data name="BLF" xml:space="preserve">
+    <value>СИНИЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="BR" xml:space="preserve">
+    <value>ЧЕРНЫЙ+КРАСНЫЙ</value>
+  </data>
+  <data name="BW" xml:space="preserve">
+    <value>ЧЕРНЫЙ+БЕЛЫЙ</value>
+  </data>
+  <data name="BWRS" xml:space="preserve">
+    <value>ЧЕРНЫЙ+БЕЛЫЙ+КРАСНАЯ ПОЛОСА ПО ОБОДУ</value>
+  </data>
+  <data name="BWWSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ+БЕЛЫЙ+БЕЛАЯ ПОЛОСА ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="CHROME" xml:space="preserve">
+    <value>ХРОМ</value>
+  </data>
+  <data name="ColorDefinition" xml:space="preserve">
+    <value>Расшифровка цветов</value>
+  </data>
+  <data name="DBF" xml:space="preserve">
+    <value>ТЕМНО-СИНИЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="GM" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ</value>
+  </data>
+  <data name="GMB" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ+ЧЕРНЫЙ</value>
+  </data>
+  <data name="GMBSI" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С СИНЕЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="GMCH" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ+ХРОМИРОВАННАЯ ВСТАВКА</value>
+  </data>
+  <data name="GMFFGMFGMFP" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="GMFplastic" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ ПОЛНОСТЬЮ ПОЛИРОВАННЫЙ С ПЛАСТИКОВЫМИ ВСТАВКАМИ</value>
+  </data>
+  <data name="GMPL" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="GMplastic" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С ПЛАСТИКОВЫМИ ВСТАВКАМИ</value>
+  </data>
+  <data name="GMPS" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С ПОЛИРОВАННОЙ ПОЛОСОЙ</value>
+  </data>
+  <data name="GMRS" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="GMRSI" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="GMWSI" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ ТЕМНО-СЕРЫЙ С БЕЛОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="HS" xml:space="preserve">
+    <value>НАСЫЩЕННЫЙ СЕРЕБРИСТЫЙ</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ</value>
+  </data>
+  <data name="MBBL" xml:space="preserve">
+    <value>МАТОВЫЙ ЧЕРНЫЙ+СИНИЙ</value>
+  </data>
+  <data name="MBFMBFLMBFP" xml:space="preserve">
+    <value>МАТОВЫЙ ЧЕРНЫЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="MBFR" xml:space="preserve">
+    <value>МАТОВЫЙ ЧЕРНЫЙ ПОЛИРОВАННЫЙ+КРАСНЫЙ</value>
+  </data>
+  <data name="MBFRS" xml:space="preserve">
+    <value>МАТОВЫЙ ЧЕРНЫЙ ПОЛИРОВАННЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="MBFRSI" xml:space="preserve">
+    <value>МАТОВЫЙ ЧЕРНЫЙ ПОЛИРОВАННЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="MBMF" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С МАТОВОЙ ПОЛИРОВКОЙ</value>
+  </data>
+  <data name="MBOGS" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С ОРАНЖЕВО-СЕРЫМИ ПОЛОСАМИ</value>
+  </data>
+  <data name="MBPL" xml:space="preserve">
+    <value>ЧЕРНЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="MBPS" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С ПОЛИРОВАННОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="MBR" xml:space="preserve">
+    <value>МАТОВЫЙ ЧЕРНЫЙ+КРАСНЫЙ</value>
+  </data>
+  <data name="MBRM" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ +КРАСНЫЙ+МИЛЛИНГ</value>
+  </data>
+  <data name="MBRRM" xml:space="preserve">
+    <value>МАТОВЫЙ КОРИЧНЕВЫЙ+МИЛЛИНГ КРАСНЫЙ</value>
+  </data>
+  <data name="MBRS" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С КРАСНЫМ ОБОДОМ</value>
+  </data>
+  <data name="MBRSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="MBSSL" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ+ОБОД ИЗ НЕРЖАВЕЮЩЕЙ СТАЛИ</value>
+  </data>
+  <data name="MBWHITEINSERT" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ+БЕЛЫЕ ПЛАСТИКОВЫЕ ВСТАВКИ</value>
+  </data>
+  <data name="MBWSI" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С БЕЛОЙ ПОЛОСОЙ</value>
+  </data>
+  <data name="MBY" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ+ЖЕЛТЫЙ</value>
+  </data>
+  <data name="MBYS" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С ЖЕЛТЫМ ОБОДОМ</value>
+  </data>
+  <data name="MBYSIY" xml:space="preserve">
+    <value>ЧЕРНЫЙ МАТОВЫЙ С ЖЕЛТОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ+ЖЕЛТЫЙ</value>
+  </data>
+  <data name="MGM" xml:space="preserve">
+    <value>МАТОВЫЙ СЕРЫЙ</value>
+  </data>
+  <data name="MGMBSI" xml:space="preserve">
+    <value>МАТОВЫЙ ТЕМНО-СЕРЫЙ С СИНЕЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="MGMF" xml:space="preserve">
+    <value>МАТОВЫЙ ТЕМНОЙ-СЕРЫЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="MGMY" xml:space="preserve">
+    <value>МАТОВЫЙ ТЕМНО-СЕРЫЙ С ЖЕЛТЫМ</value>
+  </data>
+  <data name="MW" xml:space="preserve">
+    <value>МАТОВЫЙ БЕЛЫЙ</value>
+  </data>
+  <data name="MWPL" xml:space="preserve">
+    <value>МАТОВЫЙ БЕЛЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="MWRSI" xml:space="preserve">
+    <value>МАТОВЫЙ БЕЛЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="RBF" xml:space="preserve">
+    <value>КРАСНЫЙ+ЧЕРНЫЙ+ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="S" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ</value>
+  </data>
+  <data name="SB" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ+ЧЕРНЫЙ</value>
+  </data>
+  <data name="SCH" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ+ХРОМИРОВАННАЯ ВСТАВКА</value>
+  </data>
+  <data name="SFB" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ ПОЛИРОВАННЫЙ+ЧЕРНЫЙ</value>
+  </data>
+  <data name="SFFSFSFP" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="SILVER" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ</value>
+  </data>
+  <data name="SPL" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="Splastic" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ+ПЛАСТИКОВЫЕ ВСТАВКИ</value>
+  </data>
+  <data name="SPLASTICRS" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ  ПОЛИРОВАННЫЙ+ПЛАСТИКОВЫЕ ВСТАВКИ+КРАСНАЯ ПОЛОСА</value>
+  </data>
+  <data name="SRS" xml:space="preserve">
+    <value>СЕРЕБРИСТЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="TextHelp1" xml:space="preserve">
+    <value>Инструкция по проекту</value>
+  </data>
+  <data name="TextHelp10" xml:space="preserve">
+    <value>Остатки в формате Excel</value>
+  </data>
+  <data name="TextHelp11" xml:space="preserve">
+    <value>Выбор складов</value>
+  </data>
+  <data name="TextHelp12" xml:space="preserve">
+    <value>Оптовое ценообразование</value>
+  </data>
+  <data name="TextHelp13" xml:space="preserve">
+    <value>Розничное ценообразование</value>
+  </data>
+  <data name="TextHelp14" xml:space="preserve">
+    <value>Блокировка и удаление дочерних точек</value>
+  </data>
+  <data name="TextHelp15" xml:space="preserve">
+    <value>Подбор товара: код, размер, Автомобиль</value>
+  </data>
+  <data name="TextHelp16" xml:space="preserve">
+    <value>Подбор товаров может осуществяться 3 способами:</value>
+  </data>
+  <data name="TextHelp17" xml:space="preserve">
+    <value>С помощью кода либо наименования товара в верхней строке меню</value>
+  </data>
+  <data name="TextHelp18" xml:space="preserve">
+    <value>С помощью подбора по размеру</value>
+  </data>
+  <data name="TextHelp19" xml:space="preserve">
+    <value>С помощью подбора по автомобилю</value>
+  </data>
+  <data name="TextHelp2" xml:space="preserve">
+    <value>Терминалы</value>
+  </data>
+  <data name="TextHelp20" xml:space="preserve">
+    <value>Резеревирование и подтверждение товара</value>
+  </data>
+  <data name="TextHelp21" xml:space="preserve">
+    <value>После того как вы найдете нужный вам товар с помощью подбора необходимо указать нужное количество
+        и нажать на конопку "В корзину", товар в нужном вашем количестве будет добавлен в корзину.
+        Вы можете добавлять в корзину сколько угодно товаров. Максимальное количество заказа на 1 позицию ограничено в 200 штук.
+        Все позиции, которые добавлены в корзину подсвечиваются зеленым цветом.
+        После того, как ваш заказ будет полностью сформирован необходимо проверить наличие и подтвердить его.
+        Для этого перейдите в корзину, нажав на поле в верхнем правом углу экрана,
+        проверьте правильность заказанного вами товара.</value>
+  </data>
+  <data name="TextHelp22" xml:space="preserve">
+    <value>Вы можете вводить комментарии к заказу,
+        а также вписывать контактное лицо по этому заказу и номер телефона для смс-уведомления статуса заказа по этому телефону.
+        Далее вам необходимо указать предназначение заказа: резерв или в отгрузку.</value>
+  </data>
+  <data name="TextHelp23" xml:space="preserve">
+    <value>В случае если вы поставили товар в резерв, он будет храниться на складе 7 дней.</value>
+  </data>
+  <data name="TextHelp24" xml:space="preserve">
+    <value>Создание дочерних точек</value>
+  </data>
+  <data name="TextHelp25" xml:space="preserve">
+    <value>Для создание ваших дочерних точек необходимо зайти в меню =&gt;</value>
+  </data>
+  <data name="TextHelp26" xml:space="preserve">
+    <value>В верхнем левом углу вы увидите кнопку добавить точку.</value>
+  </data>
+  <data name="TextHelp27" xml:space="preserve">
+    <value>Как настраивать ценообразование для дочерней точки можете прочитать</value>
+  </data>
+  <data name="TextHelp28" xml:space="preserve">
+    <value>здесь</value>
+  </data>
+  <data name="TextHelp29" xml:space="preserve">
+    <value>Изменение и отмена заказов</value>
+  </data>
+  <data name="TextHelp3" xml:space="preserve">
+    <value>Оглавление</value>
+  </data>
+  <data name="TextHelp30" xml:space="preserve">
+    <value>Для того, чтобы посмотреть, изменить, отменить свои заказы вам необходимо в меню выбрать =&gt;</value>
+  </data>
+  <data name="TextHelp31" xml:space="preserve">
+    <value>Здесь вы можете посмотреть всю историю</value>
+  </data>
+  <data name="TextHelp32" xml:space="preserve">
+    <value>заказов, их статус, дату отгрузки, комментарии, номер точки с которой пришел заказ,
+        распечатать счет. В стоимоти заказа вы сможете увидеть по какой цене вы продали товар и по какой цене купили.</value>
+  </data>
+  <data name="TextHelp33" xml:space="preserve">
+    <value>Реализации и отслеживание движения заказов</value>
+  </data>
+  <data name="TextHelp34" xml:space="preserve">
+    <value>Для того, чтобы посмотреть реализации, вам необходимо войти в меню =&gt;</value>
+  </data>
+  <data name="TextHelp35" xml:space="preserve">
+    <value>Здесь вы можете посмотреть всю историю реализации, дату отгрузки, контактные данные водителя, комментарии, распечатать счет.</value>
+  </data>
+  <data name="TextHelp36" xml:space="preserve">
+    <value>Пароль для входа в настройки</value>
+  </data>
+  <data name="TextHelp37" xml:space="preserve">
+    <value>Пароль для входа в настроки необходим, чтобы никто кроме вас не смог зайти в данный пункт меню и изменить ваши настройки.</value>
+  </data>
+  <data name="TextHelp38" xml:space="preserve">
+    <value>Пароль устанавливается и меняется в настройках вашей точки.</value>
+  </data>
+  <data name="TextHelp39" xml:space="preserve">
+    <value>Остатки в формате Excel</value>
+  </data>
+  <data name="TextHelp4" xml:space="preserve">
+    <value>Подбор товара: код, размер, Автомобиль</value>
+  </data>
+  <data name="TextHelp40" xml:space="preserve">
+    <value>Вы можете скачать остатки в формате Эксель зайдя в следующий пункт меню:</value>
+  </data>
+  <data name="TextHelp41" xml:space="preserve">
+    <value>В остатках будет указана ваша входящая и розничная цена.</value>
+  </data>
+  <data name="TextHelp42" xml:space="preserve">
+    <value>Выбор складов</value>
+  </data>
+  <data name="TextHelp43" xml:space="preserve">
+    <value>Вы можете выбрать до 2 скаладов, с которых у вас будут подгружаться остатки.
+        Обязательным является центральный склад в городе Ярославле.
+        Также вы можете выбрать один из складов в следующих городах: Москва, Санкт Петербург, Екатеринбург, Ростов-на-Дону.</value>
+  </data>
+  <data name="TextHelp44" xml:space="preserve">
+    <value>Выши дочерние точки смогут выбирать только те же склады, что им выбрали вы.</value>
+  </data>
+  <data name="TextHelp45" xml:space="preserve">
+    <value>Оптовое ценообразование</value>
+  </data>
+  <data name="TextHelp46" xml:space="preserve">
+    <value>При создании дочерней точки вам необходимо установить цены для этой точки.
+        Цены устанавливаются в настройках каждой дочерней точки.</value>
+  </data>
+  <data name="TextHelp47" xml:space="preserve">
+    <value>Цены можно устанавливать относительно базовой цены, с помощью наценки к вашей входящей цене,
+        также можно установить рекомендованную цену производителя. Эту цену вашу дочерняя точка будет видель как свою входящую.
+        Если вы хотите не показывать цену для клиента, то можете установить галку убрать цену.
+        Если вы не хотите показывать производителя своей дочерней точке можете убрать этого производителя.
+        Ценообразование можно устанавливать как на кождого производителя в отдельности, так и сразу на все группы товаров (диски, шины).</value>
+  </data>
+  <data name="TextHelp48" xml:space="preserve">
+    <value>Цены на аккумуляторы и аксессуары задаются следующим образом :</value>
+  </data>
+  <data name="TextHelp49" xml:space="preserve">
+    <value>На все АКБ наценка для дочернего терминала 10%</value>
+  </data>
+  <data name="TextHelp5" xml:space="preserve">
+    <value>Резеревирование и подтверждение товара</value>
+  </data>
+  <data name="TextHelp50" xml:space="preserve">
+    <value>На все аксессуары наценка для дочернего терминала 20%</value>
+  </data>
+  <data name="TextHelp51" xml:space="preserve">
+    <value>Розничное ценообразование</value>
+  </data>
+  <data name="TextHelp52" xml:space="preserve">
+    <value>Вам необходимо установить розничные цены. Цены устанавливаются в настройках.</value>
+  </data>
+  <data name="TextHelp53" xml:space="preserve">
+    <value>Цены можно устанавливать относительно базовой цены, с помощью наценки к вашей входящей цене, также можно установить
+        рекомендованную цену производителя. Эти цены будут показываться в роли продажной цены.
+        Если вы хотите не показывать цену для клиента, то можете установить галку убрать цену.
+        Если вы не хотите показывать производителя своему клиенту, можете убрать этого производителя.
+        Ценообразование можно устанавливать как на кождого производителя в отдельности, так и сразу на все группы товаров
+        (диски, шины). В случае, если вы хотите видеть в программе свои входящие цены,
+        вам необходимо на все группы товаров установить наценку 0%.</value>
+  </data>
+  <data name="TextHelp54" xml:space="preserve">
+    <value>Цены на аккумуляторы и аксессуары задаются следующим образом :</value>
+  </data>
+  <data name="TextHelp55" xml:space="preserve">
+    <value>На все АКБ наценка для конечного покупателя 40%</value>
+  </data>
+  <data name="TextHelp56" xml:space="preserve">
+    <value>На все аксессуары наценка для конечного покупателя 50%</value>
+  </data>
+  <data name="TextHelp57" xml:space="preserve">
+    <value>Блокировка и удаление дочерних точек</value>
+  </data>
+  <data name="TextHelp58" xml:space="preserve">
+    <value>Вы можете заблокировать и удалить свои дочерние точки в меню</value>
+  </data>
+  <data name="TextHelp59" xml:space="preserve">
+    <value>% от Закупочной (от той цены по которой получает товар данный терминал от головного терминала)</value>
+  </data>
+  <data name="TextHelp6" xml:space="preserve">
+    <value>Создание дочерних точек</value>
+  </data>
+  <data name="TextHelp60" xml:space="preserve">
+    <value>Убрать цену (будет отображаться нулевая цена или без цены)</value>
+  </data>
+  <data name="TextHelp61" xml:space="preserve">
+    <value>Убрать производителя (Данный производитель не будет показан в подборах)</value>
+  </data>
+  <data name="TextHelp62" xml:space="preserve">
+    <value>Цены на аккумуляторы и аксессуары задаются следующим образом :</value>
+  </data>
+  <data name="TextHelp63" xml:space="preserve">
+    <value>На все АКБ наценка для конечного покупателя 40%</value>
+  </data>
+  <data name="TextHelp64" xml:space="preserve">
+    <value>На все аксессуары наценка для конечного покупателя 50%</value>
+  </data>
+  <data name="TextHelp65" xml:space="preserve">
+    <value>После успешного сохранения настроек дочерний терминал должен ознакомиться с лицензионным соглашением и поставить галку «Я принимаю условия соглашения».</value>
+  </data>
+  <data name="TextHelp66" xml:space="preserve">
+    <value>После успешного сохранения настроек дочерний терминал должен ознакомиться с лицензионным соглашением и поставить галку «Я принимаю условия соглашения».
+        После этого дочерний терминал может приступать к продаже товаров. В любое время  Головной терминал может изменить данные настройки (меню «Настройки»), задать сроки доставки товаров и ценообразование.</value>
+  </data>
+  <data name="TextHelp67" xml:space="preserve">
+    <value>Дочерний терминал контролирует свои входные и отпускные цены через меню Настройки -&gt;Прайс-лист.</value>
+  </data>
+  <data name="TextHelp7" xml:space="preserve">
+    <value>Изменение и отмена заказов</value>
+  </data>
+  <data name="TextHelp8" xml:space="preserve">
+    <value>Реализации и отслеживание движения заказов</value>
+  </data>
+  <data name="TextHelp9" xml:space="preserve">
+    <value>Пароль для входа в настройки</value>
+  </data>
+  <data name="TitleHelp" xml:space="preserve">
+    <value>Инструкция по проекту терминалов</value>
+  </data>
+  <data name="W" xml:space="preserve">
+    <value>БЕЛЫЙ</value>
+  </data>
+  <data name="WB" xml:space="preserve">
+    <value>БЕЛЫЙ +ЧЕРНЫЙ</value>
+  </data>
+  <data name="WBBSI" xml:space="preserve">
+    <value>БЕЛЫЙ +ЧЕРНЫЙ+ЧЕРНАЯ ПОЛОСА ВНУТРИ</value>
+  </data>
+  <data name="WBL" xml:space="preserve">
+    <value>БЕЛЫЙ+СИНИЙ</value>
+  </data>
+  <data name="WBLACKINSERT" xml:space="preserve">
+    <value>БЕЛЫЙ+ЧЕРНЫЕ ПЛАСТИКОВЫЕ ВСТАВКИ</value>
+  </data>
+  <data name="WBRS" xml:space="preserve">
+    <value>БЕЛЫЙ +ЧЕРНЫЙ+КРАСНАЯ ПОЛОСА ПО ОБОДУ</value>
+  </data>
+  <data name="WBRSBSI" xml:space="preserve">
+    <value>БЕЛЫЙ +ЧЕРНЫЙ+КРАСНАЯ ПОЛОСА ПО ОБОДУ+ЧЕРНАЯ ПОЛОСА ВНУТРИ</value>
+  </data>
+  <data name="WBS" xml:space="preserve">
+    <value>БЕЛЫЙ С ЧЕРНОЙ ПОЛОСОЙ</value>
+  </data>
+  <data name="WBSI" xml:space="preserve">
+    <value>БЕЛЫЙ С ЧЕРНОЙ ПОЛОСОЙ ВНУТРИ</value>
+  </data>
+  <data name="WBWS" xml:space="preserve">
+    <value>БЕЛЫЙ+ЧЕРНЫЙ+БЕЛАЯ ПОЛОСА ПО ОБОДУ</value>
+  </data>
+  <data name="WF" xml:space="preserve">
+    <value>БЕЛЫЙ  ПОЛНОСТЬЮ ПОЛИРОВАННЫЙ</value>
+  </data>
+  <data name="WFPL" xml:space="preserve">
+    <value>БЕЛЫЙ ПОЛИРОВАННЫЙ С ПОЛИРОВАННЫМ ОБОДОМ</value>
+  </data>
+  <data name="WFRSI" xml:space="preserve">
+    <value>БЕЛЫЙ ПОЛИРОВАННЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ ВНУТРИ</value>
+  </data>
+  <data name="WHITE" xml:space="preserve">
+    <value>БЕЛЫЙ</value>
+  </data>
+  <data name="WR" xml:space="preserve">
+    <value>БЕЛЫЙ+КРАСНЫЙ</value>
+  </data>
+  <data name="WREDS" xml:space="preserve">
+    <value>БЕЛЫЙ С КРАСНОЙ ПОЛОСОЙ ПО ОБОДУ</value>
+  </data>
+  <data name="WRS" xml:space="preserve">
+    <value>БЕЛЫЙ+КРАСНЫЙ МИЛЛИНГ</value>
+  </data>
+  <data name="AllPhotos" xml:space="preserve">
+    <value>Все фото</value>
+  </data>
+  <data name="UploadWheelPhotos" xml:space="preserve">
+    <value>Скачать фото дисков</value>
+  </data>
+  <data name="WheelPhotos" xml:space="preserve">
+    <value>Фото дисков</value>
+  </data>
+  <data name="Feedback1" xml:space="preserve">
+    <value>Оставить отзыв или предложение</value>
+  </data>
+  <data name="Feedback10" xml:space="preserve">
+    <value>Для продолжения работы перейдите на главную страницу</value>
+  </data>
+  <data name="Feedback11" xml:space="preserve">
+    <value>главную страницу</value>
+  </data>
+  <data name="Feedback12" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Feedback2" xml:space="preserve">
+    <value>Для нас очень важно услышать ваше мнение и оценку нашей программы YST TERMINAL. Также вы можете задать вопрос или написать пожелания по улучшению работы системы. Ваше сообщение будет автоматически отправлено в службу поддержки клиентов и в случае необходимости с вами свяжется менеджер.</value>
+  </data>
+  <data name="Feedback3" xml:space="preserve">
+    <value>Ваше имя</value>
+  </data>
+  <data name="Feedback4" xml:space="preserve">
+    <value>Адрес электронной почты</value>
+  </data>
+  <data name="Feedback5" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="Feedback6" xml:space="preserve">
+    <value>Текст сообщения</value>
+  </data>
+  <data name="Feedback7" xml:space="preserve">
+    <value>Отправить письмо</value>
+  </data>
+  <data name="Feedback8" xml:space="preserve">
+    <value>Спасибо за ваше сообщение.</value>
+  </data>
+  <data name="Feedback9" xml:space="preserve">
+    <value>Ошибка при отправке письма.</value>
+  </data>
+  <data name="Feedback0" xml:space="preserve">
+    <value>Обратная связь</value>
+  </data>
+</root>

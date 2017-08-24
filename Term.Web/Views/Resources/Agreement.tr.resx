@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agreement1" xml:space="preserve">
+    <value>Kullanıcı anlasması</value>
+  </data>
+  <data name="Agreement10" xml:space="preserve">
+    <value>1.7. İşbu anlaşma halka arzdır. "TERMINAL YST" sitesinin bilgilerine erişince Kullanıcı işbu anlaşmaya katılmış olarak sayılır. .</value>
+  </data>
+  <data name="Agreement11" xml:space="preserve">
+    <value>1.8.İşbu anlaşmadan doğan ya da ilgili olanlar tüm anlaşmazlıklar (oluşturması, maluliyeti veya değişimleri, ihlal, fesih, geçersiz kılınması dahil) kabul edilecektir ve "Tahkim ve Arabuluculuk Merkezi" Özerk ticari olmayan kuruluşuna bağlı olan Tahkim Mahkemesi hakkında Yönetmenliğe (Yönetmenlik) ve "Tahkim ve Arabuluculuk Merkezi" Özerk ticari olmayan kuruluşuna bağlı olan Tahkim Mahkemesindeki tahkim prosedürü tüzüğüne (Tüzük) göre son karar verilmesi için "Tahkim ve Arabuluculuk Merkezi" Özerk ticari olmayan kuruluşuna bağlı olan Tahkim Mahkemesine verilecektir (sicil numarası 1147600000866, mahkeme Sekreterya ofisi: 150014, Yaroslavl eyaleti, Yaroslavl şehri, "Saltıkova-Şedrina" sokağı, ev 21, ofis 420).Tarafların anlaştığına göre Yönetmenlik ve Tüzük tahkim anlaşmasının ayrılmaz parçası olarak sayılıyor. Taraflar Yönetmenliği ve Tüzüğü kabul ediyordur. "Tahkim ve Arabuluculuk Merkezi" Özerk ticari olmayan kuruluşuna bağlı olan Tahkim Mahkemesinin herhangi bir anlaşmazlık/tartışma hakkındaki kararı itiraz kabul etmez.</value>
+  </data>
+  <data name="Agreement12" xml:space="preserve">
+    <value>1.9. Bu anlaşmada olmayan ilişkiler Kullanıcı ve "YST Group" anonim şirketi arası ajansı ilişki, işbirliği, ortak faaliyeti, işe kişisel ilişkiler, ya da başka ilişkiler olarak kabul etmeyecektir. </value>
+  </data>
+  <data name="Agreement13" xml:space="preserve">
+    <value>1.10.İşbu Anlaşmanın herhangi bir hükmü mahkeme tarafından geçersiz veya uygulanamaz sayıldığı takdirde diğer hükümlerin gerektirdiği iptal olmayacak. </value>
+  </data>
+  <data name="Agreement14" xml:space="preserve">
+    <value>1.11. Kullanıcı tarafından işbu Anlaşmanın kurallarını bozduğu takdirdeki "YST Group" şirketinin tarafından haraketsizlik şirketinin sonraki ne yasa uyarınca hakkını ne çıkarlarını korumak için gerekli önlemleri alma hakkını mahrum eder. </value>
+  </data>
+  <data name="Agreement15" xml:space="preserve">
+    <value>1.12. "TERMINAL YST" servisinin kullanılma ancak kayıt ve giriş yaptıktan sonra imkanlıdır.</value>
+  </data>
+  <data name="Agreement16" xml:space="preserve">
+    <value>1.13.  "TERMINAL YST" servisinin kullanılma kurumsal ve ticari koşulları be onun fonksiyonel yetenekleri işbu Anlaşmaya dahildir ve Kullanıcılara bildiriliyordur.</value>
+  </data>
+  <data name="Agreement17" xml:space="preserve">
+    <value>2. Ürün hakkındaki bilgiler</value>
+  </data>
+  <data name="Agreement18" xml:space="preserve">
+    <value>2.1. Her fotoğraflı örnek ürün fiyatı ile özellikleri yazılı bilgilerle eşlik ediliyordur. Kullanıcının bilgisayar ekran kalitesi ve ayarları/özellikleri ürünün renklerini tam olarak doğru bir şekilde göstermeyebilir; bu nedenle Kullanıcı istediği ürün hakkında bilgi belirlemek için geri bildirim formu kullanabilir.</value>
+  </data>
+  <data name="Agreement19" xml:space="preserve">
+    <value>2.2. "TERMINAL YST" servisinde belirtilen fiyat tek taraflı olarak değiştirilebilir; fakat ödenmiş olan ürün fiyatı değiştirilemez. </value>
+  </data>
+  <data name="Agreement20" xml:space="preserve">
+    <value>3.  Kullanıcı hakları ile sorumlulukları.</value>
+  </data>
+  <data name="Agreement21" xml:space="preserve">
+    <value>3.1. Kullanıcı "TERMINAL YST" online servisindeki bilgilerin (ürün fiyatı, ürün çeşitliği, teslimat şartları vb. dahil) ve kendi adından kendi kullanıcı adı ve şifresinin altında yapan hareketlerinin Anlaşma süresince hukuki geçerliliğini kabul eder. </value>
+  </data>
+  <data name="Agreement22" xml:space="preserve">
+    <value>3.2."TERMINAL YST" sitesindeki bilgiler, ürün yelpazesi, ürün fiyatlandırma şartları, teslimat kuralları vb dahil, Kullanıcı tarafından üçüncü tarafına vermek yasaktır</value>
+  </data>
+  <data name="Agreement23" xml:space="preserve">
+    <value>3.3. Kullanıcı Rusya’nın kanunlarını veya Uluslararası standartlarını bozabilen (fikri mülkiyet/ yazar ya da başka hakları dahil) ya da sitenin ve servisinin normal çalışmalarına engel olabilen hareketlerini yapmayacağını kabul eder.</value>
+  </data>
+  <data name="Agreement24" xml:space="preserve">
+    <value>3.4.Kullanıcı tarafından seçilen şifre ile giriş adı siteye girmesi için yeterlidir. Bu bilgilerinin üçüncü tarafına verilmesi yasaktır; saklanma yöntemi Kullanıcıdan seçilir.</value>
+  </data>
+  <data name="Agreement25" xml:space="preserve">
+    <value>3.5. "TERMINAL YST" servisinde Kullanıcı tarafından sipariş, ürün rezervasyonu yapılabilir; sipariş onaylanması alınabilir, düzeltme yapılabilir, sipariş ile gönderme durumu kontrol edilebilir.</value>
+  </data>
+  <data name="Agreement26" xml:space="preserve">
+    <value>Kullanıcı kendi kararına göre de fiyatlandırma ayarlayabilir: 
+</value>
+  </data>
+  <data name="Agreement27" xml:space="preserve">
+    <value>temel fiyatlara göre</value>
+  </data>
+  <data name="Agreement28" xml:space="preserve">
+    <value>giriş fiyatlara göre</value>
+  </data>
+  <data name="Agreement29" xml:space="preserve">
+    <value>önerilen fiyatlara göre</value>
+  </data>
+  <data name="Agreement3" xml:space="preserve">
+    <value>1.Genel bilgiler.</value>
+  </data>
+  <data name="Agreement30" xml:space="preserve">
+    <value>3.6. Kullanıcı ürünlerin teslimat adresini ve sipariş için yorumları verebilir.</value>
+  </data>
+  <data name="Agreement31" xml:space="preserve">
+    <value>3.7. Servisinin bilgileri "YST Group" izni olmadan kullanılmaz.</value>
+  </data>
+  <data name="Agreement32" xml:space="preserve">
+    <value>3.8. Kullanıcı tarafından verilen yorumlar ve notlar Rusya Federasyonu mevzuatına ve genel kabul edilmiş ahlak/etik normalarına aykırı olmamalıdır.</value>
+  </data>
+  <data name="Agreement33" xml:space="preserve">
+    <value>3.9. Kullanıcı servisin sitesinde olan bağlantılarının kaynaklarını kullanmasına "YST Group" şirketinin sorumlu olmadığı için uyarılmıştır.</value>
+  </data>
+  <data name="Agreement34" xml:space="preserve">
+    <value>3.10. Kullanıcı "TERMINAL YST" servisindeki bilgilerin reklam edilmiş olabilmesinin farkındadır; "YST Group" şirketinin bu reklamlar için sorumlu olmadığını kabul ediyordur.</value>
+  </data>
+  <data name="Agreement35" xml:space="preserve">
+    <value>3.11.Kullanıcı işbu Anlaşmanın tüm şartlarının farkında olduğunu ve onları kabul ettiğini onaylıyor. 
+</value>
+  </data>
+  <data name="Agreement36" xml:space="preserve">
+    <value>4. "YST Group" kapalı anonim şirketinin hakları, yükümlülükleri ve sorumlulukları </value>
+  </data>
+  <data name="Agreement37" xml:space="preserve">
+    <value>4.1. Kullanıcı tarafından işbu Anlaşmanın ya da Tedarik sözleşmesinin kurallarını bozduğu takdirde "YST Group" şirketi Kullanıcının "TERMINAL YST" sitesine erişimini geçici ya da tam olarak durdurabilir.</value>
+  </data>
+  <data name="Agreement38" xml:space="preserve">
+    <value>4.2.  "YST Group" şirketi demeraj akımı, görünüş ve markanın üreticisi gibi parametrelerinin değiştirilmesi için sorumlu değildir.</value>
+  </data>
+  <data name="Agreement39" xml:space="preserve">
+    <value>4.3. "YST Group" kapalı anonim şirketi yanlış seçilen ürünler için sorumlu değil çünkü verilen bilgi referans olarak verilir. </value>
+  </data>
+  <data name="Agreement4" xml:space="preserve">
+    <value>1.1. İşbu Anlaşma "YST Group" kapalı anonim şirketi ve Kullanıcı arası yazılıyordur. Amacı - "TERMINAL YST" servisinin Kullanıcı tarafından kullanılma. </value>
+  </data>
+  <data name="Agreement40" xml:space="preserve">
+    <value>4.4.  Kullanıcı tarafından siparişte verilen şartlar (seçilen çeşitlik; teslim tarihi ve adresi) "YST Group" şirketinin tarafından uygulama koşulları olarak kabul edilir. Şartların yanlış bir şekilde verildiği takdirde Kullanıcı sorumlu kalıyordur. </value>
+  </data>
+  <data name="Agreement41" xml:space="preserve">
+    <value>4.5. "YST Group" şirketi kullanıcı tarafından "TERMINAL YST" programında verilen fiyatlar için sorumlu değildir.</value>
+  </data>
+  <data name="Agreement42" xml:space="preserve">
+    <value>4.6. "YST Group" deposunda sipariş edilen ürün olmadığı takdirde Kullanıcı telefon ya da E-posta yoluyla bildirilmelidir. </value>
+  </data>
+  <data name="Agreement43" xml:space="preserve">
+    <value>4.7. Kullanıcı tarafından "TERMINAL YST" kullanarak saat 13:00'ten önce gelen siparişler (Moskova/Moskova eyaleti, Sankt Peterburg/Leningrad eyaleti, İvanovo/İvanovo eyaleti, Vladimir/Vladimir eyaleti, Kostroma/Kostroma eyaleti, Vologda/Vologda eyaleti için) aynı gün içinde sevk edilecektir; saat 13:00'den sonraki siparişler (ertesi gün 13:00'e kadar) sipariş aldıktan sonra ertesi gün içinde sevk edilecektir. </value>
+  </data>
+  <data name="Agreement44" xml:space="preserve">
+    <value>4.8.  Kullanıcı tarafından "TERMINAL YST" kullanarak saat 13:00'ten önce gelen siparişler (Rostov eyaleti, Stavropol eyaleti, Krasnodar eyaleti için) "YST Group" şirketi tarafından haftada 3 defa sevk edilecektir; Yekaterinburg şehri ve Sverdlovsk eyaleti için - haftada 1 defa edilecektir; diğer eyaletler için sevk ayrı olarak anlaşmalıdır.</value>
+  </data>
+  <data name="Agreement45" xml:space="preserve">
+    <value>4.9. Kullanıcı tarafından "TERMINAL YST" online-servisten siparişe göre alınan ürün yalnış bir şekilde kullandığının üzerine çıkan zarar için “YST Group” kapalı anonim şirketi sorumlu değildir.</value>
+  </data>
+  <data name="Agreement46" xml:space="preserve">
+    <value>4.10. "TERMINAL YST" sitesine verilen Kullanıcı kişisel verileri, telif/kayıt hakkı ve servisin sitesinde olan bağlantıları/dış siteleri kullanarak alınan ürünleri gibi şeylerle ilgili sıkıntılar ve zararlar için "YST Group" sorumlu değildir. </value>
+  </data>
+  <data name="Agreement47" xml:space="preserve">
+    <value>Anlasma şartlarını kabul ediyorum.</value>
+  </data>
+  <data name="Agreement5" xml:space="preserve">
+    <value>1.2. "TERMINAL YST" servisi "YST Group" kapalı anonim şirketine aittir. İnternet adresi - http://terminal.yst.ru ( "TERMINAL YST" sitesi).</value>
+  </data>
+  <data name="Agreement6" xml:space="preserve">
+    <value>1.3.Kullanıcı sipariş verdiği ürün Rusya Federasyonu ve işbu Sözleşmenin şartlarına göre kabul edebilen ve ödeyebilen herhangi bir tüzel kişi, bireysel girişimci veya fiziksel kişi olabilir.</value>
+  </data>
+  <data name="Agreement7" xml:space="preserve">
+    <value>1.4."YST Group" şirketi her zaman tek taraflı olarak bu Anlaşmanın şartlarını değiştirebilir. Bu değişiklikler Anlaşmanın yeni sürümü yayınlandığı tarihinde yürüdüğe girer. Anlaşmazlık durumunda Kullanıcı "TERMINAL YST" erişimi ve kullanımı redd eder.</value>
+  </data>
+  <data name="Agreement8" xml:space="preserve">
+    <value>1.5.  İşbu Anlaşma "TERMINAL YST" sitedeki verildiği şekilde olmalıdır; Rusya Federasyonu mevzuatına göre uygulanacak ve yorumlanacaktır.</value>
+  </data>
+  <data name="Agreement9" xml:space="preserve">
+    <value>1.6. "TERMINAL YST" servisinin bilgileri Rusya Federasyonu Kanunlarına göre kullanılmalıdır.</value>
+  </data>
+</root>

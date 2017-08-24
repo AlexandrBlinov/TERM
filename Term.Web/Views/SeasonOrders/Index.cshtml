@@ -1,0 +1,128 @@
+﻿@model SeasonOrderViewModel
+@using Term.Web.Views.Resources;
+@using Term.Utils;
+
+@{
+    
+    ViewBag.Title = Model.FromOnWay? Header.OrdersFromArrivals : Header.SeasonOrders;
+}
+
+<div class="row">
+    <div class="col-xs-12 form_podbor">
+        <div class="form_border">
+            <h2 class="form_header_text text-center">@ViewBag.Title</h2>
+            <form class="form-inline form_documents">
+                @Html.HiddenFor(model=>model.FromOnWay)
+                <div class="form-group">
+                    <label for="BeginDate">@SeasonOrdersTexts.BeginDate</label>
+                    <div class="input-group date">
+
+                        @Html.TextBoxFor(model => model.BeginDate, "{0:dd.MM.yyyy}", new { @class = "form-control w_lg_100" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="EndDate">@SeasonOrdersTexts.EndDate</label>
+                    <div class="input-group date">
+
+                        @Html.TextBoxFor(model => model.EndDate, "{0:dd.MM.yyyy}", new { @class = "form-control w_lg_100" })
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                    <label class="sr-only" for="OrderNumber">Order number</label>
+
+                    @Html.TextBoxFor(model => model.OrderNumber, new { @class = "form-control form-control__searchbynumber" ,@placeholder=@SeasonOrdersTexts.SearchByOrderNamber})
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
+                        </div>
+                        </div>
+                </div>
+
+                <div class="form-group">
+                    <label>@SeasonOrdersTexts.Status</label>
+
+                    @Html.DropDownListFor(p => p.OrderStatus, Model.OrderStatuses, "Все", new { @class = "form-control" })
+
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-default">@CartAndOrders.Filter</button>
+                    </div>
+</form>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="data-table order-table">
+            <thead>
+                <tr class="bg_grey">
+                    <th>
+                        @CartAndOrders.DateOrder
+                    </th>
+                    @if (!(bool)ViewBag.IsForeign)
+                    {
+                        <th>
+                            Крайняя дата дайствия
+                        </th> }
+                    <th>
+                        @CartAndOrders.NumberInDatabase
+                    </th>
+                    <th>
+                        @CartAndOrders.Status
+                    </th>
+                    <th>
+                        @CartAndOrders.TotalSum
+                    </th>
+
+                    <th>
+                        @CartAndOrders.Comment
+                    </th>
+                    <th>
+                        @ForSearchResult.Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SeasonOrders)
+                {
+                    <tr data-href="@Url.Action("Details", new { guid = item.OrderGuid })">
+                        <td>
+                            @item.OrderDate.ToShortDateString()
+
+                        </td>
+                        @if (!(bool)ViewBag.IsForeign)
+                        {
+                            <td>
+                                @item.DeliveryDate.ToShortDateFormat()
+
+                            </td>
+                        }
+                        <td>
+                            @item.NumberIn1S
+                        </td>
+                        <td>
+                            @Html.OrderStatusWithColor(item.OrderStatus)
+                        </td>
+                        <td>
+                            @item.Total
+                        </td>
+
+                        <td>
+                            @item.Comments
+                        </td>
+                        <td>@Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = item.OrderGuid })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

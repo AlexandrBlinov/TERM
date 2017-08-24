@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNet.Identity
+@using YstProject.Services
+@using Term.Web.Views.Resources;
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+
+            @{ string cartControllerName = ViewBag.ShowSeasonCart == null ? "ShoppingCart" : "SeasonShoppingCart";}
+            <li id="cart-container" data-controller="@cartControllerName">@*{ Html.RenderAction("CartSummary", @cartControllerName); } *@</li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink(@Header.Signin, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
+
+

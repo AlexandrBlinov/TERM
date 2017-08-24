@@ -1,0 +1,97 @@
+﻿@using YstIdentity.Models
+@model YstIdentity.Models.UsersViewModel
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Users</h2>
+
+
+<div class="row">
+    <div class="col-xs-10">
+        @using (Html.BeginForm("Index", "UsersAdmin", FormMethod.Get, new { @class = "border-form-podbor" }))
+        {
+
+            <!--<div class="form-group"> -->
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.FilterByName, new { @class = "form-control", @placeholder = "Search user" })
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-success blue-button"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </div>
+            <!--</div>-->
+
+
+
+
+        }
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-xs-10">
+        @Html.PagedListPager(Model.UsersPaged, PageNumber => Url.Action("Index", new
+        {
+            PageNumber,
+            FilterByName = Model.FilterByName,
+            Orderby = Model.OrderBy,
+            ItemsPerPage = Model.ItemsPerPage,
+
+
+        }), new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), DisplayLinkToNextPage = PagedListDisplayMode.Never, DisplayLinkToPreviousPage = PagedListDisplayMode.Never, LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 5, ContainerDivClasses = new[] { "pull-left" } })
+
+        <div class="pull-right btn-container" role="group">
+            <a href="@Url.Action("Index", new {PageNumber = Model.PageNumber, FilterByName = Model.FilterByName, OrderBy = OrderByUserRole.NameAsc, ItemsPerPage = Model.ItemsPerPage})" class="btn btn-default sort-btn-style sort-btn-a" role="button">SortByAsc</a>
+            <a href="@Url.Action("Index", new {PageNumber = Model.PageNumber, FilterByName = Model.FilterByName, OrderBy = OrderByUserRole.NameDesc, ItemsPerPage = Model.ItemsPerPage})" class="btn btn-default sort-btn-style sort-btn-a" role="button">SortByDesc</a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-10">
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    Username
+                </th>
+                <th>
+                    PartnerId
+                </th>
+                <th>
+                    Is Partner
+                </th>
+
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model.UsersPaged)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PartnerId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsPartner)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

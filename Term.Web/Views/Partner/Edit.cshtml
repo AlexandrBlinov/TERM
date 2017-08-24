@@ -1,0 +1,641 @@
+﻿@model YstTerm.Models.PartnerPointDTO
+@using Term.Web.Views.Resources;
+@{
+    string invis = "";
+    bool notPartner = false;
+    ViewBag.Title = Settings.EditSettings;
+    bool IsDisabledDepartment = (Model.DepartmentId == null || Model.DepartmentId == -1) ? true : false;
+    object displayModeDep = IsDisabledDepartment ? new { disabled = "disabled" } : null;
+    string IsDisabled = IsDisabledDepartment ? "disabled" : "";
+    bool DisabledUseDepartment = (!ViewBag.IsPartner) ? true : false;
+    string src = "/Content/pointphotos/" + Model.UserName + ".jpg";
+    if (ViewBag.PointId != Model.PartnerPointId && ViewBag.IsPartner) { invis = "invisible"; notPartner = true; }
+    string invisAddStock = "";
+    if (!ViewBag.AddStock) { invisAddStock = "invisibleAddStock"; }
+    string invisVat = Model.IsForeignAndMainTerminal ? "": "invisible";
+    string classInvisible = "invisible";
+    //string invisVat = (bool)ViewBag.IsPartner  ?"" :"invisible";
+    //if ((!ViewBag.AddStock) & (ViewBag.IsPartner)) { invisVat = ""; }
+    bool showDutyAndVat = Model.VatVal > 0 || Model.CustomDutyVal > 0 ;
+}
+
+<!--<h2>Edit</h2>-->
+
+
+<div id="alert-container">
+    @if (!String.IsNullOrEmpty(ViewBag.Errors))
+    {
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            @Settings.ErrorList: @ViewBag.Errors
+        </div>
+    }
+</div>
+
+@using (Html.BeginForm("EditPost", "Partner", FormMethod.Post, new { @id = "PointProfile" }))
+{
+    @Html.AntiForgeryToken()
+    @*Html.ValidationSummary() *@
+
+    if (ViewBag.PointId == Model.PartnerPointId && ViewBag.IsPartner)
+    {
+        <input type="hidden" value=@Model.PartnerPointId name="PointId" id="PointId" />
+        <input type="hidden" value=@Model.UserName name="PointName" id="PointName" />
+        <legend>@Settings.SettingsTermClient </legend>
+    <br />
+        <h4> @Settings.ContactDetails</h4>
+    }
+    else
+    {
+        <input type="hidden" value=@Model.PartnerPointId name="PointId" id="PointId" />
+        <input type="hidden" value=@Model.UserName name="PointName" id="PointName" />
+        <legend>@Settings.SettingsChildClient @Model.InternalName </legend>
+    <br />
+        <h4> @Settings.ContactDetails</h4>
+
+        <div class="row">
+            <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                <label class="create_point_label">@Settings.UserName</label>
+            </div>
+            <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3 cart_sum">
+                @Html.DisplayFor(m => m.UserName)
+            </div>
+            <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+
+            </div>
+            <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                <label class="create_point_label">@Settings.UserPassword</label>
+            </div>
+            <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3 cart_sum">
+                @Html.DisplayFor(m => m.Password)
+            </div>
+        </div>
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    /*
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.CompName</label>
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.ContactPersonEdit</label>
+                @Html.TextBoxFor(m => m.ContactFIO, new { @class = "fio form-control" }).DisabledIf(notPartner)
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.PhoneNumber</label>
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "phone-number form-control" }).DisabledIf(notPartner)
+    </div>
+    
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            @Html.ValidationMessageFor(m => m.CompanyName)
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            @Html.ValidationMessageFor(m => m.ContactFIO)
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            @Html.ValidationMessageFor(m => m.PhoneNumber)
+    </div>
+    
+    <br /><br /><br />
+
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.Country</label>  
+        @Html.DropDownListFor(p => p.Country, Model.Countries, new { @class = "form-control" })
+        <br />
+        <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.AddressForEditForm</label>
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control top10", id = "Address" })
+    </div>
+    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.SalesMarket</label>
+        <div class="btn-group for_main_sales" role="group" id="sale-direction" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipSalesMarket">
+            <button type="button" class="one_sales btn btn-default @(Model.IsOpt?"active":"" )">@Settings.Wholesale</button>
+            <button type="button" class="one_sales btn btn-default @(Model.IsRetail ? "active" : "")">@Settings.Retail</button>
+            <button type="button" class="one_sales btn btn-default @(Model.IsInetShop ? "active" : "")">@Settings.OnlineShop</button>
+            <button type="button" class="one_sales btn btn-default @(Model.IsEndCustomer ? "active" : "")">@Settings.EndCustomer</button>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />*/
+
+    //----------------------------------------------------------------------------------------------------------------
+    <div id="compname" class="row @invis">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2">@Settings.CompName</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+            <!--<input class="form-control valid" data-val="true" data-val-required="Заполните название вашей компании" id="CompanyName" name="CompanyName" type="text"  aria-required="true" aria-invalid="false" aria-describedby="CompanyName-error" data-toggle="tooltip" data-placement="top" data-original-title="Это название будет добавлено в раздел сеть продаж на сайтах: NZ, Alcasta, LegeArtis, Yokatta, YST, X-Race,CrossStreet, Trebl, Contyre, Avatyre."> -->
+        </div>
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+            @Html.ValidationMessageFor(m => m.CompanyName)
+        </div>
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.SalesMarket</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-4 col-lg-4">
+            <div class="btn-group for_main_sales" role="group" id="sale-direction" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipSalesMarket">
+                <button type="button" class="one_sales btn btn-default @(Model.IsOpt?"active":"" )">@Settings.Wholesale</button>
+                <button type="button" class="one_sales btn btn-default @(Model.IsRetail ? "active" : "")">@Settings.Retail</button>
+                <button type="button" class="one_sales btn btn-default @(Model.IsInetShop ? "active" : "")">@Settings.OnlineShop</button>
+                <button type="button" class="one_sales btn btn-default @(Model.IsEndCustomer ? "active" : "")">@Settings.EndCustomer</button>
+            </div>
+        </div>
+    </div>
+    <div class="row @invis @invisAddStock">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label">@Settings.Language</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <select class="form-control">
+                <option>Русский</option>
+            </select>
+        </div>
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+
+        </div>
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label">@Settings.Currency</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <select class="form-control">
+                <option>Рубль</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.ContactPersonEdit</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <div class="input-group">
+
+                @Html.TextBoxFor(m => m.ContactFIO, new { @class = "fio form-control" }).DisabledIf(notPartner)
+                <span class="input-group-addon glyphicon glyphicon-user top0"></span>
+            </div>
+
+        </div>
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+            @Html.ValidationMessageFor(m => m.ContactFIO)
+        </div>
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.PhoneNumber</label>
+        </div>
+        <div class="top10 col-xs-4 col-sm-3 col-md-3 col-lg-3">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "phone-number form-control" }).DisabledIf(notPartner)
+        </div>
+        <div class="top10 col-xs-2 col-sm-1 col-md-1 col-lg-1">
+            @Html.ValidationMessageFor(m => m.PhoneNumber)
+        </div>
+    </div>
+    <div class="row">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.TimeDeliveryCentrStock</label>
+        </div>
+        <div class="top10 col-xs-2 col-sm-2 col-md-1 col-lg-1">
+            @Html.TextBoxFor(m => m.DaysToMainDepartment, new { @class = "count form-control" })
+        </div>
+        <div class="top10 col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            @Html.ValidationMessageFor(m => m.DaysToMainDepartment)
+        </div>
+
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+
+        </div>
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2 @invis">
+            <label class="create_point_label_row2">@Settings.PasswordToSettings</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3 @invis">
+            @Html.TextBoxFor(m => m.KeyWord, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="row additional_stock @invisAddStock">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2">@Settings.AdditionalStock</label>
+        </div>
+        <div class="top10 col-xs-2 col-sm-1 col-md-1 col-lg-1">
+            @Html.CheckBox("UseDepartmentId", !IsDisabledDepartment, new { @class = "checkbox_del" }).DisabledIf(DisabledUseDepartment)
+        </div>
+        <div class="top10 col-xs-4 col-sm-2 col-md-2 col-lg-2">
+            @Html.DropDownListFor(p => p.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name", Model.DepartmentId ?? -1), IsDisabledDepartment == true ? new { @class = "form-control", @disabled = "disabled" } as object : new { @class = "form-control" } as object)
+        </div>
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+
+        </div>
+    </div>
+    <div class="row additional_stock @invisAddStock">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2">@Settings.TimeDeliveryAddStock</label>
+        </div>
+        <div class="top10 col-xs-2 col-sm-1 col-md-1 col-lg-1">
+            @Html.TextBoxFor(model => model.DaysToDepartment, new { @class = "count form-control" }).DisabledIf(IsDisabledDepartment)
+        </div>
+        <div class="top10 col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            @Html.ValidationMessageFor(m => m.DaysToDepartment)
+        </div>
+    </div>
+    <!-- <div class="alert alert-info" role="alert">
+             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true">Для ввода адреса установите маркер на карте или воспользуйтесь строкой поиска.</span>
+         </div>-->
+    <div class="row @invis">
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.Country</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <!-- <input id="russia" class="checkbox_del" type="checkbox" checked="checked" /><label class="create_point_label">Россия</label>
+             <input id="other_country" class="checkbox_del" type="checkbox" />
+             <select id="dropdown_country" class="form-control" disabled="disabled"><option value="+">Other country</option></select>  -->
+            @Html.DropDownListFor(p => p.Country, Model.Countries, new { @class = "form-control" })
+        </div>
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+            @Html.ValidationMessageFor(m => m.Address)
+
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.AddressForEditForm</label>
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control top10", id = "Address" })
+        </div>
+
+    </div>
+
+    <div class="row @invis">
+
+        <div class="top10 col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            <label class="create_point_label">@ForSearchResult.Photo</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <input id="Photo" type="file" name="fileUpload" class="top10" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipPhoto" />
+            <img id="PhotoComp" class="photo_comp top10" src=@src onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+
+        </div>
+        <div class="top10 col-xs-12 col-sm-1 col-md-1 col-lg-1">
+
+        </div>
+        <div class="top10 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div id="map_canvas" class="for_gmaps" style="height:385px">
+
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <br><br>
+    <div class="abs_dispos2">
+        <input class="btn btn-primary btn-large" type="submit" value="@Settings.Save" id="SavePointProfile" name="SavePointProfile" />
+        @Html.ActionLink(@Header.Exit, "Index", ViewBag.IsPartner ? "Partner" : "Home", null, new { @class = "btn btn-large button_in_order" })
+    </div>
+}
+
+
+
+<div class="form-inline bottom50 @invisVat">
+    <div class="form-group">
+        <label>Include VAT and custom duty?</label>
+        
+@Html.CheckBox("checkboxVAT", @showDutyAndVat, new { @class = "checkbox_del" })
+        </div>
+        <div class="form-group span20 toggle_visible_onVat @(showDutyAndVat ? "" : @classInvisible)">
+            <label>Custom duty</label>
+            <div class="input-group">
+                <input class="form-control" id="custom_duty_val" name="custom_duty_val" max="100" min="0" type="number" value="@Model.CustomDutyVal">
+                <div class="input-group-addon">%</div>
+            </div>
+        </div>
+        <div class="form-group span20 toggle_visible_onVat @(showDutyAndVat ? "" : @classInvisible)">
+            <label>VAT</label>
+            <div class="input-group">
+                <input class="form-control" id="vat_val" name="vat_val" max="100" min="0" type="number" value="@Model.VatVal">
+                <div class="input-group-addon">%</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-group accordion" id="accordion">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#accordionOne">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        @{
+                            if (ViewBag.PointId == Model.PartnerPointId && ViewBag.IsPartner)
+                            {
+                                <span>2. @Settings.PriceSettingsWheels </span>
+                            }
+                            else
+                            {
+                                if (DisabledUseDepartment)
+                                {
+                                    <span> 2. @Settings.PriceSettingsWheels</span>
+                                }
+                                else
+                                {
+                                    <span> 2. @Settings.PriceWholesaleWheels @Model.InternalName </span>
+                                }
+                            }
+
+                        }
+                    </a>
+                    </h4>
+            </div>
+            <div id="accordionOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+
+                    <table id="pricing_rules_disks" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                                </th>
+                                <th>
+                                    @Settings.BasicPrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBasic">?</span>
+                                </th>
+                                <th class="zakup">
+                                    @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                                </th>
+                                <th>
+                                    @Settings.Recommended
+                                </th>
+                                <th>
+                                    @Settings.ClearThePrice
+                                </th>
+                                <th>
+                                    @Settings.ClearTheBrand
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Settings.ApplyAllBrands
+                                </td>
+                                <td>
+                                    <input class="discount" max="100" min="-100" type="number" value="0" name="base">
+                                    <button id="priceBaseDisks" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </td>
+                                <td>
+                                    <input class="discount" max="100" min="-100" type="number" value="0" name="zakup">
+                                    <button id="priceZakupDisks" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </td>
+                                <td>
+                                    <button id="priceRecDisks" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.PricingRulesDisks)
+                            {
+                                <tr id=@item.ProducerId data-active_name=@item.PriceType>
+                                    <td class="w220 fs-12 tableDiscount"> @item.Name</td>
+                                    @Html.TrPriceRuleEnum(@item.PType, @item.Discount)
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#accordionThree">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        @{
+                            if (ViewBag.PointId == Model.PartnerPointId && ViewBag.IsPartner)
+                            {
+                                <span> 3. @Settings.PriceSettingsTyres</span>
+                            }
+                            else
+                            {
+                                if (DisabledUseDepartment)
+                                {
+                                    <span> 3. @Settings.PriceSettingsTyres</span>
+                                }
+                                else
+                                {
+                                    <span> 3. @Settings.PriceWholesaleTyres @Model.InternalName </span>
+                                }
+                            }
+                        }
+                    </a>
+                </h4>
+            </div>
+
+            <div id="accordionThree" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <table id="pricing_rules_tyres" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                                </th>
+                                <th>
+                                    @Settings.BasicPrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBasic">?</span>
+                                </th>
+                                <th class="zakup">
+                                    @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                                </th>
+                                <th>
+                                    @Settings.Recommended
+                                </th>
+                                <th>
+                                    @Settings.ClearThePrice
+                                </th>
+                                <th>
+                                    @Settings.ClearTheBrand
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Settings.ApplyAllBrands
+                                </td>
+                                <td>
+                                    <input class="discount" max="100" min="-100" type="number" value="0" name="base">
+                                    <button id="priceBaseTyres" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </td>
+                                <td>
+                                    <input class="discount" max="100" min="-100" type="number" value="0" name="zakup">
+                                    <button id="priceZakupTyres" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </td>
+                                <td>
+                                    <button id="priceRecTyres" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.PricingRulesTyres)
+                            {
+                                <tr id=@item.ProducerId data-active_name=@item.PriceType>
+                                    <td class="w220 fs-12 tableDiscount"> @item.Name</td>
+                                    @Html.TrPriceRuleEnum(@item.PType, @item.Discount)
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#accordionFour">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        @{
+                            if (ViewBag.PointId == Model.PartnerPointId && ViewBag.IsPartner)
+                            {
+                                <span>4. @Settings.PriceSettingsBat </span>
+                            }
+                            else
+                            {
+                                if (DisabledUseDepartment)
+                                {
+                                    <span> 4. @Settings.PriceSettingsBat</span>
+                                }
+                                else
+                                {
+                                    <span> 4. @Settings.PriceWholesaleBat @Model.InternalName </span>
+                                }
+                            }
+
+                        }
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionFour" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table id="pricing_rules_bat" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                                </th>
+                                <th class="zakup">
+                                    @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id=3387 data-active_name="zakup"><!--для тестов поменять на 3327-->
+                                <td>
+                                    @Settings.ApplyAllBrands
+                                </td>
+                                <td>
+                                    @foreach (var item in Model.PricingRulesBat) { 
+                                    <input class="discount" max="100" min="-100" type="number" value=@item.Discount.ToString("0.##") name="zakup">
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#accordionFive">
+                        <span class="glyphicon glyphicon-minus"></span>
+                        @{
+                            if (ViewBag.PointId == Model.PartnerPointId && ViewBag.IsPartner)
+                            {
+                                <span>5. @Settings.PriceSettingsAcc </span>
+                            }
+                            else
+                            {
+                                if (DisabledUseDepartment)
+                                {
+                                    <span> 5. @Settings.PriceSettingsAcc</span>
+                                }
+                                else
+                                {
+                                    <span> 5. @Settings.PriceWholesaleAcc @Model.InternalName </span>
+                                }
+                            }
+
+                        }
+                    </a>
+                </h4>
+            </div>
+            <div id="accordionFive" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table id="pricing_rules_acc" class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                                </th>
+                                <th class="zakup">
+                                    @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                                </th>
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                            <tr id=3039 data-active_name="zakup"><!--для тестов поменять на 3452-->
+                                <td>
+                                    @Settings.ApplyAllBrands
+                                </td>
+                                <td>
+                                    @foreach (var item in Model.PricingRulesAcc)
+                                    {
+                                        <input class="discount" max="100" min="-100" type="number" value=@item.Discount.ToString("0.##") name="zakup">
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="idModalToNotifySuccess" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header alert-success">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-ok-circle"> </span> @Settings.SettingsSaved</h4>
+                </div>
+                <div class="modal-footer">
+                    <button id="SuccPartnerSettings" data-terminal="@ViewBag.IsPartner" type="button" class="btn btn-default btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="idModalToNotifyFailure" class="modal fade">
+        <div class="modal-dialog center-modal-notify">
+            <div class="modal-content">
+                <div class="modal-header alert-error">
+                    <h4 class="modal-title">@Settings.ErrorSettingsSaved</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section scripts
+    {<link href="~/Content/kladr/form_with_map.css" rel="stylesheet" />
+        <link href="~/Content/kladr/jquery.kladr.min.css" rel="stylesheet" />
+        <script src="~/Content/kladr/jquery.kladr.min.js"></script>
+        <script src="~/Content/kladr/form_with_map.js"></script>
+        <script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>}

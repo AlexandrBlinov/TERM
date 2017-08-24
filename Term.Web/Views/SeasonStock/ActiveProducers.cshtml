@@ -1,0 +1,8 @@
+﻿@using Term.DAL
+@model IEnumerable<Producer>
+
+<div class="btn-group" role="group">
+@foreach(var prod in Model)
+{<div class="btn btn-default data-producerid=@prod.ProducerId">@prod.Name </div> 
+}
+</div>

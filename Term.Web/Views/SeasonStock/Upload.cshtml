@@ -1,0 +1,84 @@
+﻿@model SeasonStockModelUpload
+@{
+    ViewBag.Title = "Upload";
+}
+
+<h1>Загрузка сезонного ассортимента</h1>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>@Html.ValidationSummary()</strong>
+    </div>
+}
+
+
+@using (Html.BeginForm("upload", "seasonstock", FormMethod.Post,
+        new { enctype = "multipart/form-data" }))
+{
+
+  
+<section>
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label for="email">Производитель:</label>
+               @Html.DropDownListFor(model => model.ProducerId, new SelectList(Model.Producers, "ProducerID", "Name"), "Введите производителя", new { @class = "form-control" })
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label for="email">Крайняя дата действия:</label>
+                <div class='input-group date'>
+
+                    @Html.TextBoxFor(model => model.DateActiveTill, new { @class = "form-control w_lg_100" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>
+                <span class="subtext"> Дата действия должна быть как минимум на месяц позднее чем текущая дата</span>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="email">Комментарий:</label>
+                <!-- <input type="email" class="form-control" id="email"> -->
+                <textarea class="form-control noresize" rows="3" ></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-4 text-center">
+            <div class="form-group">
+                <!-- <a href="#" id="upload_btn" class="btn btn-upload btn-lg text-uppercase">Загрузить файл из excel</a> -->
+                <div class="fileUpload btn btn-upload btn-lg text-uppercase">
+                    <span id="upload_file_text">Загрузить файл из excel</span>
+                    <input type="file" id="file_season_stock" class="upload" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file"/>
+                </div>
+                </div>
+            </div>
+        <div class="col-md-4">
+             <button type="submit" class="btn btn-primary btn-lg text-uppercase">Сохранить изменения</button>
+        </div>
+    </div>
+
+</section>
+}
+@section scripts{
+    <script type="text/javascript"> 
+      
+    $('#file_season_stock').change(function () {
+          $("#upload_file_text").text($(this).val() ? "Файл выбран" : "Загрузить файл из excel");
+         $(this).parent('.fileUpload').removeClass('btn-upload').addClass('btn-success');
+    });
+      
+        
+        
+    </script>
+
+}

@@ -1,0 +1,302 @@
+﻿@using System.Collections
+@using Term.DAL
+@model Term.DAL.Product
+@using Term.Web.Views.Resources;
+@using Term.Web.HtmlHelpers;
+@using YstProject.Services
+
+@{
+    ViewBag.Title = @Model.Name;
+    //var analogs = ViewBag.Analogs as ICollection<searchresult>;
+
+       }
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Model.Name })
+
+<div class="row"><h1 class="order-table-header">@Html.DisplayFor(model => model.Name)</h1></div>
+
+<!--        <a class="btn btn-default btn-styled" onclick="javascript:history.back();">@ForSearchResult.Back</a> -->
+
+<div class="row">
+
+    @if (ViewBag.CountPhoto > 0)
+            {
+        <div class="col-xs-1">
+            <div>
+                <div class="details-conteiner-small-img">
+                    <img class="img-responsive small-photo" src="@Html.RemotePicture(Model.ProductId)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
+                </div>
+
+                @for (int i = 1; i <= ViewBag.CountPhoto; i++)
+                {
+                <div class="details-conteiner-small-img">
+                    <img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Model.PathToRemotePicture, number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
+                </div>
+                }
+            </div>
+        </div>
+                }
+       
+        <div class="col-xs-4">
+            <div class="details-conteiner-img">
+                <img class="img-responsive main-photo" src="@Html.RemotePicture(Model.ProductId)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
+            </div>
+
+            <ul class="list-group">
+                @foreach (var item in ViewBag.DepartmentWithRests as IEnumerable<DepartmentWithRests>)
+            {
+                    <li class="list-group-item view-pl-text-caption">
+                        @ForSearchResult.DeliveryTime: @item.Days @ForSearchResult.Days
+                        @ForSearchResult.Amount: @item.Rest @Header.Pc
+                    </li>
+            }
+            </ul>
+        </div>
+
+        <section class="col-xs-7 detail-properties">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.Name):</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                <!-- <dt>@Html.DisplayNameFor(model => model.ProductType):</dt>
+                <dd>@Model.ProductTypeToView</dd> -->
+            <dt>@Html.DisplayNameFor(model => model.ProducerId):</dt>
+            <dd>@Html.DisplayFor(model => model.Producer.Name)</dd>
+
+            @if (ViewBag.DepId > 0)
+            {
+                <dt>@ForSearchResult.DeliveryTime:</dt>
+                <dd> @ViewBag.Days @ForSearchResult.Days</dd>
+            }
+
+            @if (Model.ModelId.HasValue)
+            {
+                <dt>@Html.DisplayNameFor(model => model.ModelId):</dt>
+                <dd>@Html.DisplayFor(model => model.Model.Name)</dd>
+            }
+            @if (!String.IsNullOrEmpty(Model.Article))
+            {
+                <dt>@Html.DisplayNameFor(model => model.Article):</dt>
+                <dd> @Html.DisplayFor(model => model.Article)</dd>
+            }
+
+            @if (Model.TiporazmerId.HasValue)
+            {
+                <dt>@Html.DisplayNameFor(model => model.TiporazmerId):</dt>
+                <dd> @Html.DisplayFor(model => model.Tiporazmer.Name)</dd>
+            }
+            <dt>@ForSearchResult.Volume:</dt>
+            <dd> @Html.DisplayFor(model => model.Volume)</dd>
+            <dt>@ForSearchResult.Weight:</dt>
+            <dd> @Html.DisplayFor(model => model.Weight)</dd>
+            @if (!String.IsNullOrEmpty(Model.BarCode))
+            {
+                <dt>@ForSearchResult.Barcode:</dt>
+                <dd> @Html.DisplayFor(model => model.BarCode)</dd>
+            }
+
+            @if (Model.ProductType == ProductType.Tyre && Model.CountryProducer != null)
+            {
+                <dt>@ForSearchResult.ManufacturerCountry:</dt>
+                <dd> @Html.DisplayFor(model => model.CountryProducer)</dd>
+            }
+
+
+
+            @if (ViewBag.ProductProperties != null)
+            {
+                foreach (var productProperty in (IEnumerable<ProductPropertyValue>)ViewBag.ProductProperties)
+                {
+                    if (productProperty.Name != "fixingcode")
+                    {
+                        <dt>@productProperty.ProductPropertyDescription.NameToDisplay:</dt>
+                        if (productProperty.Name == "fixing")
+                        {                            
+                            <dd><a href="@Url.Action("details","Home",new {id= @ViewBag.FixingCode })">@productProperty.Value</a></dd>
+                        }
+                        else
+                        {                            
+                            <dd>@productProperty.Value</dd>
+                        }
+                    }
+                }
+            }
+
+            <dt>@ForSearchResult.StockNumber:</dt>
+            <dd>@Model.ToString()</dd>
+
+        </dl>
+
+        @if (ViewBag.DepId > 0)
+        {
+            <div class="row margin-top-20">
+                <div class="col-xs-9">
+                    <div class="details-conteiner-price-one">
+
+                        @Html.Price3((decimal) @ViewBag.PriceClient, "details-price-one-label", "details-price-one", "details-one")
+                        <span class="details-prise-sign">x</span>
+                    </div>
+
+                    <div class="details-add-to-cart">
+                        @Html.TextBox("DefaultNumberToOrder", 4, new {@id = "order-" + @Model.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200})
+                    </div>
+                    <div class="details-conteiner-price-one">
+                        <span class="details-prise-sign">=</span>
+                        @Html.Price3((decimal) @ViewBag.PriceClient*4, "details-price-one-label", "details-price-one", "details-sum")
+                    </div>
+                </div>
+
+
+                <div class="col-xs-3">
+                    <div class="details-add-to-cart">
+                        <a href="javascript:AddToCart(@Model.ProductId,@ViewBag.DepId);" class="details-add-to-cart-btn btn btn-default" data-id="@Model.ProductId" data-name="@Model.Name">@ForSearchResult.ToCart</a>
+                    </div>
+                </div>
+
+            </div>
+        }
+
+    </section>
+</div>
+
+@*if (ViewBag.Analogs != null )
+    {
+                <div class="row">
+                    <br />
+                    <span class="podbor-tyres-title">@CartAndOrders.Analogs</span>
+                    <br />
+                </div>
+
+
+                <div class="row container-analogs">
+                    @{var i = 0;}
+                    @foreach (var item in ViewBag.Analogs as ICollection<SearchResult>)
+            {
+                i++;
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                            <div id="@i" class="thumbnail view-pl-thumbnail">
+
+
+                                <img class="img-thumbnail-disk img-responsive data-part-min-img" src=@Html.RemotePicture(item.ProductId) onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+                                <div class="img_thumbnail_season">
+                                    @Html.SeasonImage(item.Season)
+                                </div>
+                                <div class="caption">
+                                    @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @class = "data-table-a-text view-pl-a-text" })
+                                    <hr class="m-t-b-0"/>
+                                    <div class="caption_price">
+                            @Html.Price((decimal)@item.PriceOfClient)
+                                     </div>
+                                    <p class="view-pl-text-caption">
+                                        @ForSearchResult.DeliveryTime: @Html.DisplayFor(modelItem => item.DaysToDepartment) @ForSearchResult.Days
+                                        @ForSearchResult.Amount: @Html.DisplayFor(modelItem => item.Rest) @Header.Pc
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+            }
+
+                </div>
+                <div class="row text-center">
+                    <button id="Analogs" type="submit" class="form-podbor-btn-submit">@CartAndOrders.ShowMore</button>
+                </div>
+    }*@
+
+<div class="row">
+    @if (ViewBag.CarsFromCargoWheels != null && (((IDictionary<string, string>)ViewBag.CarsFromCargoWheels).Keys.Count > 0))
+    {
+        <table class="data-table details-vehicle-table term-apptocars">
+            @foreach (var prop in (ViewBag.CarsFromCargoWheels as Dictionary<string, string>))
+            {
+                <tr>
+                    <td style="font-weight:bold;">@prop.Key</td>
+                    <td>@prop.Value</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+<div class="row">
+            @if (ViewBag.CarsOfProducts != null && (((IDictionary<string, string>)ViewBag.CarsOfProducts).Keys.Count > 0))
+    {
+                <div class="col-xs-12 @ViewBag.Invisible">
+                    <br />
+                    <span class="podbor-tyres-title">@ForSearchResult.VehicleFitmentGuide</span>
+                    <span style="padding: 20px 30px 30px 30px;" class="btn-group btn-group-sm term-refresh-cars" data-exactsize="1" data-id="@Model.ProductId">
+                        <button type="button" class="btn btn-default active">@ForSearchResult.WithTolerances</button>
+                        <button type="button" class="btn btn-default">OEM</button>
+                    </span>
+                    <br />
+                </div>
+                @Html.Partial("_AppToCars", Model)
+    }
+        </div>
+
+        @section Scripts {
+            <script>
+
+                $(function () {
+                  /*  $(document).ready(function () {
+                        var item_price = $("#details-one").text();
+                        var count = $(".count_add_to_cart").val();
+                        $("#details-sum").text(item_price * count + " ");
+                    }); */
+
+                    $(document).on("change", ".count_add_to_cart", function () {
+                        var count = $(".count_add_to_cart").val();
+                        //var item_price = $("#details-one").text();
+                        var itemPrice = $("#details-one").clone().find("span").remove().end().text();
+                        
+                        $("#details-sum").text(Math.round(itemPrice * count,2) + " ");
+                    });
+
+                    $('.term-refresh-cars button').click(function () {
+
+                        var $buttongroup = $(this).parent();
+                        var $element = $(this);
+                        var exactsize = $buttongroup.data('exactsize') || 0;
+                        var productid = $buttongroup.data('id');
+                        var path = "@Url.Action("apptocars")";
+
+                        $.get(path, { "id": productid, "exactsize": exactsize })
+                          .done(function (data) {
+                              $(".term-apptocars").html(data);
+                              $buttongroup.data('exactsize', !exactsize);
+                              $buttongroup.find('button').each(function () { $(this).toggleClass('active') });
+
+                          });
+
+
+                    });
+
+                    $(document).ready(function () {
+                        $('.small-photo').click(function () {
+                            var src = $(this).attr('src');
+                            $('.main-photo').attr('src', src);
+                        });
+                        $('.thumbnail').each(function () {
+                            if ($(this).attr("id") > 4) $(this).addClass('invisible');
+                        });
+                    });
+
+                    
+                    /*
+                    $(document).on("click", "#Analogs", function () {
+                        var i = 1;
+                        $('.thumbnail').each(function () {
+                            if ($(this).hasClass('invisible')) {
+
+                            } else {
+                                i = i + 1;
+                            }
+                        });
+                        $('.thumbnail').each(function () {
+                            if ($(this).attr("id") < i + 4) $(this).removeClass('invisible');
+                        });
+                    });
+                    */
+                });
+            </script>
+        }

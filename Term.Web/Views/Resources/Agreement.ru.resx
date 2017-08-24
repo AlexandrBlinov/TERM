@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agreement1" xml:space="preserve">
+    <value>Пользовательское соглашение</value>
+  </data>
+  <data name="Agreement10" xml:space="preserve">
+    <value>1.7. Настоящее Соглашение является публичной офертой. Получая доступ к материалам Сайта онлайн-сервиса «TERMINAL YST» Пользователь считается присоединившимся к настоящему Соглашению.</value>
+  </data>
+  <data name="Agreement11" xml:space="preserve">
+    <value>1.8. Все возможные споры, вытекающие из настоящего Соглашения или связанные с ним, подлежат рассмотрению в том числе, касающиеся возникновения, изменения, исполнения, нарушения, прекращения, расторжения, признания его недействительности либо незаключенным, передаются для окончательного разрешения в постоянно действующий Третейский суд при Автономной некоммерческой организации «Центр третейского судопроизводства и медиации» (ОГРН № 1147600000866, офис секретариата суда: 150014, Ярославская область, г. Ярославль, ул. Салтыкова-Щедрина, д.21, оф.420) в соответствии с Положением о Третейском суде при Автономной некоммерческой организации «Центр третейского судопроизводства и медиации» (далее – Положение) и Регламентом третейского разбирательства в Третейском суде при Автономной некоммерческой организации «Центр третейского судопроизводства и медиации» (далее – Регламент). При этом Стороны договорились, что: Положение и Регламент рассматриваются в качестве неотъемлемой части третейского соглашения. Стороны ознакомлены с Положением и Регламентом и согласны с ними. Решение Третейского суда при Автономной некоммерческой организации «Центр третейского судопроизводства и медиации» по конкретному спору является окончательным и оспариванию не подлежит.</value>
+  </data>
+  <data name="Agreement12" xml:space="preserve">
+    <value>1.9. Ничто в Соглашении не может пониматься как установление между Пользователем и ЗАО ТК «Яршинторг» агентских отношений, отношений товарищества, отношений по совместной деятельности, отношений личного найма, либо каких-то иных отношений, прямо не предусмотренных Соглашением.</value>
+  </data>
+  <data name="Agreement13" xml:space="preserve">
+    <value>1.10. Признание судом какого-либо положения Соглашения недействительным или не подлежащим принудительному исполнению не влечет недействительности иных положений Соглашения.</value>
+  </data>
+  <data name="Agreement14" xml:space="preserve">
+    <value>1.11. Бездействие со стороны ЗАО ТК «Яршинторг» в случае нарушения кем-либо из Пользователей положений Соглашения не лишает ЗАО ТК «Яршинторг» права предпринять позднее соответствующие действия в защиту своих интересов и прав в соответствии с законодательством.</value>
+  </data>
+  <data name="Agreement15" xml:space="preserve">
+    <value>1.12. Использование онлайн-сервиса «TERMINAL YST» допускается только после прохождения Пользователем регистрации и авторизации на Сайте онлайн-сервиса «TERMINAL YST» в соответствии с установленной процедурой.</value>
+  </data>
+  <data name="Agreement16" xml:space="preserve">
+    <value>1.13. Технические, организационные и коммерческие условия использования онлайн-сервиса «TERMINAL YST», в том числе его функциональных возможностей содержатся в настоящем Соглашении, а также доводятся до сведения Пользователей путем отдельного размещения на Сайте.</value>
+  </data>
+  <data name="Agreement17" xml:space="preserve">
+    <value>2. Информация о товаре.</value>
+  </data>
+  <data name="Agreement18" xml:space="preserve">
+    <value>2.1. Каждый фото-образец сопровождается текстовой информацией: ценой и описанием товара. Качество настройки и особенности экрана компьютера Пользователя могут искажать цветовую гамму товара. Пользователь имеет право воспользоваться формой обратной связи, чтобы уточнить информацию о заинтересовавшем его товаре.</value>
+  </data>
+  <data name="Agreement19" xml:space="preserve">
+    <value>2.2. Указанная в онлайн-сервисе «TERMINAL YST» цена товара может быть изменена в одностороннем порядке. Цена на уже оплаченный товар изменению не подлежит.</value>
+  </data>
+  <data name="Agreement2" xml:space="preserve">
+    <value>о пользовании онлайн-сервисом «TERMINAL YST»</value>
+  </data>
+  <data name="Agreement20" xml:space="preserve">
+    <value>3. Права, ответственность и обязанности Пользователя.</value>
+  </data>
+  <data name="Agreement21" xml:space="preserve">
+    <value>3.1. Пользователь обязуется признавать юридическую силу информации, размещенной на онлайн-сервисе «TERMINAL YST», в течение срока действия Соглашения, в том числе: цена на товар, ассортимент, сроки и условия доставки, иное, а также признавать юридическую силу всех действий, совершенных от собственного имени, под своим уникальным логином и паролем, в онлайн-сервисе «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement22" xml:space="preserve">
+    <value>3.2. Пользователю запрещается передавать сведения третьим лицам, размещенные в программе «TERMINAL YST», в том числе, но не ограничиваясь этим: ассортимент, условия ценообразования, условия по доставке, иная информация.</value>
+  </data>
+  <data name="Agreement23" xml:space="preserve">
+    <value>3.3. Пользователь соглашается не предпринимать действий, которые могут рассматриваться как нарушающие российское законодательство или нормы международного права, в том числе в сфере интеллектуальной собственности, авторских и/или смежных правах, а также любых действий, которые приводят или могут привести к нарушению нормальной работы Сайта и сервисов Сайта.</value>
+  </data>
+  <data name="Agreement24" xml:space="preserve">
+    <value>3.4. Выбранные Пользователем логин и пароль являются необходимой и достаточной информацией для доступа Пользователя на Сайт. Пользователь не имеет права передавать свои логин и пароль третьим лицам, несет полную ответственность за их сохранность, самостоятельно выбирая способ их хранения.</value>
+  </data>
+  <data name="Agreement25" xml:space="preserve">
+    <value>3.5. Пользователь может создавать заказы, резервировать товар в онлайн-сервисе «TERMINAL YST», получать подтверждение заказа, корректировать его, отслеживать статусы заказа и движение товара.</value>
+  </data>
+  <data name="Agreement26" xml:space="preserve">
+    <value>Пользователь может самостоятельно настраивать ценообразование по своему усмотрению:</value>
+  </data>
+  <data name="Agreement27" xml:space="preserve">
+    <value>относительно базовой цены</value>
+  </data>
+  <data name="Agreement28" xml:space="preserve">
+    <value>относительно входной цены</value>
+  </data>
+  <data name="Agreement29" xml:space="preserve">
+    <value>относительно рекомендованной цены</value>
+  </data>
+  <data name="Agreement3" xml:space="preserve">
+    <value>1.Основные положения.</value>
+  </data>
+  <data name="Agreement30" xml:space="preserve">
+    <value>3.6. Пользователь может устанавливать адрес доставки товара, оставлять комментарии к заказу.</value>
+  </data>
+  <data name="Agreement31" xml:space="preserve">
+    <value>3.7.  Использование материалов онлайн-сервиса «TERMINAL YST» без согласия ЗАО ТК «Яршинторг» не допускается.</value>
+  </data>
+  <data name="Agreement32" xml:space="preserve">
+    <value>3.8. Комментарии и иные записи Пользователя в онлайн-сервисе «TERMINAL YST» не должны вступать в противоречие с требованиями законодательства Российской Федерации и общепринятых норм морали и нравственности.</value>
+  </data>
+  <data name="Agreement33" xml:space="preserve">
+    <value>3.9. Пользователь предупрежден о том, что ЗАО ТК «Яршинторг» не несет ответственности за посещение и использование им внешних ресурсов, ссылки на которые могут содержаться на онлайн-сервисе «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement34" xml:space="preserve">
+    <value>3.10. Пользователь принимает положение о том, что все материалы онлайн-сервиса «TERMINAL YST» или любая их часть могут сопровождаться рекламой. Пользователь согласен с тем, что ЗАО ТК «Яршинторг» не несет какой-либо ответственности и не имеет каких-либо обязательств в связи с такой рекламой.</value>
+  </data>
+  <data name="Agreement35" xml:space="preserve">
+    <value>3.11. Пользователь подтверждает, что ознакомлен со всеми пунктами настоящего Соглашения и безусловно принимает их.</value>
+  </data>
+  <data name="Agreement36" xml:space="preserve">
+    <value>4. Права, обязанности и ограничение ответственности ЗАО ТК «Яршинторг»</value>
+  </data>
+  <data name="Agreement37" xml:space="preserve">
+    <value>4.1. ЗАО ТК «Яршинторг» имеет право приостановить или полностью прекратить доступ Пользователя к онлайн-сервису «TERMINAL YST» в случае нарушения Пользователем настоящего Пользовательского Соглашения, а также условий соответствующего Договора поставки.</value>
+  </data>
+  <data name="Agreement38" xml:space="preserve">
+    <value>4.2. ЗАО ТК «Яршинторг» не несет ответственности за изменение следующих параметров АКБ, установленных производителем, а именно: пусковой ток, внешний вид, завод-изготовитель торговой марки.</value>
+  </data>
+  <data name="Agreement39" xml:space="preserve">
+    <value>4.3. ЗАО ТК «Яршинторг» не несет ответственность за некорректно подобранный товар по транспортному средству, т.к. информация по подбору товара является справочной.</value>
+  </data>
+  <data name="Agreement4" xml:space="preserve">
+    <value>1.1. Настоящее Соглашение заключается между Пользователем и ЗАО ТК «Яршинторг» в целях использования онлайн-сервиса «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement40" xml:space="preserve">
+    <value>4.4. Все условия в заказе, установленные Пользователем (выбранный ассортимент, дата и адрес доставки) ЗАО ТК «Яршинторг» принимает как условия к выполнению. В случае некорректного составления заказа ответственность при этом лежит на Пользователе.</value>
+  </data>
+  <data name="Agreement41" xml:space="preserve">
+    <value>4.5. ЗАО ТК «Яршинторг» не несет ответственность за установленные Пользователем в программе «TERMINAL YST» цены для дальнейшей реализации.</value>
+  </data>
+  <data name="Agreement42" xml:space="preserve">
+    <value>4.6. При отсутствии заказанного товара на складе ЗАО ТК «Яршинторг» обязано поставить в известность об этом Пользователя (по телефону или посредством электронной почты).</value>
+  </data>
+  <data name="Agreement43" xml:space="preserve">
+    <value>4.7. Заказы, поступившие от Пользователя через онлайн-сервис «TERMINAL YST» до   13-00, для регионов: Москва, Московская обл., Санкт-Петербург, Ленинградская обл., Иваново, Ивановская обл., Владимир, Владимирская обл., Кострома, Костромская обл., Вологда, Вологодская обл., будут поставлены на отгрузку в этот же день. А заказы для указанных регионов поступившие с 13-00 текущего дня и до 13-00 следующего дня будут поставлены на отгрузку на следующий день после окончания приема заказа.</value>
+  </data>
+  <data name="Agreement44" xml:space="preserve">
+    <value>4.8. Заказы, поступившие от Пользователей через онлайн-сервис «TERMINAL YST» в Ростовской области, Ставропольского и Краснодарского края, ЗАО ТК «Яршинторг» обязуется отгружать три раза в неделю. Заказы, поступившие от Пользователей через онлайн-сервис «TERMINAL YST» в  г. Екатеринбург  и  Свердловской области, будут поставлены на отгрузку 1 раз в неделю. Доставку в остальные регионы необходимо согласовывать отдельно.</value>
+  </data>
+  <data name="Agreement45" xml:space="preserve">
+    <value>4.9. ЗАО ТК «Яршинторг» не несет ответственности за ущерб, причиненный Пользователю вследствие ненадлежащего использования им товаров, заказанных через онлайн-сервис «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement46" xml:space="preserve">
+    <value>4.10. ЗАО ТК «Яршинторг» не несет ответственности и не имеет прямых или косвенных обязательств перед Пользователем в связи с любыми возможными или возникшими потерями или убытками, связанными с любым содержанием Сайта онлайн-сервиса «TERMINAL YST», регистрацией авторских прав и сведениями о такой регистрации, товарами или услугами, доступными на или полученными через внешние сайты или ресурсы либо иные контакты Пользователя, в которые он вступил, используя размещенную на Сайте информацию или ссылки на внешние ресурсы.</value>
+  </data>
+  <data name="Agreement47" xml:space="preserve">
+    <value>Я принимаю условия соглашения</value>
+  </data>
+  <data name="Agreement5" xml:space="preserve">
+    <value>1.2. Онлайн-сервис «TERMINAL YST» является собственностью ЗАО «ТК Яршинторг» и размещен по адресу: http://terminal.yst.ru (далее - Сайт онлайн-сервиса «TERMINAL YST»).</value>
+  </data>
+  <data name="Agreement6" xml:space="preserve">
+    <value>1.3. Пользователем может быть юридическое лицо, индивидуальный предприниматель или физическое лицо, способное принять и оплатить заказанный им товар в порядке и на условиях, установленными законодательством Российской Федерации, настоящим Соглашением.</value>
+  </data>
+  <data name="Agreement7" xml:space="preserve">
+    <value>1.4. ЗАО ТК «Яршинторг» вправе в любое время в одностороннем порядке изменять условия настоящего Соглашения. Такие изменения вступают в силу с момента размещения новой версии Соглашения. При несогласии Пользователя с внесенными изменениями он обязан отказаться от доступа к «TERMINAL YST» и прекратить использование онлайн-сервиса «TERMINAL YST».</value>
+  </data>
+  <data name="Agreement8" xml:space="preserve">
+    <value>1.5. Настоящее Соглашение должно рассматриваться в том виде, как оно опубликовано на Сайте онлайн-сервиса «TERMINAL YST», и должно применяться и истолковываться в соответствии с законодательством Российской Федерации.</value>
+  </data>
+  <data name="Agreement9" xml:space="preserve">
+    <value>1.6. Использование материалов и сервисов Сайта онлайн-сервиса «TERMINAL YST» регулируется нормами действующего законодательства Российской Федерации.</value>
+  </data>
+</root>

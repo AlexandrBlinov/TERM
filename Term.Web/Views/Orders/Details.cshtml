@@ -1,0 +1,309 @@
+﻿@model Yst.ViewModels.OrderViewWithDetailsExtended
+@using Term.DAL
+@using Term.Utils
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = String.Concat(CartAndOrders.Order, Model.OrderData.NumberIn1S);
+    var reservedTill = Model.OrderData.OrderDate.AddDays(7).ToShortDateString();
+}
+
+
+<fieldset class="border-form-podbor">
+    <h2 class="border-form-podbor search-order-title">@(ViewBag.OrderInfo) @CartAndOrders.InfoOrder № @(Model.OrderData.NumberIn1S) @CartAndOrders.From @Model.OrderData.OrderDate.ToShortDateString()</h2>
+
+    @if (!String.IsNullOrEmpty(ViewBag.errorMessage))
+    {
+        <div> @ViewBag.errorMessage</div>
+    }
+
+    @Html.ValidationSummary()
+
+    
+    <dl class="dl-horizontal doc-info">
+        <dt>@CartAndOrders.NumberInDatabase:</dt>
+        <dd> @Html.DisplayFor(model => model.OrderData.NumberIn1S)</dd>
+        <dt>@CartAndOrders.Status:</dt>
+        <dd> @Html.DisplayFor(model => model.OrderData.OrderStatusName)
+        @if (@ViewBag.OrderStatus != null && ((OrderStatuses) ViewBag.OrderStatus) == OrderStatuses.Confirmed)
+        {
+            @Html.Raw("&nbsp;&nbsp; (") 
+             @Model.OrderData.DepartmentName 
+            @Html.Raw(")")
+        }
+        @* if (ViewBag.History is IList<HistoryOfOrderstatus> && ((IList<HistoryOfOrderstatus>)ViewBag.History).Any())
+    {
+        <a href="#history" class="order-history__link">@CartAndOrders.History</a>
+    }*@
+    
+        @if (Model.HistoryOfOrderStatuses.Any())
+        {
+            <a href="#history" class="order-history__link">@CartAndOrders.History</a>
+        }
+        </dd>
+        <dt>@CartAndOrders.Name:</dt>
+        <dd> @Html.DisplayFor(model => model.OrderData.ContactFIOOfClient)</dd>
+        <dt>@Settings.PhoneNumber:</dt>
+        <dd> @Html.DisplayFor(model => model.OrderData.PhoneNumberOfClient)</dd>
+
+        @if (Model.OrderData.isReserve)
+        {
+        <dt>@CartAndOrders.ReservedTill:</dt>
+            <dd>@reservedTill</dd>
+
+        }
+        else
+        {
+            <dt>@CartAndOrders.DateShipment:</dt>
+            <dd>@Html.DateFormat(Model.OrderData.DeliveryDate)</dd>
+        }
+
+        <dt>@CartAndOrders.Comment:</dt>
+        <dd> @Html.DisplayFor(model => model.OrderData.Comments)</dd>
+
+
+        @if (Model.OrderData.IsDeliveryByTk && !String.IsNullOrEmpty(Model.OrderData.DeliveryDataString))
+        {
+            <dt>@CartAndOrders.DeliveryByTransportCompany:</dt>
+            <dd> @Html.DisplayFor(model => model.OrderData.DeliveryDataString)</dd>
+
+        }
+
+        @if (Model.OrderData.IsDeliveryByTk && !String.IsNullOrEmpty(Model.OrderData.RangeDeliveryDays))
+        {
+            <dt>Число дней доставки:</dt>
+            <dd>@Html.DisplayFor(model => model.OrderData.RangeDeliveryDays)</dd>
+
+            if (Model.OrderData.DpdDeliveryStatus.HasValue)
+            {
+                <dt>Статус Dpd:</dt>
+                <dd> @Html.DisplayFor(model => model.OrderData.DpdDeliveryStatusName)</dd>
+
+            }
+        }
+
+    </dl>
+
+</fieldset>
+
+<table class="data-table order-table details-table">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                @ForSearchResult.StockNumber
+            </th>
+            <th class="change-order-prod-name">
+                @CartAndOrders.Item
+            </th>
+            <th>
+                @ForSearchResult.Available
+            </th>
+            <th>
+                @ForSearchResult.Price
+            </th>
+            <th>
+                @CartAndOrders.TotalSum
+            </th>
+            <th>
+                @CartAndOrders.PriceClient
+            </th>
+            <th>
+                @CartAndOrders.TotalClient
+            </th>
+        </tr>
+    </thead>
+    @{int counter = 0;
+    int Count = 0;
+    }
+    @foreach (var item in Model.OrderDetails)
+    {
+        counter++;
+        <tr id="row-@item.ProductId">
+            <td>
+                @counter
+            </td>
+            <td>
+                @(item.ProductId.ToString().PadLeft(7, '0'))
+            </td>
+            <td class="name-filds">
+
+                @{item.ProductName = item.ProductName != "" ? item.ProductName : "---";}
+                @Html.ActionLink(item.ProductName, "Details", "Home", new { id = item.ProductId }, new { @class = "data-table-a-text" })
+            </td>
+            <td>
+                @{Count += item.Count;}
+                @item.Count
+            </td>
+
+            <td>
+                @item.Price
+            </td>
+            <td id="item-sum-@item.ProductId">
+                <span class="data-table-price">@(item.Count * item.Price) </span>
+            </td>
+            <td>
+                @item.PriceOfClient
+            </td>
+            <td>
+                <span class="data-table-price">@(item.Count * item.PriceOfClient) </span>
+            </td>
+
+        </tr>
+    }
+    <tfoot class="order-footer-totals">
+        @if (!Model.OrderData.IsDeliveryByTk)
+        {
+            <tr>
+                <td colspan="3">
+                    <b>@CartAndOrders.Total:</b>
+                </td>
+                <td>
+                    <b>@Count</b>
+                </td>
+                <td />
+                <td>
+                    <span class="data-table-price">@Model.OrderData.Total </span>
+                </td>
+                <td />
+                <td>
+                    <span class="data-table-price">@Model.OrderData.TotalOfClient </span>
+                </td>
+            </tr>
+        }
+        @if (Model.OrderData.IsDeliveryByTk)
+        {
+            <tr>
+                <td colspan="2" rowspan="2">
+                    <b>@CartAndOrders.Total:</b>
+                </td>
+                <td> <b>Стоимость товаров:</b></td>
+                <td>
+                    <b>@Count</b>
+                </td>
+                <td />
+                <td>
+                    <span class="data-table-price">@Model.OrderData.Total </span>
+                </td>
+                <td />
+                <td>
+                    <span class="data-table-price">@Model.OrderData.TotalOfClient </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Услуга доставки:</b> </td>
+                <td>
+                    <b>1</b>
+                </td>
+                <td />
+                <td>
+                    <span class="data-table-price">@Model.OrderData.CostOfDelivery </span>
+                </td>
+                <td />
+                <td>
+                    <span class="data-table-price">@Model.OrderData.CostOfDelivery </span>
+                </td>
+            </tr>
+        }
+    </tfoot>
+</table>
+
+
+<div class="row m-t-30">
+    <div class="col-xs-12">
+      
+    
+            @if (Model.OrderData.OrderStatus == OrderStatuses.Confirmed && Model.CanUserChangeDpdOrder) // && !Model.OrderData.IsDeliveryByTk
+            {
+                using (Html.BeginForm("ChancelOrder", "Orders", FormMethod.Post, new { @class = "form-inside-button" }))
+                {
+
+                    @Html.Hidden("guid", Model.OrderData.Order_guid)
+                <input class="btn btn-styled btn-cancel" type="submit" value="@CartAndOrders.Cancel" name="ChancelOrder" />
+
+                }
+            }
+    
+        @if (Model.OrderData.OrderStatus == OrderStatuses.Confirmed && Model.CanUserChangeDpdOrder) // && !Model.OrderData.IsDeliveryByTk
+        {
+            @Html.ActionLink(@CartAndOrders.EditOrder, "ChangeOrder", "Orders", new { guid = @Model.OrderData.Order_guid }, new { @class = "btn btn-styled" })
+        }
+        @if (ViewBag.IsPartner && !ViewBag.IsForeign)
+        {
+            @Html.ActionLink("Печать счета", "Bill", "Orders", new { guid = @Model.OrderData.Order_guid }, new { @class = "btn btn-styled", @target = "_blank" })
+            
+            @Html.ActionLink("Печать счета с фото", "Bill", "Orders", new { guid = @Model.OrderData.Order_guid, showpicture = true }, new { @class = "btn btn-styled", @target = "_blank" })
+        }
+        @if (ViewBag.IsPartner && Model.OrderData.IsDeliveryByTk)
+        {
+            @Html.ActionLink("Печать поручения Dpd", "DpdErrand", "Orders", new { guid = @Model.OrderData.Order_guid }, new { @class = "btn btn-styled", @target = "_blank" })
+        }
+        @if (ViewBag.IsPartner && Model.OrderData.IsDeliveryByTk && !Model.CanUserChangeDpdOrder && ViewBag.SaleIsReady)
+        {
+            @Html.ActionLink("Уведомление об отказе от товара", "DpdCancelOrder", "Orders", new { guid = @Model.OrderData.Order_guid }, new { @class = "btn btn-default btn-styled", @target = "_blank" })
+        }
+        
+
+</div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-9 order-details-change">
+        @Html.ActionLink(@CartAndOrders.BackToList, "List", "Orders", null, new {@class = "list-points-create-btn btn-styled"})
+    </div>
+</div>
+
+
+<div class="row order-history m-t-30 hidden">
+    <div class="col-xs-12 ">
+        <hr class="order-divider"/>
+        <h4 class="cart-delivery-calc"><a class="btn btn-circle btn-primary"><i class="glyphicon glyphicon-th-list"></i></a> @CartAndOrders.HistoryOfStatuses</h4>
+        
+        <a name="history"></a>
+        @if (Model.HistoryOfOrderStatuses.Any())
+        {
+                <div class="col-xs-12 col-sm-6">
+                    <table class="table table-striped m-t-15">
+
+                        @foreach (var item in Model.HistoryOfOrderStatuses)
+                        {
+
+                            <tr> <td>@EnumDescriptionProvider.GetDescription(item.OrderStatus)</td> <td class="text-left"> @item.Date </td></tr>
+
+                        }
+                    </table>
+                    </div>
+            
+        }
+    </div>
+</div>
+
+@if (Model.OrderData.IsDeliveryByTk)
+    {
+        @Html.Action("GetImagesByDocGuid", "DocumentImagesShow", new { guid = @Model.OrderData.Order_guid, fromAction = true })
+      
+
+    }
+
+@section Scripts {
+
+    <script>
+        (function() {
+            $("#upload-file__link").on('click', function(e) {
+                e.preventDefault();
+                $("#upload").trigger('click');
+            });
+
+            $('#upload').change(function() {
+                $(this).closest('form').submit();
+            });
+
+            $('.order-history__link').on('click', function(e) {
+
+                $(".order-history").toggleClass('hidden');
+            });
+        }());
+    </script>
+}

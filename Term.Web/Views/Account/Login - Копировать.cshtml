@@ -1,0 +1,59 @@
+﻿@model YstIdentity.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Вход</h2>
+<div class="row">
+    <div class="col-md-4">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Введите данные вашей учётной записи.</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                <div style="margin-bottom:20px" class="controls controls-row">
+                    <div class="span1">
+                        Логин
+                    </div>
+                    <div class="span3">
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </div>
+                <div style="margin-bottom:20px" class="controls controls-row">
+                    <div class="span1">
+                        Пароль
+                    </div>
+                    <div class="span3">
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div style="margin-bottom:20px" class="controls">
+                    <div class="span3">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            Запомнить?
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom:20px" class="controls">
+
+                    <input class="btn btn-primary" type="submit" value="Вход" />
+
+                </div>
+                <p>
+                   Если у вас нет учётной записи, пройдите @Html.ActionLink("регистрацию", "Register").
+                </p>
+            }
+        </section>
+    </div>
+   
+   
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

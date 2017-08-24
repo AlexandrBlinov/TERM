@@ -1,0 +1,78 @@
+﻿@model YstTerm.Models.FeedbackForm
+@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = "Send message";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Help.Feedback1</h2> <br />
+
+
+<p>
+    @Help.Feedback2 
+</p>
+
+@using (Html.BeginForm("SendMail", "Help", FormMethod.Post))
+{ 
+    @Html.ValidationSummary(false,"",new {@class="alert alert-danger" } )
+    <fieldset>
+        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Help.Feedback3</label>
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label>@Help.Feedback4</label>
+            <div class="input-group">
+                <div class="input-group-addon">@@</div>
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label>@Help.Feedback5</label>
+            <div class="input-group">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span></div>
+                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                
+            </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Help.Feedback6</label>
+            @Html.TextAreaFor(model => model.Message, new { @class = "form-control",@rows=5 })
+
+            
+        </div>
+
+
+        <div class="form-group">
+            
+            
+            
+            <!--  data-rule-notequalto="{&quot;other&quot;:&quot;#Phone&quot;}" -->
+          <!-- 
+              <label for="DifferentProperty">Put something different here:</label>
+              <input data-msg-notequalto="These fields cannot match"
+                   data-msg-required="The DifferentProperty field is required."                 
+                   data-rule-notequalto="#Phone"
+                   data-rule-required="true" 
+             id ="DifferentProperty" name="DifferentProperty" type="text" value="" /> -->
+        </div>
+        <div class="form-group text_center">
+            <input class="btn btn-primary btn-default" data-type="submit" type="submit" value=@Help.Feedback7 />
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    <script>
+        jQuery.validator.addMethod("notequalto", function (value, element, params) {
+                   
+            //return this.optional(element) || value !== $(params.other).val();
+            return this.optional(element) || value !== $(params).val();
+        }, "These shouldn't equal");
+            
+
+    </script>
+}

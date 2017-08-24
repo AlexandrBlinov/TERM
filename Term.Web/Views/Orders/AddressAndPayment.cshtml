@@ -1,0 +1,48 @@
+﻿@model YstStore.Domain.Models.Order
+@{
+ViewBag.Title = "Address And Payment"; }
+
+@ViewBag.PartnerId
+<br/>
+@ViewBag.PartnerName
+
+@using (Html.BeginForm())
+{
+
+    <h2>Address And Payment</h2>
+    <fieldset>
+        <legend>Shipping Information</legend>
+        @*Html.EditorForModel()*@
+
+
+        @Html.LabelFor(p => p.Username)
+        @Html.EditorFor(p => p.Username)
+        @Html.ValidationMessageFor(p => p.Username)
+        <br />
+
+        @Html.LabelFor(p => p.FirstName)
+        @Html.EditorFor(p => p.FirstName)
+        @Html.ValidationMessageFor(p => p.FirstName)
+        <br />
+
+        @Html.LabelFor(p => p.LastName)
+        @Html.EditorFor(p => p.LastName)
+        @Html.ValidationMessageFor(p => p.LastName)
+        <br />
+
+        @Html.LabelFor(p => p.Email)
+        @Html.EditorFor(p => p.Email)
+        @Html.ValidationMessageFor(p => p.Email)
+
+        <br />
+
+        @Html.LabelFor(p => p.OrderDate)
+        @Html.EditorFor(p => p.OrderDate)
+        @Html.ValidationMessageFor(p => p.OrderDate)
+        <br />
+
+        @Html.ValidationSummary()
+        <br />
+    </fieldset>
+    <input type="submit" value="Submit Order" />
+}

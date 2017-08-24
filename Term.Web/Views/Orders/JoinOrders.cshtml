@@ -1,0 +1,359 @@
+﻿@model  Term.Web.Models.ExtendedOrdersViewModel
+@using Term.Web.Views.Resources;
+@using Term.Utils;
+
+@{
+    ViewBag.Title = CartAndOrders.ListOfOrders;
+    string invisAddStock = "";
+    string colorNewOrder = "";
+    if (!ViewBag.IsForeign) { invisAddStock = "invisibleAddStock"; }
+}
+
+<h2 class="border-form-podbor search-order-title">@ForSearchResult.ChooseOrders</h2>
+
+@using (Html.BeginForm("JoinOrders", "Orders", FormMethod.Get))
+{
+    <fieldset class="border-form-podbor">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.BeginDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.EndDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">@CartAndOrders.OrderNumber</label>
+                <div>
+                    @Html.TextBoxFor(p => p.OrderNumber, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">@CartAndOrders.Status</label>
+                <div>
+                    @Html.DropDownListFor(p => p.StatusId, Model.Statuses, @CartAndOrders.AllOrders, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 @invisAddStock">
+                <label class="search-order-label">@CartAndOrders.Department</label>
+                <div>
+                    @Html.DropDownListFor(p => p.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name"), "Все", new { @class = "form-control" })
+                </div>
+            </div>
+            @if (ViewBag.IsPartner)
+            {
+                <div class="col-xs-12 col-sm-2">
+                    <label class="search-order-label">@CartAndOrders.Point</label>
+                    <div>
+                        @Html.DropDownListFor(p => p.PointId, Model.PartnerPoints, @CartAndOrders.All, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            <div class="col-xs-12 col-sm-3">
+                <label class="search-order-label">@CartAndOrders.ByProduct</label>
+                <div>
+                    @Html.TextBoxFor(p => p.ProductName, new { @class = "form-control", @placeholder = @ForSearchResult.CodeOrArt })
+                </div>
+            </div>
+            @if (!ViewBag.IsForeign)
+            {
+                <div class="col-xs-12 col-sm-3">
+
+                   <!-- <label class="search-order-label">Доставка DPD</label>
+                    <div class="p-t-5">
+                        @Html.CheckBoxFor(m => m.IsDeliveryByTk)
+                    </div> -->
+                  
+                </div>
+            }
+            <div class="col-xs-12 text-center search-order-btn">
+                <button class="form-podbor-btn-submit" type="submit">@CartAndOrders.Filter</button>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="order-table-header-block m-t-15">
+
+        <span class="order-table-header">@CartAndOrders.ListOfOrders</span>
+        @Html.PagedListPager(Model.Orders, page => Url.Action("JoinOrders", new
+   {
+       page,
+       PointId = Model.PointId,
+       DepartmentId = Model.DepartmentId,
+       BeginDate = Model.BeginDate.ValueForPaginator(),
+       EndDate = Model.EndDate.ValueForPaginator(),
+       StatusId = Model.StatusId,
+       ProductName = Model.ProductName
+   }),
+    new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+    </div>
+
+    <div>
+        
+        <div class="psevdo-select psevdo-select-dispos">
+            <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+            @Html.DropDownListFor(p => p.ItemsPerPage,  new SelectList(new int[] { 10, 20, 50, 100, 200 }), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+        </div>
+
+
+    </div>
+}
+<table id="table-orders" class="data-table order-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @CartAndOrders.Point
+            </th>
+            <th>
+                @CartAndOrders.NumberInDatabase
+            </th>
+            <th class="@invisAddStock">
+                @CartAndOrders.Department
+            </th>
+            <th>
+                @CartAndOrders.Status
+            </th>
+            @if (ViewBag.IsPartner)
+            {
+                <th>
+                    @CartAndOrders.TotalSum
+                </th>
+            }
+            <th>
+                @CartAndOrders.TotalClient
+            </th>
+            <th>
+                @CartAndOrders.DateOrder
+            </th>
+            <th>
+                @CartAndOrders.DateShipment
+            </th>
+            <th>
+                @CartAndOrders.DateOfPayment
+            </th>
+            <th>
+                @CartAndOrders.Comment
+            </th>
+            <th>
+                @ForSearchResult.Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            
+            <tr class="open_order_tr @colorNewOrder" data-idlink="@order.NumberIn1S">
+                <td>
+                 
+                  
+                      <input type="checkbox" id="@order.GuidIn1S" class="checkbox-form-podbor yst-order">
+                        <label class="checkbox-form-podbor-label min-w-20" for="@order.GuidIn1S">&nbsp;</label> 
+                 
+
+                </td>
+                <td>
+                    @*Html.ActionLink(order.Point.InternalName, "Edit", "Partner", new { PointId = order.PointId }, null)*@
+                    <a href="javascript:void(0);">@order.Point.InternalName</a>
+                    <br />
+
+                    @if (order.IsDeliveryByTk)
+                    {
+                        <i class="icon-dpd"></i>
+                    }
+                </td>
+                <td>
+                    <span class="open_order" data-idlink="@order.NumberIn1S">@Html.DisplayFor(modelItem => order.NumberIn1S)</span>
+                </td>
+                <td class="@invisAddStock">
+
+                    @Html.DisplayFor(modelItem => order.Department.Name)
+                </td>
+
+                <td>
+                    @Html.OrderStatusWithColor(order.OrderStatus)
+                </td>
+                @if (ViewBag.IsPartner)
+                {
+                    <td class="price-filds">
+                        @Html.DisplayFor(modelItem => order.Total)
+                    </td>
+                }
+                <td class="price-filds">
+                    @if (ViewBag.IsPartner)
+                    {@(order.PointId == ViewBag.CurrentPointId ? order.TotalOfClient : order.TotalOfPoint)
+                    }
+                    else
+                    {
+                        @order.TotalOfClient
+                    }
+
+
+
+                    @*Html.DisplayFor(modelItem => item.TotalOfClient)*@
+                </td>
+                <td>
+                    @order.OrderDate.ToShortDateString()
+                </td>
+                <td>
+                    @{
+                        string deliveryDate;
+                        if (order.isReserve)
+                        {
+                            deliveryDate = @CartAndOrders.ReservedTill + " " + order.OrderDate.AddDays(7).ToShortDateString();
+                        }
+                        else
+                        {
+                            deliveryDate = order.DeliveryDate.HasValue ? ((DateTime)order.DeliveryDate).ToShortDateString() : String.Empty;
+                        }
+                    }
+
+                    @(deliveryDate)
+                </td>
+                <td>
+                    @{var dateOfPayment = order.DateOfPayment.HasValue ? ((DateTime)order.DateOfPayment).ToShortDateString() : String.Empty; }
+                    @(dateOfPayment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Comments)
+
+
+                </td>
+                <td>
+                    @Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = order.GuidIn1S }, new { @class = "order-table-details" })
+                </td>
+            </tr>
+                        if (ViewBag.IsPartner)
+                        {
+                            <tr class="invisible" data-idsource="@order.NumberIn1S">
+                                <td colspan="10">
+                                    <div class="row head_order_details">
+                                        <div class="col-xs-1">
+                                         
+                                        </div>
+                                        <div class="col-xs-1">
+                                            №
+                                        </div>
+                                        <div class="col-xs-2">
+                                            @ForSearchResult.Article
+                                        </div>
+                                        <div class="col-xs-1">
+                                            @ForSearchResult.StockNumber
+                                        </div>
+                                        <div class="col-xs-5">
+                                            @ForSearchResult.ProductName
+                                        </div>
+
+                                        <div class="col-xs-1">
+                                            @ForSearchResult.Available
+                                        </div>
+                                        <div class="col-xs-1">
+                                            @ForSearchResult.Price
+                                        </div>
+                                    </div>
+                                    @{ var i = 0; }
+
+                                    @foreach (var detail in order.OrderDetails)
+                                    {
+                                        i++;
+                                        var bg = "";
+                                        if (i % 2 != 0)
+                                        {
+                                            bg = "background_order_details";
+                                        }
+                                        <div class="row @bg">
+                                            <div class="col-xs-1">
+                                                @{ string guidAndRow = String.Concat(order.GuidIn1S.ToString() , i.ToString()); }
+                                            
+                                                <input type="checkbox" id="@guidAndRow" class="checkbox-form-podbor yst-order-item" data-yst-order="@order.GuidIn1S">
+                                                <label class="checkbox-form-podbor-label" for="@guidAndRow">&nbsp;</label>  
+                                            </div>
+                                            <div class="col-xs-1">@i</div>
+                                            <div class="col-xs-2">@detail.Product.Article</div>
+                                            <div class="col-xs-1">@detail.Product.ProductId</div>
+                                            <div class="col-xs-5 name_order_details">@detail.Product.Name</div>
+
+                                            <div class="col-xs-1">@detail.Count</div>
+                                            <div class="col-xs-1">@detail.Price</div>
+                                        </div>
+                                    }
+
+                                </td>
+                            </tr>
+                                            }
+                                        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+<div class="m-t-15">
+
+    @Html.PagedListPager(Model.Orders, page => Url.Action("JoinOrders", new
+   {
+       page,
+       PointId = Model.PointId,
+       DepartmentId = Model.DepartmentId,
+       BeginDate = Model.BeginDate.ValueForPaginator(),
+       EndDate = Model.EndDate.ValueForPaginator(),
+       StatusId = Model.StatusId,
+       ProductName = Model.ProductName
+   }),
+        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+</div>
+
+@section Scripts {
+    <script>
+
+        // Подключаем iCheck Для radiobutton
+    /*    $(function () {
+            $('[type=radio],[type=checkbox]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue'
+            });
+
+
+
+        }())
+            */
+
+        $(function () {
+            $('[type=checkbox]').change(function () {
+
+                var $this = $(this);
+                var ifchecked = this.checked;
+                if ($this.hasClass('yst-order') && (this.id))
+                { var id = this.id;
+                    
+                    $('.checkbox-form-podbor.yst-order-item').each(function () {
+                        if ($(this).data("yst-order") == id)
+                            $(this).prop("checked", ifchecked);
+                    })
+                }
+                });
+        }())
+    </script>
+}

@@ -1,0 +1,133 @@
+﻿@using Term.Utils
+@model Yst.ViewModels.OrderViewWithDetails
+@{
+    ViewBag.Title = "Реестр DPD";
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+<style>
+    .clientdata td {
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .text-left {
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .text-right {
+        text-align: right;
+        font-size: 12px;
+    }
+
+    .text-center {
+        text-align: center;
+        font-size: 12px;
+    }
+</style>
+
+<div style="text-align: center; font-size: 16px;">
+    Заказ на поставку товара
+</div>
+<div style="text-align: center; font-size: 16px;">
+    к соглашению к договору поставки № @Model.FildsForDpdForm.ContractNumber от @Model.FildsForDpdForm.ContractDate г.<br /><br /><br />
+</div>
+
+<div style="width: 50%; float: left;">
+    <table class="clientdata" border="1" cellspacing="0" style="border-collapse: collapse;word-wrap: break-word;">
+        <tr>
+            <td>Название Покупателя:</td>
+            <td>@Model.FildsForDpdForm.PartnerName</td>
+        </tr>
+        <tr>
+            <td>ИНН Покупателя:</td>
+            <td>@Model.FildsForDpdForm.PartnerInnKpp</td>
+        </tr>
+        <tr>
+            <td>Адрес Покупателя:</td>
+            <td>@Model.FildsForDpdForm.Address</td>
+        </tr>
+        <tr>
+            <td>Поставщик:</td>
+            <td>ЗАО Торговая компания "Яршинторг"</td>
+        </tr>
+        <tr>
+            <td>ИНН Поставщика:</td>
+            <td>7604069216</td>
+        </tr>
+        <tr>
+            <td>Адрес Поставщика:</td>
+            <td>150044, Ярославль г, Базовая ул, дом №3, строение 2</td>
+        </tr>
+        <tr>
+            <td>Контактное лицо:</td>
+            <td>@Model.FildsForDpdForm.PartnerManager</td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td>@Model.FildsForDpdForm.EMailManager</td>
+        </tr>
+        <tr>
+            <td>Дата забора груза:</td>
+            <td>@Model.OrderData.DeliveryDate.ToShortDateFormat()</td>
+        </tr>
+    </table>
+</div>
+
+
+<div style="width: 100%; float: left;">
+    <br />
+    <table border="1" cellspacing="0" style="border-collapse: collapse; word-wrap: break-word;">
+        <tr>
+            <td class="text-center">Номер заказа клиента</td>
+            <td class="text-center">Кол-во мест</td>
+            <td class="text-center">Факт. вес</td>
+            <td class="text-center">Сумма товаров</td>
+            <td class="text-center">Сумма услуг</td>
+            <td class="text-center">Грузополучатель</td>
+            <td class="text-center">Город доставки</td>
+            <td class="text-center">Адрес Получателя</td>
+            <td class="text-center">Вариант доставки</td>
+            <td class="text-center">Содержимое</td>
+        </tr>
+        <tr>
+            <td class="text-center">@Model.OrderData.NumberIn1S</td>
+            <td class="text-center">@Model.FildsForDpdForm.TotalCount</td>
+            <td class="text-right">@Model.FildsForDpdForm.TotalWeight</td>
+            <td class="text-right">@Model.OrderData.Total</td>
+            <td class="text-right">@Model.OrderData.CostOfDelivery</td>
+            <td class="text-left">@Model.OrderData.ContactFIOOfClient</td>
+            <td class="text-left">@Model.FildsForDpdForm.DeliveryCity</td>
+            <td class="text-left">@Model.OrderData.DeliveryDataString</td>
+            <td class="text-center">@Model.FildsForDpdForm.DeliveryType</td>
+            <td class="text-left">
+                @foreach (var item in Model.OrderDetails)
+                {
+                    @("(" + item.ProductId + ") " + item.ProductName)
+                    <br />
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="width: 100%; float: left; font-size: 12px;">
+    <br /><br />
+    <span>Покупатель:</span><br /><br />
+    <span>Должность:</span><span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>Подпись:</span><span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>ФИО:</span><span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <br /><br /><br />
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;М.П.</span>
+    <br /><br /><br />
+    <span>Дата: </span><span>@DateTime.Now.ToShortDateString()</span><br />
+    <span>Время: </span><span>@DateTime.Now.ToShortTimeString()</span><br />
+    <br /><br />
+    <span style="font-size: 10px;">Варианты доставки ДД - от двери до двери; ДТ - от двери до терминала; ДА - от двери до аэропорта; ТД - от терминала до двери; ТТ - от терминала до терминала; ТА - от терминала до аэропорта</span>
+</div>
+
+
+
+<script type="text/javascript">
+    window.print();
+</script>

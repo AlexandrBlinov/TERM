@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Список новостей (для администратора)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model NewsViewModel
+
+@{Html.RenderPartial("~/Views/News/_AddNewsForm.cshtml");}
+
+<h2>Список новостей (для администратора)</h2>
+<table class="data-table order-table">
+    <thead>
+        <tr>
+            <th>
+                ИД
+            </th>
+            <th>
+                ДАТА СОЗДАНИЯ
+            </th>
+            <th>
+                НАЗВАНИЕ
+            </th>
+            <th>
+                РЕДАКТИРОВАТЬ
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.News)
+        {
+            
+         <tr>
+             <td>@item.Id</td>
+             <td>@item.DatePublish.ToShortDateString()</td>
+             <td>@item.NewsName</td>
+             <td>@Html.ActionLink("Редактировать", "GetNewsDetails", new { Id = item.Id }, new { @class = "order-table-details" })</td>
+         </tr>
+        }
+    </tbody>
+</table>
+

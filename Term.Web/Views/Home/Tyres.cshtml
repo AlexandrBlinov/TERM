@@ -1,0 +1,350 @@
+﻿@using System.Web.Mvc.Html
+@using Term.Web.HtmlHelpers
+@using YstTerm.Models
+@using YstProject.Services
+@model  TyresPodborView
+@using Term.Web.Views.Resources;
+
+
+@{
+    ViewBag.Title = @ForSearchResult.SearchByTyreSize;
+}
+
+@*@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Tyres })*@
+
+@using (Html.BeginForm("Tyres", "Home", FormMethod.Get, new { @id = "tyres-podbor", @data_name = "tyre" }))
+{
+    @Html.Hidden("SortBy", Model.SortBy)
+    @Html.Hidden("DisplayView", Model.DisplayView)
+    @Html.Hidden("ItemsPerPage", Model.ItemsPerPage)
+    @Html.Hidden("Ship", Model.Ship)
+    @Html.Hidden("PriceMin", Model.PriceMin)
+    @Html.Hidden("PriceMax", Model.PriceMax)
+    <div class="row border-form-podbor">
+        <img class="podbor-tyres-title-img" src="~/Content/img/img-tyres-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseTyres</span>
+        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img src="~/Content/img/clear-param.png"/></a>
+    </div>
+    <div class="row m-b-20">
+       @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
+    </div>
+        
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 ">
+            <div class="row">
+                <div class="col-xs-12 m-b-20">
+                    <span class="podbor-tyres-param">@ForSearchResult.Param</span>
+                </div>
+                <div class="col-xs-12 col-md-4 m-b-10">
+
+                    @Html.DropDownListFor(p => p.ProducerId, new SelectList(Model.Producers, "ProducerID", "Name"), @ForSearchResult.ChooseSupplier, new {@class = "form-control"})
+                    
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+
+                    @Html.DropDownListFor(p => p.Diametr, new SelectList(Model.Diametrs), @ForSearchResult.Diameter, new {@class = "form-control"})
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+
+                    @Html.DropDownListFor(p => p.Width, new SelectList(Model.Widths), @ForSearchResult.Width, new {@class = "form-control"})
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+
+                    @Html.DropDownListFor(p => p.Height, new SelectList(Model.Heights), @ForSearchResult.Height, new {@class = "form-control"})
+                </div>
+                <div class="col-xs-12 col-md-2 m-b-10">
+
+                    @Html.DropDownListFor(p => p.SeasonId, Model.Seasons, @ForSearchResult.Season, new {@class = "form-control"})
+                </div>
+            </div>
+            <div class="row m-t-15 m-b-20">
+                <div class="col-xs-12">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipAll, new { @id = "shipall" }) <label class="m-r-20" for="shipall"><span class="radio-label-span">@ForSearchResult.AllShip</span></label>
+                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipShip, new { @id = "shipship" }) <label class="m-r-20" for="shipship"><span class="radio-label-span">@ForSearchResult.Ship</span></label>
+                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipNoShip, new { @id = "shipnoship" }) <label class="m-r-20" for="shipnoship"><span class="radio-label-span">@ForSearchResult.NoShip</span></label>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.CheckBoxFor(model => model.IsSet4Items, new { @id = "IsSet4Items" }) <label class="m-r-20" for="IsSet4Items"><span class="radio-label-span">@ForSearchResult.IsSet4Items</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="col-sm-3 hidden-xs">
+            <div class="col-xs-12 m-b-20">
+                <span class="podbor-tyres-param">@ForSearchResult.Price</span>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    @ForSearchResult.From <input type="text" class="form-control input-price-range m-b-10" id="price-slider-min" /> &mdash;
+                </div>
+                <div class="form-group">
+                    @ForSearchResult.To <input type="text" class="form-control input-price-range m-b-10" id="price-slider-max" />
+                </div>
+            </div>
+            <div>
+                
+                <div id="slider-range" class="m-t-15"></div>
+                <p>
+                    <span class="slider-price-const-min">0</span>
+                    <span id="MaxPrice" class="slider-price-const-max">@ViewBag.MaxPrice</span>
+                    <span id="PriceStepSlide" class="invisible">@ViewBag.PriceStepSlide</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center border-form-podbor">
+        <button type="submit" class="form-podbor-btn-submit">@ForSearchResult.ChooseTyres</button>
+    </div>
+}
+
+<div class="row m-b-20">
+    
+    <span class="podbor-tyres-title">@Header.Tyres (@Model.SearchResults.TotalItemCount)</span>
+    @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("Tyres", new
+        {
+            page,
+            ProducerId = Model.ProducerId,
+            Article = Model.Article,
+            Name = Model.Name,
+            Width = Model.Width,
+            Height = Model.Height,
+            Diametr = Model.Diametr,
+            SeasonId = Model.SeasonId,
+            ItemsPerPage = Model.ItemsPerPage,
+            SortBy = Model.SortBy,
+            Ship = Model.Ship,
+            IsSet4Items = Model.IsSet4Items,
+            PriceMin = Model.PriceMin,
+            PriceMax = Model.PriceMax,
+            DisplayView = Model.DisplayView
+        }),
+        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+
+
+</div>
+
+<div class="row">
+    <div class="col-xs-8">
+
+        <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
+
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.Name, "Tyres", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    Width = Model.Width,
+                                    Height = Model.Height,
+                                    Diametr = Model.Diametr,
+                                    SeasonId = Model.SeasonId,
+                                    DisplayView = Model.DisplayView,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    Ship = Model.Ship,
+                                    PriceMin = Model.PriceMin,
+                                    PriceMax = Model.PriceMax,
+                                    SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
+                                }, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.NameAsc || Model.SortBy == SortBy.NameDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.NameAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.DeliveryTime, "Tyres", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    Width = Model.Width,
+                                    Height = Model.Height,
+                                    Diametr = Model.Diametr,
+                                    SeasonId = Model.SeasonId,
+                                    DisplayView = Model.DisplayView,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    Ship = Model.Ship,
+                                    IsSet4Items = Model.IsSet4Items,
+                                    PriceMin = Model.PriceMin,
+                                    PriceMax = Model.PriceMax,
+                                    SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
+                                }, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.DeliveryAsc || Model.SortBy == SortBy.DeliveryDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.DeliveryAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.Amount, "Tyres", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    Width = Model.Width,
+                                    Height = Model.Height,
+                                    Diametr = Model.Diametr,
+                                    SeasonId = Model.SeasonId,
+                                    DisplayView = Model.DisplayView,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    Ship = Model.Ship,
+                                    IsSet4Items = Model.IsSet4Items,
+                                    PriceMin = Model.PriceMin,
+                                    PriceMax = Model.PriceMax,
+                                    SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
+                                }, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.AmountAsc || Model.SortBy == SortBy.AmountDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.AmountAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.Price, "Tyres", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    Width = Model.Width,
+                                    Height = Model.Height,
+                                    Diametr = Model.Diametr,
+                                    SeasonId = Model.SeasonId,
+                                    DisplayView = Model.DisplayView,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    Ship = Model.Ship,
+                                    IsSet4Items = Model.IsSet4Items,
+                                    PriceMin = Model.PriceMin,
+                                    PriceMax = Model.PriceMax,
+                                    SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
+                                }, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.PriceAsc || Model.SortBy == SortBy.PriceDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.PriceAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+
+    </div>
+    <div class="col-xs-4">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="psevdo-select">
+                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                    <select class="form-control" id="ItemsPerPageForm">
+                        <option @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
+                        <option @(Model.ItemsPerPage == 20 ? "selected" : "")>20</option>
+                        <option @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
+                        <option @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
+                        <option @(Model.ItemsPerPage == 200 ? "selected" : "")>200</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-xs-4">
+                <div class="btn-group form-podbor-change-view" role="group">
+                    <div id="table" class="btn btn-default @(Model.DisplayView == Display.Table ? "active" : "")">
+                        @Html.ActionLink(" ", "Tyres", new
+                        {
+
+                            ProducerId = Model.ProducerId,
+                            Article = Model.Article,
+                            Name = Model.Name,
+                            Width = Model.Width,
+                            Height = Model.Height,
+                            Diametr = Model.Diametr,
+                            SeasonId = Model.SeasonId,
+                            ItemsPerPage = Model.ItemsPerPage,
+                            SortBy = Model.SortBy,
+                            DisplayView = "Table",
+                            PriceMin = Model.PriceMin,
+                            PriceMax = Model.PriceMax,
+                            Ship = Model.Ship
+                        }, new { @class = "glyphicon glyphicon-th-list change-view-custom", title = @ForSearchResult.List })
+                    </div>
+
+                    <div id="plitka" class="btn btn-default @(Model.DisplayView == Display.Plitka ? "active" : "")">
+                        @Html.ActionLink(" ", "Tyres", new
+                        {
+
+                            ProducerId = Model.ProducerId,
+                            Article = Model.Article,
+                            Name = Model.Name,
+                            Width = Model.Width,
+                            Height = Model.Height,
+                            Diametr = Model.Diametr,
+                            SeasonId = Model.SeasonId,
+                            ItemsPerPage = Model.ItemsPerPage,
+                            SortBy = Model.SortBy,
+                            DisplayView = "Plitka",
+                            PriceMin = Model.PriceMin,
+                            PriceMax = Model.PriceMax,
+                            Ship = Model.Ship
+                        }, new { @class = "glyphicon glyphicon-th change-view-custom", title = @ForSearchResult.Tile })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@{Html.RenderPartial("_Tyres", Model);}
+
+
+
+<div class="row m-t-30">
+    
+    @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("Tyres", new
+        {
+            page,
+            ProducerId = Model.ProducerId,
+            Article = Model.Article,
+            Name = Model.Name,
+            Width = Model.Width,
+            Height = Model.Height,
+            Diametr = Model.Diametr,
+            SeasonId = Model.SeasonId,
+            ItemsPerPage = Model.ItemsPerPage,
+            Ship = Model.Ship,
+            IsSet4Items = Model.IsSet4Items,
+            SortBy = Model.SortBy,
+            PriceMin = Model.PriceMin,
+            PriceMax = Model.PriceMax,
+            DisplayView = Model.DisplayView
+        }),
+        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+</div>
+
+@section Scripts {
+    <script>
+        // Подключаем iCheck Для radiobutton в корзине
+        $('[type=radio],[type=checkbox]').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue'
+        });
+    </script>
+}

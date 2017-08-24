@@ -1,0 +1,7 @@
+﻿
+@{
+    String CartText = (int)ViewData["CartCount"] > 0 ? ViewData["CartCount"].ToString() : " ";
+}
+
+<a href="@Url.Action("Index","ShoppingCart")" id="cart-status" class="second">  <img src="~/Content/img/cart.png" />  <span id="cart-status-count">@CartText</span></a>
+

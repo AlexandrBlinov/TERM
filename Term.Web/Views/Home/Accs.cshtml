@@ -1,0 +1,302 @@
+﻿@using Term.Web.HtmlHelpers
+@using YstTerm.Models
+@model  AccPodborView
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = Header.Accessories;
+}
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Accessories })
+
+
+<div class="row border-form-podbor">
+    <img class="podbor-tyres-title-img" src="~/Content/img/img-acc-podbor.png"/> <span class="podbor-tyres-title">@Header.Accessories (@Model.SearchResults.TotalItemCount)</span>
+    @{Html.RenderPartial("_AccsSpecialOffer");}
+</div>
+
+
+<div class="row m-t-15">
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <div class="podbor_acc">
+            @using (Html.BeginForm("Accs", "Home", FormMethod.Get, new { @id = "acc-podbor", @class = "podbor", @data_name = "acc" }))
+            {
+                @Html.Hidden("SortBy", Model.SortBy)
+                @Html.Hidden("ItemsPerPage", Model.ItemsPerPage)
+                <div class="controls controls-row">
+                    <button class="accs-podbor-submit" type="submit">@ForSearchResult.ToSearch</button>
+                    <button class="accs-podbor-clear" id="resetAccsButton">@ForSearchResult.Clear</button>
+                </div>
+                <div class="m-t-15">
+                    @Html.TextBoxFor(p => p.Article, new { @placeholder = @ForSearchResult.CodeOrArt, @class = "form-control" })
+                </div>
+    
+    <div class="m-t-15">
+        @Html.DropDownListFor(p => p.ProducerId, new SelectList(Model.Producers, "ProducerId", "Name"), @ForSearchResult.ChooseSupplier, new { @class = "form-control" })
+    </div>
+    <div class="m-t-15">
+        @Html.CheckBoxFor(p => p.OnlySale, new { @class = "icheck" }) <label class="m-r-20" for="OnlySale"><span class="radio-label-span">@ForSearchResult.Sale</span></label>
+    </div>
+                    <div id="acc-categories">
+                        @foreach (var producer in (IList<ProductCategory>) ViewBag.Categories)
+                        {
+                            if (producer.ParentId == null)
+                            {
+                                var isChecked = Model.SelectedCategories.Contains(producer.ProductId.ToString()) ? " checked" : "";
+                                var selectedFolder = Model.SelectedFolders.Contains(producer.ProductId.ToString()) ? " glyphicon glyphicon-minus multiplue" : "glyphicon glyphicon-plus multiplue";
+                                var hiddenLev2 = Model.SelectedFolders.Contains(producer.ProductId.ToString()) ? "" : "hidden";
+                                <div class="accs-podbor-category">
+                                    @if (producer.CountOfProducts == 0)
+                                    {
+                                        <span style="float: left; margin-right: 5px; cursor: pointer;" class="@selectedFolder" data-child="@producer.ProductId"></span>
+                                    }
+                                    <input type="checkbox" id="@("id" + producer.ProductId)" class="checkbox-form-podbor accs-category" value="@producer.ProductId" @isChecked/>
+                                    <label class="checkbox-form-podbor-label" for="@("id" + producer.ProductId)">&nbsp;@producer.Name</label>
+                                </div>
+                                foreach (var producerLev2 in (IList<ProductCategory>) ViewBag.Categories)
+                                {
+                                    if (producer.ProductId == producerLev2.ParentId)
+                                    {
+                                        var isCheckedLev2 = Model.SelectedCategories.Contains(producerLev2.ProductId.ToString()) ? " checked" : "";
+                                        <div class="accs-podbor-category" data-level="2" data-parent="@producerLev2.ParentId" @hiddenLev2>
+                                            <input type="checkbox" id="@("id" + producerLev2.ProductId)" class="checkbox-form-podbor accs-category" value="@producerLev2.ProductId" @isCheckedLev2/>
+                                            <label class="checkbox-form-podbor-label accs_cat_lev2" for="@("id" + producerLev2.ProductId)">&nbsp;@producerLev2.Name</label>
+                                        </div>
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                    </div>
+                    }
+                </div>
+    </div>
+
+
+    <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        <div class="row">
+            @Html.PagedListPager(Model.SearchResults, page => Url.Action("Accs", new
+        {
+            page,
+            ProducerId = Model.ProducerId,
+            Article = Model.Article,
+            Name = Model.Name,
+            ItemsPerPage = Model.ItemsPerPage,
+            categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+            SortBy = Model.SortBy
+
+        }),
+                                 new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+
+
+        </div>
+        <div class="row">
+
+            <div class="col-xs-8 m-t-15">
+
+
+                <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                    @Html.ActionLink(@ForSearchResult.Name, "Accs", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                                    SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
+                                }, new { @class = "sort-btn-a" })
+                    @{
+                        if (Model.SortBy == SortBy.NameAsc || Model.SortBy == SortBy.NameDesc)
+                        {
+                            <span class="@(Model.SortBy == SortBy.NameAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                        }
+                        else
+                        {
+                            <span class="sort-icon-default"> </span>
+                        }
+                    }
+                </div>
+                <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                    @Html.ActionLink(@ForSearchResult.Amount, "Accs", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                                    SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
+                                }, new { @class = "sort-btn-a" })
+                    @{
+                        if (Model.SortBy == SortBy.AmountAsc || Model.SortBy == SortBy.AmountDesc)
+                        {
+                            <span class="@(Model.SortBy == SortBy.AmountAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                        }
+                        else
+                        {
+                            <span class="sort-icon-default"> </span>
+                        }
+                    }
+                </div>
+                <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                    @Html.ActionLink(@ForSearchResult.Price, "Accs", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                                    SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
+                                }, new { @class = "sort-btn-a" })
+                    @{
+                        if (Model.SortBy == SortBy.PriceAsc || Model.SortBy == SortBy.PriceDesc)
+                        {
+                            <span class="@(Model.SortBy == SortBy.PriceAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                        }
+                        else
+                        {
+                            <span class="sort-icon-default"> </span>
+                        }
+                    }
+                </div>
+                <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                    @Html.ActionLink(@ForSearchResult.DeliveryTime, "Accs", new
+                                {
+                                    ProducerId = Model.ProducerId,
+                                    Article = Model.Article,
+                                    Name = Model.Name,
+                                    ItemsPerPage = Model.ItemsPerPage,
+                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                                    SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
+                                }, new { @class = "sort-btn-a" })
+                    @{
+                        if (Model.SortBy == SortBy.DeliveryAsc || Model.SortBy == SortBy.DeliveryDesc)
+                        {
+                            <span class="@(Model.SortBy == SortBy.DeliveryAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                        }
+                        else
+                        {
+                            <span class="sort-icon-default"> </span>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 m-t-15">
+                <div class="row">
+                    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+
+                    </div>
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+
+                        <div class="psevdo-select">
+                            <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                            <select class="form-control" id="ItemsPerPageForm">
+                                <option @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
+                                <option @(Model.ItemsPerPage == 20 ? "selected" : "")>20</option>
+                                <option @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
+                                <option @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
+                                <option @(Model.ItemsPerPage == 200 ? "selected" : "")>200</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <table class="data-table order-table accs-data-table m-t-15">
+
+            <thead>
+                <tr>
+                    <th>@ForSearchResult.Photo</th>
+                    <th>@ForSearchResult.StockNumber</th>
+                    <th>
+                        @ForSearchResult.Name
+                    </th>
+                    <th class="acc-rest">
+                        @ForSearchResult.Amount
+                    </th>
+                    <th>
+                        @ForSearchResult.Price
+                    </th>
+                    <th class="accs-product-count">@ForSearchResult.Available</th>
+                    <th>@ForSearchResult.Action</th>
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model.SearchResults as IPagedList<AccSearchResult>)
+            {
+                <tr>
+                    <td>
+                        @{string saleImgClass = item.IsSaleProduct ? "sale-img" : "";}
+                        <span class="@saleImgClass"></span>
+                        <a class="fancybox-btn" href="@Html.FullPathToImage("acc", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("acc", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)<br />
+                        @Html.DisplayFor(modelItem => item.Article)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
+                    </td>
+                    @if (item.Rest != 50)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rest)<br />
+                            (@item.DaysToDepartment @ForSearchResult.Days)
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            > @Html.DisplayFor(modelItem => item.Rest)<br />
+                            (@item.DaysToDepartment @ForSearchResult.Days)
+                        </td>
+                    }
+                    <td>
+                        <span class="data-table-price">@item.PriceOfClient </span>
+                    </td>
+
+                    <td>
+                        @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
+
+                    </td>
+                    <td>
+                        <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                        <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        
+        <div class="row m-t-15">
+            @Html.PagedListPager(Model.SearchResults, page => Url.Action("Accs", new
+        {
+            page,
+            ProducerId = Model.ProducerId,
+            Article = Model.Article,
+            Name = Model.Name,
+            ItemsPerPage = Model.ItemsPerPage,
+            categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+            SortBy = Model.SortBy
+        }), new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+        </div>
+        </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Подключаем iCheck Для radiobutton в корзине
+        $('.icheck').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue'
+        });
+    </script>
+    }

@@ -1,0 +1,89 @@
+﻿
+.season-buttons>a.active,.season-buttons>button.active {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
+    border-color: rgb(53, 126, 189);
+}
+
+.table.table-striped .grouped-result{
+background-color:rgba(66, 139, 202,0.3);
+}
+
+.season-cart.table td.caption-factory {
+    color:rgb(66, 139, 202);
+    background-color:rgba(66, 139, 202,0.3);
+    margin:0;
+    padding:0;
+}
+
+.link_item-dashed {
+    display:inline-block;
+    border:none;
+    border-bottom:1px dashed rgb(53, 126, 189);
+     color:rgb(53, 126, 189) ;
+    
+}
+
+.link_item-dashed.active {
+    font-weight: bold;
+    border: none;
+    color: #606060;
+    padding: 1px 3px;
+    border-top: 2px solid #009efe;
+}
+
+.tasks-top-item-counter {
+    background-color: rgb(218, 81, 81);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 10px;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.32);
+    box-shadow: 0 2px 4px rgba(0,0,0,.32);
+    color: rgb(255, 255, 255);
+    line-height: 18px;
+    height: 21px;
+    width:20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 0 1px rgba(0,0,0,.15);
+    min-width: 11px;
+    text-align: center;
+    padding: 0 3px;
+    display: inline-block;
+}
+
+.tasks-top-item-counter {
+    top: 3px;
+    right: 7px;
+    position: absolute;
+}
+
+.dropdown-menu > li > a {
+    padding:10px 20px;
+}
+
+.doc_buttons {
+    padding:10px;
+    border:none;
+    background:#EEE;
+    border-bottom: 1px solid rgb(229, 229, 229);
+    border-top: 1px solid rgb(229, 229, 229);
+}
+
+.doc_buttons__button {
+    margin-left:20px;
+}
+
+
+@media (min-width:768px)
+{
+
+.doc_definitions dt {
+    width:200px;  
+}
+
+.doc_definitions dd {
+    margin-left:220px;
+    margin-bottom:10px;
+}
+
+} 

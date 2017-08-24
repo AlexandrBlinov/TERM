@@ -1,0 +1,359 @@
+﻿@using Yst.Utils;
+@using Yst.ViewModels
+@model Yst.ViewModels.ShoppingCartViewModelExtended
+@using Term.Web.Views.Resources;
+@using Term.Web.HtmlHelpers;
+
+
+@{
+    ViewBag.Title = Header.Cart;
+
+
+    bool isUserHasDpdContract = Model.CanUserUseDpdDelivery;
+    //bool isAdmin = Model.CanUserUseDpdDelivery;
+
+    bool isAdmin = !(ViewBag.IsForeign || ViewBag.HasitemsOnWay);
+    
+    
+    //string isAdminJs = isAdmin ? "true" : "false";
+    //string isUserHasDpdContractJs = isUserHasDpdContract ? "true" : "false";
+
+    string invisReservOrShipment = (ViewBag.IsForeign || ViewBag.HasitemsOnWay) ? "hidden" : "";
+    string hiddenDeliveryDate = !Model.IsDelivery ? "hidden" : "";
+
+    string hiddenDeliveryByTk = !isAdmin ? "hidden" : "";
+
+    // Переменные для доставки
+
+
+    string hiddensectionTransportContainer = !Model.IsDeliveryByTk ? "display: none;" : "";
+
+
+    var styleTerminal = Model.IsDeliveryByTk && Model.TerminalOrAddress ? "" : "display: none;";
+    var styleAddress = Model.IsDeliveryByTk && !Model.TerminalOrAddress ? "" : "display: none;";
+
+    var styleCostOfDelivery = Model.IsDeliveryByTk && isAdmin && Model.CostOfDelivery > 0;
+    
+
+    var styleCityDependingDataHidden = String.IsNullOrEmpty(Model.City) ? "display: none;" : "";
+
+    var styleformGroupHasSuccess = "has-success has-feedback";
+
+    var daysOfDeliveryFromSupplier = 0;
+    if (Model.CartItems.Count > 0 && Model.CartItems.Any(m => m.SupplierId > 0))
+    {
+        daysOfDeliveryFromSupplier = Model.CartItems.Where(m => m.SupplierId > 0).Max(p=>p.DaysToDepartment);
+    }
+        
+    
+    
+    
+}
+
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Cart })
+
+
+
+
+
+@if (Model.CartItems.Count == 0)
+{
+    <div>@Header.CartEmpty</div>
+
+    <h4 class="float_right">
+        @using (Html.BeginForm("uploadexcel", "ShoppingCart", FormMethod.Post,
+new { enctype = "multipart/form-data" }))
+        {
+            <span>Загрузить из excel</span>
+            <span class="btn btn-default btn-file glyphicon glyphicon-paperclip">
+                <input type="file" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="file">
+            </span>
+
+        }
+    </h4>
+}
+else
+{
+    
+    
+    <h1 class="cart-main-header"><span>@Header.Cart </span><span class="cart-count">(@Model.CartCount)</span></h1>
+    <div id="shopping-cart" class="row">
+        @using (Html.BeginForm("CreateOrder", "ShoppingCart", FormMethod.Post,new {@id="shopping-cart-form"}))
+        {
+          //  if (!Html.ViewData.ModelState.IsValid)
+            //{ <div class="alert alert-danger cart-errors" role="alert">@Html.ValidationSummary()</div>  }
+            
+
+            @Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+   <!-- begin info about delivery -->
+    <div class="row @invisReservOrShipment">
+        <div class="col-xs-2">
+            @Html.RadioButtonFor(m => m.IsDelivery, "false", new { @id = "isReserve" })
+            <label class="cart-label m-t-5" for="isReserve">@CartAndOrders.Reserve</label>
+
+        </div>
+        <div class="col-xs-2">
+            @Html.RadioButtonFor(m => m.IsDelivery, "true", new { @id = "isDelivery" })
+            <label class="cart-label m-t-5" for="isDelivery">@CartAndOrders.ForShipment</label>
+
+        </div>
+        <div class="col-xs-2 @hiddenDeliveryDate" id="deliverydate_container">
+            @*{ DateTime deliveryDate = Model.DeliveryDate ?? DateTime.Now.AddDays(1);} *@
+
+            <div class="input-group date">
+                @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control cart-date-control", data_val_requiredifnotcheched = CartAndOrders.ErrorShipmentDate, data_val_requiredifnotcheched_id = "isDelivery" })
+                <span class="input-group-addon date-pick-btn">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+
+
+        </div>
+        <div id="deliveryByTk_container" class="@hiddenDeliveryDate @hiddenDeliveryByTk col-xs-4">
+            @Html.CheckBox("IsDeliveryByTk")
+            <label class="cart-label m-t-5" for="IsDeliveryByTk">@CartAndOrders.DeliveryByTransportCompany</label>
+
+        </div>
+    </div>
+
+            <div class="transport-container" style="@hiddensectionTransportContainer">
+                <hr class="cart-divider"/>
+                <h3 class="cart-delivery-calc"><a class="btn btn-circle btn-info"><i class="glyphicon glyphicon-th"></i></a> Рассчет стоимости доставки
+                </h3>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group dpd-city">
+                            @Html.Label("CityCaption", "Город", htmlAttributes: new { @class = "cart-label" })
+
+
+                            @Html.TextBox("City", "", new { @class = "form-control m-b-10", @placeholder = "Начните вводить, затем выберите город"})
+
+                            @Html.HiddenFor(m => m.CityId)
+
+                            <div class="cityDependingData" style="@styleCityDependingDataHidden">
+                                <div class="delivery-price-value m-b-10 cost-of-delivery">
+                                    @*Html.Price(Model.CostOfDelivery, "cost-of-delivery_label", "cost-of-delivery", "cost-of-delivery")*@
+                                    Стоимость доставки: <span class="delivery-price" id="cost-of-delivery"></span>
+                                </div>
+                                <div class="m-b-10 cost-of-delivery">Число дней доставки:<span id="delivery-time" >
+
+</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hidden-xs">
+                        @Html.HiddenFor(m => m.RegionId, new {@class="delivery-field"})
+                        @Html.HiddenFor(m => m.PostalCode, new { @class = "delivery-field" })
+                        @Html.HiddenFor(m => m.StreetType, new { @class = "delivery-field" })
+                        @Html.HiddenFor(m => m.Street, new { @class = "delivery-field" })
+                        @Html.HiddenFor(m => m.House, new {@class="delivery-field"})
+                        @Html.HiddenFor(m => m.BlockType, new {@class="delivery-field"})
+                    </div>
+
+                    <div class="col-xs-4 form-inline m-t-30 cityDependingData" style="@styleCityDependingDataHidden">
+                        <div class="form-group col-xs-6">
+                            @Html.RadioButtonFor(m => m.TerminalOrAddress, "true", new {@id = "fromTerminal"})
+
+                            <label for="fromTerminal" class="cart-label">До терминала</label>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            @Html.RadioButtonFor(m => m.TerminalOrAddress, "false", new {@id = "fromAddress"})
+
+                            <label for="fromAddress" class="cart-label">По адресу</label>
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <div class="form-group dpd-address-and-terminals cityDependingData" style="@styleCityDependingDataHidden">
+                            <div class="dpd-terminals" style="@styleTerminal">
+
+                                @Html.Label("TerminalsCaption", "Терминал", htmlAttributes: new {@class = "cart-label"})
+                                <select class="form-control" id="TerminalsDpd" name="TerminalsDpd"></select>
+                                <span id="term-schedule" class="term-underline"> </span>
+
+                            </div>
+
+                            <div class="dpd-address" style="@styleAddress">
+                                @Html.Label("AddressCaption", "Адрес", htmlAttributes: new {@class = "cart-label"})
+
+                                @Html.TextBox("Address", "", new {@class = "form-control",@placeholder="Начните вводить, затем выберите адрес"})
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                    <div class="row">
+                        <div class="col-xs-12 text-center m-t-10 cityDependingData" style="@styleCityDependingDataHidden">
+                            
+                            <!-- <button class="form-podbor-btn-submit m-r-20" type="button" onclick="javascript: getCostOfDelivery();">Рассчитать стоимость</button> -->
+                            <!--<span class="f-w-100 delivery-price-value">@Html.Price(Model.CostOfDelivery, "data-table-price-label", "data-table-price", "cost-of-delivery")</span>-->
+                        </div>
+                    </div>
+                
+
+                </div>
+
+    <hr class="cart-divider" />
+    <h3 class="cart-delivery-calc"><a class="btn btn-circle btn-success"><i class="glyphicon glyphicon-user"></i></a> @CartAndOrders.CustomerData</h3>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        @Html.Label("ContactFIOLabel", @CartAndOrders.Name, htmlAttributes: new { @class = "cart-label" })
+                        
+                        @Html.TextBoxFor(p => p.ContactFIOOfClient, new { @class = "form-control input-display_validation", placeholder = "", data_val = "true", data_val_requiredifnotcheched = ShoppingCartErrors.EnterFioOfClient, data_val_requiredifnotcheched_id = "IsDeliveryByTk" })
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        @Html.Label("PhoneNumberLabel", CartAndOrders.PhoneNumber, htmlAttributes: new { @class = "cart-label"})
+                        @Html.TextBoxFor(p => p.PhoneNumberOfClient, new { @class = "form-control input-display_validation", data_val_requiredifnotcheched = ShoppingCartErrors.EnterPhoneNumber, data_val_requiredifnotcheched_id = "IsDeliveryByTk" })
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <section class="row delivery-buttons-block transport-container" style="@hiddensectionTransportContainer">
+                <hr class="cart-divider" />
+                <div class="col-xs-12 m-t-50"> <input class="btn btn-styled" id="CreateOrderWithDelivery" type="submit" value="Оформить заказ с доставкой" name="CreateOrder">
+                    <input class="btn btn-styled" id="RefuseFromDelivery" type="button" value="Отказаться от доставки" name="RefuseFromDelivery">
+                </div>
+
+            </section>
+            <hr class="cart-divider"/>
+    <h3 class="cart-delivery-calc"><a class="btn btn-circle btn-primary"><i class="glyphicon glyphicon-th-list"></i></a> @CartAndOrders.Contents</h3>
+       <!-- end info about delivery -->
+            <table class="data-table cart-items">
+                <thead>
+                    <tr>
+                        <th>
+                            №
+                        </th>
+                        <th>
+                            @ForSearchResult.Photo
+                        </th>
+                        <th class="product-name">
+                            @ForSearchResult.Name
+                        </th>
+                        <th>
+                            @ForSearchResult.DeliveryTime
+                        </th>
+                        <th>
+                            @ForSearchResult.Price
+                        </th>
+                        <th class="product-count">
+                            @ForSearchResult.Available
+                        </th>
+                        <th>
+                            @ForSearchResult.Action
+                        </th>
+                        @if (Model.Errors != null)
+                        {
+                            <th>
+                                @CartAndOrders.Fault
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int counter = 0;}
+                    @foreach (var item in Model.CartItems)
+                    {
+                        
+                        counter++;
+                        <tr id="@item.ProductId" data-id="@item.ProductId" data-department-id="@item.DepartmentId" data-supplierid="@item.SupplierId">
+                            <td>@counter</td>
+                            <td>
+                              <!--  <img class="data-table-min-img" src="@Html.Thumbnail(@item.Product)" alt="@item.Product.Name" data-src="@Html.RemotePicture(@item.Product)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />-->
+
+                                <a class="fancybox-btn" href="@Html.RemotePicture(@item.Product)" data-title="@item.Product.Name"><img src="@Html.Thumbnail(@item.Product)" alt="@item.Product.Name " class="min_img" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';"></a>
+                            </td>
+                            <td>
+                                @Html.ActionLink(item.Product.Name, "Details", "Home", new { id = item.ProductId }, new { @class = "data-table-a-text" })
+                            </td>
+                            <td class="cartitem-deliverydays">
+                                @item.DaysToDepartment
+                                @ForSearchResult.Days
+                            </td>
+                            <td>
+                                @Html.Price3(item.PriceOfClient)
+                            </td>
+                            <td id="item-count-@item.ProductId">
+                                @Html.TextBox("count-" + @item.ProductId, @item.Count, new { @id = "item-count-product-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number change-in-cart", @type = "text", @min = 1, @max = 200 })
+
+                            </td>
+                            <td>
+                                                               
+
+                                <a href="javascript:RemoveFromCart(@item.ProductId)" class="RemoveLink"><span class="cart-remove-link"></span></a>
+                            </td>
+
+                            @if (Model.Errors != null && Model.Errors.ContainsKey(item.ProductId.ToString()))
+                            {
+                                <td>@(Model.Errors[item.ProductId.ToString()])</td>
+                            }
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="cart-sum-row">
+
+
+                <span class="cart-sum-row-label">@CartAndOrders.Total:</span>
+                @Html.Price(Model.CartTotalOfClient, "data-table-price-label", "data-table-price", "cart-total-OfClient")
+
+                <span class="cart-sum-row-label">@CartAndOrders.Items:</span>
+                <span id="cart-count" class="cart-sum-row-text">@Model.CartCount </span><span class="cart-sum-row-text cart-sum-row-padding"> @Header.Pc</span>
+                <span class="cart-sum-row-label">@CartAndOrders.Cart_Weight:</span>
+                <span id="cart-weight" class="cart-sum-row-text">@Model.TotalWeight @CartAndOrders.Kg</span>
+
+            </div>
+
+
+
+
+           
+
+    <div class="col-xs-12">
+        <span class="cart-create-personal">@CartAndOrders.Comments</span><br>
+        @Html.TextAreaFor(m => m.Comments, 2, 170, new { @class = "form-control cart-create-personal-input-comment", placeholder = @CartAndOrders.WriteComment, @maxlength = 250 })
+        @Html.ValidationMessageFor(m => m.Comments)
+    </div>
+    <div class="col-xs-12 text-center">
+        <input class="form-podbor-btn-submit" id="CreateOrder" type="submit" value="@CartAndOrders.CreateOrder" name="CreateOrder" />
+        
+    </div>
+
+        }
+    </div>
+}
+
+<div class="hidden dpd-data-elements">
+    @Html.Hidden("isUserHasDpdContract", @isUserHasDpdContract);
+    @Html.Hidden("isAdmin", @isAdmin);
+</div>
+
+
+<div class="hidden suppliers-data-elements">
+    @Html.Hidden("daysOfDeliveryFromSupplier", @daysOfDeliveryFromSupplier);
+</div>
+
+    @Html.Partial("_ModalConfirmation", new ViewDataDictionary { { "ModalBodyText", DpdTexts.NotificationModalText1 }, { "id", "modalConfirmation" }, { "ModalTitle", ModalWindows.Confirmation } })
+    @Html.Partial("_ModalConfirmation", new ViewDataDictionary { { "ModalBodyText", "" }, { "id", "modalFromSupplier" }, { "ModalTitle", ModalWindows.Notification } /*, { "buttonYesTitle", "Подтверждаю" }, { "buttonNoTitle", "Отказываюсь" }*/ })
+    @Html.Partial("_ModalNotification", new ViewDataDictionary { { "ModalBodyText", DpdTexts.NotificationModalText2 }, { "id", "modalNotification" }, { "ModalTitle", ModalWindows.Attention } })
+    @Html.Partial("_ModalNotification", new ViewDataDictionary { { "ModalBodyText", "Вы не можете поставить доставку Dpd позднее 14-00 и на выходные дни (сб,вс )" }, { "id", "modalDpdCheckTime" }, { "ModalTitle", ModalWindows.Attention } })
+
+
+    @section Scripts {
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.suggestions/16.6/js/jquery.suggestions.min.js"></script>
+        @Scripts.Render("~/bundles/term_shoppingcart")
+    }

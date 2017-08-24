@@ -1,0 +1,157 @@
+﻿@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = Help.TitleHelp
+;
+}
+
+<h1> @Help.TextHelp1 &laquo;@Help.TextHelp2&raquo; </h1>
+<section>
+    <h3>@Help.TextHelp3</h3>
+    <ul>
+        <li><a href="#1">@Help.TextHelp4</a></li>
+        <li><a href="#2">@Help.TextHelp5</a></li>
+        <li><a href="#4">@Help.TextHelp7</a></li>
+        <li><a href="#5">@Help.TextHelp8</a></li>
+        <li><a href="#6">@Help.TextHelp9</a></li>
+        <li><a href="#7">@Help.TextHelp10</a></li>
+        <li><a href="#10">@Help.TextHelp13</a></li>
+    </ul>
+
+</section>
+
+<section>
+    <h4 class="bold_4">@Help.TextHelp15</h4>
+    <p>
+        @Help.TextHelp16
+    </p>
+    <ul>
+        <li>
+            @Help.TextHelp17
+            @{if (ViewBag.AdditionalStock)
+            {
+                <img style="width:1000px" src="~/Content/img/Help/2.png" />
+            }
+            else
+            {
+                <img style="width:1000px" src="~/Content/img/Help/2_en.png" />
+            }
+            }
+        </li>
+        <li>
+            @Help.TextHelp18
+            @{if (ViewBag.AdditionalStock)
+            {
+                <img style="width:1000px" src="~/Content/img/Help/1.png" />
+            }
+            else
+            {
+                <img style="width:1000px" src="~/Content/img/Help/1_en.png" />
+            }
+            }
+        </li>
+        <li>
+            @Help.TextHelp19<a name="2"></a><br />
+            @{if (ViewBag.AdditionalStock)
+            {
+                <img style="width:1000px" src="~/Content/img/Help/3.png" />
+            }
+            else
+            {
+                <img style="width:1000px" src="~/Content/img/Help/3_en.png" />
+            }
+            }
+        </li>
+    </ul>
+
+    <h4 class="bold_4">@Help.TextHelp20</h4>
+    <p>
+        @Help.TextHelp21
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/4.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/4_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp22<a name="3"></a>
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/5.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp23
+    </p>
+
+    
+
+    <h4 class="bold_4">@Help.TextHelp29</h4>
+    <p>
+        @Help.TextHelp30 <a href="/Orders/List">@Header.Orders</a>.
+        @Help.TextHelp31 <a name="5"></a>@Help.TextHelp32
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp33</h4>
+    <p>
+        @Help.TextHelp34 <a href="/Sales/List">@Header.Sales</a>. <a name="6"></a>
+        @Help.TextHelp35
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp36</h4>
+    <p>
+        @Help.TextHelp37
+        <a name="7"></a>
+        @Help.TextHelp38<a name="8"></a>
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp39</h4>
+    <p>
+        @Help.TextHelp40 <a href="/PriceList">@Header.Pricelist</a>.
+        @Help.TextHelp41
+    </p>
+
+    
+    
+
+    <h4 class="bold_4">@Help.TextHelp51</h4>
+    <p>
+        @Help.TextHelp52
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/7.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/7_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp53
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/8.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/8_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp54
+        <ul>
+            <li>@Help.TextHelp55</li>
+            <li>@Help.TextHelp56<a name="11"></a></li>
+        </ul>
+    </p>
+
+    
+</section>
+
+

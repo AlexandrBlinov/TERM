@@ -1,0 +1,14 @@
+﻿@model YstTerm.Models.BreadcrumbModel
+@using Term.Web.Views.Resources;
+@{
+    Layout = null;
+}
+
+
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index","Home")">@Header.MainPage</a></li>
+        <li class="active">@Model.CurrentActionName</li>
+    </ol>
+</div>
+

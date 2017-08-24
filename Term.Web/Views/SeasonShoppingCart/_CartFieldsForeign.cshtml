@@ -1,0 +1,25 @@
+﻿@model SeasonCartViewModel
+
+<div class="row">
+    @using (Html.BeginForm("createorder", "seasonshoppingcart", FormMethod.Post, new { @id = "seasoncart" }))
+    {       
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="Comments">Comments:</label>
+                <textarea name="Comments" class="form-control noresize" placeholder="" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <section class="form-group bottom50">
+                <div class="col-md-4 text-center">
+                    <label>&nbsp;</label>
+                    @Html.HiddenFor(model => model.ActiveWheelType)
+                    <div class="form-group">
+                        <input class="btn btn-primary btn-lg" type="submit" value="Create production order" name="CreateSeasonOrder" />
+                    </div>
+                </div>
+            </section>
+        </div>
+    }
+</div>

@@ -1,0 +1,24 @@
+﻿@model YstTerm.Models.PartnerPointDTO
+@using Term.Web.Views.Resources;
+
+<label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.SalesMarket</label>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <input class="checkbox" type="checkbox" id="IsOpt" @(Model.IsOpt ? "checked" : "checked") value="@Settings.Wholesale">
+        <label class="checkbox-label label-lineheight30 no-select" for="IsOpt"><span class="dspl_ts">@Settings.Wholesale</span></label>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <input class="checkbox" type="checkbox" id="IsRetail" @(Model.IsRetail ? "checked" : "") value="@Settings.Retail">
+        <label class="checkbox-label label-lineheight30 no-select" for="IsRetail"><span class="dspl_ts">@Settings.Retail</span></label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <input class="checkbox" type="checkbox" id="IsInetShop" @(Model.IsInetShop ? "checked" : "") value="@Settings.OnlineShop">
+        <label class="checkbox-label label-lineheight30 no-select" for="IsInetShop"><span class="dspl_ts">@Settings.OnlineShop</span></label>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <input class="checkbox" type="checkbox" id="IsEndCustomer" @(Model.IsEndCustomer ? "checked" : "") value="@Settings.EndCustomer">
+        <label class="checkbox-label label-lineheight15 no-select" for="IsEndCustomer"><span class="dspl_ts">@Settings.EndCustomer</span></label>
+    </div>
+</div>

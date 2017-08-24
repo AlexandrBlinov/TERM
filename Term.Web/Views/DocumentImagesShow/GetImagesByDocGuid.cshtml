@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Term.DAL.File>
+
+@{
+    string guidIn1S = ViewBag.GuidIn1S.ToString();
+}
+
+@if (ViewBag.FromAction) { 
+<div class="row m-t-30">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("Upload", "DocumentImagesShow", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.Hidden("GuidIn1S", @guidIn1S) 
+
+                </div>
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                        <input type="file" id="upload" name="upload" class="hidden" multiple accept='image/*' />
+                        <a href="javascript:void(0)" id="upload-file__link" class="attachdoc__link">Прикрепить документ</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+        }
+    </div>
+</div>
+}
+    
+<div class="row">
+    <div class="col-xs-12">
+        @foreach (var file in Model)
+        {
+            <div class="col-sm-4 col-md-3 m-b-20">
+                <img src='@Url.Action("GetById", "DocumentImagesShow", new { id = file.Id })' class="img-responsive" />
+            </div>
+        }
+    </div>
+</div>
+
+<!--
+<div class="row temp">
+
+    <a class="fancybox-test" rel="1" href="/DocumentImagesShow/GetById/5" data-title="1">
+    <img src="/DocumentImagesShow/GetById/5" alt="1" class="min_img"></a>
+    <a class="fancybox-test" rel="1" href="/DocumentImagesShow/GetById/6" data-title="1" hidden>
+        <img src="/DocumentImagesShow/GetById/6" alt="1">
+    </a>
+    </div>
+
+<div class="row temp">
+
+    <a class="fancybox-test" rel="1" href="/Content/img/catalog-no-image-small-box.png" data-title="1">
+        <img src="/Content/img/catalog-no-image-small-box.png" alt="1" class="min_img" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+    </a>
+    <a class="fancybox-test" rel="1" href="/Content/img/catalog-no-image-small-box.png" data-title="1" hidden>
+        <img src="/Content/img/catalog-no-image-small-box.png" alt="1" class="min_img" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+    </a>
+</div>
+    -->
+
+
+@*section Scripts {
+        <script>
+            $(".fancybox-test").fancybox({
+                'transitionIn': 'none',
+                'transitionOut': 'none',
+                'titlePosition': 'over',
+                'cyclic': true,
+                "type": "image"
+            });
+            </script>
+    }
+*@

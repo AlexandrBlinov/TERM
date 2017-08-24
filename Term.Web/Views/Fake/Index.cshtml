@@ -1,0 +1,95 @@
+﻿@using YstProject.Models
+@model Yst.Terminal.FakeViewModels.FakeSecondViewModel
+@{
+    ViewBag.Title = "Index";
+
+
+}
+
+<h3>Index</h3>
+
+<form action="/fake" method="post" novalidate="novalidate" id="myform">
+    @Html.ValidationSummary()
+
+    <div class="row">
+
+        <div class="col-xs-3">
+            <div class="form-group ">
+                @Html.Label("CityCaption", "Город", htmlAttributes: new { @class = "cart-label" })
+
+                @Html.TextBox("City", "", new { @class = "form-control  ignore" })
+                <!--<input class="form-control" name="City" type="text"/>-->
+
+
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group ">
+                @Html.Label("CityCaption", "Телефон", htmlAttributes: new { @class = "cart-label" })
+
+                @Html.TextBox("Phone", "", new { @class = "form-control input-display_validation",@data_val_fieldnotempty="Related field has to be not empty", @data_val_fieldnotempty_id="regionId" })
+
+
+            </div>
+        </div>
+
+
+        <div class="col-xs-3">
+            <div class="form-group ">
+                <!--<input class="form-control" name="TestField" type="text" data-val="true" data-val-regex="ErrMsg" data-val-regex-pattern="^\d{11}$"/>-->
+                <!--<input class="form-control input-display_validation" name="TestField" type="text" data-val="true" data-val-email="This field needs to be email"/>-->
+                <label for="TestField">TestFieldRegionId</label>
+                <input class="form-control input-display_validation" name="TestField" type="text" data-val="true" data-val-fieldnotempty="Related field has to be not empty" data-val-fieldnotempty-id="regionId"/>
+            </div>
+        </div>
+
+        <div class="col-xs-3">
+            <div class="form-group ">
+                
+                <label for="TestField">TestFieldCityId</label>
+                <input class="form-control input-display_validation" name="TestField2" type="text" data-val="true" data-val-fieldnotempty="Related field has to be not empty" data-val-fieldnotempty-id="cityId" />
+            </div>
+        </div> 
+        @Html.Hidden("cityId","1")
+        @Html.Hidden("regionId")
+    </div>
+    <div class="col-xs-4">
+        <div class="form-group ">
+            <input type="submit" value="Pass" class="btn btn-default" />
+        </div>
+    </div>
+    
+</form>
+
+@section Scripts
+{
+    <script>
+        (function ($) {
+            $.validator.addMethod("notequalto", function (value, element, params) {
+                if (!this.optional(element)) {
+                    var otherProp = $('#' + params)
+                    return (otherProp.val() != value);
+                }
+                return true;
+            });
+
+            $.validator.unobtrusive.adapters.addSingleVal("notequalto", "otherproperty");
+
+
+            $.validator.addMethod('fieldnotempty', function (value, element, params) {
+                var $element = $('#'+params.id);
+                return $element.length && $element.val();
+                
+            });
+            
+            
+            jQuery.validator.unobtrusive.adapters.add('fieldnotempty', ['id'], function (options) {
+                options.rules["fieldnotempty"] = { id: options.params.id }
+                options.messages['fieldnotempty'] = options.message;
+            });
+
+
+        }(jQuery));
+    </script>
+}

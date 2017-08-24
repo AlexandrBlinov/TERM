@@ -1,0 +1,54 @@
+﻿@model Yst.Terminal.FakeViewModels.FakeFormModel1
+
+@{
+    ViewBag.Title = "PassToForm";
+}
+
+<h2>PassToForm</h2>
+
+
+        @using (Html.BeginForm("passtoform", "fake", FormMethod.Get, new {@class="pass_params" }))
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartPriceString, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.StartPriceString, new { @class = "form-control" })
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndPriceString, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.EndPriceString, new { @class = "form-control" })
+
+                    </div>
+                </div>
+                @Html.HiddenFor(p => p.StartPrice)
+                @Html.HiddenFor(p => p.EndPrice)
+            </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Pass" class="btn btn-default" />
+        </div>
+    </div>
+        }
+            
+@section Scripts {
+    <script> 
+        $(function () {
+            $('form.pass_params').on('submit', function () {
+                var sps = $('#StartPriceString').val();
+                var eps = $('#EndPriceString').val();
+             //   $('#StartPrice').val(sps);
+             //   $('#EndPrice').val(eps);
+            });
+
+        });
+    
+    </script>
+    }
+
+

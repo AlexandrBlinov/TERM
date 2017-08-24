@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd1="http://37.1.84.50:8080/ServiceTerminal" xmlns:xsd2="http://37.1.84.50:8080/Terminal" xmlns:soapbind="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12bind="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://37.1.84.50:8080/ServiceTerminal" name="ServiceTerminal" targetNamespace="http://37.1.84.50:8080/ServiceTerminal" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xs:schema xmlns:tns="http://37.1.84.50:8080/Terminal" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://37.1.84.50:8080/Terminal" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="ArrayOfProducts">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Products" type="tns:Product" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ArrayOfProductsResult">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductsResult" type="tns:ProductResult" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Product">
+        <xs:sequence>
+          <xs:element maxOccurs="7" name="Code" type="xs:string" />
+          <xs:element maxOccurs="1000" name="Quantity" type="xs:int" />
+          <xs:element maxOccurs="100" name="Storage" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ProductResult">
+        <xs:sequence>
+          <xs:element maxOccurs="7" name="Code" type="xs:string" />
+          <xs:element maxOccurs="1000" name="Quantity" type="xs:int" />
+          <xs:element maxOccurs="100" name="Storage" type="xs:string" />
+          <xs:element maxOccurs="100" name="OrderGUID" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Result">
+        <xs:sequence>
+          <xs:element name="Products" type="tns:ArrayOfProductsResult" />
+          <xs:element name="Success" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ResultDel">
+        <xs:sequence>
+          <xs:element name="Success" type="xs:boolean" />
+          <xs:element name="Error" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema xmlns:xs2="http://37.1.84.50:8080/ServiceTerminal" xmlns:xs1="http://37.1.84.50:8080/Terminal" elementFormDefault="qualified" targetNamespace="http://37.1.84.50:8080/ServiceTerminal" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://37.1.84.50:8080/Terminal" />
+      <xs:element name="CreateOrder">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Partner" type="xs:string" />
+            <xs:element name="PointId" type="xs:string" />
+            <xs:element name="Goods" type="xs1:ArrayOfProducts" />
+            <xs:element name="Comment" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateOrderResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs1:Result" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteOrder">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="OrderGUID" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteOrderResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="return" type="xs1:ResultDel" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </types>
+  <message name="CreateOrderRequestMessage">
+    <part name="parameters" element="tns:CreateOrder" />
+  </message>
+  <message name="CreateOrderResponseMessage">
+    <part name="parameters" element="tns:CreateOrderResponse" />
+  </message>
+  <message name="DeleteOrderRequestMessage">
+    <part name="parameters" element="tns:DeleteOrder" />
+  </message>
+  <message name="DeleteOrderResponseMessage">
+    <part name="parameters" element="tns:DeleteOrderResponse" />
+  </message>
+  <portType name="ServiceTerminalPortType">
+    <operation name="CreateOrder">
+      <input message="tns:CreateOrderRequestMessage" />
+      <output message="tns:CreateOrderResponseMessage" />
+    </operation>
+    <operation name="DeleteOrder">
+      <input message="tns:DeleteOrderRequestMessage" />
+      <output message="tns:DeleteOrderResponseMessage" />
+    </operation>
+  </portType>
+  <binding name="ServiceTerminalSoapBinding" type="tns:ServiceTerminalPortType">
+    <soapbind:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="CreateOrder">
+      <soapbind:operation soapAction="http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:CreateOrder" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="DeleteOrder">
+      <soapbind:operation soapAction="http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:DeleteOrder" style="document" />
+      <input>
+        <soapbind:body use="literal" />
+      </input>
+      <output>
+        <soapbind:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="ServiceTerminalSoap12Binding" type="tns:ServiceTerminalPortType">
+    <soap12bind:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="CreateOrder">
+      <soap12bind:operation soapAction="http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:CreateOrder" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+    <operation name="DeleteOrder">
+      <soap12bind:operation soapAction="http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:DeleteOrder" style="document" />
+      <input>
+        <soap12bind:body use="literal" />
+      </input>
+      <output>
+        <soap12bind:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="ServiceTerminal">
+    <port name="ServiceTerminalSoap" binding="tns:ServiceTerminalSoapBinding">
+      <documentation>
+        <wsi:Claim xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" conformsTo="http://ws-i.org/profiles/basic/1.1" />
+      </documentation>
+      <soapbind:address location="http://37.1.84.50:8080/YST/ws/serviceterminal" />
+    </port>
+    <port name="ServiceTerminalSoap12" binding="tns:ServiceTerminalSoap12Binding">
+      <soap12bind:address location="http://37.1.84.50:8080/YST/ws/serviceterminal" />
+    </port>
+  </service>
+</definitions>

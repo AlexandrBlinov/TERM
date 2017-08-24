@@ -1,0 +1,24 @@
+﻿@model NewsViewModel
+
+
+@using (Html.BeginForm("Create", "News", null, FormMethod.Post))
+{
+    <fieldset>
+        <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <label>Описание новости</label>
+            @Html.TextBoxFor(model => model.NewsName, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label>Язык</label>
+            @Html.DropDownListFor(p => p.Culture, new SelectList(Model.Languages, "LanguageName", "LanguageDescription", Model.Culture), new { @class = "form-control" })
+
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label>Текст новости</label>
+            @Html.TextAreaFor(model => model.NewsText, new { @class = "form-control", @rows = 5 })
+        </div>
+        <div class="form-group text_center">
+            <input class="btn btn-primary btn-default" data-type="submit" type="submit" value="Создать новость" />
+        </div>
+    </fieldset>
+}

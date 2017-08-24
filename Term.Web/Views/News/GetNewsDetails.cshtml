@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "Редактор новости";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model NewsViewModel
+<h2>Редактор новости</h2>
+<div class="row">
+    @Html.ActionLink("К списку новостей", "NewsList", "News", new {@class= "form-podbor-change-view" })
+</div>
+@using (Html.BeginForm("Edit", "News", null, FormMethod.Post))
+{
+    <fieldset>
+        @Html.Hidden("Id", Model.Id)
+        @Html.Hidden("Active", Model.Active)
+        <div class="form-group col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <label>Описание новости</label>
+            @Html.TextBoxFor(model => model.NewsName, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label>Язык</label>
+            @Html.DropDownListFor(p => p.Culture, new SelectList(Model.Languages, "LanguageName", "LanguageDescription", Model.Culture), new { @class = "form-control" })
+
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label>Текст новости</label>
+            @Html.TextAreaFor(model => model.NewsText, new { @class = "form-control", @rows = 5 })
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <input class="checkbox" type="checkbox" id="IsActive" @(Model.Active ? "checked" : "") value="Active">
+            <label class="checkbox-label label-lineheight30 no-select" for="IsActive"><span class="dspl_ts">Новость в массы</span></label>
+        </div>
+        <div class="form-group text_center">
+            <input class="btn btn-primary btn-default" data-type="submit" type="submit" value="Изменить новость" />
+        </div>
+    </fieldset>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+      
+        <div class="col-sm-4 col-md-3 m-b-20">
+            
+        </div>
+        
+    </div>
+</div>
+
+
+
+@using (Html.BeginForm("UploadImg", "News", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.Hidden("Id", Model.Id)
+            @Html.Hidden("ImgType", 0)
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <input type="file" id="upload" name="upload" class="hidden" multiple accept='image/*' />
+               
+                
+            </div>
+        </div>
+
+        <table class="data-table">
+            <tr>
+                <td><a href="javascript:void(0)" id="upload-file__link" class="attachdoc__link">Прикрепить превью</a></td>
+                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 1 })' class="img-responsive" style="max-width: 200px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+            </tr>
+            <tr>
+                <td><a href="javascript:void(0)" id="upload-file__link_main" class="attachdoc__link">Прикрепить основное фото</a></td>
+                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 2 })' class="img-responsive" style="width: 200px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+            </tr>
+        </table>
+    </div>
+
+}
+
+
+
+
+@section Scripts {
+
+    <script>
+        $("#upload-file__link").on('click', function (e) {
+            e.preventDefault();
+            $("#ImgType").val(1);
+            $("#upload").trigger('click');
+        });
+        $("#upload-file__link_main").on('click', function (e) {
+            e.preventDefault();
+            $("#ImgType").val(2);
+            $("#upload").trigger('click');
+        });
+
+        $('#upload').change(function () {
+            $(this).closest('form').submit();
+        });
+
+
+        $("#IsActive").on('click', function () {
+            var isChecked = $(".checkbox").is(':checked');
+            if (isChecked) $("#Active").val(true);
+            else $("#Active").val(false);
+        });
+    </script>
+}

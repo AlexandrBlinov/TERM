@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BK" xml:space="preserve">
+    <value>BLACK</value>
+  </data>
+  <data name="BKBL" xml:space="preserve">
+    <value>BLACK+BLUE</value>
+  </data>
+  <data name="BKBSI" xml:space="preserve">
+    <value>BLACK WITH BLUE STRIP INSIDE</value>
+  </data>
+  <data name="BKFBSI" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH BLUE STRIP INSIDE</value>
+  </data>
+  <data name="BKFFBKFBKFP" xml:space="preserve">
+    <value>BLACK FULLY POLISHED</value>
+  </data>
+  <data name="BKFL" xml:space="preserve">
+    <value>BLACK POLISHED STRIP</value>
+  </data>
+  <data name="BKFPL" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH POLISHED LIP</value>
+  </data>
+  <data name="BKFplastic" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH PLASTIC INSERTS</value>
+  </data>
+  <data name="BKFPSIBKFRSI" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH POLISHED STRIP INSIDE</value>
+  </data>
+  <data name="BKFPU" xml:space="preserve">
+    <value>BLACK FULLY POLISHED+POLISHED UNDERCUT</value>
+  </data>
+  <data name="BKFR" xml:space="preserve">
+    <value>BLACK FULLY POLISHED+RED</value>
+  </data>
+  <data name="BKFRS" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH RED STRIP</value>
+  </data>
+  <data name="BKFRSI" xml:space="preserve">
+    <value>BLACK FULLY POLISHED RED STRIP INSIDE</value>
+  </data>
+  <data name="BKFWSI" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH WHITE STRIP INSIDE</value>
+  </data>
+  <data name="BKFYSI" xml:space="preserve">
+    <value>BLACK FULLY POLISHED WITH YELLOW STRIP INSIDE</value>
+  </data>
+  <data name="BKPL" xml:space="preserve">
+    <value>BLACK WITH POLISHED LIP</value>
+  </data>
+  <data name="BKplastic" xml:space="preserve">
+    <value>BLACK+plastic inserts</value>
+  </data>
+  <data name="BKPRS" xml:space="preserve">
+    <value>BLACK POLISHED WITH RED STRIP</value>
+  </data>
+  <data name="BKPS" xml:space="preserve">
+    <value>BLACK POLISHED STRIP</value>
+  </data>
+  <data name="BKR" xml:space="preserve">
+    <value>BLACK+RED</value>
+  </data>
+  <data name="BKRS" xml:space="preserve">
+    <value>BLACK WITH RED STRIP</value>
+  </data>
+  <data name="BKRSI" xml:space="preserve">
+    <value>BLACK WITH RED STRIP INSIDE</value>
+  </data>
+  <data name="BKWS" xml:space="preserve">
+    <value>BLACK WITH WHITE STRIP</value>
+  </data>
+  <data name="BKY" xml:space="preserve">
+    <value>BLACK WITH YELLOW STRIP</value>
+  </data>
+  <data name="BKYS" xml:space="preserve">
+    <value>BLACK WITH YELLOW STRIP INSIDE</value>
+  </data>
+  <data name="BLACK" xml:space="preserve">
+    <value>BLACK</value>
+  </data>
+  <data name="BLF" xml:space="preserve">
+    <value>BLUE POLISHED</value>
+  </data>
+  <data name="BR" xml:space="preserve">
+    <value>BLACK+RED</value>
+  </data>
+  <data name="BW" xml:space="preserve">
+    <value>BLACK+WHITE</value>
+  </data>
+  <data name="BWRS" xml:space="preserve">
+    <value>BLACK+WHITE+RED STRIP</value>
+  </data>
+  <data name="BWWSI" xml:space="preserve">
+    <value>BLACK+WHITE+WHITE STRIP INSIDE</value>
+  </data>
+  <data name="CHROME" xml:space="preserve">
+    <value>CHROME</value>
+  </data>
+  <data name="ColorDefinition" xml:space="preserve">
+    <value>Color definition</value>
+  </data>
+  <data name="DBF" xml:space="preserve">
+    <value>DARK BLUE POLISHED</value>
+  </data>
+  <data name="GM" xml:space="preserve">
+    <value>GUN METAL</value>
+  </data>
+  <data name="GMB" xml:space="preserve">
+    <value>GUN METAL+BLACK</value>
+  </data>
+  <data name="GMBSI" xml:space="preserve">
+    <value>GUN METAL WITH BLUE STRIP INSIDE</value>
+  </data>
+  <data name="GMCH" xml:space="preserve">
+    <value>GUN METAL WITH CROME PLATE</value>
+  </data>
+  <data name="GMFFGMFGMFP" xml:space="preserve">
+    <value>GUN METAL FULLY POLISHED</value>
+  </data>
+  <data name="GMFplastic" xml:space="preserve">
+    <value>GUN METAL FULLY POLISHED WITH PLASTIC INSERTS</value>
+  </data>
+  <data name="GMPL" xml:space="preserve">
+    <value>GUN METAL POLISHED LIP</value>
+  </data>
+  <data name="GMplastic" xml:space="preserve">
+    <value>GUN METAL+plastic</value>
+  </data>
+  <data name="GMPS" xml:space="preserve">
+    <value>GUN METAL POLISHED STRIP</value>
+  </data>
+  <data name="GMRS" xml:space="preserve">
+    <value>GUN METAL WITH RED STRIP</value>
+  </data>
+  <data name="GMRSI" xml:space="preserve">
+    <value>GUN METAL WITH RED STRIP INSIDE</value>
+  </data>
+  <data name="GMWSI" xml:space="preserve">
+    <value>GUN METAL WHITE STRIP INSIDE</value>
+  </data>
+  <data name="HS" xml:space="preserve">
+    <value>HYPER SILVER</value>
+  </data>
+  <data name="MB" xml:space="preserve">
+    <value>MATT BLACK</value>
+  </data>
+  <data name="MBBL" xml:space="preserve">
+    <value>MATT BLACK +BLUE</value>
+  </data>
+  <data name="MBFMBFLMBFP" xml:space="preserve">
+    <value>MATT BLACK POLISHED</value>
+  </data>
+  <data name="MBFR" xml:space="preserve">
+    <value>MATT BLACK POLISHED +RED</value>
+  </data>
+  <data name="MBFRS" xml:space="preserve">
+    <value>MATT BLACK FULLY POLISHED WITH RED STRIP</value>
+  </data>
+  <data name="MBFRSI" xml:space="preserve">
+    <value>MATT BLACK FULLY POLISHED WITH RED STRIP INSIDE</value>
+  </data>
+  <data name="MBMF" xml:space="preserve">
+    <value>MATT BLACK MATT POLISHED</value>
+  </data>
+  <data name="MBOGS" xml:space="preserve">
+    <value>MATT BLACK WITH ORANGE AND GREY STRIPS</value>
+  </data>
+  <data name="MBPL" xml:space="preserve">
+    <value>MATT BLACK POLISHED LIP</value>
+  </data>
+  <data name="MBPS" xml:space="preserve">
+    <value>MATT BLACK POLISHED STRIP</value>
+  </data>
+  <data name="MBR" xml:space="preserve">
+    <value>MATT BLACK + RED</value>
+  </data>
+  <data name="MBRM" xml:space="preserve">
+    <value>MATT BLACK +RED+MILLING</value>
+  </data>
+  <data name="MBRRM" xml:space="preserve">
+    <value>MATT BROWN+RED MILLING</value>
+  </data>
+  <data name="MBRS" xml:space="preserve">
+    <value>MATT BLACK WITH RED STRIP</value>
+  </data>
+  <data name="MBRSI" xml:space="preserve">
+    <value>MATT BLACK WITH RED STRIP INSIDE</value>
+  </data>
+  <data name="MBSSL" xml:space="preserve">
+    <value>MATT BLACK WITH STAINLESS STEEL LIP</value>
+  </data>
+  <data name="MBWHITEINSERT" xml:space="preserve">
+    <value>MATT BLACK +WHITE INSERTS</value>
+  </data>
+  <data name="MBWSI" xml:space="preserve">
+    <value>MATT BLACK WHITE STRIP INSIDE</value>
+  </data>
+  <data name="MBY" xml:space="preserve">
+    <value>MATT BLACK+YELLOW</value>
+  </data>
+  <data name="MBYS" xml:space="preserve">
+    <value>MATT BLACK WITH YELLOW STRIP</value>
+  </data>
+  <data name="MBYSIY" xml:space="preserve">
+    <value>MATT BLACK WITH YELLOW STRIP INSIDE+YELLOW</value>
+  </data>
+  <data name="MGM" xml:space="preserve">
+    <value>MATT GUN METAL</value>
+  </data>
+  <data name="MGMBSI" xml:space="preserve">
+    <value>MATT GUN METAL WITH BLUE STRIP INSIDE</value>
+  </data>
+  <data name="MGMF" xml:space="preserve">
+    <value>MATT GUN METAL POLISHED</value>
+  </data>
+  <data name="MGMY" xml:space="preserve">
+    <value>MATT GUN METAL+ YELLOW</value>
+  </data>
+  <data name="MW" xml:space="preserve">
+    <value>MATT WHITE</value>
+  </data>
+  <data name="MWPL" xml:space="preserve">
+    <value>MATT WHITE WITH POLISHED LIP</value>
+  </data>
+  <data name="MWRSI" xml:space="preserve">
+    <value>MATT WHITE RED STRIP INSIDE</value>
+  </data>
+  <data name="RBF" xml:space="preserve">
+    <value>RED+BLACK+POLISHED</value>
+  </data>
+  <data name="S" xml:space="preserve">
+    <value>SILVER</value>
+  </data>
+  <data name="SB" xml:space="preserve">
+    <value>SILVER+BLACK</value>
+  </data>
+  <data name="SCH" xml:space="preserve">
+    <value>SILVER WITH CROME PLATE</value>
+  </data>
+  <data name="SFB" xml:space="preserve">
+    <value>SILVER POLISHED+BLACK</value>
+  </data>
+  <data name="SFFSFSFP" xml:space="preserve">
+    <value>SILVER FULLY POLISHED</value>
+  </data>
+  <data name="SILVER" xml:space="preserve">
+    <value>SILVER</value>
+  </data>
+  <data name="SPL" xml:space="preserve">
+    <value>SILVER WITH POLISHED LIP</value>
+  </data>
+  <data name="Splastic" xml:space="preserve">
+    <value>SILVER+plastic</value>
+  </data>
+  <data name="SPLASTICRS" xml:space="preserve">
+    <value>SILVER+PLASTIC+RED STRIP</value>
+  </data>
+  <data name="SRS" xml:space="preserve">
+    <value>SILVER WITH RED STRIP</value>
+  </data>
+  <data name="TextHelp1" xml:space="preserve">
+    <value>Instruction for project</value>
+  </data>
+  <data name="TextHelp10" xml:space="preserve">
+    <value>Download available stock in Excel format</value>
+  </data>
+  <data name="TextHelp12" xml:space="preserve">
+    <value>Wholesale pricing</value>
+  </data>
+  <data name="TextHelp13" xml:space="preserve">
+    <value>Retail pricing</value>
+  </data>
+  <data name="TextHelp14" xml:space="preserve">
+    <value>Blocking or deleting of Points</value>
+  </data>
+  <data name="TextHelp15" xml:space="preserve">
+    <value>Product search: code, size, vehicle</value>
+  </data>
+  <data name="TextHelp16" xml:space="preserve">
+    <value>The search can be performed in 3 ways:</value>
+  </data>
+  <data name="TextHelp17" xml:space="preserve">
+    <value>Any product name in the upper menu window</value>
+  </data>
+  <data name="TextHelp18" xml:space="preserve">
+    <value>Parameters search</value>
+  </data>
+  <data name="TextHelp19" xml:space="preserve">
+    <value>Vehicle search</value>
+  </data>
+  <data name="TextHelp2" xml:space="preserve">
+    <value>Terminal</value>
+  </data>
+  <data name="TextHelp20" xml:space="preserve">
+    <value>Product reservation</value>
+  </data>
+  <data name="TextHelp21" xml:space="preserve">
+    <value>After you find the required product, you need to indicate required amount and press “add to cart”, the product will be added to cart. You can add as many products as you need. Maximum order of 1 position is restricted to 200pc. Products added to Cart are underlined green. After order is formed it is required to check availability and confirm it. Go to cart and press “check order correctness” in the right upper corner window.</value>
+  </data>
+  <data name="TextHelp22" xml:space="preserve">
+    <value>You can add comments to the Order, such as contact person and contact number for sms-notification. </value>
+  </data>
+  <data name="TextHelp23" xml:space="preserve">
+    <value>Reservation lasts 7 days.</value>
+  </data>
+  <data name="TextHelp24" xml:space="preserve">
+    <value>Creation of Points</value>
+  </data>
+  <data name="TextHelp25" xml:space="preserve">
+    <value>In order to add new Point, go to Menu:</value>
+  </data>
+  <data name="TextHelp26" xml:space="preserve">
+    <value>Press “Add Point” in upper left corner.</value>
+  </data>
+  <data name="TextHelp27" xml:space="preserve">
+    <value>Read below how to set</value>
+  </data>
+  <data name="TextHelp28" xml:space="preserve">
+    <value>pricing for the Points</value>
+  </data>
+  <data name="TextHelp29" xml:space="preserve">
+    <value>Order change or cancelling</value>
+  </data>
+  <data name="TextHelp3" xml:space="preserve">
+    <value>Сontent</value>
+  </data>
+  <data name="TextHelp30" xml:space="preserve">
+    <value>In order to change, cancel, see your orders, go to Menu:</value>
+  </data>
+  <data name="TextHelp31" xml:space="preserve">
+    <value>Here you can see the history</value>
+  </data>
+  <data name="TextHelp32" xml:space="preserve">
+    <value>of your orders, their status, date of shipment, comment, Point where the order came from, print out invoice. You can see entry price and the price you sold the product.</value>
+  </data>
+  <data name="TextHelp33" xml:space="preserve">
+    <value>Sales and order follow up.</value>
+  </data>
+  <data name="TextHelp34" xml:space="preserve">
+    <value>In order to see product sales, go Menu:</value>
+  </data>
+  <data name="TextHelp35" xml:space="preserve">
+    <value>Here you can see history of sales, date of shipment, contacts of driver, comments, and print out the invoice.</value>
+  </data>
+  <data name="TextHelp36" xml:space="preserve">
+    <value>Password to enter settings</value>
+  </data>
+  <data name="TextHelp37" xml:space="preserve">
+    <value>Password is required, that no one can enter this Menu and change settings</value>
+  </data>
+  <data name="TextHelp38" xml:space="preserve">
+    <value>Password is established and changed in the Settings of your Terminal Point.</value>
+  </data>
+  <data name="TextHelp39" xml:space="preserve">
+    <value>Download Excel file with available stock</value>
+  </data>
+  <data name="TextHelp4" xml:space="preserve">
+    <value>Product search: code, size, vehicle</value>
+  </data>
+  <data name="TextHelp40" xml:space="preserve">
+    <value>You can download Excel file with available stock in the Menu:</value>
+  </data>
+  <data name="TextHelp41" xml:space="preserve">
+    <value>The file will be formed with your entry and retail price.</value>
+  </data>
+  <data name="TextHelp42" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextHelp43" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextHelp44" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TextHelp45" xml:space="preserve">
+    <value>Wholesale price forming</value>
+  </data>
+  <data name="TextHelp46" xml:space="preserve">
+    <value>You need to establish price for each Point. It is established in the settings of each Point.</value>
+  </data>
+  <data name="TextHelp47" xml:space="preserve">
+    <value>Price can be set in relation to basic price, with the extra charge to your entry price, or as manufacturer recommended price. This price will be shown as an entry price for your Point.  If you do not want to show price to the client, mark window “hide price”. If you do not want to show the producer, mark window “hide producer”. Pricing can be established for each producer separately, and also for group of product (wheels, tires).</value>
+  </data>
+  <data name="TextHelp48" xml:space="preserve">
+    <value>Price for batteries and accessories is formed as following:</value>
+  </data>
+  <data name="TextHelp49" xml:space="preserve">
+    <value>Extra charge for all batteries for Point is 10%</value>
+  </data>
+  <data name="TextHelp5" xml:space="preserve">
+    <value>Reservation of product</value>
+  </data>
+  <data name="TextHelp50" xml:space="preserve">
+    <value>Extra charge for accessories for Point is 20%</value>
+  </data>
+  <data name="TextHelp51" xml:space="preserve">
+    <value>Retail price forming</value>
+  </data>
+  <data name="TextHelp52" xml:space="preserve">
+    <value>You have to establish retail price in the Settings.</value>
+  </data>
+  <data name="TextHelp53" xml:space="preserve">
+    <value>Price can be set in relation to basic price, with the extra charge to your entry price, or as manufacturer recommended price. This price will be shown as sale price. If you do not want to show price to the client, mark window “hide price”. If you do not want to show the producer, mark window “hide producer”.  Pricing can be established for each producer separately, and also for group of product (wheels, tires). If you want to see your entry price, you have to establish 0% extra charge for all product groups.</value>
+  </data>
+  <data name="TextHelp54" xml:space="preserve">
+    <value>Price for batteries and accessories is formed as following:</value>
+  </data>
+  <data name="TextHelp55" xml:space="preserve">
+    <value>End customer price for batteries +40%</value>
+  </data>
+  <data name="TextHelp56" xml:space="preserve">
+    <value>End customer price for accessories +50%</value>
+  </data>
+  <data name="TextHelp57" xml:space="preserve">
+    <value>Blocking and deleting of Points</value>
+  </data>
+  <data name="TextHelp58" xml:space="preserve">
+    <value>You can block or delete your Points in Menu:</value>
+  </data>
+  <data name="TextHelp59" xml:space="preserve">
+    <value>% from purchase (from the purchase price, established for the Terminal client)</value>
+  </data>
+  <data name="TextHelp6" xml:space="preserve">
+    <value>Addition of Points</value>
+  </data>
+  <data name="TextHelp60" xml:space="preserve">
+    <value>Clear the price (zero price is shown or no price)</value>
+  </data>
+  <data name="TextHelp61" xml:space="preserve">
+    <value>Clear the brand  (the brand is not shown)</value>
+  </data>
+  <data name="TextHelp62" xml:space="preserve">
+    <value>Price for car batteries and accessories is established as following:</value>
+  </data>
+  <data name="TextHelp63" xml:space="preserve">
+    <value>For all car batteries extra charge for end client is 40%</value>
+  </data>
+  <data name="TextHelp64" xml:space="preserve">
+    <value>For all accessories extra charge for end client is 50%</value>
+  </data>
+  <data name="TextHelp65" xml:space="preserve">
+    <value>After all settings are saved, the Point is to read and agree with license agreement and check the box “I accept the Agreement conditions”.</value>
+  </data>
+  <data name="TextHelp66" xml:space="preserve">
+    <value>The Point can control orders created under its account data. It can edit its orders and orders of Points within 7 days from order date.</value>
+  </data>
+  <data name="TextHelp67" xml:space="preserve">
+    <value>The point controls its purchase and sale price via Menu Settings.</value>
+  </data>
+  <data name="TextHelp7" xml:space="preserve">
+    <value>Order changing and cancelling</value>
+  </data>
+  <data name="TextHelp8" xml:space="preserve">
+    <value>Order follow up</value>
+  </data>
+  <data name="TextHelp9" xml:space="preserve">
+    <value>Password for settings adjustment</value>
+  </data>
+  <data name="TitleHelp" xml:space="preserve">
+    <value>Assistance</value>
+  </data>
+  <data name="W" xml:space="preserve">
+    <value>WHITE</value>
+  </data>
+  <data name="WB" xml:space="preserve">
+    <value>WHITE +BLACK</value>
+  </data>
+  <data name="WBBSI" xml:space="preserve">
+    <value>WHITE +BLACK+BLACK STRIP INSIDE</value>
+  </data>
+  <data name="WBL" xml:space="preserve">
+    <value>WHITE +BLUE</value>
+  </data>
+  <data name="WBLACKINSERT" xml:space="preserve">
+    <value>WHITE+BLACK INSERT</value>
+  </data>
+  <data name="WBRS" xml:space="preserve">
+    <value>WHITE +BLACK+RED STRIP</value>
+  </data>
+  <data name="WBRSBSI" xml:space="preserve">
+    <value>WHITE +BLACK+RED STRIP+BLACK STRIP INSIDE</value>
+  </data>
+  <data name="WBS" xml:space="preserve">
+    <value>WHITE BLACK STRIP</value>
+  </data>
+  <data name="WBSI" xml:space="preserve">
+    <value>WHITE BLACK STRIP INSIDE</value>
+  </data>
+  <data name="WBWS" xml:space="preserve">
+    <value>WHITE+BLACK+WHITE STRIP</value>
+  </data>
+  <data name="WF" xml:space="preserve">
+    <value>WHITE FULLY POLISHED</value>
+  </data>
+  <data name="WFPL" xml:space="preserve">
+    <value>WHITE FULLY POLISHED WITH POLISHED LIP</value>
+  </data>
+  <data name="WFRSI" xml:space="preserve">
+    <value>WHITE FULLY POLISHED WITH RED STRIP INSIDE</value>
+  </data>
+  <data name="WHITE" xml:space="preserve">
+    <value>WHITE</value>
+  </data>
+  <data name="WR" xml:space="preserve">
+    <value>WHITE +RED</value>
+  </data>
+  <data name="WREDS" xml:space="preserve">
+    <value>WHITE RED STRIP</value>
+  </data>
+  <data name="WRS" xml:space="preserve">
+    <value>WHITE AND RED MILLING</value>
+  </data>
+  <data name="AllPhotos" xml:space="preserve">
+    <value>All photos</value>
+  </data>
+  <data name="UploadWheelPhotos" xml:space="preserve">
+    <value>Upload wheel photos</value>
+  </data>
+  <data name="WheelPhotos" xml:space="preserve">
+    <value>Wheel photos</value>
+  </data>
+  <data name="TextHelp11" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Feedback1" xml:space="preserve">
+    <value>Leave feedback</value>
+  </data>
+  <data name="Feedback10" xml:space="preserve">
+    <value>Move to</value>
+  </data>
+  <data name="Feedback11" xml:space="preserve">
+    <value>main page</value>
+  </data>
+  <data name="Feedback12" xml:space="preserve">
+    <value>to continue</value>
+  </data>
+  <data name="Feedback2" xml:space="preserve">
+    <value>Your opinion and evaluation of Terminal program work is really important for us. You are welcomed to ask questions and send you suggestion for improvement any time. Your message will be automatically directed to Client’s service and our manager will contact you if required.</value>
+  </data>
+  <data name="Feedback3" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Feedback4" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Feedback5" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Feedback6" xml:space="preserve">
+    <value>Message text</value>
+  </data>
+  <data name="Feedback7" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="Feedback8" xml:space="preserve">
+    <value>Thank you for you message!</value>
+  </data>
+  <data name="Feedback9" xml:space="preserve">
+    <value>Sending failed</value>
+  </data>
+  <data name="Feedback0" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+</root>

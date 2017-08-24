@@ -1,0 +1,187 @@
+﻿
+
+@using Term.DAL
+@using Term.DAL.Resources
+@using Term.Utils
+@using Term.Web.Views.Resources
+@model  IPagedList<IGrouping<Term.Web.Controllers.SupplierController.OrderDto, Term.Web.Controllers.SupplierController.OrderForSupplierResult>> 
+@{
+    ViewBag.Title = "Список заказов";
+    int count = 0;
+    Layout="~/Views/Shared/_LayoutSupplier.cshtml";
+    
+}
+
+<h2>Список заказов для поставщика @ViewBag.SupplierName</h2>
+
+@foreach (var groupedItem in Model)
+{
+    count++;
+    <table class="table order-forsupplier__inlist">
+
+        @{
+    var orderClass = groupedItem.Key.OrderStatus == OrderStatuses.BeingDeliveredToStockFromSupplier ? "alert-success" : groupedItem.Key.OrderStatus == OrderStatuses.Chancelled|| groupedItem.Key.OrderStatus == OrderStatuses.CancelledBySupplier ? "alert-danger" : "alert-info";
+    var orderSign = groupedItem.Key.OrderStatus == OrderStatuses.BeingDeliveredToStockFromSupplier ? "glyphicon-ok" : groupedItem.Key.OrderStatus == OrderStatuses.Chancelled || groupedItem.Key.OrderStatus == OrderStatuses.CancelledBySupplier ? "glyphicon-remove" : "glyphicon-none";
+           
+        }
+        <thead class="alert @orderClass clearfix">
+        <tr>
+            <td colspan="7">
+                <div>
+                <span class="glyphicon order-nostatus @orderSign"></span>
+                <span class="order-header" data-id="@groupedItem.Key.GuidIn1S" data-status="@groupedItem.Key.OrderStatus"> Заказ № @groupedItem.Key.NumberIn1S  от @groupedItem.Key.OrderDate</span> 
+                    <span class="order-header pull-right">
+                        <a href="@Url.Action("ImportOrderToExcel", "Supplier",new { guid=groupedItem.Key.GuidIn1S})" class="btn btn-primary" role="button">Импорт в Excel</a>
+                        @if (groupedItem.Key.OrderStatus == OrderStatuses.BeingConfirmedBySupplier) //16
+                        {
+                            <button class="btn btn-success" onclick="supplierLibrary.doConfirmOrder(this, '@groupedItem.Key.GuidIn1S')" type="button">Подтвердить</button>
+                            <button class="btn btn-danger" onclick="supplierLibrary.doDenyOrder(this, '@groupedItem.Key.GuidIn1S')" type="button">Отказать</button>
+                        }
+                        else
+                        {
+                            <i>@EnumDescriptionProvider.GetMultiCultureDescription(groupedItem.Key.OrderStatus)</i>
+                        }
+                    </span>
+
+                    </div>
+            </td>
+        </tr>
+        </thead>
+        @foreach (var item in groupedItem)
+        {
+            <tr>
+                <td> @item.RowNumber</td>
+                <td class="cell-code"> @item.ProductId</td>
+                <td class="cell-article">@item.Article</td>
+                <td class="cell-barcode">@item.BarCode</td>
+                <td>@item.ProductName</td>
+                <td class="w-50">
+                    @{
+                        var inOrderText = String.Format("В заказе {0} штук ",item.Count);
+                        var onRestsText = String.Format("На остатках {0} штук ", item.RestOfSupplier);
+                    } 
+                    <span class="has-popover" data-content="@inOrderText " data-original-title=" " title=" "> @item.Count</span>
+                    
+                </td>
+                <td class="w-50">
+                    <span class="has-popover" data-content="@onRestsText " data-original-title=" " title=" "> @item.RestOfSupplier</span>
+                    
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+<div class="m-t-15">
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+    {
+        page,
+        /*PointId = Model.PointId,
+        DepartmentId = Model.DepartmentId,
+        BeginDate = Model.BeginDate.ValueForPaginator(),
+        EndDate = Model.EndDate.ValueForPaginator(),
+        StatusId = Model.StatusId,
+        ProductId = Model.ProductId */
+    }),
+        new PagedListRenderOptions {LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9})
+</div>
+
+
+
+@Html.Partial("_ModalConfirmation", new ViewDataDictionary { { "ModalBodyText", "Вы действительно желаете отменить заказ?" }, { "id", "modalConfirmation" }, { "ModalTitle", "Подтверждение" } })
+@Html.Partial("_ModalNotification", new ViewDataDictionary { { "ModalBodyText", "Поступили новые заказы" }, { "id", "modalShowNotification" }, { "ModalTitle", ModalWindows.Attention } })
+
+
+
+@section Scripts {
+    <script>
+
+
+        var supplierLibrary = (function() {
+            var url = '/api/ordersapi/ChangeStatusOfSupplier',
+                urlToCheck = '/api/notificationsapi/GetFirst',
+                urlToDisable = '/api/notificationsapi/DisableAll';
+
+
+            var timeout = 1 * 60 * 1000; // раз в минуту
+
+            var statusConfirmed = 17, statusRejected = 20;
+
+            var confirmedSign = 'glyphicon-ok', rejectedSign = 'glyphicon-remove';
+            var confirmedClass = "alert-success", rejectedClass = "alert-danger";
+            var errorText = 'ошибка';
+
+
+            setInterval(function() {
+                if (!$('#modalShowNotification').is(':visible'))
+                    $.getJSON(urlToCheck, function(data) {
+                        if (data && Object.keys(data).length > 0) $('#modalShowNotification').modal();
+                        console.log(data);
+                    });
+
+            }, timeout);
+
+            var updateStatus = function(self, status) {
+
+                var $td = $(self).closest('td');
+                var $spanf = $td.find('span').first();
+                $spanf.addClass(status === statusConfirmed ? confirmedSign : rejectedSign);
+                var $thead = $(self).closest('thead');
+                $thead.addClass(status === statusConfirmed ? confirmedClass : rejectedClass).removeClass('alert-info');
+                var $spanl = $td.find('span').last();
+                $spanl.addClass('hidden');
+            }
+
+            var confirmOrder = function(self, guid) {
+
+                $.post(url, { 'guid': guid, status: statusConfirmed })
+                    .done(function(data) {
+                        updateStatus(self, statusConfirmed);
+                    }).fail(function(error) {
+
+                        alert(errorText);
+
+                    });
+            };
+
+
+            $('#modalShowNotification .modal-footer button').on('click', function() {
+                $.post(urlToDisable).then(function(data) {
+                    location.reload();
+                });
+                
+            });
+
+
+            var denyOrder = function(self, guid) {
+
+                $('#modalConfirmation').modal();
+
+                $('#modalConfirmation .modal-footer button').on('click', function(e) {
+                    var $target = $(e.target); // Clicked button element
+
+
+                    // если Да
+                    if ($target.val() == 1) {
+
+                        $.post(url, { 'guid': guid, status: statusRejected })
+                            .done(function(data) {
+                                updateStatus(self, statusRejected);
+                            }).fail(function(error) {
+                                alert(errorText);
+
+                            });
+                    }
+
+                });
+            }
+            return {
+                doConfirmOrder: confirmOrder,
+                doDenyOrder: denyOrder
+            }
+        }());
+
+    </script>
+}

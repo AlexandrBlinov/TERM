@@ -1,0 +1,33 @@
+﻿@model  YstProject.Models.ProductCountWithSaleInfoDto
+
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => model.ProductId, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Count, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => model.Count, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SaleDate, htmlAttributes: new {@class = "control-label col-md-2"})
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => model.SaleDate, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SaleNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-8">
+            @Html.TextBoxFor(model => model.SaleNumber, new { @class = "form-control" })
+        </div>
+    </div>
+

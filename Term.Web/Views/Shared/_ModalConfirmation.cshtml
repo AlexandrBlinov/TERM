@@ -1,0 +1,23 @@
+﻿@using Term.Web.Views.Resources
+@{
+    Layout = null;
+}
+
+<div class="top-200 modal fade" id="@( ViewData["id"] ?? "modalConfirmation")"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert alert-warning">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title"> <span class="glyphicon glyphicon-question-sign"> </span> @(ViewData["ModalTitle"] ?? @ModalWindows.Confirmation)</h4>
+            </div>
+            <div class="modal-body">
+                <p>@ViewData["ModalBodyText"]</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-styled" data-dismiss="modal" value="1">@( ViewData["buttonYesTitle"] ?? ModalWindows.Yes)</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" value="0">@( ViewData["buttonNoTitle"] ?? @ModalWindows.No)</button>
+            </div>
+        </div>
+
+    </div>
+</div>

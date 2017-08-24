@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Yst.ViewModels.UserViewModel>
+@{
+    ViewBag.Title = "ListUsers";
+}
+
+<h2>Список пользователей</h2>
+
+@using (Html.BeginForm())
+{
+
+<div class="input-group">
+   @Html.TextBox("username",null, new { @class = "form-control" , @placeholder="поиск по имени/ наименованию" }) 
+        <!--<input type="submit" value="Найти" class="btn" /> -->
+    <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go!</button>
+    </span>
+    <!--<button type="submit" value="Найти" class="btn" /> -->
+</div>
+    
+ 
+ 
+     
+}
+    
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+
+        
+        <th>
+            @Html.DisplayNameFor(model => model.IsPartner)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.PartnerId)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.PartnerName)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.INNKPP)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ContactFIO)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </th>
+
+        <th>
+            @Html.DisplayName("Действия")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPartner)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PartnerName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.INNKPP)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactFIO)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentName)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { username = item.UserName }) 
+                @*Html.ActionLink("Details", "Details", new { id = item.UserName })*@ |
+
+                @using (Html.BeginForm("Delete", "Admin", new { username = item.UserName }))
+                {
+                    @Html.AntiForgeryToken()
+                <input type="submit" name="Delete" value="Удалить">
+                }
+                
+                @*Html.ActionLink("Delete", "Delete", new { username = item.UserName }) *@
+            </td>
+        </tr>
+    }
+</table>

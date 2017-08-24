@@ -1,0 +1,491 @@
+﻿@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = Help.TitleHelp
+    ;
+}
+
+<h1> @Help.TextHelp1 &laquo;@Help.TextHelp2&raquo; </h1>
+<section>
+    <div class="row">
+        <div class="col-xs-6">
+            <h3>Для пользователей</h3>
+            <ul>
+                <li><a href="#1">@Help.TextHelp4</a></li>
+                <li><a href="#2">@Help.TextHelp5</a></li>
+                <li><a href="#3">@Help.TextHelp6</a></li>
+                <li><a href="#4">@Help.TextHelp7</a></li>
+                <li><a href="#5">@Help.TextHelp8</a></li>
+                <li><a href="#6">@Help.TextHelp9</a></li>
+                <li><a href="#7">@Help.TextHelp10</a></li>
+                @{if (ViewBag.AdditionalStock)
+                  {
+                      <li><a href="#8">@Help.TextHelp11</a></li>
+                  }
+                }
+                <li><a href="#9">@Help.TextHelp12</a><a name="1"></a></li>
+                <li><a href="#10">@Help.TextHelp13</a></li>
+                <li><a href="#11">@Help.TextHelp14</a></li>
+            </ul>
+        </div>
+        @{if (ViewBag.AdditionalStock)
+        {
+            <div class="col-xs-6">
+                <h3>Для разработчиков</h3>
+                <ul>
+                    <li><a href="#12">Доступ к web-сервису store</a></li>
+                    <li><a href="#12">Метод CreateOrder</a></li>
+                    <li><a href="#14">Метод DeleteOrder</a></li>
+                    <li><a href="#15">Метод ChangeOrder</a></li>
+                    <li><a href="#16">Пример обращения к web-сервису из 1С</a></li>
+                </ul>
+            </div>
+        }
+        }
+        
+    </div>
+
+
+</section>
+
+<section>
+    <h4 class="bold_4">@Help.TextHelp15</h4>
+    <p>
+        @Help.TextHelp16
+    </p>
+    <ul>
+        <li>
+            @Help.TextHelp17
+            @{if (ViewBag.AdditionalStock)
+            {
+                <img style="width:1000px" src="~/Content/img/Help/2.png" />
+            }
+            else
+            {
+                <img style="width:1000px" src="~/Content/img/Help/2_en.png" />
+            }
+            }
+        </li>
+        <li>
+            @Help.TextHelp18
+            @{if (ViewBag.AdditionalStock)
+            {
+                <img style="width:1000px" src="~/Content/img/Help/1.png" />
+            }
+            else
+            {
+                <img style="width:1000px" src="~/Content/img/Help/1_en.png" />
+            }
+            }
+        </li>
+        <li>
+            @Help.TextHelp19<a name="2"></a><br />
+            @{if (ViewBag.AdditionalStock)
+            {
+                <img style="width:1000px" src="~/Content/img/Help/3.png" />
+            }
+            else
+            {
+                <img style="width:1000px" src="~/Content/img/Help/3_en.png" />
+            }
+            }
+        </li>
+    </ul>
+
+    <h4 class="bold_4">@Help.TextHelp20</h4>
+    <p>
+        @Help.TextHelp21
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/4.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/4_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp22<a name="3"></a>
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/5.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp23
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp24</h4>
+    <p>
+        @Help.TextHelp25 <a href="/Partner">@Header.Settings</a>.
+        @Help.TextHelp26 <a name="4"></a>
+        @Help.TextHelp27 <a href="#9">@Help.TextHelp28</a><a name="1"></a>.
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp29</h4>
+    <p>
+        @Help.TextHelp30 <a href="/Orders/List">@Header.Orders</a>.
+        @Help.TextHelp31 <a name="5"></a>@Help.TextHelp32
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp33</h4>
+    <p>
+        @Help.TextHelp34 <a href="/Sales/List">@Header.Sales</a>. <a name="6"></a>
+        @Help.TextHelp35
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp36</h4>
+    <p>
+        @Help.TextHelp37
+        <a name="7"></a>
+        @Help.TextHelp38<a name="8"></a>
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp39</h4>
+    <p>
+        @Help.TextHelp40 <a href="/PriceList">@Header.Pricelist</a>.
+        @Help.TextHelp41
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp42</h4>
+    <p>
+        @Help.TextHelp43
+        <a name="9"></a>
+        @Help.TextHelp44
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp45</h4>
+    <p>
+        @Help.TextHelp46
+
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/6.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/6_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp47
+    </p>
+    <p>
+        @Help.TextHelp48
+        <ul>
+            <li>@Help.TextHelp49</li>
+            <li>@Help.TextHelp50<a name="10"></a></li>
+        </ul>
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp51</h4>
+    <p>
+        @Help.TextHelp52
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/7.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/7_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp53
+        @{if (ViewBag.AdditionalStock)
+        {
+            <img style="width:1000px" src="~/Content/img/Help/8.png" />
+        }
+        else
+        {
+            <img style="width:1000px" src="~/Content/img/Help/8_en.png" />
+        }
+        }
+    </p>
+    <p>
+        @Help.TextHelp54
+        <ul>
+            <li>@Help.TextHelp55</li>
+            <li>@Help.TextHelp56<a name="11"></a></li>
+        </ul>
+    </p>
+
+    <h4 class="bold_4">@Help.TextHelp57</h4>
+    <p>
+        @Help.TextHelp58 <a href="/Partner">@Header.Settings</a><a name="12"></a>
+    </p>
+<br/>
+@{
+    if (ViewBag.AdditionalStock)
+    {
+        <h4 class="bold_4">Доступ к web-сервису store</h4>
+        <p>
+            1. WSDL-ссылка на web-сервис http://37.1.84.50:8080/YST/ws/serviceystore?wsdl <br/>
+            2. Логин и пароль для использования web-сервиса предоставляются по Вашему обращению <br/>
+            3. Данный сервис позволяет автоматизировать процессы создания, редактирования и отмены заказов
+        </p>
+
+        <h4 class="bold_4">Метод CreateOrder</h4>
+        <p>
+            1. Метод CreateOrder (Partner, Goods, Storage, Comment, isTestOrder, ShippingDay, isReserve) <br/><br/>
+            2. Входные параметры:
+        </p>
+        <table id="help_info" class="table-bordered">
+            <tr>
+                <td class="bold table_help_col_width">Параметр</td>
+                <td class="bold">Тип</td>
+                <td class="bold">Описание</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Partner</td>
+                <td>string</td>
+                <td class="table_help_left">Код партнера (по запросу)</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Goods</td>
+                <td>ArrayOfProducts</td>
+                <td class="table_help_left">Ассортимент заказа</td>
+            </tr>
+            <tr>
+                <td>RowNumber</td>
+                <td>int</td>
+                <td class="table_help_left">Номер строки. От 1 до 100</td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>string</td>
+                <td class="table_help_left">Код номенклатуры. Максимум 7 символов.</td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td>int</td>
+                <td class="table_help_left">Количество в заказ. Максимум 100.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Storage</td>
+                <td>string</td>
+                <td class="table_help_left">
+                    Код подразделения, где делается заказ.<br/>
+                    Возможные значения:<br/>
+                    «00005» - Ярославль<br/>
+                    «00112» - Санкт-Петербург<br/>
+                    «00106» - Ростов-На-Дону<br/>
+                    «00122» - Екатеринбург<br/>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Comment</td>
+                <td>string</td>
+                <td class="table_help_left">Комментарий к заказу. Возможно пустое значение.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">isTestOrder</td>
+                <td>boolean</td>
+                <td class="table_help_left">
+                    Признак, что заказ тестовый.
+                    Возможные значения True – в случае если заказ тестовый, иначе – False.
+                    Если заказ не содержал признак, что он тестовый, то при создании заказа в базе Яршинторга, происходит резервирование товара.
+                </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">ShippingDay</td>
+                <td>string</td>
+                <td class="table_help_left">
+                    Дата предполагаемой отгрузки товара.
+                    Можно передать желаемую дату получения товара.
+                    Формат "ГГГГММДД"
+                    Возможно пустое значение.
+                </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">isReserve</td>
+                <td>boolean</td>
+                <td class="table_help_left">Когда Дата отгрузки (ShippingDay) не определена, то заказ просто ставится в резерв, который закроется автоматически через 10 дней.</td>
+            </tr>
+        </table>
+        <br/>
+        <p>3. Выходные параметры:</p>
+        <table id="help_info" class="table-bordered">
+            <tr>
+                <td class="bold table_help_col_width">Параметр</td>
+                <td class="bold">Тип</td>
+                <td class="bold">Описание</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Products</td>
+                <td>ArrayOfProducts</td>
+                <td class="table_help_left">Массив строк с товаром, которого в наличии недостаточно</td>
+            </tr>
+            <tr>
+                <td>RowNumber</td>
+                <td>int</td>
+                <td class="table_help_left">Номер строки.</td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>string</td>
+                <td class="table_help_left">Код номенклатуры. Максимум 7 символов.</td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td>int</td>
+                <td class="table_help_left">Количество в наличии.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Success</td>
+                <td>boolean</td>
+                <td class="table_help_left">Признак успешного создания заказа. Возможные значения True – в случае успешного создания заказа, иначе – False.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">OrderNumber</td>
+                <td>string</td>
+                <td class="table_help_left">
+                    Номер заказа в базе Яршинторга (нумерация в пределах года).
+                </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">OrderGUID</td>
+                <td>string</td>
+                <td class="table_help_left">
+                    Уникальный идентификатор заказа.
+                </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Error</td>
+                <td>string</td>
+                <td class="table_help_left">Описание ошибки, возникшей при попытке проведения заказа или получения остатков.</td>
+            </tr>
+        </table>
+        <a name="14"></a>
+        <h4 class="bold_4">Метод DeleteOrder</h4>
+        <p>
+            1. Метод: DeleteOrder (OrderGUID) <br/><br/>
+            2. Входные параметры:
+        </p>
+        <table id="help_info" class="table-bordered">
+            <tr>
+                <td class="bold table_help_col_width">Параметр</td>
+                <td class="bold">Тип</td>
+                <td class="bold">Описание</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">OrderGUID</td>
+                <td>string</td>
+                <td class="table_help_left">Уникальный идентификатор заказа.</td>
+            </tr>
+        </table>
+        <br/>
+        <p>3. Выходные параметры:</p>
+        <table id="help_info" class="table-bordered">
+            <tr>
+                <td class="bold table_help_col_width">Параметр</td>
+                <td class="bold">Тип</td>
+                <td class="bold">Описание</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Success</td>
+                <td>boolean</td>
+                <td class="table_help_left">Признак успешного удаления заказа. </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Error</td>
+                <td>string</td>
+                <td class="table_help_left">Описание ошибки, возникшей при попытке удаления заказа.</td>
+            </tr>
+        </table>
+        <a name="15"></a>
+        <br/>
+        <h4 class="bold_4">Метод ChangeOrder</h4>
+        <p>
+            1. Метод: ChangeOrder(OrderGUID, Goods, Comment, isReserve, ShippingDay) <br/><br/>
+            2. Входные параметры:
+        </p>
+        <table id="help_info" class="table-bordered">
+            <tr>
+                <td class="bold table_help_col_width">Параметр</td>
+                <td class="bold">Тип</td>
+                <td class="bold">Описание</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">OrderGUID</td>
+                <td>string</td>
+                <td class="table_help_left">Уникальный идентификатор заказа.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Goods</td>
+                <td>ArrayOfProducts</td>
+                <td class="table_help_left">Ассортимент заказа после изменения.</td>
+            </tr>
+            <tr>
+                <td>RowNumber</td>
+                <td>int</td>
+                <td class="table_help_left">Номер строки. От 1 до 100</td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>string</td>
+                <td class="table_help_left">Код номенклатуры. Максимум 7 символов.</td>
+            </tr>
+            <tr>
+                <td>Quantity</td>
+                <td>int</td>
+                <td class="table_help_left">Новое количество. </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Comment</td>
+                <td>string</td>
+                <td class="table_help_left">Комментарий к заказу. Возможно пустое значение.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">isReserve</td>
+                <td>boolean</td>
+                <td class="table_help_left">Когда Дата отгрузки (ShippingDay) не определена, то заказ просто ставится в резерв, который закроется автоматически через 10 дней.</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">ShippingDay</td>
+                <td>string</td>
+                <td class="table_help_left">
+                    Дата предполагаемой отгрузки товара.
+                    Можно передать желаемую дату получения товара.
+                    Формат "ГГГГММДД"
+                    Возможно пустое значение.
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <p>3. Выходные параметры:</p>
+        <table id="help_info" class="table-bordered">
+            <tr>
+                <td class="bold table_help_col_width">Параметр</td>
+                <td class="bold">Тип</td>
+                <td class="bold">Описание</td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Success</td>
+                <td>boolean</td>
+                <td class="table_help_left">Признак успешного изменения заказа. </td>
+            </tr>
+            <tr>
+                <td class="table_help_left">Error</td>
+                <td>string</td>
+                <td class="table_help_left">Описание ошибки, возникшей при попытке изменения заказа.</td>
+            </tr>
+        </table>
+        <a name="16"></a>
+        <br/>
+        <h4 class="bold_4">Пример обращения к веб-сервису из 1С</h4>
+        <p>
+            1. Подключается WS-ссылка<br/>
+        </p>
+        <img src="~/Content/img/1cWebService.png"/>
+        <p>
+            <br/>
+            2. Команда обращения к веб-сервису (пример из Заказа покупателя)<br/>
+        </p>
+        <img src="~/Content/img/1cWebService_2.png"/>
+    }
+}
+    </section>

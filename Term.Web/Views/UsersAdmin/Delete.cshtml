@@ -1,0 +1,33 @@
+﻿@model Yst.ViewModels.ApplicationUser
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete.</h2>
+
+<h3>Вы уверены что хотите удалить пользователя?</h3>
+<div>
+    <h4>@Model.UserName</h4>
+    <hr />
+    @Html.ValidationSummary(true)
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,45 @@
+﻿@using Term.Web.Views.Resources;
+
+    <hr />
+    <div class="container">
+        <div class="row row-bottom">
+            <div class="footer-row-text col-xs-3">
+                &copy Service &laquo;Terminal YST&raquo;, 2016
+            </div>
+            <div class="footer-row-a col-xs-3">
+                <ul class="list-unstyled">
+                    <li>@Html.ActionLink(@Header.Download + @" Excel/XML", "Download", "Help")</li>
+                    <li>@Html.ActionLink("News", "Index", "News", null, new { @class = "a_news_list" })</li>
+                </ul>
+            </div>
+            <div class="footer-row-a col-xs-3">
+                <ul class="list-unstyled">
+                    <li>@Html.ActionLink(@Help.WheelPhotos, "WheelsPhotos", "Help")</li>
+                    <li>@Html.ActionLink(@Help.ColorDefinition, "ColorDefinition", "Help")</li>
+                </ul>
+            </div>
+            <div class="footer-row-a col-xs-3">
+                <ul class="list-unstyled">
+                    <li>@Html.ActionLink(@Header.Assistance, "Index", "Help")</li>
+                    <li>@Html.ActionLink(@Help.Feedback0, "SendMail", "Help")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row footer-socials">
+        <div class="col-xs-3 footer-socials-vk">
+            <a target="_blank" title="Вконтакте" href="http://vk.com/tk_yst"><span class="item-vk"></span></a>
+        </div>
+        <div class="col-xs-3 footer-socials-google">
+            <a target="_blank" title="instagram" href="https://www.instagram.com/YST_Group/"><span class="item-google"></span></a>
+
+        </div>
+        <div class="col-xs-3 footer-socials-tw">
+            <a target="_blank" title="Twitter" href="https://twitter.com/YSTGroup"><span class="item-tw"></span></a>
+
+        </div>
+        <div class="col-xs-3 footer-socials-fb">
+            <a target="_blank" title="Facebook" href="http://www.facebook.com/ystgroup"><span class="item-fb"></span></a>
+
+        </div>
+    </div>

@@ -1,0 +1,71 @@
+﻿@model Term.DAL.SaleReturn
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = String.Format("{0} {1} {2} {3} {4}", "Заявка на возврат", " № ", Model.NumberIn1S, SalesTexts.From, Model.DocDate.ToShortDateString());
+}
+
+
+@if (TempData["isNewSaleReturn"]!=null)
+{
+    <div class="alert alert-success">
+        <span class="lead">Новая заявка на возврат успешено создана!</span>
+    </div>   
+}
+
+<h2 class="border-form-podbor search-order-title">@ViewBag.Title</h2>
+
+<table class="data-table order-table details-table">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>@ForSearchResult.StockNumber</th>
+            <th>@ForSearchResult.Name</th>
+            <th>Количество</th>
+            <th>@ForSearchResult.Price</th>
+            <th>
+                @CartAndOrders.TotalSum
+            </th>
+
+        </tr>
+    </thead>
+    @foreach (var detail in Model.SaleReturnDetails)
+    {
+        <tr>
+            <td>@detail.RowNumber</td>
+            <td>@detail.Product.ProductId</td>
+            <td>@detail.Product.Name</td>
+
+            <td>@detail.Count</td>
+            <td class="price-filds">@detail.Price</td>
+            <td class="price-filds">
+                @(detail.Count * detail.Price)
+            </td>
+        </tr>
+
+
+    }
+    <tfoot>
+        <tr>
+            <td class="price-filds" colspan="3">@CartAndOrders.Total:</td>
+            <td class="price-filds">
+                @Model.SaleReturnDetails.Sum(item => item.Count)
+            </td>
+
+            <td></td>
+            <td class="price-filds">
+                @Model.SaleReturnDetails.Sum(item => item.Count * item.Price)
+            </td>
+
+        </tr>
+    </tfoot>
+</table>
+<div class="row m-t-30">
+    <div class="col-xs-12">
+        @Html.ActionLink("<< К списку заявок", "List", "SaleReturns", null, new { @class = "list-points-create-btn btn-styled" })
+        @Html.ActionLink("Печать задания", "Print", "SaleReturns", new { @guid = Model.GuidIn1S }, new { @class = "list-points-create-btn btn-styled" })
+    </div>
+</div>
+

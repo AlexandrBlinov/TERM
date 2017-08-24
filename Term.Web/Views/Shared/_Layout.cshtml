@@ -1,0 +1,315 @@
+﻿@using YstProject.Services;
+@using Term.Web.Views.Resources;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/jquery.suggestions/16.6/css/suggestions.css" type="text/css" rel="stylesheet"/>
+    <link href="https://oss.maxcdn.com/icheck/1.0.2/skins/square/blue.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+          @Styles.Render("~/Content/themes/base/css")
+          @Styles.Render("~/content/sitestyles")
+    <link href="~/Content/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @{
+        string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+        string srcgooglemapslibrary = "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" + "&language=" + lang + "&key=AIzaSyAsZVI6IsMalUenNMRGr7xlzhpjrGkZipA";
+
+
+    }
+   
+</head>
+<body>
+    @{var sps = new SeasonProductService();}
+<header>
+<nav class="navbar navbar-default first-horizontal-menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logotip-yst" href="#"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.OrdersAll <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink(@Header.Orders, "List", "Orders")</li>
+                        <li>@Html.ActionLink(@Header.SeasonOrders, "Index", "SeasonOrders")</li>
+                        <li>@Html.ActionLink(@Header.OrdersFromArrivals, "Index", "SeasonOrders", new { @FromOnWay = true }, null)</li>
+                    </ul>
+                </li>
+                <li>@Html.ActionLink(@Header.Sales, "List", "Sales")</li>
+
+                @if (ViewBag.CurrentPartner != null && !ViewBag.CurrentPartner.IsForeign)
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.SaleReturns </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("по невостребованным товарам", "List", "SaleReturns")</li>
+                            <li><a href="http://service.yst.ru/web/">по браку</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- <li>@Html.ActionLink(@Header.SaleReturns, "List", "SaleReturns")</li>-->
+                }
+                <li> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-user" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.Name <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Action("Index", "Partner")"><i class=" fa fa-cog" aria-hidden="true"></i> @Header.Settings</a></li>
+                            <li><a href="@Url.Action("ManagerInfo", "Help")">@Header.YourManagers</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">@Header.Exit</a></li>
+                }
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
+<nav class="navbar navbar-default top-menu-second">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand logotip-terminal" href="@Url.Action("index", "home")"></a>
+
+        </div>
+        <div class="collapse navbar-collapse" id="bs-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle second" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.Tyres <span class="caret"></span></a>
+                    <ul class="dropdown-menu menu-tyre-dropdown" role="menu">
+                        <li>
+                            <div class="menu-tyre-dropdown-img">
+                                <span class="pass-tyre"></span><span class="pass-tyre-label">@ForSearchResult.PassengerTyres</span>
+                            </div>
+                            <div class="menu-tyre-dropdown-img">
+                                <span class="cargo-tyre"></span><span class="pass-tyre-label">@ForSearchResult.TruckTyres</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-tyre-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByParam, "Tyres", "Home")
+                            </div>
+                            <div class="menu-tyre-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByParam, "CargoTyres", "Home")
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-tyre-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByCar, "Index", "PodborAutoTyresDisks")
+                            </div>
+                            <div class="menu-tyre-dropdown-text">
+
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-tyre-dropdown-text">
+                                @Html.ActionLink(@Header.OthersCams, "Others", "Home", new { @OthersType = "Cams", @Folder = Defaults.TyreCamsFolder }, null)
+                            </div>
+                            <div class="menu-tyre-dropdown-text">
+
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle second" data-toggle="dropdown" role="button" aria-expanded="false">
+                        @Header.Wheels <span class="caret"></span>@if (sps.AmountOfOffers > 0)
+                        {<span class="tasks-top-item-counter">@sps.AmountOfOffers</span>}
+                    </a>
+                    <ul class="dropdown-menu menu-disk-dropdown" role="menu">
+                        <li>
+                            <div class="menu-tyre-dropdown-img">
+                                <span class="pass-disk"></span><span class="pass-disk-label">@ForSearchResult.AlloyAndSteel</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByParam, "Disks", "Home")
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByCar, "Index", "PodborAutoTyresDisks")
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@Header.OthersBolts, "Others", "Home", new { @OthersType = "Bolts", @Folder = Defaults.WheelsBoltsFolder }, null)
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@Header.CargoWheels, "CargoDisks", "Home")
+                            </div>
+                        </li>
+                        @if (sps.AmountOfOffers > 0)
+                        {
+                            <li role="presentation" class="divider"></li>
+                        }
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@Header.Wheels_SeasonForged, "Disks", "SeasonProduct", new { @WheelType = "Forged" }, null)
+                            </div>
+                        </li>
+                        @if (sps.HasAlloyOffers)
+                        {
+                            <li>
+                                <div class="menu-disk-dropdown-text">
+                                    @Html.ActionLink(@Header.Wheels_SeasonAlloy, "Disks", "SeasonProduct", new { @WheelType = "Alloy" }, null)
+                                </div>
+                            </li>
+                        }
+                        @if (sps.HasSteelOffers)
+                        {
+                            <li>
+                                <div class="menu-disk-dropdown-text">
+                                    @Html.ActionLink(@Header.Wheels_SeasonSteel, "Disks", "SeasonProduct", new { @WheelType = "Steel" }, null)
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle second" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.CarBatteries <span class="caret"></span></a>
+                    <ul class="dropdown-menu menu-akb-dropdown" role="menu">
+                        <li>
+                            <div class="menu-tyre-dropdown-img">
+                                <span class="pass-akb"></span><span class="pass-akb-label">@Header.CarBatteries</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByParam, "Akb", "Home")
+                            </div>
+                        </li>
+                        <li>
+                            <div class="menu-disk-dropdown-text">
+                                @Html.ActionLink(@ForSearchResult.ByCar, "Index", "PodborAkb")
+                            </div>
+                        </li>
+                    </ul>
+
+                </li>
+                <li class="dropdown">
+                    @Html.ActionLink(@Header.Accessories, "Accs", "Home", null, new { @class = "second" })
+
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-form navbar-left search invisible" role="search">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" class="form-control search-form-input" placeholder="@ForSearchResult.Search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default search-btn" type="submit"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </li>
+
+                <li class="dropdown yst-limit-container" id="yst-limit-container" > &nbsp;
+                    @* {Html.RenderAction("index","LimitData");}*@
+                </li>
+                <li> @Html.Partial("_LoginMenu")</li>
+            </ul>
+        </div>
+
+
+
+    </div>
+</nav>
+<!--<nav class="nav_error_line">@Header.Price_Error</nav>-->
+</header>
+   
+    <!--end-->
+    <div class="container container-main">
+        @RenderSection("featured", required: false)
+
+        @RenderBody()
+
+    </div>
+
+    <footer class="footer-bg">
+        @Html.Partial("_Footer")
+        </footer>
+
+        <!-- <a href="#" class="scrollup">Наверх</a>
+         <a href="#" class="scrolldown">Вниз</a> -->
+    <div class='scrolltop'>
+        <div class='scroll icon'><i class="fa fa-4x fa-angle-up"></i></div>
+    </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+<script src="https://oss.maxcdn.com/icheck/1.0.2/icheck.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+        @*Scripts.Render("~/bundles/modernizr")*@
+
+        <script src=@srcgooglemapslibrary></script>
+        @Scripts.Render("~/bundles/other_service")
+        @Scripts.Render("~/bundles/term_service")
+
+    <script>
+    (function () {
+        'use strict';
+        var cartContainer = $('#cart-container').data('controller');
+        $('#cart-container').load("/" + cartContainer + "/CartSummary");
+    }());
+
+       (function () {
+            'use strict';
+            var $limitContainer = $('#yst-limit-container');
+            $limitContainer.load("/LimitData/Index");
+        }()); 
+</script>
+
+    
+
+@RenderSection("scripts", required: false)
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-96624468-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    
+
+    <!-- @ViewBag.PartnerId @ViewBag.PointId -->
+</body>
+</html>

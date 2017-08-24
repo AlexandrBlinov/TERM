@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Журнал заявок на возврат (не брак)";
+}
+<h2 class="border-form-podbor search-order-title">@ViewBag.Title</h2>
+
+@using Term.Utils
+@using Term.Web.Views.Resources
+@model  Term.Web.Models.SaleReturnViewModel
+
+
+
+@using (Html.BeginForm("List", "SaleReturns", FormMethod.Get))
+{
+    <fieldset class="border-form-podbor">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.BeginDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                @Html.LabelFor(p => p.EndDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <label class="search-order-label">@ForSearchResult.PerPage</label>
+                <div>
+                    @Html.DropDownListFor(p => p.ItemsPerPage, new SelectList(new int[] {1, 10, 20, 50, 100, 200 }), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 search-order-btn text-center">
+                <button class="form-podbor-btn-submit" type="submit">@CartAndOrders.Filter</button>
+            </div>
+        </div>
+
+    </fieldset>
+}
+
+<div class="order-table-header-block m-t-15">
+    <a class="btn btn-primary" href="/SaleReturns/"> <i class="fa fa-plus" aria-hidden="true"></i> Добавить новую заявку </a>    
+    @Html.PagedListPager(Model.SaleReturns, page => Url.Action("List", new
+    {
+        page,
+        BeginDate = Model.BeginDate.ValueForPaginator(),
+        EndDate = Model.EndDate.ValueForPaginator(),
+        ItemsPerPage = Model.ItemsPerPage
+    }),
+    new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+</div>
+
+
+<table class="data-table order-table">
+    <thead>
+        <tr>
+            <th>
+                Номер
+            </th>
+            <th>
+                Дата
+            </th>
+            <th>
+                Номер точки
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Сумма
+            </th>
+            <th>
+                @ForSearchResult.Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SaleReturns)
+        {
+
+            <tr>
+                <td>@item.NumberIn1S</td>
+                <td>@item.DocDate</td>
+                <td>@item.PointId</td>
+                <td>@item.Sum</td>
+                <td>@item.Sum</td>
+                <td>@Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = item.GuidIn1S }, new { @class = "order-table-details" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

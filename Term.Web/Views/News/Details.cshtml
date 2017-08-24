@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Просмотр новости";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    @model NewsViewModel
+<h2>@Model.NewsName</h2>
+
+<div class="row">
+    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+        <img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 2 })' class="img-responsive" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
+    </div>
+    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+        @Html.Raw(Model.NewsText)
+    </div>
+</div>

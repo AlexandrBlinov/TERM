@@ -1,0 +1,118 @@
+﻿@model YstTerm.Models.PartnerPointDTOCreate
+@using Term.Web.Views.Resources;
+@{
+
+    ViewBag.Title = Settings.CreatePoint;
+    /* bool IsDisabledDepartment = (Model.DepartmentId == null || Model.DepartmentId == -1) ? true : false;
+     object displayModeDep = IsDisabledDepartment ?  new { disabled = "disabled" } : null; */
+    bool IsDisabledDepartment = (Model.DepartmentId == null || Model.DepartmentId == -1) ? true : false;
+    object displayModeDep = IsDisabledDepartment ? new { disabled = "disabled" } : null;
+    string IsDisabled = IsDisabledDepartment ? "disabled" : "";
+    string invisAddStock = "";
+    string invisVat = "invisible";
+    if ((!ViewBag.AddStock) & (ViewBag.IsPartner)) { invisVat = ""; }
+    bool RusUser = true;
+    if (!ViewBag.AddStock) { invisAddStock = "invisibleAddStock"; RusUser = false; }
+    var modelCreate = new PartnerPointDTO
+    {
+        DaysToMainDepartment = Model.DaysToMainDepartment,
+        DepartmentId = Model.DepartmentId,
+        DaysToDepartment = Model.DaysToDepartment,
+        PricingRulesAcc = Model.PricingRulesAcc,
+        PricingRulesBat = Model.PricingRulesBat,
+        PricingRulesDisks = Model.PricingRulesDisks,
+        PricingRulesTyres = Model.PricingRulesTyres
+    };
+
+}
+
+<!--<h2>Edit</h2>-->
+@ViewBag.AutherizationMessage
+
+
+@using (Html.BeginForm("CreatePost", "Partner", FormMethod.Post, new { @id = "CreatePointProfile" }))
+{
+    
+    
+    <div>
+        @Html.ValidationSummary()
+    </div>
+    @Html.AntiForgeryToken()
+    @*Html.ValidationSummary()*@
+
+
+
+    <legend>@Settings.CreatePoint @Model.UserName </legend>
+
+    <div class="row">
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <!-- <label class="create_point_label"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span> Ответственный менеджер</label> -->
+            <label class="create_point_label"> @Settings.ResponsibleManager</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            @Html.TextBoxFor(m => m.ContactFIO, new { @class = "fio form-control" })
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            <label class="create_point_label"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span> Номер телефона</label>
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            @*Html.TextBoxFor(m => m.PhoneNumber, new { @class = "phone-number form-control" }) *@
+        </div>
+        <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+            @*Html.ValidationMessageFor(m => m.PhoneNumber) *@
+        </div>
+    </div> -->
+    Html.RenderPartial("_DepartmentsSettings", modelCreate);
+    <input type="hidden" name="pricingrules" value="">
+    <div class="abs_dispos2">
+        <input class="btn btn-primary btn-large" type="submit" value=@Settings.Save id="CreatePointProfile" name="CreatePointProfile" />
+        @Html.ActionLink(@Header.Exit, "Index", @ViewBag.IsPartner ? "Partner" : "Home", new { @class = "btn btn-large button_in_order" })
+    </div>
+}
+
+<div class="form-inline bottom50 @invisVat col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="form-group vat-padding">
+        @Html.CheckBox("checkboxVAT", false, new { @class = "checkbox-vat", @id = "checkboxVAT" })
+        <label class="checkbox-vat-label no-select" for="checkboxVAT">Include VAT and custom duty?</label>
+    </div>
+    <div class="form-group span20 toggle_visible_onVat invisible">
+        <label>Custom duty</label>
+        <div class="input-group">
+            <input class="form-control" id="custom_duty_val" name="custom_duty_val" max="100" min="0" type="number" value="">
+            <div class="input-group-addon">%</div>
+        </div>
+    </div>
+    <div class="form-group span20 toggle_visible_onVat invisible">
+        <label>VAT</label>
+        <div class="input-group">
+            <input class="form-control" id="vat_val" name="vat_val" max="100" min="0" type="number" value="">
+            <div class="input-group-addon">%</div>
+        </div>
+    </div>
+</div>
+
+<div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h4>@Settings.PriceWholesale</h4>
+    <br />
+</div>
+
+@{
+    Html.RenderPartial("_PriceTableSettings", modelCreate);
+}
+
+    
+
+   
+    
+   
+    
+    
+
+
+
+
+
+
+

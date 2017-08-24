@@ -1,0 +1,283 @@
+﻿@using System.Web.UI.WebControls
+@using YstProject.Models
+@model  PurchaseReturnDto
+
+@{
+    ViewBag.Title = "Возврат невостребованных товаров";
+    string styleDisplay = "";
+}
+
+<h2>Возврат невостребованных товаров (не брак)</h2>
+
+
+<div class="hidden" id="emptyrow-container">
+    @Html.Partial("_GetRowToAdd", Model)
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "", new { @class = "alert alert-danger" })
+
+    <div class="returnItems" id="form-rows">
+        @Html.Partial("_ReturnItems", Model)
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="addRow" type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Добавить строку </button>
+            <button id="saveItems" type="button" class="btn btn-primary"><i class="fa fa-save" aria-hidden="true"></i> Сохранить черновик</button>
+            <button id="restoreItems" type="button" class="btn btn-primary" style="display: none"><i class="fa fa-restore" aria-hidden="true"></i> Загрузить из черновика </button>
+            <button type="submit" class="btn btn-success"> <i class="fa fa-paper-plane" aria-hidden="true"></i> Отправить заявку</button>
+        </div>
+    </div>
+}
+
+
+@section scripts{
+    <script>
+        
+        function doFillRecord() {
+
+            
+            var self = arguments[0];
+            if (!self.value) return;
+
+            var $self = $(self);
+            var $parent = $self.closest('.panel.panel-primary');
+            
+
+                var $elSaleNumber = $parent.find('.returnItems-doc-number');
+                var $elSaleDate = $parent.find('.returnItems-doc-date');
+                var $elProductName = $parent.find('.returnItems-product-name');
+                var $elProductId = $parent.find('.returnItems-product-id');
+
+
+            var productId = $elProductId.val(), saleDate = $elSaleDate.val(), saleNumber = $elSaleNumber.val();
+
+            if (productId && productId.length>=7)
+                    {
+                if (!saleNumber || !saleDate)
+                {
+                    $.getJSON("/saleReturns/getSaleDataFromParam",
+                        {
+                            'ProductId': productId,
+                            'SaleDate': saleDate,
+                            'SaleNumber': saleNumber
+                        }).done(
+                        function (data) {
+                  //          console.log(data);
+                            if (data.SaleFound)
+                            {
+                                if (!saleNumber && self.name.indexOf("SaleNumber") < 0) $elSaleNumber.val(data.SaleNumber);
+                                if (!saleDate && self.name.indexOf("SaleDate") < 0) $elSaleDate.val(data.SaleDate);
+                                $elProductName.val(data.ProductName);
+                            }                            
+                        });
+                }        
+                }
+            }
+        
+
+        (function($) {
+
+            var hasSavedDraft = false;
+
+            $(document).on('click', '.yst-panel-close', function() {
+                var effect = $(this).data('effect');
+                $(this).closest('.panel')[effect]().remove();
+            });
+
+            var counterLength = Math.max($('#form-rows .panel.panel-primary').length, 1);
+            //  var counterLength =  1;
+            var itemsToSerialize = [];
+
+
+            // обработчик нажатия на кнопку Удалить
+            $(document).on('click', ".returnItems .remove-product button", function() {
+                
+                if ($('#form-rows .panel.panel-primary').length > 1)             
+                                   $(this).closest('.panel.panel-primary').remove();               
+            });
+
+
+           
+
+            // обработчик нажатия на кнопку Сохранить
+            $("#saveItems").on('click', function() {
+
+                    itemsToSerialize = [];
+                    $('#form-rows .panel.panel-primary').each(function() {
+
+                        itemsToSerialize.push(
+                            {
+                                SaleNumber: $(this).find('.returnItems-doc-number').val(),
+                                SaleDate: $(this).find('.returnItems-doc-date').val(),
+                                ProductId: $(this).find('.returnItems-product-id').val(),
+                                ProductName: $(this).find('.returnItems-product-name').val(),
+                                Count: $(this).find('.returnItems-count').val()
+                            }
+                        );
+                        localStorage.setItem('returnItems', JSON.stringify(itemsToSerialize));
+                    });
+                    hasSavedDraft = true;
+                    $('#restoreItems').show();
+                }
+            );
+
+            // обработчик нажатия на кнопку Восстановить
+            $("#restoreItems").on('click', function() {
+                var itemsToPass = JSON.parse(localStorage.getItem('returnItems'));
+
+                //   var data = JSON.stringify({'Items': itemsToPass });
+              //  console.log(itemsToPass);
+
+                $.post("/salereturns/index", { 'Items': itemsToPass }).done(function(data) {
+                    $('#form-rows').empty().append(data);
+                });
+
+            });
+
+
+            //
+            // При вводе товара по коду - добирает наименование
+            //
+            /*
+            $(".returnItems-product-autocomplete").each(function(i, el) {
+                setupAutocomplete(el);
+            });
+
+            
+            function setupAutocomplete(el) {
+                var $el = $(el);
+                $el.autocomplete({
+
+                    //  source: "/api/productsapi/GetProductsByCode?term="+$(this).val(),
+                    source: function (request, response) {
+
+                        $.ajax({
+                            url: "/api/productsapi/getproductsbycode",
+                            dataType: "json",
+                            data: {
+                                term: request.term,
+                            },
+                            success: function (data) {
+                                var array = $.map(data, function (m) {
+                                    return {
+                                        label: m.Label,
+                                        value: m.Value
+                                    };
+                                });
+
+                                response(array);
+                            },
+
+                        });
+                    },
+                    minLength: 6,
+                    select: function (event, ui) {
+                        $el.closest('.panel-body').find('.returnItems-product-name').val(ui.item.label);
+
+                    }
+                });
+            } */
+
+            $.validator.setDefaults({
+                highlight: function(element) {
+
+                    $(element).closest('.form-group').addClass('has-error');
+
+                },
+                unhighlight: function(element) {
+
+                    $(element).closest('.form-group').removeClass('has-error');
+
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function(error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+
+            $.validator.unobtrusive.parseDynamicContent = function(selector) {
+                //use the normal unobstrusive.parse method
+                $.validator.unobtrusive.parse(selector);
+
+                //get the relevant form
+                var form = $(selector).first().closest('form');
+
+                //get the collections of unobstrusive validators, and jquery validators
+                //and compare the two
+                var unobtrusiveValidation = form.data('unobtrusiveValidation');
+                var validator = form.validate();
+
+                if (!unobtrusiveValidation || !unobtrusiveValidation.options) return;
+
+                $.each(unobtrusiveValidation.options.rules, function(elname, elrules) {
+                    if (validator.settings.rules[elname] == undefined) {
+                        var args = {};
+                        $.extend(args, elrules);
+                        args.messages = unobtrusiveValidation.options.messages[elname];
+                        //edit:use quoted strings for the name selector
+                        $("[name='" + elname + "']").rules("add", args);
+                    } else {
+                        $.each(elrules, function(rulename, data) {
+                            if (validator.settings.rules[elname][rulename] == undefined) {
+                                var args = {};
+                                args[rulename] = data;
+                                args.messages = unobtrusiveValidation.options.messages[elname][rulename];
+                                //edit:use quoted strings for the name selector
+                                $("[name='" + elname + "']").rules("add", args);
+                            }
+                        });
+                    }
+                });
+            }
+
+            // обработчик нажатия на кнопку Добавить
+            $("#addRow").on('click', function () {
+
+                //     $('.claims .remove-product').hide();
+
+                var listLength = Math.max($('#form-rows .panel.panel-primary').length, counterLength++);
+                // var listLength = $('#form-rows .panel.panel-primary').length;
+                console.log(listLength);
+
+                var html = $('#rowToAdd')[0].outerHTML.replace(/\[0\]/g, '[' + listLength + ']').replace("ItemToReplace", listLength);
+
+                var $lastRow = $("#form-rows .panel.panel-primary:last");
+
+                $lastRow.after(html);
+
+            /*    $("#form-rows .panel.panel-primary:last").find(".returnItems-product-autocomplete").each(function (i, el) {
+                    setupAutocomplete(el);
+                }); */
+
+                $.validator.unobtrusive.parseDynamicContent($lastRow);
+            }
+            );
+
+
+            (function init() {
+
+                hasSavedDraft = localStorage.getItem('returnItems');
+                if (hasSavedDraft) $('#restoreItems').show();
+
+            }()); 
+/*
+            (function scrollToError() {
+                var $container = $("html,body");
+                var $scrollTo = $('.field-validation-error');
+
+                if ($scrollTo.length)
+
+                    $container.animate({ scrollTop: $scrollTo.offset().top - $container.offset().top, scrollLeft: 0 }, 500);
+            })(); */
+        })($);
+    </script>
+}
+
+

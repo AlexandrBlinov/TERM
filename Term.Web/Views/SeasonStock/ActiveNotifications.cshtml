@@ -1,0 +1,25 @@
+﻿@using Term.DAL
+@model IEnumerable<NotificationOfSeasonPost>
+           @if (Model.Any()) 
+           { 
+<div class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="container">
+
+        <ul class="list-unstyled list-inline footer_brands">
+            <li><a href="@Url.Action("Index", "Home")" class="btn btn-success">На главную</a></li>
+            @foreach(var notification in Model)
+            {
+                
+                if (notification.Post.Producer.ProductType == ProductType.Tyre)
+                {
+                <li><a href="@Url.Action("tyres", "seasonproduct", new { @seasonpostid = notification.Post.Id }, null)" class="btn btn-gray">@notification.Post.Producer.Name</a></li>
+                }
+                else
+                {<li><a href="@Url.Action("disks", "seasonproduct", new { @seasonpostid = notification.Post.Id }, null)" class="btn btn-gray">@notification.Post.Producer.Name</a></li> }
+                @*Html.ActionLink(@notification.Post.Producer.Name, "tyres", "seasonproduct", new { @seasonpostid = notification.Post.Id },null) *@
+            }
+            
+        </ul>
+    </div>
+</div>
+           }

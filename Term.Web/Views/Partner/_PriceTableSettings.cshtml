@@ -1,0 +1,190 @@
+﻿@model YstTerm.Models.PartnerPointDTO
+@using Term.Web.Views.Resources;
+
+@{
+    string invisAddStock = "";
+    bool RusUser = true;
+    if (!ViewBag.AddStock) { invisAddStock = "invisibleAddStock"; RusUser = false; }
+}
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs yst-product-types" role="tablist">
+        <li role="presentation" class="active"><a href="#Wheels" aria-controls="Wheels" role="tab" data-toggle="tab">@Header.Wheels</a></li>
+        <li role="presentation"><a href="#Tyres" aria-controls="Tyres" role="tab" data-toggle="tab">@Header.Tyres</a></li>
+        <li role="presentation"><a href="#CarBatteries" aria-controls="CarBatteries" role="tab" data-toggle="tab">@Header.CarBatteries</a></li>
+        <li role="presentation"><a href="#Accessories" aria-controls="Accessories" role="tab" data-toggle="tab">@Header.Accessories</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="Wheels">
+            <table id="pricing_rules_disks" class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                        </th>
+                        <th class="@invisAddStock">
+                            @Settings.BasicPrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBasic">?</span>
+                        </th>
+                        <th class="zakup">
+                            @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                        </th>
+                        <th class="@invisAddStock">
+                            @Settings.Recommended
+                        </th>
+                        <th>
+                            @Settings.ClearThePrice
+                        </th>
+                        <th>
+                            @Settings.ClearTheBrand
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Settings.ApplyAllBrands
+                        </td>
+                        <td class="@invisAddStock">
+                            <input class="discount" max="100" min="-100" type="number" value="0" name="base">
+                            <button id="priceBaseDisks" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        </td>
+                        <td>
+                            <input class="discount" max="100" min="-100" type="number" value="0" name="zakup">
+                            <button id="priceZakupDisks" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        </td>
+                        <td class="@invisAddStock">
+                            <button id="priceRecDisks" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.PricingRulesDisks)
+                    {
+                        <tr id=@item.ProducerId data-active_name=@item.PriceType>
+                            <td class="w220 fs-12 tableDiscount"> @item.Name</td>
+                            @Html.TrPriceRuleEnum(@item.PType, @item.Discount, RusUser, @item.ProducerId)
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Tyres">
+            <table id="pricing_rules_tyres" class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                        </th>
+                        <th class="@invisAddStock">
+                            @Settings.BasicPrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBasic">?</span>
+                        </th>
+                        <th class="zakup">
+                            @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                        </th>
+                        <th class="@invisAddStock">
+                            @Settings.Recommended
+                        </th>
+                        <th>
+                            @Settings.ClearThePrice
+                        </th>
+                        <th>
+                            @Settings.ClearTheBrand
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Settings.ApplyAllBrands
+                        </td>
+                        <td class="@invisAddStock">
+                            <input class="discount" max="100" min="-100" type="number" value="0" name="base">
+                            <button id="priceBaseTyres" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        </td>
+                        <td>
+                            <input class="discount" max="100" min="-100" type="number" value="0" name="zakup">
+                            <button id="priceZakupTyres" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        </td>
+                        <td class="@invisAddStock">
+                            <button id="priceRecTyres" type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.PricingRulesTyres)
+                    {
+                        <tr id=@item.ProducerId data-active_name=@item.PriceType>
+                            <td class="w220 fs-12 tableDiscount"> @item.Name</td>
+                            @Html.TrPriceRuleEnum(@item.PType, @item.Discount, RusUser, @item.ProducerId)
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="CarBatteries">
+            <table id="pricing_rules_bat" class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                        </th>
+                        <th class="zakup">
+                            @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id=3387 data-active_name="zakup">
+                        <td>
+                            @Settings.ApplyAllBrands
+                        </td>
+                        <td>
+                            @foreach (var item in Model.PricingRulesBat)
+                            {
+                                <input class="discount" max="100" min="-100" type="number" value=@item.Discount.ToString("0.##") name="zakup">
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Accessories">
+            <table id="pricing_rules_acc" class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            @Settings.Brand <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipBrand">?</span>
+                        </th>
+                        <th class="zakup">
+                            @Settings.PurchasePrice <span class="badge badge-info" data-toggle="tooltip" data-placement="top" data-original-title="@Settings.TooltipZakup">?</span>
+                        </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr id=3039 data-active_name="zakup">
+                        <td>
+                            @Settings.ApplyAllBrands
+                        </td>
+                        <td>
+                            @foreach (var item in Model.PricingRulesAcc)
+                            {
+                                <input class="discount" max="100" min="-100" type="number" value=@item.Discount.ToString("0.##") name="zakup">
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>

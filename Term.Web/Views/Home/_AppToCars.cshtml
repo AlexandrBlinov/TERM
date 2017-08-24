@@ -1,0 +1,24 @@
+﻿@using Term.DAL
+@using Term.Web.Views.Resources
+
+        <table class="data-table details-vehicle-table term-apptocars">
+            <thead>
+                <tr>
+                    <th class="details-vehicle-model">
+                        @ForSearchResult.VehicleCar
+                    </th>
+                    <th>
+                        @ForSearchResult.VehicleModel
+                    </th>
+                </tr>
+            </thead>
+            @foreach (var car in (ViewBag.CarsOfProducts as Dictionary<string, string>))
+            {
+                <tr>
+                    <td style="font-weight:bold;">@car.Key</td>
+                    <td>@Html.Raw(car.Value)</td>
+                </tr>
+            }
+        </table>
+
+   

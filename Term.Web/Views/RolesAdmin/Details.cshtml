@@ -1,0 +1,50 @@
+﻿@model YstIdentity.Models.RoleViewModelWithUsers
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details.</h2>
+
+<div>
+    <h4>Roles.</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        
+    </dl>
+</div>
+
+@if (Model.Users.Count == 0)
+{
+    <hr />
+    <p>No users found in this role.</p>
+}
+else
+{
+    <h4>List of users in this role</h4>
+}
+
+<table class="table">
+
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>
+                @item
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+

@@ -1,0 +1,244 @@
+﻿@model  YstTerm.Models.PodborAutoView
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = SearchByAuto.SearchByVehicle;
+    object displayModeModel = null;
+    if (Model.model == null)
+    { displayModeModel = new { @class = "form-control", @disabled = "disabled" }; }
+    else
+    { displayModeModel = new { @class = "form-control" }; }
+
+    object displayYearModel = null;
+
+    if (Model.year == 0)
+    { displayYearModel = new { @class = "form-control", @disabled = "disabled" }; }
+    else
+    { displayYearModel = new { @class = "form-control" }; }
+
+
+    object displayEngineModel = null;
+
+    if (Model.engine == null)
+    { displayEngineModel = new { @class = "form-control", @disabled = "disabled" }; }
+    else
+    { displayEngineModel = new { @class = "form-control" }; }
+
+    //displayModeModel = new { @class = "form-control"};
+
+
+    // object displayModeYear = (Model.year) ? null : new { disabled = "disabled" };
+}
+
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.ByAuto })
+
+<div class="row border-form-podbor">
+    <img class="podbor-tyres-title-img" src="~/Content/img/img-auto-podbor.png" /> <span class="podbor-tyres-title">@SearchByAuto.SearchByVehicle</span>
+</div>
+
+<div>
+    <div class="row border-form-podbor">
+        <div class="col-xs-12">
+
+            <div class="row">
+                <br />
+                <div class="col-xs-12">
+                    <span class="podbor-tyres-param">@ForSearchResult.CarParam</span>
+                </div>
+            </div>
+
+            @using (Html.BeginForm("PodborAuto", "Home", null, FormMethod.Get, new { id = "podborauto" }))
+            {
+
+                <div class="row">
+                    <br />
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.brand, new SelectList(Model.Brands), @SearchByAuto.Brand, new { @class = "form-control" })
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.model, new SelectList(Model.Models), @SearchByAuto.Model, displayModeModel)
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.year, new SelectList(Model.Years), @SearchByAuto.YearOfIssue, displayYearModel)
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.engine, new SelectList(Model.Engines), @SearchByAuto.Modification, displayEngineModel)
+                    </div>
+                </div>
+                <br />
+            }
+        </div>
+        
+    </div>
+    @if (ViewBag.Length == 0)
+    {
+        <div id="view_tab" class="container">
+            <div class="row text-center">
+                @if (ViewBag.AddStock)
+                {
+                    <img src="~/Content/img/car_text.png" class="img-responsive">
+                }
+                else
+                {
+                    <img src="~/Content/img/car_text_en.png" class="img-responsive">
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+@{
+    if (@ViewBag.Bolts != null)
+    {
+        <span class="bolts_size"><a href="@ViewBag.BoltsUrl">@ViewBag.Bolts</a></span>
+    }
+}
+
+<div id="podborautoresult" class="m-t-15">
+
+
+    @if (ViewBag.Length > 0)
+    {
+        <span class="podbor-tyres-title">@ForSearchResult.SearchResult</span>
+        <table id="podborauto" class="data-table data-table-auto">
+            <thead>
+                <tr>
+                    <th class="podbor-auto-table-th" colspan="4">
+                        <img class="podbor-tyres-title-img" src="~/Content/img/img-tyres-podbor.png" /> <span class="podbor-tyres-title">@Header.Tyres</span>
+                    </th>
+                    <th class="podbor-auto-table-th" colspan="4">
+                        <img class="podbor-tyres-title-img" src="~/Content/img/img-disks-podbor.png" /> <span class="podbor-tyres-title">@Header.Wheels</span>
+                    </th>
+                </tr>
+                <tr>
+                    <th> @SearchByAuto.Type </th>
+                    <th> @SearchByAuto.Front_Axle </th>
+                    <th></th>
+                    <th> @SearchByAuto.Rear_Axle </th>
+                    <th> @SearchByAuto.Type </th>
+                    <th> @SearchByAuto.Front_Axle </th>
+                    <th></th>
+                    <th> @SearchByAuto.Rear_Axle </th>
+                </tr>
+            </thead>
+            @for (int i = 0; i < ViewBag.Length; i++)
+            {
+
+                <tr>
+                    <td> @(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].Prop1) : "")</td>
+                    <td> @(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].HRef) : "") </td>
+                    <td>@(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].Spark) : "")</td>
+                    <td> @(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].HRefRear) : "") </td>
+
+                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].Prop1) : "") </td>
+                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].HRef) : "") </td>
+                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].Spark) : "")</td>
+                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].HRefRear) : "") </td>
+                </tr>
+
+            }
+
+        </table>
+    }
+</div>
+
+
+<div id="ForSortSale" class="row invisible">
+    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 m-t-15">
+        <div id="sortBtnRow" class="row">
+            <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
+
+            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                <a name="sortBtn" data-sort="NameAsc" class="sort-btn-a sort-active" href="#">@ForSearchResult.Name</a>
+                <span id="sortName" name="sortIcon" class="sort-icon-default"> </span>
+
+            </div>
+            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                <a name="sortBtn" data-sort="DeliveryAsc" class="sort-btn-a" href="#">@ForSearchResult.DeliveryTime</a>
+                <span id="sortDelivery" name="sortIcon" class="sort-icon-default"> </span>
+
+            </div>
+            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                <a name="sortBtn" data-sort="AmountAsc" class="sort-btn-a" href="#">@ForSearchResult.Amount</a>
+                <span id="sortAmount" name="sortIcon" class="sort-icon-default"> </span>
+
+            </div>
+            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                <a name="sortBtn" data-sort="PriceAsc" class="sort-btn-a" href="#">@ForSearchResult.Price</a>
+                <span id="sortPrice" name="sortIcon" class="sort-icon-default"> </span>
+
+            </div>
+            <div class="btn btn-default sort-btn-style ForSortSale @ViewBag.SaleMode" aria-label="Left Align">
+                <a id="sort-sale" class="sort-btn-a" href="#">@ForSearchResult.Sale</a>
+            </div>
+        </div>
+        <div id="Seasons" class="btn-group" style="padding-top: 10px;padding-left: 119px;">
+            <button type="button" class="btn btn-default season_change" name="winter">
+                <img src="/Content/img/season_winter.png" style="width: 16px;">
+            </button>
+            <button type="button" class="btn btn-default season_change" name="summer">
+                <img src="/Content/img/season_summer.png" style="width: 18px;">
+            </button>
+            <button type="button" class="btn btn-default season_change" name="allseason">
+                <img src="/Content/img/season_all.png" style="width: 19px;">
+            </button>
+            <button type="button" class="btn btn-default season_change" name="all">Все</button>
+        </div>
+        <div class="row" style="padding-top: 10px; text-align: center;">
+            <button id="ForgedWheels" type="button" class="btn btn-primary btn-lg">@SearchByAuto.Forged_wheels</button>
+            <button id="AllWheels" type="button" class="btn btn-default btn-lg">@SearchByAuto.All_wheels</button>
+        </div>
+    </div>
+    <div id="SortCheckBoxes" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 m-t-15">
+        
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ForSortSale">
+                <input id="exact-size" type="checkbox" name="exact-size" value="false" class="checkbox-auto originals_param">
+                <label class="checkbox-auto-label" for="exact-size"><span class="original-param">@SearchByAuto.OriginalParams</span></label>
+
+                <input id="FromRests" type="checkbox" name="FromRests" value="false" class="checkbox-auto" checked>
+                <label class="checkbox-auto-label" for="FromRests"><span class="original-param">@ForSearchResult.FromStock</span></label>
+
+                <input id="FromOnWay" type="checkbox" name="FromOnWay" value="false" class="checkbox-auto">
+                <label class="checkbox-auto-label" for="FromOnWay"><span class="original-param">@ForSearchResult.FromOnWay</span></label>
+
+                <input id="complect" type="checkbox" name="complect" value="false" class="checkbox-auto originals_param">
+                <label class="checkbox-auto-label" for="complect"><span class="original-param">@ForSearchResult.IsSet4Items</span></label>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float: right;">
+                <div class="btn-group form-podbor-change-view" role="group">
+                    <div id="table" class="btn btn-default active">
+                        <a class="glyphicon glyphicon-th-list change-view-custom" href="#" title="Вид подбора списком"> </a>
+                    </div>
+
+                    <div id="plitka" class="btn btn-default ">
+                        <a class="glyphicon glyphicon-th change-view-custom" href="#" title="Вид подбора плиткой"> </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="podbortiporazmerresult"></div>
+
+@section Scripts {
+
+    <script src="~/Scripts/term-season-scripts.js"></script>
+<script>
+
+        $(function () {
+            $(document).ready(function () {
+                console.log(localStorage['selectedlink']);
+                if (localStorage.getItem("selectedlink") != null) {
+                    $("a[href^='" + localStorage['selectedlink'] + "']").trigger('click');
+                }
+
+            });
+        });
+</script>
+
+}

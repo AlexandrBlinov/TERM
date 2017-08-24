@@ -1,0 +1,172 @@
+﻿body {
+    font-size: .85em;
+    color: #232323;
+    background-color: #fff;
+}
+
+header, footer, nav, section {
+    display: block;
+}
+
+
+
+
+/* Lapenkov start*/
+
+table#podborauto td.activePodbor {
+    background-color:rgb(0,136,204);
+ }
+
+table#podborauto td.activePodbor a{
+     color:#fff;
+}
+
+.checkbox_del{ -ms-transform: scale(2);
+            -moz-transform: scale(2);
+            -o-transform: scale(2); 
+            height: 28px; 
+            width: 28px !important;
+ }
+
+.fs-16 {
+    font-size:12pt;
+}
+
+.fs-12 {
+    font-size:12pt;
+}
+
+ul.import_data li{
+    display: inline-block;
+    margin-left:20px;
+} 
+
+form#formdepartment 
+{margin:0px;}
+
+form#podborauto select 
+{ max-width : 140px;}
+
+
+table#podborauto {
+    width : 500px;
+    margin : 20px  100px;
+    min-width: 300px;
+  
+}
+
+    table#podborauto td {
+        text-align:center;
+    }
+
+.b_inline {
+    display:inline-block;
+    padding:5px;
+}
+.sorting > .b_inline.active {
+    background-color:#0088cc;
+    
+}
+
+.sorting > .b_inline.active a{
+    color:#FFF;
+    text-decoration:none;
+}
+
+#pricing_rules_tyres tr:hover, #pricing_rules_disks tr:hover {
+    background-color: #eee !important;
+}
+
+.list-of-points {
+    margin-top:10px;
+}
+/* Lapenkov end*/
+
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 50px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+input[type="text"].address, input[type="text"].fio {
+    width:500px;
+}
+
+
+
+.hidden {display:none;}
+
+DIV.pager { text-align:center; border-top: 2px solid silver;
+padding: .5em 0 0 0; margin-top: 1em; }
+DIV.pager A {
+    padding: 8px 14px;
+    line-height: 40px;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+DIV.pager A:hover { background-color: Silver; }
+DIV.pager A.selected { background-color: #0088cc; color: White; }
+
+.error {
+    color:red;
+}
+
+
+.col-margin {
+    margin-bottom:15px;
+}
+
+
+.season-buttons>button.active {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
+    border-color: rgb(53, 126, 189);
+}
+
+
+
+
+

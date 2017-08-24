@@ -1,0 +1,76 @@
+﻿@using System.Web.UI.WebControls
+@using YstProject.Models
+@model  PurchaseReturnDto
+
+@{
+   
+}
+
+
+@for (var i = 0; i < Model.Items.Count; i++)
+{
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <span class="pull-right yst-panel-close" data-effect="fadeOut"><i class="fa fa-times"></i></span>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Номер документа</label>
+                                <input type="hidden" name="Items.Index" value="@i" />
+                                @*Html.TextBoxFor(x => x.Items[i].SaleNumber, new { @class = "form-control claim-doc-number", @autocomplete = "off" })*@
+
+                                <input autocomplete="off" class="form-control claim-doc-number" data-val="true" data-val-number="The field SaleNumber must be a number." data-val-required="Заполните номер реализации" name="Items[@(i.ToString())].SaleNumber" type="text" value="@(Model.Items[i].SaleNumber)">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Дата документа</label> @*Html.TextBoxFor(x => x.Items[i].SaleDate, "{0:dd.MM.yyyy}", new { @class = "form-control claim-doc-date", @autocomplete = "off" }) *@
+                                <input autocomplete="off" class="form-control claim-doc-date" data-val="true" data-val-date="The field SaleDate must be a date." data-val-required="Заполните дату реализации" name="Items[@(i.ToString())].SaleDate" type="text" value="@(Model.Items[i].SaleDate.ToString("dd.MM.yyyy"))">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Код товара</label>
+
+                                <input autocomplete="off" class="form-control claim-product-autocomplete claim-product-id ui-autocomplete-input" data-val="true" data-val-number="The field ProductId must be a number." data-val-required="Заполните код товара" name="Items[@(i.ToString())].ProductId" type="text" value="@(Model.Items[i].ProductId)">
+                                 @*@Html.TextBoxFor(x => x.Items[i].ProductId, new { @class = "form-control claim-product-autocomplete claim-product-id", @autocomplete = "off" })*@
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Наименование товара</label> @Html.TextBoxFor(x => x.Items[i].ProductName, new { @class = "form-control claim-product-name", @autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="control-label">Количество</label>@*Html.TextBoxFor(x => x.Items[i].Count, new { @class = "form-control claim-count", @autocomplete = "off" })*@
+                                <input autocomplete="off" class="form-control claim-count" data-val="true" data-val-number="The field Count must be a number." data-val-required="Заполните количество" name="Items[@(i.ToString())].Count" type="text" value="@(Model.Items[i].Count)">
+                            </div>
+                        </div>
+                    </div>
+
+                   <!-- <div class="row remove-product">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-danger btn-sm" data-type="1">
+                                    <span class="glyphicon glyphicon-minus"></span> Убрать товар
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+-->
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+

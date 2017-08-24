@@ -1,0 +1,73 @@
+﻿@model IEnumerable<YstTerm.Models.PartnerPointDTOForList>
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = Settings.ListPoints;
+}
+
+
+<div>
+    <span class="order-table-header">@Settings.ListPoints</span>
+</div>
+
+<div class="text-center search-order-btn">
+
+    @Html.ActionLink(@Settings.AddPoint, "Create", null, new { @class = "list-points-create-btn" })
+</div>
+
+
+<table id="table-points" class="data-table order-table" title=@Settings.OpenSettings>
+    <thead>
+        <tr>
+            <th>@Settings.NamePoint</th>
+            <th class="table-points-address">@Settings.Address</th>
+            <th>@Settings.ContactPerson</th>
+            <th class="table-points-phone">@Settings.PhoneNumber </th>
+            <th class="table-points-actions">@Settings.Actions</th>
+
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr data-id="@item.PartnerPointId">
+            <td>
+                @if (ViewBag.PointId == item.PartnerPointId)
+                { <span class="glyphicon glyphicon-star" aria-hidden="true"></span> } @item.InternalName
+                @if (ViewBag.PointId == item.PartnerPointId)
+                { <br /><span>@Settings.YourPoint</span> }
+            </td>
+            <td>@item.Address</td>
+            <td>@item.ContactFIO</td>
+
+            <td>
+                @item.PhoneNumber
+            </td>
+            <td>
+            @*Html.ActionLink(" ", "Edit", new { PointId = item.PartnerPointId }, new { @class = "a_glif glyphicon glyphicon-edit", @title="Редактировать"})*@
+                @{ var faClass = item.IsLocked ? "fa-unlock" : "fa-lock";}
+                <a class="delete-point" title="@Settings.Delete" data-point="@item.PartnerPointId"><i class="fa fa-ban"></i> @Settings.Delete </a><br/>
+                <a class="@(item.IsLocked ? "enable": "disable")-point" title="@(item.IsLocked ? @Settings.Unblock : @Settings.Block)" data-point="@item.PartnerPointId"> <i class="fa @faClass"> </i>   @(item.IsLocked ? Settings.Unblock : Settings.Block)</a>
+            </td>
+
+        </tr>
+    }
+</table>
+
+<div id="idModalToDeletePoint" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@Settings.ConfDel</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Settings.ConfDelAsk<span> </span>?</p>
+                <p class="text-warning"><small>@Settings.ConfDelText</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Settings.Cancel</button>
+                <button type="button" class="btn btn-primary" id="ButDeletePartnerPoint" data-partnerpointid="19">@Settings.Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@using YstProject.Services;
+@using Term.Web.Views.Resources;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/jquery.suggestions/16.6/css/suggestions.css" type="text/css" rel="stylesheet"/>
+    <link href="https://oss.maxcdn.com/icheck/1.0.2/skins/square/blue.min.css" rel="stylesheet"/>
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+          @Styles.Render("~/Content/themes/base/css")
+          @Styles.Render("~/content/sitestyles")
+    <link href="~/Content/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+  
+   
+</head>
+<body>
+    @{var sps = new SeasonProductService();}
+   <header>
+       <nav class="navbar navbar-default first-horizontal-menu">
+           <div class="container"> 
+               <div class="navbar-header">
+                   <a class="navbar-brand logotip-yst" href="#"></a> 
+               </div>
+               <ul class="nav navbar-nav">
+
+                   <li>@Html.ActionLink(@Header.Orders, "Index", "Supplier")</li>
+
+               </ul>
+               <ul class="nav navbar-nav navbar-right">
+                   @if (User.Identity.IsAuthenticated)
+                   {
+
+                       <li>
+
+                           <a href="@Url.Action("Index", "Partner")" class="icon-user"><!--<i class="icon-user"></i>--> <span class="user-name">@User.Identity.Name</span></a>
+                       </li>
+                       <li><a href="javascript:document.getElementById('logoutForm').submit()">@Header.Exit</a></li>
+                   }
+               </ul>
+               
+
+           </div> 
+       </nav>
+       <nav class="navbar navbar-default top-menu-second">
+           <div class="container">
+               <div class="navbar-header">
+                   <a class="navbar-brand logotip-terminal" href="@Url.Action("index","home")"></a>
+
+               </div>
+               
+               <ul class="nav navbar-nav navbar-right">
+                   <li>
+                       <form class="navbar-form navbar-left search invisible" role="search">
+                           <div class="form-group">
+                               <div class="input-group">
+                                   <input type="text" class="form-control search-form-input" placeholder="@ForSearchResult.Search">
+                                   <div class="input-group-btn">
+                                       <button class="btn btn-default search-btn" type="submit"></button> 
+</div>
+                               </div>
+                           </div>
+</form>
+                       
+                   </li>
+                   <li> @Html.Partial("_LoginMenu")</li>
+               </ul>
+
+
+           </div>
+       </nav>
+       </header>
+
+    <div class="container container-main">
+        @RenderSection("featured", required: false)
+
+        @RenderBody()
+
+    </div>
+
+    <footer class="footer-bg">
+        @Html.Partial("_Footer")
+        </footer>
+
+        <!-- <a href="#" class="scrollup">Наверх</a>
+         <a href="#" class="scrolldown">Вниз</a> -->
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="https://oss.maxcdn.com/icheck/1.0.2/icheck.min.js"></script>
+        @*Scripts.Render("~/bundles/modernizr")*@
+
+        
+        @Scripts.Render("~/bundles/other_service")
+        @Scripts.Render("~/bundles/term_service")
+
+
+@RenderSection("scripts", required: false)
+    
+</body>
+</html>

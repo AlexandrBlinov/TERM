@@ -1,0 +1,115 @@
+﻿<?xml version="1.0"?>
+<Managers>
+<Manager Guid="7d920bbd-f049-11e2-91e4-d4ae52b5e909" FIO="Исаев Евгений Иванович" Email="isaev@yst.ru"/>
+<Manager Guid="0ef0eef4-ecf1-11e1-9c34-14dae9dda2a1" FIO="Челышева Татьяна Александровна" Email="200200152@yst.ru"/>
+<Manager Guid="73d73624-3661-11da-a73a-000ea627253e" FIO="Бондаренко Евгений Дмитриевич" Email="bondarenko@yst76.ru"/>
+<Manager Guid="c92810f4-3b18-11e3-b841-d4ae52b5e909" FIO="Клейменова Оксана Григорьевна" Email="kleymenova@yst.ru"/>
+<Manager Guid="690c0067-c25e-11e4-8fbf-d4ae52b5e909" FIO="Алексеева Ольга Сергеевна" Email="alekseeva@yst.ru"/>
+<Manager Guid="086b7a79-791f-11e3-b841-d4ae52b5e909" FIO="Фончикова Ольга Аркадьевна" Email="fonchikova@yst76.ru"/>
+<Manager Guid="5547dbdb-44c2-11e5-9b91-d4ae52b5e909" FIO="Горицкий Антон Игоревич" Email="goritsky@yst.ru"/>
+<Manager Guid="75241a97-3773-11e6-a7ea-d4ae52b5e909" FIO="Бармин Виктор Викторович" Email="barmin@yst.ru"/>
+<Manager Guid="6f704bb2-436f-11e6-963c-d4ae52b5e909" FIO="Нуриахметов Роман Марлисович" Email="roman_nr@yst.ru"/>
+<Manager Guid="56e628fc-3663-11da-a73a-000ea627253e" FIO="Кузьмичева Ирина Анатольевна" Email="kuzmichova@yst.ru"/>
+<Manager Guid="52b318b9-3d9e-11e1-ab13-14dae9dda2a1" FIO="Горюшкина Екатерина Александровна" Email="kagor@yst76.ru"/>
+<Manager Guid="100b313b-824c-11de-8e3a-000d609846de" FIO="Алаев Михаил Александрович" Email="alaev@yst76.ru"/>
+<Manager Guid="f9843588-b5d5-11dc-8225-000d609846de" FIO="Золотарева Анна Александровна" Email="novikova@yst.ru, goritsky@yst.ru"/>
+<Manager Guid="f8bad3f5-f8dd-11e2-8145-d4ae52b5e909" FIO="Котенков Вячеслав Юрьевич" Email="kotenkov@yst76.ru"/>
+<Manager Guid="99fae154-a1cb-11e2-9e12-d4ae52b5e909" FIO="Плешивцева Наталья Владимировна" Email="pleshivtseva@yst76.ru"/>
+<Manager Guid="c8b093d4-dc82-11e5-98cf-d4ae52b5e909" FIO="Хачатурян Лусине Карленовна" Email="lusine@yst.ru"/>
+<Manager Guid="7f7610be-365b-11da-a73a-000ea627253e" FIO="Серков Александр Николаевич" Email="serkov@yst.ru"/>
+<Manager Guid="7301a206-6595-11e4-ad54-d4ae52b5e909" FIO="Лигута Александр Сергеевич" Email="liguta@yst.ru"/>
+<Manager Guid="6d88c21f-92c6-11e2-9b5f-d4ae52b5e909" FIO="Зинченко Сергей Игоревич" Email="zinchenko@yst76.ru"/>
+<Manager Guid="519954c8-41e8-11e3-b841-d4ae52b5e909" FIO="Антонов Алексей Вячеславович" Email="antonov@yst76.ru"/>
+<Manager Guid="3d15cd04-82c9-11e1-b370-14dae9dda2a1" FIO="Захаров Владимир Васильевич (снабжение)" Email="z@yst.ru"/>
+<Manager Guid="a91cb91a-35e9-11dc-81a3-000d609846de" FIO="Малышев Егор Игоревич" Email="MALYSHEV@YST.RU"/>
+<Manager Guid="05993858-07f5-11e4-8456-d4ae52b5e909" FIO="Горустович Татьяна Ивановна" Email="gti@yst.ru"/>
+<Manager Guid="ba45bc9f-6087-11de-8e3a-000d609846de" FIO="Никитин Михаил Игоревич" Email="nikitin_m@yst76.ru"/>
+<Manager Guid="2dedb9ee-a36e-11e3-95b0-d4ae52b5e909" FIO="Голубева Вилена Сергеевна" Email="golubeva_vs@yst.ru"/>
+<Manager Guid="a05fdb73-f049-11e2-91e4-d4ae52b5e909" FIO="Киселева Елена Николаевна" Email="kiseleva@yst76.ru"/>
+<Manager Guid="5d94e088-0607-11e2-9de4-14dae9dda2a1" FIO="Филатова Светлана Владимировна" Email="200200143@yst.ru"/>
+<Manager Guid="2e9e1076-17b8-11db-a748-000ea627253e" FIO="Виноградов Георгий Александрович" Email="vinogradov@yst76.ru"/>
+<Manager Guid="33d98762-7bfb-11e2-9a37-d4ae52b5e909" FIO="Бондаренко Евгений Дмитриевич" Email="bondarenko@yst76.ru"/>
+<Manager Guid="b9e29996-ea5d-11e4-a1c5-d4ae52b5e909" FIO="Красюк Наталия Васильевна" Email="krasyuk@yst.ru"/>
+<Manager Guid="07c211f6-8a8b-11e0-9a32-000d609846de" FIO="Огородников Сергей Александрович" Email="ogorodnikov@yst.ru"/>
+<Manager Guid="2c00da73-368b-11e5-91b0-d4ae52b5e909" FIO="Осипова Наталья Игоревна" Email="osipova@yst.ru"/>
+<Manager Guid="1bb1bc9e-f52d-11e3-8456-d4ae52b5e909" FIO="Тарасов Владислав Игоревич" Email="tarasov@yst.ru"/>
+<Manager Guid="03a875e5-52b7-11e4-8456-d4ae52b5e909" FIO="Леонтьева Ирина Владимировна" Email="leontyeva@yst.ru"/>
+<Manager Guid="cc6d4367-532e-11dd-8a19-000d609846de" FIO="Малышев Егор (снабжение)" Email="malyshev@yst.ru"/>
+<Manager Guid="c128d00b-e267-11df-9823-000d609846de" FIO="Марешева Ирина Германовна" Email="maresheva@yst.ru"/>
+<Manager Guid="bfb839e8-ae90-11e3-95b0-d4ae52b5e909" FIO="Горелов Иван Владимирович" Email="gorelov@yst.ru"/>
+<Manager Guid="848819e8-d6ea-11e5-98cf-d4ae52b5e909" FIO="Трошин Денис Олегович" Email="mikhail_zh@yst.ru"/>
+<Manager Guid="ff8be97b-7d69-11dd-87f2-000d609846de" FIO="Панченко Марина Сергеевна"/>
+<Manager Guid="893f01bb-e610-11e1-bafb-14dae9dda2a1" FIO="Серков Александр Николаевич"/>
+<Manager Guid="190fef25-e60d-11e1-bafb-14dae9dda2a1" FIO="Джугань Роман Владимирович"/>
+<Manager Guid="ab8300bd-8cc9-11e3-b841-d4ae52b5e909" FIO="Замула А. В."/>
+<Manager Guid="3e4aa2aa-8e9b-11e5-8831-d4ae52b5e909" FIO="Качалов Алексей Викторович"/>
+<Manager Guid="0c652916-5349-11e3-b841-d4ae52b5e909" FIO="Решотка Сергей Александрович"/>
+<Manager Guid="3e551b9c-7624-11dc-a1b6-000d609846de" FIO="Проскурня Александр Геннадьевич"/>
+<Manager Guid="49699ae2-f7db-11e5-bed6-d4ae52b5e909" FIO="Чимбирев Ярослав Андреевич"/>
+<Manager Guid="73a12e54-ffb6-11e4-8dfb-d4ae52b5e909" FIO="Паращенко Олег Владимирович"/>
+<Manager Guid="9d350e18-88d8-11db-a751-000ea627253e" FIO="Петухова Алена Ивановна"/>
+<Manager Guid="814c35f9-25de-11e3-8342-d4ae52b5e909" FIO="Фролов П. А."/>
+<Manager Guid="c1c9d162-0f72-11e1-b283-485b39a5ddbb" FIO="Михайлов Лука Андреевич"/>
+<Manager Guid="c08f12fe-8db0-11e0-9f90-000d609846de" FIO="Лунин Александр Сергеевич"/>
+<Manager Guid="0a5e595a-4be4-11e5-863f-d4ae52b5e909" FIO="Пушной Кирилл Александрович"/>
+<Manager Guid="2f38ee60-3eb3-11dd-8c0f-000d609846de" FIO="Махова Татьяна"/>
+<Manager Guid="ae8080dc-6b12-11e4-ad54-d4ae52b5e909" FIO="Ширяева Светлана Григорьевна"/>
+<Manager Guid="d400a17c-e60c-11e1-bafb-14dae9dda2a1" FIO="Тархов Василий Николаевич"/>
+<Manager Guid="429b73de-2ea7-11e5-8dfb-d4ae52b5e909" FIO="Емельянов Руслан Евгеньевич"/>
+<Manager Guid="de78b70a-9ff9-11e1-bafa-14dae9dda2a1" FIO="Феоктистова-Мажаева Наталья Викторовна"/>
+<Manager Guid="23e0ea6d-dd57-11e1-bafa-14dae9dda2a1" FIO="Жилин А. В."/>
+<Manager Guid="12aad13a-9e8b-11e1-bafa-14dae9dda2a1" FIO="Вострилов Андрей Вадимович (снабжение)"/>
+<Manager Guid="bae06a5a-1ec7-11db-a749-000ea627253e" FIO="Ченцов Алексей Михайлович"/>
+<Manager Guid="49ec3be6-1ecf-11db-a749-000ea627253e" FIO="Межерицкая Оксана Петровна"/>
+<Manager Guid="37d48751-b694-11e0-9f90-000d609846df" FIO="Артемьева Ольга Николаевна"/>
+<Manager Guid="795b08e1-0a94-11e5-8dfb-d4ae52b5e909" FIO="Свирин Алексей Владимирович"/>
+<Manager Guid="760dc2a6-d8c9-11de-9ea4-000d609846de" FIO="Федунов Андрей Александрович"/>
+<Manager Guid="c16d1a42-5858-11e1-9df9-14dae9dda2a1" FIO="Ломоносова Ксения Валерьевна"/>
+<Manager Guid="cb2eb0f0-476b-11dd-8a19-000d609846de" FIO="Фролов Александр Иванович"/>
+<Manager Guid="41f682ac-3663-11da-a73a-000ea627253e" FIO="Степанов Василий"/>
+<Manager Guid="1bd6d7d6-ab86-11db-87d3-000d609846de" FIO="Никитин Игорь Борисович"/>
+<Manager Guid="2dfbebcb-571c-11dd-a488-000d609846de" FIO="Хрыков Олег Витальевич"/>
+<Manager Guid="c9c8db89-3929-11e6-a7ea-d4ae52b5e909" FIO="Нахимова Марина Евгеньевна"/>
+<Manager Guid="e5936bcd-0577-11e3-8145-d4ae52b5e909" FIO="Киреев Андрей Дмитриевич"/>
+<Manager Guid="d4a76a9a-824c-11de-8e3a-000d609846de" FIO="Алаев Михаил Александрович(снабжение)"/>
+<Manager Guid="a4ea754c-0370-11e4-8456-d4ae52b5e909" FIO="Вильчинская Эльвира Сергеевна"/>
+<Manager Guid="2374f58a-c6f9-11e3-aa42-d4ae52b5e909" FIO="Люхничов Игорь Юрьевич"/>
+<Manager Guid="503f7cb5-00d6-11e4-8456-d4ae52b5e909" FIO="Лопухов Вячеслав Владимирович"/>
+<Manager Guid="f5e982c4-593d-11e1-9df9-14dae9dda2a1" FIO="Ломоносова Ксения Валерьевна"/>
+<Manager Guid="d66161dd-374f-11e4-8456-d4ae52b5e909" FIO="Голубев Юрий Сергеевич"/>
+<Manager Guid="61ac0061-4539-11de-8e3a-000d609846de" FIO="Горохов Владимир Анатольевич"/>
+<Manager Guid="277753a5-ae34-11e5-a91c-d4ae52b5e909" FIO="Смирнов Александр"/>
+<Manager Guid="fde5df99-1b32-11e6-9e68-d4ae52b5e909" FIO="Мигнон Наталья"/>
+<Manager Guid="ea55009a-9e87-11e1-bafa-14dae9dda2a1" FIO="Вострилов Андрей Вадимович"/>
+<Manager Guid="b8a2697a-54ba-11dd-a488-000d609846de" FIO="Красникова Анна Александровна"/>
+<Manager Guid="cb375ef6-6202-11e1-9df9-14dae9dda2a1" FIO="Курапова Елена Андреевна"/>
+<Manager Guid="38568215-cbb1-11e4-931f-d4ae52b5e909" FIO="Кунаков Руслан Евгениевич"/>
+<Manager Guid="e4e653e2-6e03-11df-9b2a-000d609846de" FIO="Соковых Елена Сергеевна"/>
+<Manager Guid="1799aa45-8a7b-11e0-9a32-000d609846de" FIO="Суворов Александр Владимирович"/>
+<Manager Guid="deee29b2-8d5a-11e3-b841-d4ae52b5e909" FIO="Панфилов Михаил Александрович"/>
+<Manager Guid="6331aa47-6aa4-11e2-8c05-14dae9dda2a1" FIO="Гуров Максим Владимирович"/>
+<Manager Guid="e0cd3bda-27d2-11e6-a7ea-d4ae52b5e909" FIO="Бекенова А.В."/>
+<Manager Guid="48336cfe-a3ed-11e5-8831-d4ae52b5e909" FIO="Гюр Аталай"/>
+<Manager Guid="630eb05c-1553-11db-a748-000ea627253e" FIO="Лапенков Владимир Иванович"/>
+<Manager Guid="cd0899d2-c984-11dc-b5eb-000d609846de" FIO="Яковлева Наталья Александровна"/>
+<Manager Guid="c898008c-189f-11e5-8dfb-d4ae52b5e909" FIO="Борисов Антон Владимирович"/>
+<Manager Guid="29a1a3d3-9d75-11e5-8831-d4ae52b5e909" FIO="Ширяев Никита Андреевич"/>
+<Manager Guid="e5e93c88-2ddc-11df-8d17-000d609846de" FIO="Иванов Дмитрий Владимирович"/>
+<Manager Guid="2e8afe78-81fc-11dc-90dd-000d609846de" FIO="Короткова Елена Юрьевна"/>
+<Manager Guid="1af1710b-36bd-11e6-a7ea-d4ae52b5e909" FIO="Левченко Е."/>
+<Manager Guid="82708bca-cf03-11e5-98cf-d4ae52b5e909" FIO="Кузьминых Надежда Александровна"/>
+<Manager Guid="5e3b6135-6370-11e6-963c-d4ae52b5e909" FIO="Голубев Олег Арнольдович"/>
+<Manager Guid="853a615e-adea-11e0-9f90-000d609846de" FIO="Горохов Дмитрий Владимирович"/>
+<Manager Guid="e34eae69-e764-11e4-a1c5-d4ae52b5e909" FIO="Бубнова А.А."/>
+<Manager Guid="ef421bda-3652-11da-a73a-000ea627253e" FIO="Горохов Владимир Анатольевич"/>
+<Manager Guid="ef0368c5-d3c7-11e5-98cf-d4ae52b5e909" FIO="Свежинин Александр Викторович"/>
+<Manager Guid="487647c9-3c88-11e3-b841-d4ae52b5e909" FIO="Уманский В. А."/>
+<Manager Guid="f33d7222-e60c-11e1-bafb-14dae9dda2a1" FIO="Паршукова Людмила Викторовна"/>
+<Manager Guid="1b671fda-d881-11dc-ad4a-000d609846de" FIO="Аракелян Анна Михайловна"/>
+<Manager Guid="50296627-3813-11e4-8456-d4ae52b5e909" FIO="Никулин Артем Валерьевич"/>
+<Manager Guid="5542cf6b-9921-11dd-a722-000d609846de" FIO="Грачёва Юлия Владимировна"/>
+<Manager Guid="65a07b14-685b-11dd-af1a-000d609846de" FIO="Никитин Дмитрий Владимирович"/>
+<Manager Guid="2bc9381e-8037-11df-9b2a-000d609846de" FIO="Кузьминых Надежда Александровна"/>
+<Manager Guid="5d41815c-3649-11da-a73a-000ea627253e" FIO="Малышев Игорь Иванович"/>
+<Manager Guid="fad4471a-87b9-11e1-b370-14dae9dda2a1" FIO="Воробьев Александр Владимирович"/>
+</Managers>

@@ -1,0 +1,58 @@
+﻿@model YstIdentity.Models.LoginViewModel
+@using Term.Web.Views.Resources;
+@{
+    ViewBag.Title = "Login";
+}
+<div class="row">
+    <div class="alert alert-info col-xs-5">Хотите зарегистрироваться?<a href="https://yst.ru/cooperation/" class="alert-link"> Заполните анкету на нашем сайте.</a></div>
+    <div class="col-xs-2"></div>
+    <div class="alert alert-info col-xs-5">Would you like to register?<a href="http://yst-group.com/cooperation/" class="alert-link"> Fill the form on website.</a></div>
+</div>
+<section id="loginForm" class="login_form">
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h2 class="form-signin-heading">@Header.MainSignin</h2>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = @Header.UserLogin })
+        @Html.ValidationMessageFor(m => m.UserName)
+
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control top10", placeholder = @Header.Password })
+        @Html.ValidationMessageFor(m => m.Password)
+
+    <div>
+        <label>
+            @Html.CheckBoxFor(m => m.RememberMe)
+            <label for="RememberMe">@Header.Remember</label>
+        </label>
+    </div>
+
+
+
+
+
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value=@Header.Signin />
+        <hr/>
+        <section class="forget-password">
+            <a class="link_item-dashed" href="@Url.Action("ForgotPassword","Account")">Forgot password?</a>
+            
+        </section>
+    }
+</section>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('[type=radio],[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+        });
+    </script>
+}
+
+

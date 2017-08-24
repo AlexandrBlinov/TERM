@@ -1,0 +1,127 @@
+﻿@model  YstTerm.Models.PodborAutoView
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = SearchByAuto.SearchByVehicle;
+    object displayModeModel = null;
+
+    if (Model.model == null)
+    { displayModeModel = new { @class = "form-control", @disabled = "disabled" }; }
+    else
+    { displayModeModel = new { @class = "form-control" }; }
+
+    object displayYearModel = null;
+
+    if (Model.year == 0)
+    { displayYearModel = new { @class = "form-control", @disabled = "disabled" }; }
+    else
+    { displayYearModel = new { @class = "form-control" }; }
+
+
+    object displayEngineModel = null;
+
+    if (Model.engine == null)
+    { displayEngineModel = new { @class = "form-control", @disabled = "disabled" }; }
+    else
+    { displayEngineModel = new { @class = "form-control" }; }
+
+    //displayModeModel = new { @class = "form-control"};
+
+
+    // object displayModeYear = (Model.year) ? null : new { disabled = "disabled" };
+}
+
+
+<div class="row">
+    <span class="text_main right20">@SearchByAuto.SearchByVehicle</span>
+
+</div>
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="/home/index">@Header.MainPage</a></li>
+        <li class="active">@Header.ByAuto</li>
+    </ol>
+</div>
+
+<div class="form_border">
+    <div class="row all10">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text_center">
+
+            <span class="form_header_text">@SearchByAuto.SearchByVehicle</span>
+
+            @using (Html.BeginForm("PodborAuto", "Home", null, FormMethod.Get, new { id = "podborauto", @class = "top20" }))
+            {
+
+                <div class="row">
+                    <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.brand, new SelectList(Model.Brands), @SearchByAuto.Brand, new { @class = "form-control" })
+                    </div>
+                    <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.model, new SelectList(Model.Models), @SearchByAuto.Model, displayModeModel)
+                    </div>
+                    <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.year, new SelectList(Model.Years), @SearchByAuto.YearOfIssue, displayYearModel)
+                    </div>
+                    <div class="top10 col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        @Html.DropDownListFor(p => p.engine, new SelectList(Model.Engines), @SearchByAuto.Modification, displayEngineModel)
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@{Html.RenderPartial("PartialImg");}
+@if (ViewBag.Length == 0)
+{
+    <div id="view_tab" class="container">
+        <div class="row text_center">
+            @if (ViewBag.AddStock) { 
+             <img src="~/Content/img/car_text.png" class="img-responsive">
+            }
+            else
+            {
+             <img src="~/Content/img/car_text_en.png" class="img-responsive">
+            }
+        </div>
+    </div>
+}
+
+<div id="podborautoresult" class="top70">
+    @if (ViewBag.Length > 0)
+    {
+        <table id="podborauto" class="table table_original">
+            <thead><tr class="bg_th_lvl1"><th class="border_right th_width_half" colspan="2"> @Header.Tyres </th><th class="border_left th_width_half" colspan="2"> @Header.Wheels </th></tr><tr class="bg_th_lvl2"><th class="border_top_0"> @SearchByAuto.Factory </th><th class="border_right border_top_0"> @SearchByAuto.Replacement </th><th class="border_left border_top_0"> @SearchByAuto.Factory </th><th class="border_top_0"> @SearchByAuto.Replacement </th></tr></thead>
+            @for (int i = 0; i < ViewBag.Length; i++)
+            {
+
+                <tr>
+                    <td> @(ViewBag.tyresZavod.Length > i ? @Html.Raw(ViewBag.tyresZavod[i].HRef) : "") </td>
+                    <td> @(ViewBag.tyresZamena.Length > i ? @Html.Raw(ViewBag.tyresZamena[i].HRef) : "") </td>
+                    <td> @(ViewBag.disksZavod.Length > i ? @Html.Raw(ViewBag.disksZavod[i].HRef) : "") </td>
+                    <td> @(ViewBag.disksZamena.Length > i ? @Html.Raw(ViewBag.disksZamena[i].HRef) : "") </td>
+                </tr>
+
+            }
+
+        </table>
+    }
+</div>
+
+<div id="ForSortSale" class="row invisible text-right">
+    <div class="col-lg-2 btn-group sort_row" role="group">
+        <button id="table" type="button" class="btn btn-default active"><span class="glyphicon glyphicon-th-list fs15px" aria-hidden="true" title=@ForSearchResult.List></span></button>
+        <button id="plitka" type="button" class="btn btn-default"><span class="glyphicon glyphicon-th fs15px" aria-hidden="true" title=@ForSearchResult.Tile></span></button>
+    </div>
+    <div class="col-lg-2 btn-group sort_row @ViewBag.SaleMode" role="group">
+        <button id="all" type="button" class="btn btn-default active">All</button>
+        <button id="onlysale" type="button" class="btn btn-default only_sale">Sale</button>
+    </div>
+    <div class="col-lg-2 checkbox sort_row">
+        <label>
+            <input id="exact-size" type="checkbox" name="exact-size" value="false" class="checkbox_del originals_param"><span>@SearchByAuto.OriginalParams</span>
+        </label>
+    </div>
+</div>
+
+<div id="podbortiporazmerresult"></div>

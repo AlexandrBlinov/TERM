@@ -1,0 +1,81 @@
+﻿@model Term.DAL.SaleReturn
+@using Term.Web.Views.Resources;
+
+@{
+    ViewBag.Title = String.Format("{0} {1} {2} {3} {4}", "Задание на возврат", " № ", Model.NumberIn1S, SalesTexts.From, Model.DocDate.ToShortDateString());
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+
+<section class="head-above-contents m-b-50">
+    <p class="lead">Внимание водителей!</p>
+    <p>1. Товар принимается в чистом виде, в заводской упаковке, без мех. повреждений.</p>
+    <p>2. Если товар рекламационный, мех. повреждения должны быть указаны в рекламационной карте.</p>
+    </section>
+
+
+<h3 class="m-b-20">
+   @ViewBag.Title
+</h3>
+
+<h5>
+    @ViewBag.AskToReturnCaption
+    </h5>
+
+<table class="table table-bill m-b-20">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>@ForSearchResult.StockNumber</th>
+            <th>@ForSearchResult.Name</th>
+            <th>Количество</th>
+            <th>Реализация</th>
+            <th>Дата реализации</th>
+            <th>@ForSearchResult.Price</th>
+            <th>
+                @CartAndOrders.TotalSum
+            </th>
+
+        </tr>
+    </thead>
+    @foreach (var detail in Model.SaleReturnDetails)
+    {
+        <tr>
+            <td>@detail.RowNumber</td>
+            <td>@detail.Product.ProductId</td>
+            <td>@detail.Product.Name</td>
+
+            <td>@detail.Count</td>
+            <td>@detail.SaleNumber</td>
+            <td>@detail.SaleDate.ToShortDateString()</td>
+            <td class="text-right">@detail.Price</td>
+            <td class="text-right">
+                @(detail.Count * detail.Price)
+            </td>
+        </tr>
+
+
+    }
+    <tfoot>
+        <tr>
+            <td class="price-filds" colspan="3">@CartAndOrders.Total:</td>
+            <td class="price-filds">
+                @Model.SaleReturnDetails.Sum(item => item.Count)
+            </td>
+
+            <td colspan="3"></td>
+            <td class="price-filds text-right">
+                @Model.SaleReturnDetails.Sum(item => item.Count * item.Price)
+            </td>
+
+        </tr>
+    </tfoot>
+</table>
+<h4>Основание: товар не востребован. </h4>
+<script type="text/javascript">
+    window.print();
+</script>
+
+

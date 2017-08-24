@@ -1,0 +1,1420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CFEEF8AE-4935-4A09-B2FF-0B5036140EAE}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Term.Web</RootNamespace>
+    <AssemblyName>Term.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44350</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program Files (x86)\Open XML SDK\V2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.0.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Providers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Web.Providers.1.0.1\lib\Net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\API\DbActionLogsApiController.cs" />
+    <Compile Include="Controllers\API\DpdApiController.cs" />
+    <Compile Include="Controllers\API\OnWayItemsController.cs" />
+    <Compile Include="Controllers\API\PartnerServiceApiController.cs" />
+    <Compile Include="Controllers\API\AppToCarsApiController.cs" />
+    <Compile Include="Controllers\API\PricesApiController.cs" />
+    <Compile Include="Controllers\API\ProductsApiController.cs" />
+    <Compile Include="Controllers\API\SalesApiController.cs" />
+    <Compile Include="Controllers\API\SeasonOrdersApiController.cs" />
+    <Compile Include="Controllers\API\RestsOfSuppliersApiController.cs" />
+    <Compile Include="Controllers\DocumentImagesShowController.cs" />
+    <Compile Include="Controllers\API\NotificationsApiController.cs" />
+    <Compile Include="Controllers\LimitDataController.cs" />
+    <Compile Include="Controllers\PhotoController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\PodborAkbController.cs" />
+    <Compile Include="Controllers\RolesAdminController.cs" />
+    <Compile Include="Controllers\SaleReturnsController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Filters\ErrorIfPricesAreBeingUpdatedFilter.cs" />
+    <Compile Include="Filters\LoggedExceptionFilter.cs" />
+    <Compile Include="Filters\TrackUserApiActionAttribute.cs" />
+    <Compile Include="HtmlHelpers\HtmlElements.cs" />
+    <Compile Include="HtmlHelpers\LocalizedRegexAttribute .cs" />
+    <Compile Include="HtmlHelpers\PictureUtility.cs" />
+    <Compile Include="HtmlHelpers\UrlGenerator.cs" />
+    <Compile Include="Migrations\201610310944138_DocumentRelatedFilesNew.cs" />
+    <Compile Include="Migrations\201610310944138_DocumentRelatedFilesNew.Designer.cs">
+      <DependentUpon>201610310944138_DocumentRelatedFilesNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610311138365_RelatedFiles.cs" />
+    <Compile Include="Migrations\201610311138365_RelatedFiles.Designer.cs">
+      <DependentUpon>201610311138365_RelatedFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612071014114_SipplierIdAddedToOrder.cs" />
+    <Compile Include="Migrations\201612071014114_SipplierIdAddedToOrder.Designer.cs">
+      <DependentUpon>201612071014114_SipplierIdAddedToOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612080706391_AddedPropsToUserProfile.cs" />
+    <Compile Include="Migrations\201612080706391_AddedPropsToUserProfile.Designer.cs">
+      <DependentUpon>201612080706391_AddedPropsToUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612080725311_AddedPropsOrderDetails.cs" />
+    <Compile Include="Migrations\201612080725311_AddedPropsOrderDetails.Designer.cs">
+      <DependentUpon>201612080725311_AddedPropsOrderDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612130807040_SupplierIdAddedToUsers.cs" />
+    <Compile Include="Migrations\201612130807040_SupplierIdAddedToUsers.Designer.cs">
+      <DependentUpon>201612130807040_SupplierIdAddedToUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612130813173_SupplierIdAddedToUsersRemoveIs.cs" />
+    <Compile Include="Migrations\201612130813173_SupplierIdAddedToUsersRemoveIs.Designer.cs">
+      <DependentUpon>201612130813173_SupplierIdAddedToUsersRemoveIs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612130815161_SupplierIdAddedToUsersRemoveIs2.cs" />
+    <Compile Include="Migrations\201612130815161_SupplierIdAddedToUsersRemoveIs2.Designer.cs">
+      <DependentUpon>201612130815161_SupplierIdAddedToUsersRemoveIs2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612130818563_SupplierIdAddedToUsers2.cs" />
+    <Compile Include="Migrations\201612130818563_SupplierIdAddedToUsers2.Designer.cs">
+      <DependentUpon>201612130818563_SupplierIdAddedToUsers2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612150855480_NotificationForUsers.cs" />
+    <Compile Include="Migrations\201612150855480_NotificationForUsers.Designer.cs">
+      <DependentUpon>201612150855480_NotificationForUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612150901143_NotificationForUsersUpdated.cs" />
+    <Compile Include="Migrations\201612150901143_NotificationForUsersUpdated.Designer.cs">
+      <DependentUpon>201612150901143_NotificationForUsersUpdated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701091142127_AddedRestOfPartner.cs" />
+    <Compile Include="Migrations\201701091142127_AddedRestOfPartner.Designer.cs">
+      <DependentUpon>201701091142127_AddedRestOfPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702031326519_ForeignKeyForOrderHistory.cs" />
+    <Compile Include="Migrations\201702031326519_ForeignKeyForOrderHistory.Designer.cs">
+      <DependentUpon>201702031326519_ForeignKeyForOrderHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702141353549_PrePayAddedToPartnerAndSupplier.cs" />
+    <Compile Include="Migrations\201702141353549_PrePayAddedToPartnerAndSupplier.Designer.cs">
+      <DependentUpon>201702141353549_PrePayAddedToPartnerAndSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702151521064_DbUserActionLogAdded.cs" />
+    <Compile Include="Migrations\201702151521064_DbUserActionLogAdded.Designer.cs">
+      <DependentUpon>201702151521064_DbUserActionLogAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702220646435_AddedIsDeliveredToSale.cs" />
+    <Compile Include="Migrations\201702220646435_AddedIsDeliveredToSale.Designer.cs">
+      <DependentUpon>201702220646435_AddedIsDeliveredToSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703170809512_ManagerContactDataAdded.cs" />
+    <Compile Include="Migrations\201703170809512_ManagerContactDataAdded.Designer.cs">
+      <DependentUpon>201703170809512_ManagerContactDataAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703241230335_FeedbackFormToDatabase.cs" />
+    <Compile Include="Migrations\201703241230335_FeedbackFormToDatabase.Designer.cs">
+      <DependentUpon>201703241230335_FeedbackFormToDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704101358195_ManagersOfPartners_Added.cs" />
+    <Compile Include="Migrations\201704101358195_ManagersOfPartners_Added.Designer.cs">
+      <DependentUpon>201704101358195_ManagersOfPartners_Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704121059026_PriceOfProduct_PriceOpt1__Added.cs" />
+    <Compile Include="Migrations\201704121059026_PriceOfProduct_PriceOpt1__Added.Designer.cs">
+      <DependentUpon>201704121059026_PriceOfProduct_PriceOpt1__Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705160801397_SaleReturnAdded.cs" />
+    <Compile Include="Migrations\201705160801397_SaleReturnAdded.Designer.cs">
+      <DependentUpon>201705160801397_SaleReturnAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705160937446_SaleReturnAddedDocDate.cs" />
+    <Compile Include="Migrations\201705160937446_SaleReturnAddedDocDate.Designer.cs">
+      <DependentUpon>201705160937446_SaleReturnAddedDocDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705230753189_SaleReturn_SetSaleNumberToString.cs" />
+    <Compile Include="Migrations\201705230753189_SaleReturn_SetSaleNumberToString.Designer.cs">
+      <DependentUpon>201705230753189_SaleReturn_SetSaleNumberToString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705251351384_CreateTablePhotoForProducts.cs" />
+    <Compile Include="Migrations\201705251351384_CreateTablePhotoForProducts.Designer.cs">
+      <DependentUpon>201705251351384_CreateTablePhotoForProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705311136445_UpdateTablePhotoForProducts.cs" />
+    <Compile Include="Migrations\201705311136445_UpdateTablePhotoForProducts.Designer.cs">
+      <DependentUpon>201705311136445_UpdateTablePhotoForProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705311240484_UpdateTablePhotoForProducts2.cs" />
+    <Compile Include="Migrations\201705311240484_UpdateTablePhotoForProducts2.Designer.cs">
+      <DependentUpon>201705311240484_UpdateTablePhotoForProducts2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705311244113_UpdateTablePhotoForProducts3.cs" />
+    <Compile Include="Migrations\201705311244113_UpdateTablePhotoForProducts3.Designer.cs">
+      <DependentUpon>201705311244113_UpdateTablePhotoForProducts3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706130731017_NumberOfDaysForReturnAddedToPartner.cs" />
+    <Compile Include="Migrations\201706130731017_NumberOfDaysForReturnAddedToPartner.Designer.cs">
+      <DependentUpon>201706130731017_NumberOfDaysForReturnAddedToPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706160939546_SeasonStockItemOfPartnerAdded.cs" />
+    <Compile Include="Migrations\201706160939546_SeasonStockItemOfPartnerAdded.Designer.cs">
+      <DependentUpon>201706160939546_SeasonStockItemOfPartnerAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707050557240_AddTableCountriesAndCarsForReplica.cs" />
+    <Compile Include="Migrations\201707050557240_AddTableCountriesAndCarsForReplica.Designer.cs">
+      <DependentUpon>201707050557240_AddTableCountriesAndCarsForReplica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707050758432_HasOwnRestAddedToPartners.cs" />
+    <Compile Include="Migrations\201707050758432_HasOwnRestAddedToPartners.Designer.cs">
+      <DependentUpon>201707050758432_HasOwnRestAddedToPartners.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707181152549_ProductPropertyDescription_Added2.cs" />
+    <Compile Include="Migrations\201707181152549_ProductPropertyDescription_Added2.Designer.cs">
+      <DependentUpon>201707181152549_ProductPropertyDescription_Added2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707270600029_PartnerPropertiesAdded.cs" />
+    <Compile Include="Migrations\201707270600029_PartnerPropertiesAdded.Designer.cs">
+      <DependentUpon>201707270600029_PartnerPropertiesAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708200827449_PartnerPointsEmailAdded.cs" />
+    <Compile Include="Migrations\201708200827449_PartnerPointsEmailAdded.Designer.cs">
+      <DependentUpon>201708200827449_PartnerPointsEmailAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708230504015_AddressOfPartners_Added.cs" />
+    <Compile Include="Migrations\201708230504015_AddressOfPartners_Added.Designer.cs">
+      <DependentUpon>201708230504015_AddressOfPartners_Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeliveryViewModels.cs" />
+    <Compile Include="Models\FakeViewModels.cs" />
+    <Compile Include="Models\OrderNumberWithStatusDTO.cs" />
+    <Compile Include="Controllers\API\OrdersApiController.cs" />
+    <Compile Include="Controllers\API\PartnerApiController.cs" />
+    <Compile Include="Controllers\API\XmlController.cs" />
+    <Compile Include="Controllers\API\ExchangeController.cs" />
+    <Compile Include="Controllers\FakeController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
+    <Compile Include="Controllers\API\PointsApiController.cs" />
+    <Compile Include="Controllers\PodborAutoTyresDisksController.cs" />
+    <Compile Include="Controllers\PriceListController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\SeasonOrdersController.cs" />
+    <Compile Include="Controllers\SeasonProductController.cs" />
+    <Compile Include="Controllers\SeasonShoppingCartController.cs" />
+    <Compile Include="Filters\AdminHashAuthAttribute.cs" />
+    <Compile Include="Models\PodborAkbViewModel.cs" />
+    <Compile Include="Models\PodborAkbViewResult.cs" />
+    <Compile Include="Models\ProductCount.cs" />
+    <Compile Include="Models\SeasonViewModels.cs" />
+    <Compile Include="Models\ViewPodborModels.cs" />
+    <Compile Include="Services\CachedListForPodborsProvider.cs" />
+    <Compile Include="Services\CheckerCountExeedsRest.cs" />
+    <Compile Include="Services\DaysToDepartmentService.cs" />
+    <Compile Include="Services\Defaults.cs" />
+    <Compile Include="Services\DeliveryCostCalculatorService.cs" />
+    <Compile Include="Services\ExceptionUtility.cs" />
+    <Compile Include="Services\JobScheduler.cs" />
+    <Compile Include="Services\NewsService.cs" />
+    <Compile Include="Services\NotificationForUserService.cs" />
+    <Compile Include="Services\PersistedStorage.cs" />
+    <Compile Include="Services\CustomExceptions.cs" />
+    <Compile Include="Services\Disp.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PartnerController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\ThumbnailController.cs" />
+    <Compile Include="Controllers\API\YstApiController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HtmlHelpers\PagingHelpers.cs" />
+    <Compile Include="Migrations\201409080821443_CreateDropIndexes.cs" />
+    <Compile Include="Migrations\201409080821443_CreateDropIndexes.Designer.cs">
+      <DependentUpon>201409080821443_CreateDropIndexes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409291306461_UpdateSales.cs" />
+    <Compile Include="Migrations\201409291306461_UpdateSales.Designer.cs">
+      <DependentUpon>201409291306461_UpdateSales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201409291320298_UpdateSaleOne.cs" />
+    <Compile Include="Migrations\201409291320298_UpdateSaleOne.Designer.cs">
+      <DependentUpon>201409291320298_UpdateSaleOne.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\UserAndRolesViewModels.cs" />
+    <Compile Include="Models\ModelBinders.cs" />
+    <Compile Include="Models\TermViewModels.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BaseService.cs" />
+    <Compile Include="Services\ExcelParser.cs" />
+    <Compile Include="Services\FileUploaderService.cs" />
+    <Compile Include="Filters\Filters.cs" />
+    <Compile Include="Services\Logger.cs" />
+    <Compile Include="Services\PodborAkbService.cs" />
+    <Compile Include="Services\PodborTyreDiskService.cs" />
+    <Compile Include="Services\PredicateBuilder.cs" />
+    <Compile Include="Services\PriceListResults.cs" />
+    <Compile Include="Services\ProductOnRestsService.cs" />
+    <Compile Include="Services\ProductProducerProvider.cs" />
+    <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Models\AppDbContext.cs" />
+    <Compile Include="Models\YstViewModels.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DropDownsFactory.cs" />
+    <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Services\SalesService.cs" />
+    <Compile Include="Services\SeasonOrderAnalizerService.cs" />
+    <Compile Include="Services\SeasonProductService.cs" />
+    <Compile Include="Services\SendMailService.cs" />
+    <Compile Include="Services\ServicePartnerPoint.cs" />
+    <Compile Include="Services\SeasonShoppingCart.cs" />
+    <Compile Include="Services\ShoppingCart.cs" />
+    <Compile Include="Services\SPExecutor.cs" />
+    <Compile Include="Services\StringAsNumberComparer.cs" />
+    <Compile Include="Services\UpdatePicturesJob.cs" />
+    <Compile Include="Services\UrlChecker.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\Utility.cs" />
+    <Compile Include="Services\XmlResult.cs" />
+    <Compile Include="Services\XMLService.cs" />
+    <Compile Include="Views\Resources\AccountTexts.Designer.cs">
+      <DependentUpon>AccountTexts.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\AccountTexts.ru.Designer.cs">
+      <DependentUpon>AccountTexts.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\LimitDataTexts.ru.Designer.cs">
+      <DependentUpon>LimitDataTexts.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\LimitDataTexts.Designer.cs">
+      <DependentUpon>LimitDataTexts.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\Agreement.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Agreement.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Agreement1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Agreement.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\CartAndOrders.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CartAndOrders.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\CartAndOrders1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CartAndOrders.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\DpdTexts.ru.Designer.cs">
+      <DependentUpon>DpdTexts.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\DpdTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DpdTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\FeedbackForms.ru.Designer.cs">
+      <DependentUpon>FeedbackForms.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\FeedbackForms.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FeedbackForms.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\ForSearchResult.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForSearchResult.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\ForSearchResult1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForSearchResult.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Header.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Header1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Header.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Help.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Help.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Help1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Help.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\ModalWindows.ru.Designer.cs">
+      <DependentUpon>ModalWindows.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\ModalWindows.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModalWindows.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\SalesTexts.ru.Designer.cs">
+      <DependentUpon>SalesTexts.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\SalesTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SalesTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\SearchByAuto.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchByAuto.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\SearchByAuto1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SearchByAuto.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\SeasonOrdersTexts.ru.Designer.cs">
+      <DependentUpon>SeasonOrdersTexts.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\SeasonOrdersTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SeasonOrdersTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Settings.ru1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.ru.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\Settings1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Resources\ShoppingCartErrors.ru.Designer.cs">
+      <DependentUpon>ShoppingCartErrors.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Resources\ShoppingCartErrors.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShoppingCartErrors.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ResultDel.datasource\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\common.css" />
+    <Content Include="Content\css\ReSite.css" />
+    <Content Include="Content\css\toastr.css" />
+    <Content Include="Content\fancybox\blank.gif" />
+    <Content Include="Content\fancybox\fancybox_buttons.png" />
+    <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\03490.jpg" />
+    <Content Include="Content\img\1cWebService.png" />
+    <Content Include="Content\img\1cWebService_2.png" />
+    <Content Include="Content\img\accs.jpg" />
+    <Content Include="Content\img\Activ.png" />
+    <Content Include="Content\img\add-scan.png" />
+    <Content Include="Content\img\akb.jpg" />
+    <Content Include="Content\img\akk.jpg" />
+    <Content Include="Content\img\big_loading.gif" />
+    <Content Include="Content\img\button_cancel.png" />
+    <Content Include="Content\img\cart-sprite.png" />
+    <Content Include="Content\img\cart.png" />
+    <Content Include="Content\img\car_text.png" />
+    <Content Include="Content\img\car_text_en.png" />
+    <Content Include="Content\img\catalog-no-image-small-box.png" />
+    <Content Include="Content\img\check-box.png" />
+    <Content Include="Content\img\clear-param.png" />
+    <Content Include="Content\img\close.png" />
+    <Content Include="Content\img\disk.jpg" />
+    <Content Include="Content\img\download.gif" />
+    <Content Include="Content\img\dpd.png" />
+    <Content Include="Content\img\edit-add.png" />
+    <Content Include="Content\img\eng_yst.png" />
+    <Content Include="Content\img\excel.png" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\img\Help\1.png" />
+    <Content Include="Content\img\Help\1_en.png" />
+    <Content Include="Content\img\Help\2.png" />
+    <Content Include="Content\img\Help\2_en.png" />
+    <Content Include="Content\img\Help\3.png" />
+    <Content Include="Content\img\Help\3_en.png" />
+    <Content Include="Content\img\Help\4.png" />
+    <Content Include="Content\img\Help\4_en.png" />
+    <Content Include="Content\img\Help\5.png" />
+    <Content Include="Content\img\Help\6.png" />
+    <Content Include="Content\img\Help\6_en.png" />
+    <Content Include="Content\img\Help\7.png" />
+    <Content Include="Content\img\Help\7_en.png" />
+    <Content Include="Content\img\Help\8.png" />
+    <Content Include="Content\img\Help\8_en.png" />
+    <Content Include="Content\img\grass.jpg" />
+    <Content Include="Content\img\grass_2.jpg" />
+    <Content Include="Content\img\icon-error.png" />
+    <Content Include="Content\img\icon-success.png" />
+    <Content Include="Content\img\icon_bottom.png" />
+    <Content Include="Content\img\icon_top.png" />
+    <Content Include="Content\img\ImageNotFound.png" />
+    <Content Include="Content\img\img-acc-podbor.png" />
+    <Content Include="Content\img\img-akb-podbor.png" />
+    <Content Include="Content\img\img-auto-podbor.png" />
+    <Content Include="Content\img\img-disks-podbor.png" />
+    <Content Include="Content\img\img-tyres-podbor.png" />
+    <Content Include="Content\img\inci.jpg" />
+    <Content Include="Content\img\item_382_thumb.jpg" />
+    <Content Include="Content\img\liquid_1.jpg" />
+    <Content Include="Content\img\liquid_2.jpg" />
+    <Content Include="Content\img\logo-yst.png" />
+    <Content Include="Content\img\logotip.png" />
+    <Content Include="Content\img\math_1.jpg" />
+    <Content Include="Content\img\math_2.jpg" />
+    <Content Include="Content\img\menu-akb-icon.png" />
+    <Content Include="Content\img\menu-disk-icon.png" />
+    <Content Include="Content\img\menu-tyre-icon.png" />
+    <Content Include="Content\img\NotActiv.png" />
+    <Content Include="Content\img\rub.png" />
+    <Content Include="Content\img\rub2.png" />
+    <Content Include="Content\img\sale-icon.png" />
+    <Content Include="Content\img\search-btn.png" />
+    <Content Include="Content\img\season_all.png" />
+    <Content Include="Content\img\season_summer.png" />
+    <Content Include="Content\img\season_winter.png" />
+    <Content Include="Content\img\socials.jpg" />
+    <Content Include="Content\img\solite_1.jpg" />
+    <Content Include="Content\img\solite_2.jpg" />
+    <Content Include="Content\img\spinner.gif" />
+    <Content Include="Content\img\sprite-socials.png" />
+    <Content Include="Content\img\sprite-sort.png" />
+    <Content Include="Content\img\sprite.png" />
+    <Content Include="Content\img\trebl.jpg" />
+    <Content Include="Content\img\trebl_2.jpg" />
+    <Content Include="Content\img\tyre.jpg" />
+    <Content Include="Content\img\usd.png" />
+    <Content Include="Content\img\usd2.png" />
+    <Content Include="Content\img\user-icon.png" />
+    <Content Include="Content\img\wallet.svg" />
+    <Content Include="Content\img\WheelsBrands\Alcasta.png" />
+    <Content Include="Content\img\WheelsBrands\CrossStreet.png" />
+    <Content Include="Content\img\WheelsBrands\LA.png" />
+    <Content Include="Content\img\WheelsBrands\LA_TD.png" />
+    <Content Include="Content\img\WheelsBrands\NZ.jpg" />
+    <Content Include="Content\img\WheelsBrands\TREBL.png" />
+    <Content Include="Content\img\WheelsBrands\X-Race.png" />
+    <Content Include="Content\img\WheelsBrands\Yokatta.png" />
+    <Content Include="Content\img\WheelsBrands\YST.png" />
+    <Content Include="Content\img\xml.png" />
+    <Content Include="Content\img\YST.png" />
+    <Content Include="Content\img\_Concept-FD504_S.png" />
+    <Content Include="Content\img\azard_1.jpg" />
+    <Content Include="Content\img\azard_2.jpg" />
+    <Content Include="Content\img\акб_1.jpg" />
+    <Content Include="Content\img\акб_2.jpg" />
+    <Content Include="Content\img\varta.jpg" />
+    <Content Include="Content\img\varta_2.jpg" />
+    <Content Include="Content\img\gruz_1.jpg" />
+    <Content Include="Content\img\gruz_2.jpg" />
+    <Content Include="Content\img\deflector_1.jpg" />
+    <Content Include="Content\img\deflector_2.jpg" />
+    <Content Include="Content\img\колпаки_1.jpg" />
+    <Content Include="Content\img\колпаки_2.jpg" />
+    <Content Include="Content\img\компрессоры_1.jpg" />
+    <Content Include="Content\img\компрессоры_2.jpg" />
+    <Content Include="Content\jquery.fancybox-buttons.css" />
+    <Content Include="Content\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\jquery.fancybox.css" />
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\common-v6.js" />
+    <Content Include="Scripts\jquery.bootstrap-touchspin.js" />
+    <Content Include="Scripts\jquery.fancybox-buttons.js" />
+    <Content Include="Scripts\jquery.fancybox-media.js" />
+    <Content Include="Scripts\jquery.fancybox-thumbs.js" />
+    <Content Include="Scripts\jquery.fancybox.js" />
+    <Content Include="Scripts\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.mask.js" />
+    <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Content\kladr\form_with_map.css" />
+    <Content Include="Content\kladr\form_with_map.js" />
+    <Content Include="Content\kladr\jquery.kladr.min.css" />
+    <Content Include="Content\kladr\jquery.kladr.min.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap-datetimepicker-build.less" />
+    <Content Include="Content\seasonstyles.css" />
+    <Content Include="Content\_bootstrap-datetimepicker.less" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\img\Thumbs.db" />
+    <Content Include="CustomForPartners\autodoc_wheels.ashx" />
+    <Content Include="CustomForPartners\autodoc_tyres.ashx" />
+    <Content Include="CustomForPartners\autoto.ashx" />
+    <Content Include="CustomForPartners\berg.ashx" />
+    <Content Include="CustomForPartners\expressdetal_tyres.ashx" />
+    <Content Include="CustomForPartners\autodoc_accs.ashx" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="CustomForPartners\updatedisksphoto.ashx" />
+    <Content Include="CustomForPartners\client527_accs.ashx" />
+    <Content Include="CustomForPartners\client527_akb.ashx" />
+    <Content Include="CustomForPartners\client527_tyres.ashx" />
+    <Content Include="CustomForPartners\client527_wheels.ashx" />
+    <Content Include="CustomForPartners\autorashodnik_accs.ashx" />
+    <Content Include="CustomForPartners\autorashodnik_akb.ashx" />
+    <Content Include="CustomForPartners\autorashodnik_tyres.ashx" />
+    <Content Include="CustomForPartners\autorashodnik_wheels.ashx" />
+    <Content Include="CustomForPartners\ProductPhoto.ashx" />
+    <Content Include="CustomForPartners\partline_tyres.ashx" />
+    <Content Include="CustomForPartners\partline_wheels.ashx" />
+    <Content Include="CustomForPartners\partline_accs.ashx" />
+    <Content Include="CustomForPartners\partline_akb.ashx" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\terminal.pubxml" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Instruction.aspx" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.mousewheel-3.0.6.pack.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\term-season-scripts.js" />
+    <Content Include="Scripts\term-scripts-20170506.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\yst-localize-20170619.js" />
+    <Content Include="Scripts\yst-shoppingcart-20170506.js" />
+    <Content Include="Scripts\yst-notifications.js" />
+    <Content Include="Scripts\yst-scripts-20170506.js" />
+    <Content Include="Scripts\yst-utility.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Partner\CreateOwn.cshtml" />
+    <Content Include="Views\Shared\_LoginMenu.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\ShoppingCart\CartSummary.cshtml" />
+    <Content Include="Views\Shared\ProductSummary.cshtml" />
+    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
+    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Account\Manage.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\List.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Orders\List.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\ShoppingCart\OrdersCreated.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Account\Login - Копировать.cshtml" />
+    <Content Include="Views\Partner\Index.cshtml" />
+    <Content Include="Views\Partner\Edit.cshtml" />
+    <Content Include="Views\Partner\Create.cshtml" />
+    <Content Include="Views\Home\Disks.cshtml" />
+    <Content Include="Views\Partner\KeyWordEnter.cshtml" />
+    <Content Include="Views\Shared\_LayoutPartner.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\ChangeOrder.cshtml" />
+    <Content Include="Views\Home\Tyres.cshtml" />
+    <Content Include="Views\Home\_Tyres.cshtml" />
+    <Content Include="Views\Home\_Disks.cshtml" />
+    <Content Include="Views\Home\PodborAuto2.cshtml" />
+    <Content Include="Views\Home\Akb.cshtml" />
+    <Content Include="Views\Home\Accs.cshtml" />
+    <Content Include="Views\Partner\UserAgreement.cshtml" />
+    <Content Include="Views\Partner\AddressWindow.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Help\PartialForChildPoint.cshtml" />
+    <Content Include="Views\Help\ColorDefinition.cshtml" />
+    <Content Include="Views\Sales\Details.cshtml" />
+    <Content Include="Views\Sales\List.cshtml" />
+    <Content Include="Views\Sales\Bill.cshtml" />
+    <Content Include="Views\Shared\_LayoutPrint.cshtml" />
+    <Content Include="Views\Help\WheelsPhotos.cshtml" />
+    <Content Include="Views\SeasonStock\Index.cshtml" />
+    <Content Include="Views\SeasonStock\_Stock.cshtml" />
+    <Content Include="Views\SeasonStock\ActiveProducers.cshtml" />
+    <Content Include="Views\SeasonStock\Popup.cshtml" />
+    <Content Include="Views\SeasonStock\Upload.cshtml" />
+    <Content Include="Views\SeasonProduct\_SeasonTyres.cshtml" />
+    <Content Include="Views\SeasonProduct\Disks.cshtml" />
+    <Content Include="Views\SeasonProduct\_SeasonDisks.cshtml" />
+    <Content Include="Views\SeasonShoppingCart\CartSummary.cshtml" />
+    <Content Include="Views\Shared\_LoginSeasonMenu.cshtml" />
+    <Content Include="Views\SeasonShoppingCart\Index.cshtml" />
+    <Content Include="Web References\ResultDel.datasource\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\SeasonStock\ActiveNotifications.cshtml" />
+    <Content Include="Views\SeasonOrders\Details.cshtml" />
+    <Content Include="Views\SeasonShoppingCart\OrdersCreated.cshtml" />
+    <Content Include="Views\Help\SendMail.cshtml" />
+    <Content Include="Views\Help\SendMailSuccess.cshtml" />
+    <Content Include="Views\Help\Download.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\PodborAutoTyresDisks\Index.cshtml" />
+    <Content Include="Views\Fake\Get.cshtml" />
+    <Content Include="Views\SeasonShoppingCart\GroupedByFactory.cshtml" />
+    <Content Include="Views\Partner\EditNew.cshtml" />
+    <Content Include="Views\Partner\EditPoint.cshtml" />
+    <Content Include="Views\SeasonShoppingCart\_CartFieldsForeign.cshtml" />
+    <Content Include="Views\SeasonShoppingCart\_CartFieldsRussian.cshtml" />
+    <Content Include="Views\SeasonOrders\Index.cshtml" />
+    <Content Include="Views\SeasonOrders\Edit.cshtml" />
+    <Content Include="Views\Shared\_Breadcrumbs.cshtml" />
+    <Content Include="Views\Shared\_SeasonProductSwitch.cshtml" />
+    <Content Include="Views\Error\InternalError.cshtml" />
+    <Content Include="Views\Fake\PassToForm.cshtml" />
+    <Content Include="Views\Home\_AppToCars.cshtml" />
+    <Content Include="Views\Home\CargoTyres.cshtml" />
+    <Content Include="Views\Home\_CargoTyres.cshtml" />
+    <Content Include="Views\PodborAkb\Index.cshtml" />
+    <Content Include="Views\Orders\Bill.cshtml" />
+    <Content Include="Views\SeasonOrders\Analyse.cshtml" />
+    <Content Include="Views\SeasonOrders\AnalysePrint.cshtml" />
+    <Content Include="Views\Home\Others.cshtml" />
+    <Content Include="Views\Fake\Index.cshtml" />
+    <Content Include="Web References\ResultDel.datasource\Result1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\ResultDel.datasource\ResultDel1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\_ModalConfirmation.cshtml" />
+    <Content Include="Views\Orders\DpdErrand.cshtml" />
+    <Content Include="Views\Shared\_ModalNotification.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Fake\Upload.cshtml" />
+    <Content Include="Views\Fake\Details.cshtml" />
+    <Content Include="Views\DocumentImagesShow\GetImagesByDocGuid.cshtml" />
+    <Content Include="Views\RolesAdmin\Index.cshtml" />
+    <Content Include="Views\RolesAdmin\Create.cshtml" />
+    <Content Include="Views\RolesAdmin\Details.cshtml" />
+    <Content Include="Views\RolesAdmin\Delete.cshtml" />
+    <Content Include="Views\UsersAdmin\Index.cshtml" />
+    <Content Include="Views\UsersAdmin\Edit.cshtml" />
+    <Content Include="Views\UsersAdmin\Delete.cshtml" />
+    <Content Include="Views\UsersAdmin\Details.cshtml" />
+    <Content Include="Views\UsersAdmin\Create.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutSupplier.cshtml" />
+    <Content Include="Views\Home\_SearchFieldByCodeArticleOrName.cshtml" />
+    <Content Include="Views\News\GetNewsDetails.cshtml" />
+    <Content Include="Views\News\NewsList.cshtml" />
+    <Content Include="Views\News\Details.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\_AddNewsForm.cshtml" />
+    <Content Include="Views\Orders\DpdCancelOrder.cshtml" />
+    <Content Include="Views\Home\CargoDisks.cshtml" />
+    <Content Include="Views\Home\_AccsSpecialOffer.cshtml" />
+    <Content Include="Views\Help\ManagerInfo.cshtml" />
+    <Content Include="Views\Home\_AkbSpecialOffer.cshtml" />
+    <Content Include="Views\Fake\ShowModel.cshtml" />
+    <Content Include="Views\Fake\_ProductCountWithSaleInfo_RowView.cshtml" />
+    <Content Include="Views\Fake\_GetRowToAdd.cshtml" />
+    <Content Include="Views\Fake\_ClaimItems.cshtml" />
+    <Content Include="Views\SaleReturns\Index.cshtml" />
+    <Content Include="Views\SaleReturns\_ReturnItems.cshtml" />
+    <Content Include="Views\SaleReturns\_GetRowToAdd.cshtml" />
+    <Content Include="Views\SaleReturns\Details.cshtml" />
+    <Content Include="Views\SaleReturns\List.cshtml" />
+    <Content Include="Views\SaleReturns\Print.cshtml" />
+    <Content Include="Views\Photo\Index.cshtml" />
+    <Content Include="Views\Partner\_DepartmentsSettings.cshtml" />
+    <Content Include="Views\Partner\_PriceTableSettings.cshtml" />
+    <Content Include="Views\Partner\_SalesMarketSettings.cshtml" />
+    <Content Include="Views\LimitData\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\LimitData\DetailedData.cshtml" />
+    <Content Include="Views\LimitData\GetDetailedData.cshtml" />
+    <Content Include="Views\Orders\JoinOrders.cshtml" />
+    <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
+    <None Include="Web.dev1.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.test3.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="ImportData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409080821443_CreateDropIndexes.resx">
+      <DependentUpon>201409080821443_CreateDropIndexes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409291306461_UpdateSales.resx">
+      <DependentUpon>201409291306461_UpdateSales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409291320298_UpdateSaleOne.resx">
+      <DependentUpon>201409291320298_UpdateSaleOne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610310944138_DocumentRelatedFilesNew.resx">
+      <DependentUpon>201610310944138_DocumentRelatedFilesNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610311138365_RelatedFiles.resx">
+      <DependentUpon>201610311138365_RelatedFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612071014114_SipplierIdAddedToOrder.resx">
+      <DependentUpon>201612071014114_SipplierIdAddedToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612080706391_AddedPropsToUserProfile.resx">
+      <DependentUpon>201612080706391_AddedPropsToUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612080725311_AddedPropsOrderDetails.resx">
+      <DependentUpon>201612080725311_AddedPropsOrderDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612130807040_SupplierIdAddedToUsers.resx">
+      <DependentUpon>201612130807040_SupplierIdAddedToUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612130813173_SupplierIdAddedToUsersRemoveIs.resx">
+      <DependentUpon>201612130813173_SupplierIdAddedToUsersRemoveIs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612130815161_SupplierIdAddedToUsersRemoveIs2.resx">
+      <DependentUpon>201612130815161_SupplierIdAddedToUsersRemoveIs2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612130818563_SupplierIdAddedToUsers2.resx">
+      <DependentUpon>201612130818563_SupplierIdAddedToUsers2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612150855480_NotificationForUsers.resx">
+      <DependentUpon>201612150855480_NotificationForUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612150901143_NotificationForUsersUpdated.resx">
+      <DependentUpon>201612150901143_NotificationForUsersUpdated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701091142127_AddedRestOfPartner.resx">
+      <DependentUpon>201701091142127_AddedRestOfPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702031326519_ForeignKeyForOrderHistory.resx">
+      <DependentUpon>201702031326519_ForeignKeyForOrderHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702141353549_PrePayAddedToPartnerAndSupplier.resx">
+      <DependentUpon>201702141353549_PrePayAddedToPartnerAndSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702151521064_DbUserActionLogAdded.resx">
+      <DependentUpon>201702151521064_DbUserActionLogAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702220646435_AddedIsDeliveredToSale.resx">
+      <DependentUpon>201702220646435_AddedIsDeliveredToSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703170809512_ManagerContactDataAdded.resx">
+      <DependentUpon>201703170809512_ManagerContactDataAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703241230335_FeedbackFormToDatabase.resx">
+      <DependentUpon>201703241230335_FeedbackFormToDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704101358195_ManagersOfPartners_Added.resx">
+      <DependentUpon>201704101358195_ManagersOfPartners_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704121059026_PriceOfProduct_PriceOpt1__Added.resx">
+      <DependentUpon>201704121059026_PriceOfProduct_PriceOpt1__Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705160801397_SaleReturnAdded.resx">
+      <DependentUpon>201705160801397_SaleReturnAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705160937446_SaleReturnAddedDocDate.resx">
+      <DependentUpon>201705160937446_SaleReturnAddedDocDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705230753189_SaleReturn_SetSaleNumberToString.resx">
+      <DependentUpon>201705230753189_SaleReturn_SetSaleNumberToString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705251351384_CreateTablePhotoForProducts.resx">
+      <DependentUpon>201705251351384_CreateTablePhotoForProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705311136445_UpdateTablePhotoForProducts.resx">
+      <DependentUpon>201705311136445_UpdateTablePhotoForProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705311240484_UpdateTablePhotoForProducts2.resx">
+      <DependentUpon>201705311240484_UpdateTablePhotoForProducts2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705311244113_UpdateTablePhotoForProducts3.resx">
+      <DependentUpon>201705311244113_UpdateTablePhotoForProducts3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706130731017_NumberOfDaysForReturnAddedToPartner.resx">
+      <DependentUpon>201706130731017_NumberOfDaysForReturnAddedToPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706160939546_SeasonStockItemOfPartnerAdded.resx">
+      <DependentUpon>201706160939546_SeasonStockItemOfPartnerAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707050557240_AddTableCountriesAndCarsForReplica.resx">
+      <DependentUpon>201707050557240_AddTableCountriesAndCarsForReplica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707050758432_HasOwnRestAddedToPartners.resx">
+      <DependentUpon>201707050758432_HasOwnRestAddedToPartners.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707181152549_ProductPropertyDescription_Added2.resx">
+      <DependentUpon>201707181152549_ProductPropertyDescription_Added2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707270600029_PartnerPropertiesAdded.resx">
+      <DependentUpon>201707270600029_PartnerPropertiesAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708200827449_PartnerPointsEmailAdded.resx">
+      <DependentUpon>201708200827449_PartnerPointsEmailAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708230504015_AddressOfPartners_Added.resx">
+      <DependentUpon>201708230504015_AddressOfPartners_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\AccountTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\AccountTexts.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountTexts.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\LimitDataTexts.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LimitDataTexts.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\LimitDataTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LimitDataTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Agreement.es.resx" />
+    <EmbeddedResource Include="Views\Resources\Agreement.it.resx" />
+    <EmbeddedResource Include="Views\Resources\Agreement.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Agreement1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Agreement.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Agreement.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Agreement.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\CartAndOrders.es.resx" />
+    <EmbeddedResource Include="Views\Resources\CartAndOrders.it.resx" />
+    <EmbeddedResource Include="Views\Resources\CartAndOrders.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CartAndOrders1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\CartAndOrders.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CartAndOrders.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\CartAndOrders.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\DpdTexts.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DpdTexts.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\DpdTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DpdTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\FeedbackForms.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FeedbackForms.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\FeedbackForms.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FeedbackForms.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ForSearchResult.es.resx" />
+    <EmbeddedResource Include="Views\Resources\ForSearchResult.it.resx" />
+    <EmbeddedResource Include="Views\Resources\ForSearchResult.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ForSearchResult1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ForSearchResult.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ForSearchResult.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ForSearchResult.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\Header.es.resx" />
+    <EmbeddedResource Include="Views\Resources\Header.it.resx" />
+    <EmbeddedResource Include="Views\Resources\Header.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Header1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Header.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Header.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Header.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\Help.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Help1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Help.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Help.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ModalWindows.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModalWindows.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ModalWindows.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModalWindows.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SalesTexts.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesTexts.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SalesTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SearchByAuto.es.resx" />
+    <EmbeddedResource Include="Views\Resources\SearchByAuto.it.resx" />
+    <EmbeddedResource Include="Views\Resources\SearchByAuto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchByAuto1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SearchByAuto.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SearchByAuto.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SearchByAuto.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\SeasonOrdersTexts.es.resx" />
+    <EmbeddedResource Include="Views\Resources\SeasonOrdersTexts.it.resx" />
+    <EmbeddedResource Include="Views\Resources\SeasonOrdersTexts.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeasonOrdersTexts.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SeasonOrdersTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SeasonOrdersTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\SeasonOrdersTexts.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\Settings.es.resx" />
+    <EmbeddedResource Include="Views\Resources\Settings.it.resx" />
+    <EmbeddedResource Include="Views\Resources\Settings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Settings.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Settings.ru1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\Settings.tr.resx" />
+    <EmbeddedResource Include="Views\Resources\ShoppingCartErrors.es.resx" />
+    <EmbeddedResource Include="Views\Resources\ShoppingCartErrors.it.resx" />
+    <EmbeddedResource Include="Views\Resources\ShoppingCartErrors.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShoppingCartErrors.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ShoppingCartErrors.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShoppingCartErrors.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Resources\ShoppingCartErrors.tr.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Term.Services\Term.Services.csproj">
+      <Project>{e7959ecf-d0f8-4ade-87b2-5c71f77230eb}</Project>
+      <Name>Term.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Term.Utils\Term.Utils.csproj">
+      <Project>{ce2b7bb0-d72f-4212-9716-aaf907335a6d}</Project>
+      <Name>Term.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Term.DAL\Term.DAL.csproj">
+      <Project>{af5e1202-a562-46ca-a059-83b414b64859}</Project>
+      <Name>Term.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://37.1.84.50:8080/YST/ws/serviceterminal%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ResultDel.datasource\</RelPath>
+      <UpdateFromURL>http://37.1.84.50:8080/YST/ws/serviceterminal%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>YstProject_WebReferenceTerm_ServiceTerminal</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49640/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:49640/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

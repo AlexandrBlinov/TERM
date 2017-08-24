@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Список новостей";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model NewsViewModel
+
+
+<h2 class="a_news_list">News list</h2>
+<table class="data-table order-table">
+    <thead>
+        <tr>
+            <th>
+                ФОТО
+            </th>
+            <th>
+                ДАТА
+            </th>
+            <th>
+                НАЗВАНИЕ
+            </th>
+            <th>
+                ПРОСМОТР
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.News)
+        {
+
+            <tr>
+                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = item.Id, ImgType = 1 })' class="img-responsive" style="max-width: 200px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+                <td>@item.DatePublish.ToShortDateString()</td>
+                <td>@item.NewsName</td>
+                <td>@Html.ActionLink("Просмотр", "Details", new { Id = item.Id }, new { @class = "order-table-details" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

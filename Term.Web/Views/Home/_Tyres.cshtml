@@ -1,0 +1,135 @@
+﻿@using Term.Web.HtmlHelpers
+@using Yst.ViewModels
+@model  YstTerm.Models.TyresPodborView
+@using Term.Web.Views.Resources;
+
+@{
+    string dataContent = String.Format("со сроком доставки {0} дня", Model.BackDepartmentWithInfo.Days);
+}
+
+@if (Model.DisplayView == Display.Table)
+{
+    <div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th class="hidden-xs">@ForSearchResult.Photo</th>
+                    <th class="p-l-25">@ForSearchResult.StockNumber</th>
+                    <th class="product-name">
+                        @ForSearchResult.Name
+                    </th>
+                    <th class="hidden-xs">
+                        @ForSearchResult.Amount
+                    </th>
+                    <th class="hidden-xs">
+                        @ForSearchResult.DeliveryTime
+                    </th>
+                    <th class="hidden-xs">@ForSearchResult.Season</th>
+                    <th>
+                        @ForSearchResult.Price
+                    </th>
+                    <th class="product-count">@ForSearchResult.Available</th>
+                    <th>@ForSearchResult.Action</th>
+                </tr>
+            </thead>
+            @{int counter = @Model.SearchResults.FirstItemOnPage;}
+            <tbody>
+                @foreach (var item in Model.SearchResults as IPagedList<TyreSearchResult>)
+                {
+                    <tr>
+                        <td class="hidden-xs">
+                            <a class="fancybox-btn" href="@Html.FullPathToImage("tyre", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("tyre", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+                        </td>
+                        <td class="p-l-25">
+                            @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
+                        </td>
+                        <td class="hidden-xs">
+                            @{
+
+                    if (item.RestOtherStock > 0)
+                    {
+
+                        var restOtherStock = String.Format(" + {0}", item.RestOtherStock == 50 ? ">50" : item.RestOtherStock.ToString());
+                        string dataContentItem = String.Format(" {0} шт. {1}", restOtherStock, dataContent);
+                        var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+                        @restMainStock <span class="has-popover" data-content="@dataContentItem">@restOtherStock</span>
+                    }
+                    else
+                    {
+                        var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+                        @restMainStock
+
+                    }
+                            }
+                        </td>
+                        <td class="hidden-xs">
+                            @Html.DisplayFor(modelItem => item.DaysToDepartment)
+                            @ForSearchResult.Days
+                        </td>
+                        <td class="hidden-xs">
+                            @Html.SeasonImage(item.Season)
+                        </td>
+                        <td>
+                            @Html.Price3((decimal)@item.PriceOfClient)
+                            
+                        </td>
+                        <td>
+
+                            @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
+
+                        </td>
+                        <td>
+                            <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                            <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+
+
+
+@if (Model.DisplayView == Display.Plitka)
+{
+    <div class="data-view-pl">
+        <div class="row">
+
+            @foreach (var item in Model.SearchResults)
+            {
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="thumbnail view-pl-thumbnail">
+                        <img class="img-thumbnail img-responsive data-part-min-img" src="@Html.FullPathToImage("tyre", item.PathToImage)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+                        <div class="img-thumbnail-season">
+                            @Html.SeasonImage(item.Season)
+                        </div>
+                        <div class="caption">
+                            @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @class = "data-table-a-text view-pl-a-text" })
+                            <hr />
+                            @Html.Price((decimal)@item.PriceOfClient)
+                            <p class="view-pl-text-caption">
+                                @ForSearchResult.DeliveryTime: @Html.DisplayFor(modelItem => item.DaysToDepartment) @ForSearchResult.Days
+                                @ForSearchResult.Amount: @Html.DisplayFor(modelItem => item.Rest) @Header.Pc
+                            </p>
+                        </div>
+                        <div class="view-pl-hidden">
+                            <div class="view-pl-hidden__content">
+                                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
+                                <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId);" class="AddLink data-view-pl-add-to-cart btn btn-default" data-id="@item.ProductId" data-name="@item.Name">@ForSearchResult.ToCart</a>
+                                <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-view-pl-add-to-cart invisible btn btn-default" data-id="@item.ProductId" data-name="@item.Name">@ForSearchResult.Added</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+
+}

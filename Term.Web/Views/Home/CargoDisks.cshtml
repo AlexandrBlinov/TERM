@@ -1,0 +1,443 @@
+﻿@using YstTerm.Models
+@using PagedList;
+@using Term.Web.Views.Resources;
+@using Term.DAL;
+@using Term.Web.HtmlHelpers;
+@using YstProject.Services
+
+@model SeasonDisksPodborView
+
+@{
+    ViewBag.Title = @ForSearchResult.SearchByWheelSize;
+
+}
+
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Wheels })
+
+
+@using (Html.BeginForm("CargoDisks", "Home", FormMethod.Get, new { @id = "disk-podbor", @data_name = "2" }))
+{
+    @Html.Hidden("SortBy", Model.SortBy)
+    @Html.Hidden("DisplayView", Model.DisplayView)
+    @Html.Hidden("ItemsPerPage", Model.ItemsPerPage)
+    @Html.Hidden("PriceMin", Model.PriceMin)
+    @Html.Hidden("PriceMax", Model.PriceMax)
+    @Html.Hidden("Brands", Model.Brands)
+    <div class="row border-form-podbor">
+        <img class="podbor-tyres-title-img" src="~/Content/img/img-disks-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseDisks</span>
+        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img src="~/Content/img/clear-param.png" /></a>
+        <a href="@Url.Action("Disks", "Home")" class="btn change-cargo-or-all-wheels"><span class="link_item-dashed @(Model.CargoWheels ? "" : "active")">@Header.AllWheels</span></a>
+        <a href="@Url.Action("CargoDisks", "Home")" class="btn change-cargo-or-all-wheels"><span class="link_item-dashed @(Model.CargoWheels ? "active" : "")">@Header.CargoWheels</span></a>
+    </div>
+    <div class="row m-t-15">
+
+        @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
+    </div>
+    <div class="row m-t-15">
+
+        <div class="col-xs-6">
+            <span class="podbor-tyres-param">@ForSearchResult.ProducerName</span>
+        </div>
+        <div class="col-xs-3">
+            <span class="podbor-tyres-param">@ForSearchResult.Param</span>
+        </div>
+        <div class="col-xs-3">
+            <span class="podbor-tyres-param">@ForSearchResult.Price</span>
+        </div>
+    </div>
+    <div class="row m-t-15">
+        <div class="col-xs-6">
+
+            <div id="Brands" class="row">
+                @foreach (var producer in Model.Producers)
+                {
+                    var brands = Model.Brands != null ? Model.Brands.Split(',') : String.Empty.Split(',');
+                    var isChecked = Array.IndexOf(brands, producer.ProducerId.ToString()) != -1 ? " checked" : "";
+                    <div class="col-xs-3">
+                        <input type="checkbox" id="@producer.ProducerId" class="checkbox-form-podbor" value="@producer.ProducerId" @isChecked />
+                        <label class="checkbox-form-podbor-label form-disk-podbor-producer" for="@producer.ProducerId">&nbsp;@producer.Name</label>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-xs-3">
+
+            <div class="row">
+                <div class="col-xs-6 form-disk-podbor-select">
+                    @Html.DropDownListFor(p => p.Width, new SelectList(Model.Widths), @ForSearchResult.Width, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-6 form-disk-podbor-select">
+                    @Html.DropDownListFor(p => p.Diametr, new SelectList(Model.Diametrs), @ForSearchResult.Diameter, new { @class = "form-control" })
+                </div>
+                <div class="col-xs-6 form-disk-podbor-select">
+                    @Html.DropDownListFor(p => p.Hole, new SelectList(Model.Holes), "Hole", new { @class = "form-control" })
+                </div>
+                <div class="col-xs-6 form-disk-podbor-select">
+                    @Html.DropDownListFor(p => p.PCD, new SelectList(Model.Pcds), "PCD", new { @class = "form-control" })
+                </div>
+
+                <div class="col-xs-6 form-disk-podbor-select">
+                    @Html.DropDownListFor(p => p.ET, new SelectList(Model.Ets), "ET", new { @class = "form-control" })
+                </div>
+
+                <div class="col-xs-6 form-disk-podbor-select">
+                    @Html.DropDownListFor(p => p.DIA, new SelectList(Model.Dias), "DIA", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3">
+
+            <div class="form-inline">
+                <div class="form-group">
+                    @ForSearchResult.From <input type="text" class="form-control input-price-range" id="price-slider-min" /> &mdash;
+                </div>
+                <div class="form-group">
+                    @ForSearchResult.To <input type="text" class="form-control input-price-range" id="price-slider-max" />
+                </div>
+            </div>
+            <div class="m-t-15">
+
+                <div id="slider-range"></div>
+                <p>
+                    <span class="slider-price-const-min">0</span>
+                    <span id="MaxPrice" class="slider-price-const-max">@ViewBag.MaxPrice</span>
+                    <span id="PriceStepSlide" class="invisible">@ViewBag.PriceStepSlide</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @if (Model.HasAlloyOffers || Model.HasSteelOffers)
+        {
+            <a href="@Url.Action("Disks","Home",null)" class="btn"><span class="link_item-dashed active">@Header.Wheels_Stock</span></a>
+        }
+        @if (Model.HasAlloyOffers)
+        {
+            <a href="@Url.Action("Disks", "SeasonProduct", new { WheelType=WheelType.Alloy})" class="btn"><span class="link_item-dashed">@Header.Wheels_SeasonAlloy</span></a>
+        }
+
+        @if (Model.HasSteelOffers)
+        {
+            <a href="@Url.Action("Disks", "SeasonProduct", new { WheelType=WheelType.Steel})" class="btn"><span class="link_item-dashed">@Header.Wheels_SeasonSteel</span></a>
+        }
+        <div class="checkbox-inline">
+            @Html.BasicCheckBoxFor(p => p.FromRests, new { @class = "checkbox-form-podbor" })
+            <label class="checkbox-form-podbor-label" for="FromRests">@ForSearchResult.FromStock</label>
+        </div>
+        <div class="checkbox-inline">
+            <!--<input type="checkbox" id="FromOnWay" class="checkbox-form-podbor" />-->
+            @Html.BasicCheckBoxFor(p => p.FromOnWay, new { @class = "checkbox-form-podbor" })
+            <label class="checkbox-form-podbor-label" for="FromOnWay">@ForSearchResult.FromOnWay</label>
+        </div>
+
+    </div>
+
+    <div class="row text-center border-form-podbor m-t-15">
+        <button type="submit" class="form-podbor-btn-submit">@ForSearchResult.ChooseDisks</button>
+    </div>
+
+}
+
+<div class="row m-t-15">
+
+    <span class="podbor-tyres-title">@Header.Wheels (@Model.SearchResults.TotalItemCount)</span>
+    @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("CargoDisks", new
+{
+    page,
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    SortBy = Model.SortBy,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay
+}),
+new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 5 })
+
+
+</div>
+
+<div class="row m-t-15">
+    <div class="col-xs-8">
+
+        <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
+
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.Name, "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
+}, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.NameAsc || Model.SortBy == SortBy.NameDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.NameAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.DeliveryTime, "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
+}, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.DeliveryAsc || Model.SortBy == SortBy.DeliveryDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.DeliveryAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.Amount, "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
+}, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.AmountAsc || Model.SortBy == SortBy.AmountDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.AmountAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+            @Html.ActionLink(@ForSearchResult.Price, "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
+}, new { @class = "sort-btn-a" })
+            @{
+                if (Model.SortBy == SortBy.PriceAsc || Model.SortBy == SortBy.PriceDesc)
+                {
+                    <span class="@(Model.SortBy == SortBy.PriceAsc ? "sort-icon-active-asc" : "sort-icon-active-desc")"> </span>
+                }
+                else
+                {
+                    <span class="sort-icon-default"> </span>
+                }
+            }
+        </div>
+        @if (ViewBag.SaleMode)
+        {
+            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                @Html.ActionLink(@ForSearchResult.Sale, "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    DisplayView = Model.DisplayView,
+    ItemsPerPage = Model.ItemsPerPage,
+    SortBy = Model.SortBy,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    OnlySale = Model.OnlySale == true ? false : true
+}, new { @class = "sort-btn-a", title = @ForSearchResult.Sort })
+            </div>
+        }
+    </div>
+    <div class="col-xs-4">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="psevdo-select">
+                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                    <select class="form-control" id="ItemsPerPageForm">
+                        <option @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
+                        <option @(Model.ItemsPerPage == 20 ? "selected" : "")>20</option>
+                        <option @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
+                        <option @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
+                        <option @(Model.ItemsPerPage == 200 ? "selected" : "")>200</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-xs-4">
+                <div class="btn-group form-podbor-change-view" role="group">
+                    <div id="table" class="btn btn-default @(Model.DisplayView == Display.Table ? "active" : "")">
+                        @Html.ActionLink(" ", "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    DisplayView = "Table"
+}, new { @class = "glyphicon glyphicon-th-list change-view-custom", title = @ForSearchResult.List })
+                    </div>
+
+                    <div id="plitka" class="btn btn-default @(Model.DisplayView == Display.Plitka ? "active" : "")">
+                        @Html.ActionLink(" ", "CargoDisks", new
+{
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay,
+    Brands = Model.Brands,
+    DisplayView = "Plitka"
+}, new { @class = "glyphicon glyphicon-th change-view-custom", title = @ForSearchResult.Tile })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{Html.RenderPartial("_Disks", Model);}
+
+
+
+<div class="row m-t-15">
+
+    @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("CargoDisks", new
+{
+    page,
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    SortBy = Model.SortBy,
+    PriceMin = Model.PriceMin,
+    PriceMax = Model.PriceMax,
+    Brands = Model.Brands,
+    OnlySale = Model.OnlySale,
+    FromRests = Model.FromRests,
+    FromOnWay = Model.FromOnWay
+}),
+new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 5 })
+</div>

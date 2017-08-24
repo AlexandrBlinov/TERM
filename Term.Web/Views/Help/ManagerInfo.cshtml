@@ -1,0 +1,73 @@
+﻿@using Term.DAL.Resources
+@model Term.DAL.Manager
+
+@{
+    var personalPhoto = Model.PersonalPhoto;
+}
+
+<div>
+    <h1 class="text-center"> @Term.DAL.Resources.ResourceManagerInfo.YourManager</h1>
+    <div class="contact-container text-center" id="contact">
+        @if (personalPhoto != null)
+        {
+        <div class="avatar inline-block m-b-50" style="background-image: url(@personalPhoto)"></div>
+        }
+        <div class="text-center">
+            <div class="inline-block">
+                <dl class="dl-horizontal manager-data">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Fio)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Fio)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EMail)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.EMail)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.MobilePhoneNumber)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.MobilePhoneNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.InternalPhoneNumber)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.InternalPhoneNumber)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Skype)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Skype)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ICQ)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ICQ)
+                    </dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
