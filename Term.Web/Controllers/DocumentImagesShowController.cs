@@ -62,9 +62,9 @@ namespace Term.Web.Controllers
                 throw new FileFormatException("Неверный формат  или превышение макс. размера файла");
 
             }
-            catch (Exception ex)
+            catch 
             {
-                //ErrorLogger.Error(ex);
+                
                 throw;
 
             }

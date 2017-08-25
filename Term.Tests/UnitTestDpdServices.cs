@@ -22,7 +22,8 @@ namespace UnitTestProject1
                 clientNumber = 1007003132
             };
 
-
+        private readonly string  moskowCode = "77000000000";
+        private readonly string  yarCode = "76000001000";
 
         [TestInitialize]
         public void Initialize()
@@ -49,8 +50,7 @@ namespace UnitTestProject1
         public void TestMethodGetTerminalsAnalizeResultsEquals5()
         {
             service.Proxy = new WebProxy("127.0.0.1", 8888);
-            var moskowCode = "77000000000";
-            var yarCode = "76000001000";
+           
 
             var results = service.getTerminalsSelfDelivery2(_authdata);
 
@@ -67,8 +67,7 @@ namespace UnitTestProject1
         [TestMethod]
         public void FillTerminalsWithDelivery()
         {
-            var moskowCode = "77000000000";
-            var yarCode = "76000001000";
+       
 
             var results = service.getTerminalsSelfDelivery2(_authdata);
 

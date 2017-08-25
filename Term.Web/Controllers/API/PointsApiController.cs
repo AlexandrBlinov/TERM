@@ -141,7 +141,7 @@ namespace Term.Web.Controllers.API
                     fileContents = memoryStream.ToArray();
                     
                 }
-                catch (WebException ex)
+                catch 
                 {
                     
                     

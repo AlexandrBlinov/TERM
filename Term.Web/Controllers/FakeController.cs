@@ -15,6 +15,7 @@ using Yst.Terminal.FakeViewModels;
 using YstProject.Models;
 using File = Term.DAL.File;
 
+#if DEBUG
 namespace Term.Web.Controllers
 {
     [Authorize]
@@ -223,3 +224,5 @@ namespace Term.Web.Controllers
 
 
     }}
+
+#endif

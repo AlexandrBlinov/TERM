@@ -3,7 +3,7 @@
 @using Term.Web.Views.Resources
 
 @{
-    string specifier = "#,#.";
+    string specifier = "#,0.";
     decimal limit, debt, orderedsum, expireddebt;
     limit = debt = orderedsum = expireddebt = default(decimal);
     if (Model.ContainsKey("limit")) { limit = Model["limit"]; }

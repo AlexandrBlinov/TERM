@@ -130,7 +130,7 @@ namespace Term.Web.Controllers
         {
 
             string culture = Defaults.Culture_RU;
-            var CultureKey = "Culture";
+          
 
             var request = requestContext.HttpContext.Request;
             var currentThread = System.Threading.Thread.CurrentThread;
