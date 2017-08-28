@@ -282,7 +282,7 @@
                                             <div class="col-xs-1">
                                                 @{ string guidAndRow = String.Concat(order.GuidIn1S.ToString() , i.ToString()); }
                                             
-                                                <input type="checkbox" id="@guidAndRow" class="checkbox-form-podbor yst-order-item" data-yst-order="@order.GuidIn1S" 
+                                                <input type="checkbox" id="@guidAndRow" class="checkbox-form-podbor yst-order-item" data-yst-order="@order.GuidIn1S" data-yst-ordernumber="@order.NumberIn1S" 
                                                        data-yst-count="@detail.Count" data-yst-productid="@detail.Product.ProductId" data-yst-productname="@detail.Product.Name"/>
                                                 <label class="checkbox-form-podbor-label" for="@guidAndRow">&nbsp;</label>  
                                             </div>
@@ -328,7 +328,7 @@
 
 <div class="slide-panel-container hidden-xs">
     <div class="slide-panel-left">
-        <a href="#" class="opener-sign" id="opener">
+        <a href="#" class="opener-sign" id="opener" title="Развернуть окно">
             <i class="fa fa-expand" aria-hidden="true"></i>
             <div class="pad-50">
                 <span class="vertical text-uppercase bold">Товары в заказах для объединения</span>
@@ -343,48 +343,55 @@
             <table class="table table-stripped" id="slide-panel-table">
                 <thead>
                     <tr>
-                        <th>№</th>
+                        <th>№ заказа</th>
+                        <th>Код товара</th>
                         <th>Товар</th>
                         <th>Количество</th>
                         <th> </th>
                     </tr>
                 </thead>
                 <tbody>
-                   <!-- <tr>
-                        <td>9121231</td>
-                        <td>AVATYRE FREEZE 185/60R14 82Q шип.</td>
-                        <td><input type="text" class="w-50" /></td>
-                        <td>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>CONTINENTAL CONTI4x4CONTACT 205/70R15 96T TL</td>
-                        <td><input type="text" class="w-50" /></td>
-                        <td>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>CROSS STREET CR-01 6.5x16/5x108 ET50 D63.3 BKF</td>
-                        <td><input type="text" class="w-50" /></td>
-                        <td>
-                            <a href="#" class="yst-remove-item">
-                                <i class="glyphicon glyphicon-remove"></i>
-                            </a>
-
-                        </td>
-                    </tr>
-                       -->
+                 
                 </tbody>
             </table>
         </div>
+        <div class="row slide-panel-attributes">
+            <div class="col-xs-12 col-sm-4 m-b-20">
+                <label class="slide-panel-label" for="BeginDate">Дата отгрузки</label>
+                <div>
+                    <div class="input-group date">
+                        <input class="form-control" data-val="true" data-val-date="Поле Искать с даты должно содержать дату." id="BeginDate" name="BeginDate" type="text" value="">
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-sm-8 m-b-20">
+                <label class="slide-panel-label">Адрес</label>
+                <div>
+                    <select class="form-control" data-val="true" data-val-number="Значением поля StatusId должно быть число." id="AddressId" name="AddressId">
+                        <option value=""></option>
+                        <option value="1">197374, Санкт-Петербург г, Оптиков ул, дом № 4</option>
+                        <option value="2">195197, Санкт-Петербург г, Санкт-Петербург г, Полюстровский пр, дом № 54</option>
+                        <option value="3">196105, Санкт-Петербург г, Рощинская ул, дом № 36</option>
+                        
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12">
+               
+             <label class="slide-panel-label">Комментарий</label>
+             <div>
+                 <input class="form-control" id="Comments" name="Comments" placeholder="пожелания к объединенному заказу" type="text" value=""/>
+             </div>         
+         
+            </div>
+            <div class="col-xs-12 search-order-btn text-center">
+                <button class="form-podbor-btn-submit" type="submit">Объединить</button>
+            </div>
     </div>
 </div>
 
@@ -392,46 +399,74 @@
 @section Scripts {
     <script>
 
-        // Подключаем iCheck Для radiobutton
-    /*    $(function () {
-            $('[type=radio],[type=checkbox]').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue'
-            });
+        var moduleSlidePanelTable = (function () {
 
 
+            var serialize = function () {
+                itemsToSerialize = [];
+                $('#slide-panel-table tbody tr').each(function () {
 
-        }())
-            */
+                    itemsToSerialize.push(
+                        {
+                            orderid: $(this).data('orderid'),
+                            ordernumber: $(this).data('ordernumber'),
+                            productid: $(this).data('productid'),
+                            productname: $(this).find('.yst-join-productname').text(),
+                            count: $(this).find('.yst-join-productcount').val()
+                        }
+                    );
 
-        function removeTr(el)
-        {       
-            $(el).closest('tr').remove();
-        }
+                });
+                localStorage.setItem('joinItems', JSON.stringify(itemsToSerialize));
+            },
 
-        var addToList = function (orderId, productId,productName,count) {
+             restoreItemsFromLocalStorage = function ()
+            {
+                var items = JSON.parse(localStorage.getItem('joinItems'));
 
-          //  console.log(orderId + ' ' + productId);    
-            var tr = '<tr data-orderId="' + orderId + '" data-productId="' + productId + '"><td>' + productId + '</td><td>' + productName + '</td><td><input type="text" class="w-50" value="' + count + '"</td>' +
+                if (items && Array.isArray(items))
+                {
+                    for (i = 0; i < items.length ; i++)
+                    {
+                        this.addToList(items[i].orderid, items[i].ordernumber, items[i].productid, items[i].productname, items[i].count);
+                    }
+                }
 
-                '<td><a href="#" onclick="removeTr(this); return false;" class="yst-remove-item"><i class="glyphicon glyphicon-remove"></i></a></td> </tr>';
-            //href = "#" onclick= "ko(this); return false;
-            $('#slide-panel-table tbody').append((tr));
-            
-        }
+            }
 
-        var removeFromList=function(orderId, productId)
-        {
-            $('#slide-panel-table tbody tr').each(function () {
-                if ($(this).data('orderId') == orderId && $(this).data('productId') == productId)
-                 
-                    $(this).remove();
-            });
-        }
+            return {
+                'restoreItems': restoreItemsFromLocalStorage,
+                removeTr: function (el) {
+                    $(el).closest('tr').remove();
+                   serialize();
+                },
+                addToList: function (orderId, ordernumber, productId, productName, count) {
+                    var tr = '<tr data-ordernumber="' + ordernumber + '" data-orderid="' + orderId + '" data-productid="' + productId + '"><td>' + ordernumber + '</td><td>' + productId + '</td><td class="yst-join-productname">' + productName + '</td><td><input type="text" class="w-50 yst-join-productcount" value="' + count + '"</td>' +
+
+                        '<td><a href="#" onclick="moduleSlidePanelTable.removeTr(this); return false;" class="yst-remove-item"><i class="glyphicon glyphicon-remove"></i></a></td> </tr>';
+
+                    $('#slide-panel-table tbody').append((tr));
+
+                    serialize();
+                    
+                },
+                removeFromList: function (orderId, productId) {
+                   
+                    $('#slide-panel-table tbody tr').each(function () {
+                        
+                        if ($(this).data('orderid') == orderId && $(this).data('productid') == productId)
+
+                            $(this).remove();
+                    });
+                    serialize();
+                }
+            }
+           
+        }());
 
         $(function () {
 
-
+            moduleSlidePanelTable.restoreItems();
 
             $('[type=checkbox]').change(function () {
 
@@ -447,15 +482,15 @@
                             $(this).prop("checked", ifchecked);
 
                             $this = $(this);
-                            if (ifchecked) addToList($this.data('yst-order'), $this.data('yst-productid'), $this.data('yst-productname'), $this.data('yst-count'));
-                            else removeFromList($this.data('yst-order'), $this.data('yst-productid'));
+                            if (ifchecked) moduleSlidePanelTable.addToList($this.data('yst-order'), $this.data('yst-ordernumber'), $this.data('yst-productid'), $this.data('yst-productname'), $this.data('yst-count'));
+                            else moduleSlidePanelTable.removeFromList($this.data('yst-order'), $this.data('yst-productid'));
                         }
                     })
                 } else
                     // если выбирают товар
                     if (ifchecked && $this.hasClass('yst-order-item'))
-                        addToList($this.data('yst-order'), $this.data('yst-productid'), $this.data('yst-productname'), $this.data('yst-count'));
-                        else removeFromList($this.data('yst-order'), $this.data('yst-productid'));
+                        moduleSlidePanelTable.addToList($this.data('yst-order'),$this.data('yst-ordernumber'), $this.data('yst-productid'), $this.data('yst-productname'), $this.data('yst-count'));
+                    else moduleSlidePanelTable.removeFromList($this.data('yst-order'), $this.data('yst-productid'));
                    
 
             });
@@ -467,12 +502,15 @@
                 var duration = 500;
 
                 if (panelRight.css('display') == 'none') {
+                    document.getElementById('opener').title = 'Свернуть окно';
+                    
                     panelRight.show(duration);                    
                     panel.animate({ 'right': '50%' }, duration);
                     panel.css({ 'transform': 'translate(50%)' ,'min-width':'550px'});
 
                 }
                 else {
+                    document.getElementById('opener').title = 'Развернуть окно';
                     panel.css({ 'min-width': '0' });
                     panel.animate({ 'right': '0' }, duration, function () { panel.css({ "transform": "" }); });
                     panelRight.hide(duration);
