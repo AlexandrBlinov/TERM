@@ -92,6 +92,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CacheTests.cs" />
+    <Compile Include="UnitTestLinq.cs" />
+    <Compile Include="UnitTestAppDbContextNoMock.cs" />
     <Compile Include="UnitTestDurationGoogleApi.cs" />
     <Compile Include="UnitTestMailServices.cs" />
     <Compile Include="UnitTestInterface.cs" />

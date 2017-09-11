@@ -107,6 +107,11 @@ namespace Yst.ViewModels
     /// </summary>
     public class ShoppingCartViewModelExtended : ShoppingCartViewModel
     {
+
+        public ShoppingCartViewModelExtended()
+        {
+            AddressesIds = new SelectList(Enumerable.Empty<SelectListItem>());
+        }
         /// <summary>
         /// Видит ли пользователь доставку DPD 
         /// </summary>
@@ -125,7 +130,7 @@ namespace Yst.ViewModels
         public bool TerminalOrAddress { get; set; }
 
         public string TerminalsDpd { get; set; }
-        // адрес строкой
+        // адрес dpd строкой
         public string Address { get; set; }
 
         public decimal CostOfDelivery { get; set; }
@@ -139,6 +144,12 @@ namespace Yst.ViewModels
         public string House { get; set; }
 
         public string BlockType { get; set; }
+
+        // список адресов
+        public SelectList AddressesIds { get; set; }
+
+        // идентификатор 1С адреса доставки ( не dpd)
+        public string AddressId { get; set; }
 
     }
 

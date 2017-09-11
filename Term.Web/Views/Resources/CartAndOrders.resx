@@ -180,6 +180,9 @@
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="CombinedOrder" xml:space="preserve">
+    <value>Combined</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>

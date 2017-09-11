@@ -561,6 +561,8 @@ namespace YstProject.Services
             return user.PartnerPointId ?? -1; // error if -1
         }
 
+
+
         public void Dispose()
         {
             if (_allocDBContext)

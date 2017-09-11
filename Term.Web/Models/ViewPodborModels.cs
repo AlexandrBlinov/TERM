@@ -44,6 +44,10 @@ namespace Term.Web.Models
     public class OrdersViewModel : BaseViewPodborModel
     {
 
+        public OrdersViewModel()
+        {
+            ItemsPerPage = 50;
+        }
 
         private static SelectList _orderStatuses = DropDownsFactory.GetOrderStatuses();
         private static readonly Department[] _departments = DropDownsFactory.Departments;
@@ -56,7 +60,7 @@ namespace Term.Web.Models
         public int? DepartmentId { get; set; }
 
         // поиск по коду 1С и по коду заказа
-        [StringLength(8)]
+        //[StringLength(8)]
         public string OrderNumber { get; set; }
 
         //   public string Status { get; set; }
@@ -69,8 +73,7 @@ namespace Term.Web.Models
         }
 
         [DisplayName("Номер в учетной базе")]
-        [StringLength(8)]
-
+        //[StringLength(8)]
         public string NumberIn1S { get; set; }
 
 
@@ -92,7 +95,14 @@ namespace Term.Web.Models
         public ExtendedOrdersViewModel()
         {
             ItemsPerPage = 100;
+            AddressesIds = new SelectList(Enumerable.Empty<SelectListItem>());
         }
+
+      public  SelectList AddressesIds { get; set; }
+
+      
+      public string AddressId { get; set; }
+
     }
 
     /// <summary>

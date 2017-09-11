@@ -187,7 +187,7 @@ $(function () {
 
     // доступность статуса доп подразделения
 
-    $("form#PointProfile,form#CreatePointProfile ").on('click', '#UseDepartmentId', function () {
+    $("form#PointProfile,form#CreatePointProfile,form#CreateOwnProfile").on('click', '#UseDepartmentId', function () {
         var DEF_NUMBER_OF_DAYS = 5;
         var status = $(this).prop("checked");
         $("#DepartmentId").prop("disabled", !status).val(-1);
@@ -279,6 +279,12 @@ $(function () {
             return false;
         }
 
+        if (dataValue.DepartmentId != -1) {
+            if (dataValue.DaysToMainDepartment == dataValue.DaysToDepartment) {
+                showAlert(YstLocale.Get("errdays"), false);
+                return false;
+            }
+        }
         $(this).find('[name="SaleDirection"]').val(dataValue.SaleDirection);
         $(this).find('[name="pricingrules"]').val(JSON.stringify(arrFilteredPricingRules));
        

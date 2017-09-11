@@ -204,11 +204,20 @@ function refuseFromDelivery() {
 
 $('[name=IsDeliveryByTk]').on('ifChecked', function() {
     $('.transport-container').show();
+    $('.address-container').hide();
 
 
 }).on('ifUnchecked', function() {
     //$('.transport-container').hide();
     refuseFromDelivery();
+
+    // debug
+
+   
+    if ($('#isDelivery').is(':checked')) {
+        console.log('isdelivery checked');
+        $('.address-container').show();
+    }
 
 });
 
@@ -220,14 +229,18 @@ $('#RefuseFromDelivery').on('click', function() {
 });
 
 $('[name=IsDelivery]').on('ifChecked', function(event) {
+
     
     setValidateOnClient($('#Address'), false);
     var $deliveryDate = $("#DeliveryDate"),
         $deliverydate_container = $("#deliverydate_container"),
         $deliveryByTk_container = $('#deliveryByTk_container');
+
+    var $address_container = $('.address-container');
     if (event.target.id === "isDelivery") {
         $deliverydate_container.removeClass('hidden');
         $deliveryByTk_container.removeClass('hidden');
+        $address_container.show();
       ///// вариант с всплавающим окном
       /////  if (isAdmin) $('#modalConfirmation').modal();
       
@@ -237,6 +250,7 @@ $('[name=IsDelivery]').on('ifChecked', function(event) {
 
         $deliverydate_container.addClass('hidden');
         $deliveryByTk_container.addClass('hidden');
+        $address_container.hide();
         $deliveryDate.val('');
         $('#IsDeliveryByTk').iCheck('uncheck');
 

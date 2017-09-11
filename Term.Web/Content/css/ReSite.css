@@ -2603,13 +2603,14 @@ border-radius:4px;
 
 .slide-panel-container {
     position: fixed;
-    top: 180px;
+    top: 150px;
     right: 0px;
     clear: both;
     border: 1px solid #ddd;
     background:#fff;
     z-index:100;
     border-left:none;
+
 }
 
 .vertical {
@@ -2652,6 +2653,10 @@ border-radius:4px;
 a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active {
     color: white;
     text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none;
 }
 
 .slide-panel-contents .table > tbody > tr > td {
@@ -2678,3 +2683,12 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
     color: rgb(136, 136, 136);
 }
 
+.slide-panel-left-ins {
+    margin-left:10px;
+    text-decoration:none;
+}
+
+.slide-validation-summary {
+    margin:0 10px;
+    display:none;
+}

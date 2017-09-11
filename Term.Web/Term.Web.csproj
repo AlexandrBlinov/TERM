@@ -16,8 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44350</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
@@ -884,7 +883,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\term-season-scripts.js" />
-    <Content Include="Scripts\term-scripts-20170506.js" />
+    <Content Include="Scripts\term-scripts-20170906.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

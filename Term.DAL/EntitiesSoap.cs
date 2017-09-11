@@ -16,7 +16,7 @@ namespace Term.Soapmodels
     public partial class SoapProduct
     {
 
-        
+
         private string codeField;
 
         private int quantityField;
@@ -182,7 +182,7 @@ namespace Term.Soapmodels
     }
 
 
-    
+
 
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34234")]
@@ -280,10 +280,10 @@ namespace Term.Soapmodels
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
     public partial class Result
     {
-        
+
         public string OrdersFromSuppliers { get; set; }
 
-        
+
         private ProductResult[] productsField;
 
         private bool successField;
@@ -329,7 +329,7 @@ namespace Term.Soapmodels
             }
         }
 
-       
+
     }
 
 
@@ -345,7 +345,7 @@ namespace Term.Soapmodels
 
         private bool successField;
 
-       private string errorField;
+        private string errorField;
 
         /// <remarks/>
         public bool Success
@@ -359,7 +359,7 @@ namespace Term.Soapmodels
                 this.successField = value;
             }
         }
-        
+
         /// <remarks/>
         public string Error
         {
@@ -386,7 +386,7 @@ namespace Term.Soapmodels
                 this.productsField = value;
             }
         }
-       
+
     }
 
 
@@ -395,7 +395,8 @@ namespace Term.Soapmodels
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
-    public partial class SeasonOrderAnalyseResult {
+    public partial class SeasonOrderAnalyseResult
+    {
 
         private bool successField;
         /// <remarks/>
@@ -414,7 +415,7 @@ namespace Term.Soapmodels
 
         private ProductAnalyseSeasonOrder[] products;
 
-       
+
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("ProductAnalyseSeasonOrder", IsNullable = false)]
@@ -438,7 +439,8 @@ namespace Term.Soapmodels
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
-    public partial class ProductAnalyseSeasonOrder {
+    public partial class ProductAnalyseSeasonOrder
+    {
 
         [System.Xml.Serialization.XmlElementAttribute("Code")]
         public string Code { get; set; }
@@ -457,26 +459,26 @@ namespace Term.Soapmodels
         [System.Xml.Serialization.XmlElementAttribute("Rest")]
         public int Rest { get; set; }
 
-      
+
 
     }
 
-/*    <xs:complexType name="DeliferyInfo">
-<xs:sequence>
-<xs:element name="ContactFio" type="xs:string" nillable="true"/>
-<xs:element name="ContactPhone" type="xs:string" nillable="true"/>
-<xs:element name="CostOfDelivery" type="xs:integer" nillable="true"/>
-<xs:element name="RegionId" type="xs:string" nillable="true"/>
-<xs:element name="CityId" type="xs:string" nillable="true"/>
-<xs:element name="TerminalOrAddress" type="xs:boolean"/>
-<xs:element name="TerminalCode" type="xs:string" nillable="true"/>
-<xs:element name="PostalCode" type="xs:string" nillable="true"/>
-<xs:element name="StreetType" type="xs:string" nillable="true"/>
-<xs:element name="Street" type="xs:string" nillable="true"/>
-<xs:element name="BlockType" type="xs:string" nillable="true"/>
-<xs:element name="House" type="xs:string" nillable="true"/>
-</xs:sequence>
-</xs:complexType> */
+    /*    <xs:complexType name="DeliferyInfo">
+    <xs:sequence>
+    <xs:element name="ContactFio" type="xs:string" nillable="true"/>
+    <xs:element name="ContactPhone" type="xs:string" nillable="true"/>
+    <xs:element name="CostOfDelivery" type="xs:integer" nillable="true"/>
+    <xs:element name="RegionId" type="xs:string" nillable="true"/>
+    <xs:element name="CityId" type="xs:string" nillable="true"/>
+    <xs:element name="TerminalOrAddress" type="xs:boolean"/>
+    <xs:element name="TerminalCode" type="xs:string" nillable="true"/>
+    <xs:element name="PostalCode" type="xs:string" nillable="true"/>
+    <xs:element name="StreetType" type="xs:string" nillable="true"/>
+    <xs:element name="Street" type="xs:string" nillable="true"/>
+    <xs:element name="BlockType" type="xs:string" nillable="true"/>
+    <xs:element name="House" type="xs:string" nillable="true"/>
+    </xs:sequence>
+    </xs:complexType> */
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1067.0")]
     [System.SerializableAttribute()]
@@ -906,4 +908,195 @@ namespace Term.Soapmodels
             }
         }
     }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2053.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
+    public partial class ResaltJoinOrder
+    {
+
+        private JoinOrderProduct[] productsField;
+
+        private bool successField;
+
+        private int errorField;
+
+        private string errorDescriptionField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Products", IsNullable = false)]
+        public JoinOrderProduct[] Products
+        {
+            get
+            {
+                return this.productsField;
+            }
+            set
+            {
+                this.productsField = value;
+            }
+        }
+
+        /// <remarks/>
+        public bool Success
+        {
+            get
+            {
+                return this.successField;
+            }
+            set
+            {
+                this.successField = value;
+            }
+        }
+
+        /// <remarks/>
+        public int Error
+        {
+            get
+            {
+                return this.errorField;
+            }
+            set
+            {
+                this.errorField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ErrorDescription
+        {
+            get
+            {
+                return this.errorDescriptionField;
+            }
+            set
+            {
+                this.errorDescriptionField = value;
+            }
+        }
+    }
+
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2053.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
+    public partial class JoinOrderProduct
+    {
+
+        private string orderGuidField;
+
+        private string codeField;
+
+        private int quantityField;
+
+        private System.Nullable<bool> isJoinedField;
+
+        private bool isJoinedFieldSpecified;
+
+        private string oldGuidField;
+
+        private string orderNumberIn1SField;
+
+        /// <remarks/>
+        public string OrderGuid
+        {
+            get
+            {
+                return this.orderGuidField;
+            }
+            set
+            {
+                this.orderGuidField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Code
+        {
+            get
+            {
+                return this.codeField;
+            }
+            set
+            {
+                this.codeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public int Quantity
+        {
+            get
+            {
+                return this.quantityField;
+            }
+            set
+            {
+                this.quantityField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)]
+        public System.Nullable<bool> IsJoined
+        {
+            get
+            {
+                return this.isJoinedField;
+            }
+            set
+            {
+                this.isJoinedField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsJoinedSpecified
+        {
+            get
+            {
+                return this.isJoinedFieldSpecified;
+            }
+            set
+            {
+                this.isJoinedFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OldGuid
+        {
+            get
+            {
+                return this.oldGuidField;
+            }
+            set
+            {
+                this.oldGuidField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string OrderNumberIn1S
+        {
+            get
+            {
+                return this.orderNumberIn1SField;
+            }
+            set
+            {
+                this.orderNumberIn1SField = value;
+            }
+        }
+    }
 }
+
+

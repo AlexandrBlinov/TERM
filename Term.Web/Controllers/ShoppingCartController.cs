@@ -77,7 +77,8 @@ namespace Term.Web.Controllers
                 CartTotalOfClient = cart.GetTotalOfClient(),
                 CartCount = cart.GetCount(),
                 TotalWeight = cart.GetCartWeight(),
-                CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery
+                CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery,
+                AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint()
             };
 
 
@@ -155,6 +156,8 @@ namespace Term.Web.Controllers
 
        //     bool addStock = ServicePP.CanPartnerUseAdditionalStock();
             viewModel.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
+
+            viewModel.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
 
        //     ViewBag.AddStock = addStock;
 

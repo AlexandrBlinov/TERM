@@ -176,6 +176,9 @@
 
                 <td>
                     @Html.OrderStatusWithColor(order.OrderStatus)
+
+                    @if (order.IsJoined)
+                    { <span class="label label-success">@CartAndOrders.CombinedOrder</span> }
                 </td>
                 @if (ViewBag.IsPartner)
                 {

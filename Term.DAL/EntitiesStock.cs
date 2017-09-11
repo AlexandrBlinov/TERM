@@ -520,7 +520,7 @@ namespace Term.DAL
         [DefaultValue(0)]
         public int VatVal { get; set; }
 
-        public string Sale { get; set; }
+     //   public string Sale { get; set; }
 
        
 
@@ -1150,16 +1150,10 @@ namespace Term.DAL
     public class OrderDetail
     {
         public long OrderDetailId { get; set; }
-
-     /*    [ForeignKey("Order")]
-        public Guid Order_guid { get; set; } */
-
+        
         [ForeignKey("Order")]
         public Guid GuidIn1S { get; set; } 
-
-        
-       // public Guid DocGuid { get; set; }
-
+                
         [DefaultValue(0)]
         public int RowNumber { get; set; }
 
@@ -1169,17 +1163,13 @@ namespace Term.DAL
         public decimal Price { get; set; }
 
         [DefaultValue(0)]
-        public decimal PriceOfClient
-        {
-            get;
-            set;
-        }
+        public decimal PriceOfClient        { get; set; }
+
         [DefaultValue(0)]
         public decimal PriceOfPoint { get; set; }
-        //  public virtual Product Product { get; set; }
+    
         public virtual Order Order { get; set; }
-    //    public virtual Product Product { get; set; }
-
+    
         // первоначальная цена
         [DefaultValue(0)]
         public decimal PriceInitial  {get;set;}

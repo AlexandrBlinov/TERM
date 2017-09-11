@@ -4,7 +4,7 @@
 <label class="create_point_label_row2"><span class="glyphicon glyphicon-star red" aria-hidden="true"></span>@Settings.SalesMarket</label>
 <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-        <input class="checkbox" type="checkbox" id="IsOpt" @(Model.IsOpt ? "checked" : "checked") value="@Settings.Wholesale">
+        <input class="checkbox" type="checkbox" id="IsOpt" @(Model.IsOpt ? "checked" : "") value="@Settings.Wholesale">
         <label class="checkbox-label label-lineheight30 no-select" for="IsOpt"><span class="dspl_ts">@Settings.Wholesale</span></label>
     </div>
     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

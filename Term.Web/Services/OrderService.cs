@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Term.Web.Services;
 using Term.Soapmodels;
 using Term.Web.Models;
+using System.Web.Mvc;
 
 namespace Term.Services
 {
@@ -24,8 +25,39 @@ namespace Term.Services
     /// </summary>
     public class OrderService  : BaseService
     {
-      
-         
+
+        /// <summary>
+        /// Получить адреса доставки для текущего партнера или точки
+        /// </summary>
+        public SelectList GetAddressesOfDeliveryForCurrentPoint() {
+           var partnerId=  this.CurrentPoint?.PartnerId;
+            var pointId = this.CurrentPoint?.PartnerPointId;
+
+             Expression<Func<AddressOfPartner,bool>> predicate = p => p.PartnerId == partnerId ;
+
+            bool flag = false;
+            
+            if (base.IsPartner && partnerId != null)  flag = true;
+            
+            // predicate stays unchanged
+
+            else if (!base.IsPartner && partnerId != null && pointId.HasValue)
+            {
+              flag = true;
+              predicate = p => p.PartnerId == partnerId && p.PointId == pointId;
+              }
+
+            if (flag) return new SelectList(DbContext.AddressOfPartners.Where(predicate).Select(p => new {
+                Id = p.AddressId,
+                Name = p.Address
+
+            }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+
+
+            return new SelectList(Enumerable.Empty<SelectListItem>());
+            
+        }
+
 
         /// <summary>
         /// Получить заказ при создании из корзины
@@ -248,7 +280,7 @@ namespace Term.Services
             Expression<Func<Order, bool>> filter = o => o.PartnerId == partnerId && (model.PointId == null || o.PointId == model.PointId) && /*!o.IsJoined &&*/
                 (model.DepartmentId == null || o.DepartmentId == model.DepartmentId) && (model.BeginDate == null || o.OrderDate >= model.BeginDate ) 
                 && (model.EndDate == null || o.OrderDate <= endDate) && ((int)o.OrderStatus == model.StatusId || model.StatusId == null) 
-                && (o.NumberIn1S.Contains(model.OrderNumber) || model.OrderNumber == null) && (!model.IsDeliveryByTk || o.IsDeliveryByTk) ;
+                && (model.OrderNumber == null || o.NumberIn1S.Contains(model.OrderNumber) || o.Comments.Contains(model.OrderNumber) )   && (!model.IsDeliveryByTk || o.IsDeliveryByTk) ;
 
             var filterall = filter;
             Expression<Func<Order, bool>> predicatebyProductId = _ => true;
@@ -284,11 +316,12 @@ namespace Term.Services
 
             Expression<Func<Order, bool>> filter = o =>
                     o.PointId == pointId && (model.DepartmentId == null || o.DepartmentId == model.DepartmentId)
-                        /*&& !o.IsJoined */
+                    /*&& !o.IsJoined */
                     && (o.OrderDate > model.BeginDate || model.BeginDate == null) &&
                     (o.OrderDate <= model.EndDate || model.EndDate == null)
-                    && ((int) o.OrderStatus == model.StatusId || model.StatusId == null) &&
-                    (o.NumberIn1S.Contains(model.OrderNumber) || model.OrderNumber == null);
+                    && ((int)o.OrderStatus == model.StatusId || model.StatusId == null) &&
+                    (model.OrderNumber == null || o.Comments.Contains(model.OrderNumber) || o.NumberIn1S.Contains(model.OrderNumber)  ); 
+          
 
              var filterall = filter;
             Expression<Func<Order, bool>> predicatebyProductId = _ => true;

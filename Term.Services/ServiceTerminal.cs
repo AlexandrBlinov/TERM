@@ -185,7 +185,11 @@ namespace Term.Services
         }
 
 
-        /// <remarks/>
+        /// <summary>
+        /// Получить долги
+        /// </summary>
+        /// <param name="PartnerId"></param>
+        /// <returns></returns>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:GetDebt", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return")]
         public ResultDebt GetDebt([System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string PartnerId)
@@ -193,6 +197,27 @@ namespace Term.Services
             object[] results = this.Invoke("GetDebt", new object[] {
                         PartnerId});
             return ((ResultDebt)(results[0]));
+        }
+
+
+        /// <summary>
+        /// Объединить заказы
+        /// </summary>
+        /// <param name="Goods"></param>
+        /// <param name="Address"></param>
+        /// <param name="ShippingDay"></param>
+        /// <param name="Comment"></param>
+        /// <returns></returns>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:JoinOrders", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return")]
+        public ResaltJoinOrder JoinOrders([System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] JoinOrderProduct[] Goods, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string Address, string ShippingDay, string Comment)
+        {
+            object[] results = this.Invoke("JoinOrders", new object[] {
+                        Goods,
+                        Address,
+                        ShippingDay,
+                        Comment});
+            return ((ResaltJoinOrder)(results[0]));
         }
 
         private bool IsLocalFileSystemWebService(string url)

@@ -64,7 +64,7 @@
                     </div>
                 </div>
             }
-
+            
             <div class="col-xs-12 col-sm-3">
                 <label class="search-order-label">@CartAndOrders.ByProduct</label>
                 <div>
@@ -189,6 +189,9 @@
 
                 <td>
                     @Html.OrderStatusWithColor(order.OrderStatus)
+
+                    @if (order.IsJoined)
+                    { <span class="label label-success">Объединенный</span> }
                 </td>
                 @if (ViewBag.IsPartner)
                 {
@@ -331,7 +334,7 @@
         <a href="#" class="opener-sign" id="opener" title="Развернуть окно">
             <i class="fa fa-expand" aria-hidden="true"></i>
             <div class="pad-50">
-                <span class="vertical text-uppercase bold">Товары в заказах для объединения</span>
+                <span class="vertical text-uppercase bold"> Товары в заказах для объединения <ins class="slide-panel-left-ins" id="slide-total-count"></ins></span>
             </div>
         </a>
     </div>
@@ -350,49 +353,52 @@
                         <th> </th>
                     </tr>
                 </thead>
-                <tbody>
-                 
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
-        <div class="row slide-panel-attributes">
-            <div class="col-xs-12 col-sm-4 m-b-20">
-                <label class="slide-panel-label" for="BeginDate">Дата отгрузки</label>
-                <div>
-                    <div class="input-group date">
-                        <input class="form-control" data-val="true" data-val-date="Поле Искать с даты должно содержать дату." id="BeginDate" name="BeginDate" type="text" value="">
-                        <span class="input-group-addon date-pick-btn">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
+        <form id="join-orders-form">
+            <div id="slide-validation-summary" class="slide-validation-summary alert alert-danger" data-valmsg-summary="true">
 
             </div>
-            <div class="col-xs-12 col-sm-8 m-b-20">
-                <label class="slide-panel-label">Адрес</label>
-                <div>
-                    <select class="form-control" data-val="true" data-val-number="Значением поля StatusId должно быть число." id="AddressId" name="AddressId">
-                        <option value=""></option>
-                        <option value="1">197374, Санкт-Петербург г, Оптиков ул, дом № 4</option>
-                        <option value="2">195197, Санкт-Петербург г, Санкт-Петербург г, Полюстровский пр, дом № 54</option>
-                        <option value="3">196105, Санкт-Петербург г, Рощинская ул, дом № 36</option>
-                        
-                        
-                    </select>
+
+            <div class="row slide-panel-attributes">
+                <div class="col-xs-12 col-sm-4 m-b-20">
+                    <div class="form-group">
+                        <label class="slide-panel-label" for="ShippingDate">Дата отгрузки</label>
+
+                        <div class="input-group shipping-date">
+                            <input class="form-control" data-val="true" required data-val-date="Поле должно содержать дату." id="ShippingDate" name="ShippingDate" type="text" value="">
+
+                            <span class="input-group-addon date-pick-btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xs-12 col-sm-8 m-b-20">
+                    <div class="form-group">
+                        <label class="slide-panel-label">Адрес</label>
+                        <div>
+                            @Html.DropDownListFor(p => p.AddressId, Model.AddressesIds, "выберите адрес доставки", new { @class = "form-control  m-b-10" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+
+                    <label class="slide-panel-label">Комментарий</label>
+                    <div>
+                        <textarea class="form-control" id="Comments" name="Comments" placeholder="пожелания к объединенному заказу" type="text" value="" ></textarea>
+                    </div>
+
+                </div>
+                <div class="col-xs-12 search-order-btn text-center">
+                    <button class="form-podbor-btn-submit" type="submit" id="join-orders">Объединить</button>
                 </div>
             </div>
-            <div class="col-xs-12">
-               
-             <label class="slide-panel-label">Комментарий</label>
-             <div>
-                 <input class="form-control" id="Comments" name="Comments" placeholder="пожелания к объединенному заказу" type="text" value=""/>
-             </div>         
-         
-            </div>
-            <div class="col-xs-12 search-order-btn text-center">
-                <button class="form-podbor-btn-submit" type="submit">Объединить</button>
-            </div>
-    </div>
+            </form>
+</div>
 </div>
 
 
@@ -420,51 +426,77 @@
                 localStorage.setItem('joinItems', JSON.stringify(itemsToSerialize));
             },
 
-             restoreItemsFromLocalStorage = function ()
-            {
-                var items = JSON.parse(localStorage.getItem('joinItems'));
+                restoreItemsFromLocalStorage = function () {
+                    var items = JSON.parse(localStorage.getItem('joinItems'));
 
-                if (items && Array.isArray(items))
-                {
-                    for (i = 0; i < items.length ; i++)
-                    {
-                        this.addToList(items[i].orderid, items[i].ordernumber, items[i].productid, items[i].productname, items[i].count);
+                    if (items && Array.isArray(items)) {
+                        for (i = 0; i < items.length; i++) {
+                            this.addToList(items[i].orderid, items[i].ordernumber, items[i].productid, items[i].productname, items[i].count);
+                        }
                     }
-                }
 
-            }
+                },
+
+                updateSlideTotalCount = function () {
+                    var count = 0;
+                    $('#slide-panel-table tbody tr').each(function () {
+                        var countToAdd = $(this).find('.yst-join-productcount').val();
+
+                        if (countToAdd) count += parseInt(countToAdd) || 0;
+                    });
+                    $('#slide-total-count').text(count);
+
+                };
+
 
             return {
                 'restoreItems': restoreItemsFromLocalStorage,
                 removeTr: function (el) {
                     $(el).closest('tr').remove();
-                   serialize();
+                    serialize();
+                    updateSlideTotalCount();
                 },
                 addToList: function (orderId, ordernumber, productId, productName, count) {
-                    var tr = '<tr data-ordernumber="' + ordernumber + '" data-orderid="' + orderId + '" data-productid="' + productId + '"><td>' + ordernumber + '</td><td>' + productId + '</td><td class="yst-join-productname">' + productName + '</td><td><input type="text" class="w-50 yst-join-productcount" value="' + count + '"</td>' +
+                    var tr = '<tr data-ordernumber="' + ordernumber + '" data-orderid="' + orderId + '" data-productid="' + productId + '"><td>' + ordernumber + '</td><td>' + productId + '</td><td class="yst-join-productname">' + productName + '</td><td><input type="number" class="w-50 yst-join-productcount" value="' + count + '"</td>' +
 
                         '<td><a href="#" onclick="moduleSlidePanelTable.removeTr(this); return false;" class="yst-remove-item"><i class="glyphicon glyphicon-remove"></i></a></td> </tr>';
 
                     $('#slide-panel-table tbody').append((tr));
 
                     serialize();
-                    
+                    updateSlideTotalCount();
+
                 },
                 removeFromList: function (orderId, productId) {
-                   
+
                     $('#slide-panel-table tbody tr').each(function () {
-                        
+
                         if ($(this).data('orderid') == orderId && $(this).data('productid') == productId)
 
                             $(this).remove();
                     });
                     serialize();
+                    updateSlideTotalCount();
                 }
             }
-           
+
         }());
 
         $(function () {
+
+            var maxDaysToAdd = 5;
+            var today = new Date();
+         
+            var maxDate = new Date(today.getTime() + 1000 * 60 * 60 * 24 * maxDaysToAdd);
+            $('.shipping-date').datetimepicker({
+                format: 'DD.MM.YYYY', locale: YstLocale.GetLocale("Culture"),
+                showTodayButton: true,
+                defaultDate: today,
+                minDate: today,
+                maxDate: maxDate,
+                //  daysOfWeekDisabled: [6, 7],
+                showClear: true
+            });
 
             moduleSlidePanelTable.restoreItems();
 
@@ -489,9 +521,9 @@
                 } else
                     // если выбирают товар
                     if (ifchecked && $this.hasClass('yst-order-item'))
-                        moduleSlidePanelTable.addToList($this.data('yst-order'),$this.data('yst-ordernumber'), $this.data('yst-productid'), $this.data('yst-productname'), $this.data('yst-count'));
+                        moduleSlidePanelTable.addToList($this.data('yst-order'), $this.data('yst-ordernumber'), $this.data('yst-productid'), $this.data('yst-productname'), $this.data('yst-count'));
                     else moduleSlidePanelTable.removeFromList($this.data('yst-order'), $this.data('yst-productid'));
-                   
+
 
             });
 
@@ -503,10 +535,10 @@
 
                 if (panelRight.css('display') == 'none') {
                     document.getElementById('opener').title = 'Свернуть окно';
-                    
-                    panelRight.show(duration);                    
+
+                    panelRight.show(duration);
                     panel.animate({ 'right': '50%' }, duration);
-                    panel.css({ 'transform': 'translate(50%)' ,'min-width':'550px'});
+                    panel.css({ 'transform': 'translate(50%)', 'min-width': '550px' });
 
                 }
                 else {
@@ -514,12 +546,55 @@
                     panel.css({ 'min-width': '0' });
                     panel.animate({ 'right': '0' }, duration, function () { panel.css({ "transform": "" }); });
                     panelRight.hide(duration);
-                    
+
                 }
-               
+
                 $openerFa.toggleClass('fa-expand').toggleClass('fa-compress');
                 return false;
             });
+
+            $('#join-orders-form').on('submit', () => {
+
+                var $summary = $('#slide-validation-summary');
+                
+                var textError = '<strong>Ошибка!</strong>';
+               // if (!$(this).valid()) return false;
+
+                $summary.html('').hide();
+                var ordersAndProducts = [];
+                $('#slide-panel-table tbody tr').each(function () {
+
+                    ordersAndProducts.push({
+                        OrderId: $(this).data('orderid'),
+                        ProductId: $(this).data('productid'),
+                        Count: parseInt($(this).find('.yst-join-productcount').val()) || 0
+                    });
+                });
+
+                var parameter = {
+                    Comments: $("#Comments").val(),
+                    AddressId: $("#AddressId").val(),
+                    ShippingDay: $("#ShippingDate").val(),
+                    OrdersAndProducts: ordersAndProducts
+
+                }
+
+                $.post("@Url.Action("joinorders", "orders")", parameter).done(function (data) {
+                    console.log(data);
+
+                    if (!data.Success) $summary.html(textError + ' ' + data.Message).show();
+                    else {
+                        $summary.html('').hide();
+                        console.log('worked!');
+                        localStorage.setItem('joinItems', null);
+                        $('#slide-panel-table tbody tr').remove();
+                    }
+                
+                });
+
+                return false;
+               
+            } ); 
 
         }())
     </script>

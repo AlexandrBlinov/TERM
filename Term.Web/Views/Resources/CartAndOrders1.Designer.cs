@@ -250,6 +250,15 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Combined.
+        /// </summary>
+        public static string CombinedOrder {
+            get {
+                return ResourceManager.GetString("CombinedOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Comment.
         /// </summary>
         public static string Comment {
