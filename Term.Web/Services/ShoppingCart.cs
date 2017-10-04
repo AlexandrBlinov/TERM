@@ -24,15 +24,15 @@ namespace Yst.Services
     public partial class ShoppingCart : BaseService
     {
         public event EventHandler<ShoppingCartInfoArgs> ItemAddedToCart = delegate { };
-        private string ShoppingCartId = null; 
+        private string ShoppingCartId = null;
         public const string CartSessionKey = "CartId";
 
         public DaysToDepartmentWithSuppliersService _daysToDepartmentService = null;
 
         public ShoppingCart(AppDbContext dbcontext)
-            : this(dbcontext, new DaysToDepartmentWithSuppliersService()) 
+            : this(dbcontext, new DaysToDepartmentWithSuppliersService())
         {
-   
+
         }
 
         ShoppingCart(AppDbContext dbcontext, DaysToDepartmentWithSuppliersService daysToDepartmentService)
@@ -42,7 +42,7 @@ namespace Yst.Services
             ShoppingCartId = GetCartId();
         }
 
-     //   public DaysToDepartmentService DaysToDepartmentService { get { return _daysToDepartment ?? new DaysToDepartmentService(); } }
+        //   public DaysToDepartmentService DaysToDepartmentService { get { return _daysToDepartment ?? new DaysToDepartmentService(); } }
 
 
 
@@ -52,13 +52,13 @@ namespace Yst.Services
         /// <returns></returns>
         private string GetCartId()
         {
-            if (_context.Session[CartSessionKey] == null)    _context.Session[CartSessionKey] = _context.User.Identity.Name;
+            if (_context.Session[CartSessionKey] == null) _context.Session[CartSessionKey] = _context.User.Identity.Name;
             return _context.Session[CartSessionKey].ToString();
 
         }
 
 
-        private static readonly Func<ProductType, byte> SortInCart = delegate(ProductType productType)
+        private static readonly Func<ProductType, byte> SortInCart = delegate (ProductType productType)
         {
             {
                 byte byteValue;
@@ -68,9 +68,9 @@ namespace Yst.Services
             }
         };
 
-     //   private  readonly Expression<Func<Cart,  bool>> _predicate = (cart) => cart.CartId == ShoppingCartId;
+        //   private  readonly Expression<Func<Cart,  bool>> _predicate = (cart) => cart.CartId == ShoppingCartId;
 
-        
+
         /// <summary>
         /// Очистить корзину
         /// </summary>
@@ -78,31 +78,42 @@ namespace Yst.Services
         {
 
             var cartItems = DbContext.Carts.Where(cart => cart.CartId == ShoppingCartId);
-               /* foreach (var cartItem in cartItems)
-                {
-                    DbContext.Carts.Remove(cartItem);
-                }*/
-                DbContext.Carts.RemoveRange(cartItems);
-                // Save changes
-                DbContext.SaveChanges();
-            
+            /* foreach (var cartItem in cartItems)
+             {
+                 DbContext.Carts.Remove(cartItem);
+             }*/
+            DbContext.Carts.RemoveRange(cartItems);
+            // Save changes
+            DbContext.SaveChanges();
+
         }
 
         public IList<Cart> GetCartItems()
         {
 
-            return DbContext.Carts.Where(cart => cart.CartId == ShoppingCartId).Include(p=>p.Product).ToList().OrderBy(cart => SortInCart(cart.Product.ProductType)).ToList();
-            
+            return DbContext.Carts.Where(cart => cart.CartId == ShoppingCartId).Include(p => p.Product).ToList().OrderBy(cart => SortInCart(cart.Product.ProductType)).ToList();
+
         }
 
         public async Task<IList<Cart>> GetCartItemsAsync()
         {
 
-            var resultList=await DbContext.Carts.Where(cart => cart.CartId == ShoppingCartId).ToListAsync() ;
+            var resultList = await DbContext.Carts.Where(cart => cart.CartId == ShoppingCartId).ToListAsync();
 
             return resultList.OrderBy(cart => SortInCart(cart.Product.ProductType)).ToList();
 
         }
+
+        
+        public bool IsPrepay  { get
+            {
+                var firstCartItem = GetCartItems().FirstOrDefault();
+
+                return (firstCartItem != null && firstCartItem.PriceIsPrepay);
+            }
+        } 
+
+            
 
         /// <summary>
         /// Вес товаров в корзине
@@ -151,7 +162,7 @@ namespace Yst.Services
         /// <param name="price"></param>
         /// <param name="priceOfPoint"></param>
         /// <param name="priceOfClient"></param>
-        public void AddToCart(Product product, int departmentId, int days, ref int count, decimal price = 0, decimal priceOfPoint=0, decimal priceOfClient = 0, int supplierId=0)
+        public void AddToCart(Product product, int departmentId, int days, ref int count, decimal price = 0, decimal priceOfPoint=0, decimal priceOfClient = 0, int supplierId=0, bool useprepay=false)
         {
             
             var cartItem = DbContext.Carts.FirstOrDefault(c => c.CartId == ShoppingCartId && c.ProductId == product.ProductId);
@@ -171,7 +182,8 @@ namespace Yst.Services
                         PriceOfPoint = priceOfPoint,
                         Price = price,
                         DateCreated = DateTime.Now,
-                        SupplierId=supplierId
+                        SupplierId=supplierId,
+                        PriceIsPrepay = useprepay
                     };
                     itemAdded = true;
                     DbContext.Carts.Add(cartItem);
@@ -211,7 +223,10 @@ namespace Yst.Services
             
             
             // получаем из ответа 1С товары и guid заказов
-            var productsAndGuids = soapResult.Products.Select(p => new { ProductId = StringUtils.GetProductId(p.Code), OrderGuid = p.OrderGUID, NumberIn1S = p.OrderNumberIn1S });
+            var productsAndGuids = soapResult.Products.Select(p => new {
+                ProductId = StringUtils.GetProductId(p.Code),
+                OrderGuid = p.OrderGUID,
+                NumberIn1S = p.OrderNumberIn1S });
 
             var cartItems = viewModel.CartItems;
 
@@ -240,7 +255,7 @@ namespace Yst.Services
 
             var distinctGuids = alldata.Select(p => new { p.OrderGuid, p.DepartmentId, p.NumberIn1S,p.SupplierId }).Where(p => p.DepartmentId != 0).Distinct();
 
-            //
+            // цикл по guid заказов
             // for orders from stock (DepartmentId != 0)
             //
 

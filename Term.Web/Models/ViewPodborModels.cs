@@ -79,6 +79,8 @@ namespace Term.Web.Models
 
         public IPagedList<Order> Orders { get; set; }
 
+        public IPagedList<OrderWithGuidLink> OrdersWithGuid { get; set; }
+
         public IEnumerable<Department> Departments
         {
             get { return _departments; }

@@ -19,7 +19,7 @@
 
     @{
         string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-        string srcgooglemapslibrary = "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" + "&language=" + lang + "&key=AIzaSyAsZVI6IsMalUenNMRGr7xlzhpjrGkZipA";
+        string srcgooglemapslibrary = "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" + "&language=" + lang + "&key=AIzaSyDN7YSVCGitkbM-gZ4h7dT5eVw1bo6CgnU";
 
 
     }
@@ -66,6 +66,7 @@
                 }
                 <li> </li>
             </ul>
+            
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -75,6 +76,10 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="@Url.Action("Index", "Partner")"><i class=" fa fa-cog" aria-hidden="true"></i> @Header.Settings</a></li>
                             <li><a href="@Url.Action("ManagerInfo", "Help")">@Header.YourManagers</a></li>
+                            
+                            <li class="text-center m-t-15 menu-item-divider" id="yst-menuitem-prepay">
+                           
+                            </li>
                         </ul>
                     </li>
 
@@ -289,7 +294,11 @@
             'use strict';
             var $limitContainer = $('#yst-limit-container');
             $limitContainer.load("/LimitData/Index");
-        }()); 
+        }());         (function () {
+            'use strict';
+            var $prepayToggleContainer = $('#yst-menuitem-prepay');
+            $prepayToggleContainer.load("/PrepayToggle/Index");
+        }());                 
 </script>
 
     

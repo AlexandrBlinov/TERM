@@ -523,7 +523,7 @@ namespace Term.DAL
      //   public string Sale { get; set; }
 
        
-
+        // Показывать распродажи в дисках
         [DefaultValue(false)]
         public bool IsSale { get; set; }
 
@@ -556,10 +556,24 @@ namespace Term.DAL
         // Процент наценки DPD
         public byte? DeliveryProfitPercent { get; set; }
 
-
+        // Основной договор - предоплатный
         public bool PrePay { get; set; }
-
+                
         public bool HasOwnRest { get; set; }
+        
+        // есть договоры *
+        public bool HasStar { get; set; }
+
+        // есть предоплатные договоры
+        public bool HasPrepay { get; set; }
+
+        // способ доставки 1- самовывоз, 0- доставка наша
+        public int  WayOfDelivery { get; set; }
+
+        // реквизит нужен для подсчета цены исходя из предоплатной цены (в настройках клиента)
+        // считать цену исходя из предоплатной цены (только если PrePay=0 и HasPrepay=1)
+        // данный реквизит не синхронизируется
+        public bool UsePrepayPrices { get; set; }
 
         /// <summary>
         /// Число дней для заявок на возврат
@@ -712,7 +726,10 @@ namespace Term.DAL
          [DataMember]
         public decimal Price { get; set; }
 
-         
+
+        public decimal Price2 { get; set; }
+
+
 
 
     }
@@ -818,10 +835,13 @@ namespace Term.DAL
         public string DepartmentName { get {return DepartmentId.ToString().PadLeft(5, '0');} }
 
         public int SupplierId { get; set; }
+
+        public bool PriceIsPrepay { get; set; }
+
         //  { Removed from foregn key control by Lapenkov 2016-06-23
-     //   public virtual Department Department { get; set; }
+        //   public virtual Department Department { get; set; }
         // }
-       
+
     }
 
 

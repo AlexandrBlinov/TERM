@@ -268,7 +268,7 @@
     <value>Сезон</value>
   </data>
   <data name="Ship" xml:space="preserve">
-    <value>Шипы</value>
+    <value>Шипованные</value>
   </data>
   <data name="Sort" xml:space="preserve">
     <value>Сортировка</value>
@@ -464,5 +464,11 @@
   </data>
   <data name="Rear" xml:space="preserve">
     <value>(Задняя ось)</value>
+  </data>
+  <data name="Friction" xml:space="preserve">
+    <value>Нешипуемые</value>
+  </data>
+  <data name="ShipNoShip" xml:space="preserve">
+    <value>Неошипованные</value>
   </data>
 </root>

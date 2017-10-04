@@ -24,23 +24,7 @@ namespace Term.Web.Controllers
     [CheckSettings]
     public class OrdersController : BaseController
     {
-        public class DtoOrdersAndProducts {
-            public Guid OrderId { get; set; }
-            public int ProductId { get; set; }
-            public int Count { get; set; }
-        }
-
-        public class DtoJoinOrders {
-            public DtoJoinOrders()
-            {
-                //    OrdersAndProducts = Enumerable.Empty<DtoOrdersAndProducts>();
-                OrdersAndProducts = new List<DtoOrdersAndProducts>();
-            }
-            public IEnumerable<DtoOrdersAndProducts> OrdersAndProducts { get; set; }
-            public string Comments { get; set; }
-            public string AddressId { get; set; }
-            public DateTime ShippingDay { get; set; }
-        }
+       
 
         private bool _isPartner;
       
@@ -82,21 +66,33 @@ namespace Term.Web.Controllers
             ViewBag.IsForeign =Partner.IsForeign;
             ViewBag.CurrentPointId = base.Point.PartnerPointId;
 
-                if (_isPartner) // PartnerId is set too
-                {
-                    model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
-                    model = _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
+                  if (_isPartner) // PartnerId is set too
+                   {
+                       model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
+                      _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
 
-                }
-                else
-                {
-                    model.PartnerPoints = null;
-                    if (base.Point.PartnerPointId > 0) model = _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
-                }
-                return View(model);
-            
-           
+                   }
+                   else
+                   {
+                       model.PartnerPoints = null;
+                       if (base.Point.PartnerPointId > 0)  _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
+                   }
+                   return View(model); 
 
+
+       /*     if (_isPartner) // PartnerId is set too
+            {
+                model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
+                _orderService.GetListOfOrdersByPartnerIdWithGuid(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
+
+            }
+            else
+            {
+                model.PartnerPoints = null;
+                if (base.Point.PartnerPointId > 0) _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
+            }
+            return View("List2",model);
+            */
         }
 
 
@@ -584,13 +580,13 @@ namespace Term.Web.Controllers
             if (_isPartner) // PartnerId is set too
             {
                 model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
-                model = _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
+                _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
 
             }
             else
             {
                 model.PartnerPoints = null;
-                if (base.Point.PartnerPointId > 0) model = _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
+                if (base.Point.PartnerPointId > 0)  _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
             }
             return View(model);
             

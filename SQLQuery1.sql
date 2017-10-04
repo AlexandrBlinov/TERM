@@ -1,0 +1,1 @@
+﻿select count(*) from products where parentid = 9098690

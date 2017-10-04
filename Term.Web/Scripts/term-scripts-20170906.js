@@ -235,10 +235,10 @@ $(function () {
 
         var arrFilteredPricingRules = ArrPricingRules.filter(function (rec) { return (rec.PType != null || rec.ProducerId == 0); });
         // console.log(arrFilteredPricingRules);
-        if (!$("#LatLng").val()) {
+        /*if (!$("#LatLng").val()) {
             showAlert(YstLocale.Get("marker"), false);
             return false;
-        }
+        }*/
         var dataValue = { 'PricingRules': arrFilteredPricingRules,
             'CompanyName': getValueById('CompanyName'),
             'ContactFIO': getValueById('ContactFIO'),
@@ -253,7 +253,7 @@ $(function () {
             'Email': $('#Email').val(),
             'AddressForDelivery': getValueById('AddressForDelivery'),
             'Language': getValueById('Language'),
-            'LatLng' : $("#LatLng").val()
+            'LatLng' : 1
         };
         var buttons = $("#sale-direction").find("button");
 
@@ -267,12 +267,12 @@ $(function () {
             }
         }
 
-        if ($('#AddressIsValid').val() == "false") {
+        /*if ($('#AddressIsValid').val() == "false") {
             if (dataValue.Country == "7_1") {
                 showAlert("Адрес введён некорректно! Не указан дом!", false);
                 return false;
             }
-        }
+        }*/
 
         if (dataValue.SaleDirection == 0) {
             showAlert(YstLocale.Get("errsaledir"), false);
@@ -401,7 +401,7 @@ $(function () {
 
         dataValue.CompanyName = $("#CompanyName").val();
         dataValue.WebSite = $("#WebSite").val();
-        dataValue.LatLng = $("#LatLng").val();
+        dataValue.LatLng = 1;
         dataValue.AddressForDelivery = $("#AddressForDelivery").val();
         dataValue.Country = $('#Country :selected').val();
         dataValue.Language = $('#Language :selected').val();
@@ -424,22 +424,22 @@ $(function () {
         }
 
         if (!$("#compname").hasClass('invisible')) {
-            if (!$("#LatLng").val()) {
+            /*if (!$("#LatLng").val()) {
                 showAlert(YstLocale.Get("marker"), false);
                 return false;
-            }
+            }*/
             if (dataValue.SaleDirection == 0) {
                 showAlert(YstLocale.Get("errsaledir"), false);
                 return false;
             }
         }
 
-        if (!$("#compname").hasClass('invisible') && $('#AddressIsValid').val() == "false") {
+        /*if (!$("#compname").hasClass('invisible') && $('#AddressIsValid').val() == "false") {
             if (dataValue.Country == "7_1") {
                 showAlert("Адрес введён некорректно! Не указан дом!", false);
                 return false;
             }
-        }
+        }*/
 
         if (dataValue.DepartmentId != -1) {
             if (dataValue.DaysToMainDepartment == dataValue.DaysToDepartment) {
@@ -459,11 +459,13 @@ $(function () {
         }).done(function (result) {
 
             if (!result.Success) {
+                $('#loading').remove();
                 $(".modal-dialog").addClass("center-modal-notify");
                 $('#idModalToNotifyFailure').modal();
                
             }
             else {
+                $('#loading').remove();
                 $(".modal-dialog").addClass("center-modal-notify");
                 $('#idModalToNotifySuccess').modal();
                 $('#alert-container').fadeOut();

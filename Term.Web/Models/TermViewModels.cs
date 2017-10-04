@@ -19,6 +19,8 @@ using System.Text.RegularExpressions;
 using Term.Web.HtmlHelpers;
 using Term.Web.Views.Resources;
 using YstProject.Services;
+using Term.Utils;
+using Term.CustomAttributes;
 
 namespace YstTerm.Models
 {
@@ -483,26 +485,50 @@ namespace YstTerm.Models
         public bool OnlySale { get; set; }
     }
 
+
+    public enum TyresSeasons {
+        [MultiCultureDescription(typeof(ForSearchResult), "Winter")]
+        winter,
+        [MultiCultureDescription(typeof(ForSearchResult), "Summer")]
+        summer,
+        [MultiCultureDescription(typeof(ForSearchResult), "All")]
+        allseason
+    }
     /// <summary>
     /// Модель подбора для шин
     /// </summary>
     public class TyresPodborView : CommonPodborView
-    {  
+    {
 
+
+        
         private static  SelectList GetSeasons()
         {
             var nvc = new NameValueCollection { { "winter", ForSearchResult.Winter }, 
-            { "summer", ForSearchResult.Summer }, { "allseason", ForSearchResult.Allseason } };
+            { "summer", ForSearchResult.Summer },
+            { "allseason", ForSearchResult.Allseason } };
             return new SelectList(nvc.AllKeys.SelectMany(nvc.GetValues, (x, y) => new { SeasonId = x, SeasonName = y }).ToList(), "SeasonId", "SeasonName");
 
 
         }
     
+    /*
+        public  SelectList Seasons
+        {
+            get  {
+                return (new SelectList(Enum.GetValues(typeof(TyresSeasons)).Cast<TyresSeasons>().Select(p => new
+                {
+                    Id = (int)p,
+                    Name = EnumDescriptionProvider.GetDescription(p)
 
-        private static readonly SelectList _seasons = GetSeasons();
+                }), "Id", "Name"));
+            }
+        }
+*/
+          private static readonly SelectList _seasons = GetSeasons();
 
-        
-        
+
+
         public string Width { get; set; }
 
         
@@ -1268,11 +1294,23 @@ namespace YstTerm.Models
         }
     }
 
+
+    /// <summary>
+    /// Условия шиповки в подборе шин
+    /// </summary>
     public enum ShipForTyresPodbor
     {
+        // все
         ShipAll=0,
+
+        // шипованные
         ShipShip,
-        ShipNoShip
+
+        // неошипованные но шупуемые
+        ShipNoShip,
+
+        // нешипуемые (фрикционные)
+        Friction
     }
 
     public class SparPodborView

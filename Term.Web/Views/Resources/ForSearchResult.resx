@@ -465,4 +465,10 @@
   <data name="Rear" xml:space="preserve">
     <value>(Rear)</value>
   </data>
+  <data name="Friction" xml:space="preserve">
+    <value>friction</value>
+  </data>
+  <data name="ShipNoShip" xml:space="preserve">
+    <value>no studs</value>
+  </data>
 </root>

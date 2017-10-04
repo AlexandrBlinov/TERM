@@ -204,7 +204,7 @@ function refuseFromDelivery() {
 
 $('[name=IsDeliveryByTk]').on('ifChecked', function() {
     $('.transport-container').show();
-    $('.address-container').hide();
+    $('.address-container').hide('slow');
 
 
 }).on('ifUnchecked', function() {
@@ -216,7 +216,7 @@ $('[name=IsDeliveryByTk]').on('ifChecked', function() {
    
     if ($('#isDelivery').is(':checked')) {
         console.log('isdelivery checked');
-        $('.address-container').show();
+        $('.address-container').show('slow');
     }
 
 });
@@ -240,7 +240,7 @@ $('[name=IsDelivery]').on('ifChecked', function(event) {
     if (event.target.id === "isDelivery") {
         $deliverydate_container.removeClass('hidden');
         $deliveryByTk_container.removeClass('hidden');
-        $address_container.show();
+        $address_container.show('slow');
       ///// вариант с всплавающим окном
       /////  if (isAdmin) $('#modalConfirmation').modal();
       
@@ -271,6 +271,9 @@ function getCostOfDelivery() {
     var rouble = '\u20BD';
     var orderGuid = $('#OrderGuidIn1S').val() || null;
     var apicallPath = "/api/dpdapi/GetCostAndTimeOfDelivery";
+
+    if (!$('#IsDeliveryByTk').is(':checked')) return;
+
     $.getJSON(apicallPath, { 'cityId': $('#CityId').val(), terminalOrAddress: $('#fromTerminal').is(':checked'), orderGuid: orderGuid })
         .done(function(data) {
 

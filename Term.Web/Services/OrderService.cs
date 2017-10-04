@@ -272,7 +272,7 @@ namespace Term.Services
         /// <param name="pointId"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public OrdersViewModel GetListOfOrdersByPartnerId(OrdersViewModel model, string partnerId, int pointId)
+        public void GetListOfOrdersByPartnerId(OrdersViewModel model, string partnerId, int pointId)
         {
 
 
@@ -296,14 +296,47 @@ namespace Term.Services
            model.Orders = DbContext.Orders.Where(filterall).Include(o => o.OrderDetails).Include(i => i.OrderDetails.Select(p => p.Product)).
                Include(p=>p.Point).Include(p=>p.Department)
              .OrderByDescending(o => o.OrderDate).ToPagedList(model.Page, model.ItemsPerPage);
-
-
-
-            return model;
             
         }
 
-        
+
+
+        // партнер = головной терминал
+        /// <summary>
+        /// Функция возвращает список заказов головного териминала
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="partnerId"></param>
+        /// <param name="pointId"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public void GetListOfOrdersByPartnerIdWithGuid(OrdersViewModel model, string partnerId, int pointId)
+        {
+
+
+            var endDate = model.EndDate.HasValue ? ((DateTime)model.EndDate).AddDays(1).AddTicks(-1) : DateTime.MaxValue;
+            Expression<Func<Order, bool>> filter = o => o.PartnerId == partnerId && (model.PointId == null || o.PointId == model.PointId) && /*!o.IsJoined &&*/
+                (model.DepartmentId == null || o.DepartmentId == model.DepartmentId) && (model.BeginDate == null || o.OrderDate >= model.BeginDate)
+                && (model.EndDate == null || o.OrderDate <= endDate) && ((int)o.OrderStatus == model.StatusId || model.StatusId == null)
+                && (model.OrderNumber == null || o.NumberIn1S.Contains(model.OrderNumber) || o.Comments.Contains(model.OrderNumber)) && (!model.IsDeliveryByTk || o.IsDeliveryByTk);
+
+            var filterall = filter;
+            Expression<Func<Order, bool>> predicatebyProductId = _ => true;
+            if (!String.IsNullOrEmpty(model.ProductName))
+
+            {
+                predicatebyProductId = o => (o.OrderDetails.Any(p => model.ProductName == null || p.ProductId.ToString().Contains(model.ProductName) || (p.Product.Name != null && p.Product.Name.Contains(model.ProductName)) || (p.Product.Article != null && p.Product.Article.Contains(model.ProductName))));
+                filterall = filter.And(predicatebyProductId);
+
+            }
+
+            model.OrdersWithGuid =DbContext.Orders.Where(filterall).Include(o => o.OrderDetails).Include(i => i.OrderDetails.Select(p => p.Product)).
+                Include(p => p.Point).Include(p => p.Department).Select(p => new OrderWithGuidLink { Order = p,
+                    Guid = DbContext.Sales.Where(s=> p.GuidIn1S==s.GuidOfOrderIn1S).Select(s=>s.GuidIn1S).LastOrDefault()
+                }).OrderByDescending(o => o.Order.OrderDate).ToPagedList(model.Page, model.ItemsPerPage);
+
+        }
+
         /// <summary>
         /// Получить список товаров партнерской точки
         /// </summary>
@@ -311,7 +344,7 @@ namespace Term.Services
         /// <param name="pointId"></param>
         /// <param name="page"></param>
         /// <returns></returns>
-        public OrdersViewModel GetListOfOrdersByPointId(OrdersViewModel model, int pointId)
+        public void GetListOfOrdersByPointId(OrdersViewModel model, int pointId)
         {
 
             Expression<Func<Order, bool>> filter = o =>
@@ -335,8 +368,7 @@ namespace Term.Services
            model.Orders = DbContext.Orders.Where(filterall).Include(o => o.OrderDetails).Include(i => i.OrderDetails.Select(p => p.Product)).
                Include(p => p.Point).Include(p => p.Department).OrderByDescending(o => o.OrderDate).ToPagedList(model.Page, model.ItemsPerPage); 
 
-
-            return model;
+            
         }
 
 

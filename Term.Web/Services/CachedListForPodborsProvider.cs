@@ -1,4 +1,5 @@
 ﻿using PagedList;
+
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -30,10 +31,10 @@ namespace YstProject.Services
     {
         private static readonly AppDbContext _dbContext = new AppDbContext();
         private static readonly ICacheService _cache = new CacheService();
-        private static readonly int TimeoutMin = 10;
-        private static string KeyDisks = "podbor.disks";
-        private static string KeyTyres = "podbor.tyres";
-        private static string KeyAccs = "podbor.accs";
+        private static readonly int TimeoutMin = 10;        
+        private static string KeyDisks = Defaults.CacheSettings.KeyDisks;
+        private static string KeyTyres = Defaults.CacheSettings.KeyTyres;
+        private static string KeyAccs = Defaults.CacheSettings.KeyAccs;
         private static readonly object LockAkbObject = new object();
         private static readonly object LockProducersObject = new object();
         private static readonly object LockTiporazmersObject = new object();
@@ -91,7 +92,11 @@ namespace YstProject.Services
         
         }
 
-        public static void Remove(string pointId)
+        /// <summary>
+        /// Удалить кэш по точке по дискам
+        /// </summary>
+        /// <param name="pointId"></param>
+        public static void RemoveCacheWheels(string pointId)
         {
 
             _cache.Remove(String.Format("{0}.{1}.1", KeyDisks, pointId)); // очистить кэш на остатках
@@ -99,6 +104,17 @@ namespace YstProject.Services
             _cache.Remove(String.Format("{0}.{1}.3", KeyDisks, pointId)); // очистить кэш на остатках и в пути
 
         }
+
+
+
+        public static void RemoveCacheAll(string pointId)
+        {
+            RemoveCacheWheels(pointId);
+            _cache.Remove( $"{KeyTyres}.{pointId}" ); // очистить кэш по шинам
+            _cache.Remove($"{KeyAccs}.{pointId}"); // очистить кэш аксессуары
+            
+        }
+
 
         public static IEnumerable<string>  GetKeys()
         {
@@ -111,35 +127,9 @@ namespace YstProject.Services
 
 
 
-
-        /// <summary>
-        /// Возвращает выборку отсортированную по натиенованию, остатку, числу дней или цене
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="queryNotOrdered"></param>
-        /// <returns></returns>
-        /*
-        private static IQueryable<SearchResult> GetOrderedResults(CommonPodborView model, IQueryable<SearchResult> queryNotOrdered)
-        {
-
-            IQueryable<SearchResult> query;
-            switch (model.SortBy)
-            {
-                case SortBy.NameAsc: query = queryNotOrdered.OrderBy(p => p.Name); break;
-                case SortBy.NameDesc: query = queryNotOrdered.OrderByDescending(p => p.Name); break;
-                case SortBy.AmountAsc: query = queryNotOrdered.OrderBy(p => p.Rest); break;
-                case SortBy.AmountDesc: query = queryNotOrdered.OrderByDescending(p => p.Rest); break;
-                case SortBy.DeliveryAsc: query = queryNotOrdered.OrderBy(p => p.DaysToDepartment); break;
-                case SortBy.DeliveryDesc: query = queryNotOrdered.OrderByDescending(p => p.DaysToDepartment); break;
-                case SortBy.PriceAsc: query = queryNotOrdered.OrderBy(p => p.PriceOfClient); break;
-                case SortBy.PriceDesc: query = queryNotOrdered.OrderByDescending(p => p.PriceOfClient); break;
-                default: query = queryNotOrdered.OrderBy(p => p.Name); break;
-
-            }
-            return query;
-        }
-        */
-
+            //
+            // Сортировка в зависимости от модели
+            //
         private static IQueryable<SearchResult> GetOrderedResults(this IQueryable<SearchResult> queryNotOrdered, CommonPodborView model)
         {
 
@@ -265,9 +255,7 @@ namespace YstProject.Services
         /// <returns></returns>
         public static IPagedList<TyreSearchResult> GetAllTyresByPartnerPoint(TyresPodborView podborModel, int pointId)
         {
-            
-            
-
+                       
             IList<TyreSearchResult> result = _cache.GetOrAdd(String.Format("{0}.{1}",KeyTyres, pointId), () => GetAllTyresByPartnerPointFromDb(pointId, podborModel), DateTimeOffset.UtcNow.AddMinutes(TimeoutMin));
 
             var query = result.AsQueryable();
@@ -278,13 +266,19 @@ namespace YstProject.Services
             if (podborModel.Height != null) query = query.Where(p => p.Height == podborModel.Height);
             if (podborModel.SeasonId != null) query = query.Where(p => p.Season == podborModel.SeasonId);
 
-            if (podborModel.Ship == ShipForTyresPodbor.ShipShip) query = query.Where(p => p.Name.Contains(Defaults.Ship));
-            if (podborModel.Ship == ShipForTyresPodbor.ShipNoShip) query = query.Where(p => !p.Name.Contains(Defaults.Ship));
+
+            // if (podborModel.SeasonId==Defaults.TyresSettings.Winter) 
+            {
+                if (podborModel.Ship == ShipForTyresPodbor.ShipShip) query = query.Where(p => p.Name.Contains(Defaults.TyresSettings.Ship) );
+            if (podborModel.Ship == ShipForTyresPodbor.ShipNoShip) query = query.Where(p => !p.Name.Contains(Defaults.TyresSettings.Ship) && p.ParentId == Defaults.TyresSettings.ShipNoShipParentId);
+            if (podborModel.Ship == ShipForTyresPodbor.Friction) query = query.Where(p => !p.Name.Contains(Defaults.TyresSettings.Ship) && p.ParentId == Defaults.TyresSettings.TyresFrictionParentId);
+            }
 
             query = query.Where(p => p.PriceOfClient >= podborModel.PriceMin);
             query = query.Where(p => p.PriceOfClient <= podborModel.PriceMax);
+                        
+            string article = podborModel.Article?.ToLowerInvariant().TrimStart(Defaults.Space.ToCharArray()[0]);
 
-            string article = podborModel.Article == null ? null : podborModel.Article.ToLowerInvariant().TrimStart(' ');
             if (article != null) query = query.Where(p => p.ProductIdTo7Simbols.ToString().Contains(article) || p.Name.ToLower().Contains(article.ToLower())  || p.Article!=null && p.Article.StartsWith(article.ToLower()));
 
             //if (article != null) query = query.Where(p =>p.Article!=null && p.Article.StartsWith(article.ToLower()));

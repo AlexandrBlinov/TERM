@@ -191,11 +191,15 @@ namespace Term.Web.Controllers
     //   [OutputCache(VaryByParam = "ProducerId;SeasonId;Width;Height;Diametr;Sortby;DisplayView;ItemsPerPage;Ship;PriceMin;PriceMax;page", VaryByCustom = "User;RestsImportDateTime", Duration = 600, Location = OutputCacheLocation.Server)]
         public ActionResult Tyres([ModelBinder(typeof(TyresModelBinder))] TyresPodborView podborModel)
         {
-            
+
+            string partnerId = base.Partner.PartnerId;
             podborModel.Producers = CachedCollectionsService.GetProducers(ProductType.Tyre);
             podborModel.Heights = CachedCollectionsService.GetTiporazmerProperties(ProductType.Tyre, "height");
 
-        //    int partnerPointId = ServicePP.getPointID();
+            ViewBag.HideNoStud = DbContext.PartnerPropertyValues.Any(p => p.PartnerId == partnerId && p.Name==Defaults.PartnerProperties.HideNoStud);
+                         
+            
+            //    int partnerPointId = ServicePP.getPointID();
             ViewBag.NoDsplAutoPodbor = _space;
             ViewBag.YesDsplAutoPodbor = _invisible;
 
@@ -218,13 +222,10 @@ namespace Term.Web.Controllers
                 podborModel.ItemsPerPage = MAX_ITEMS_TO_SHOW;
             }
 
-            // pb.ItemsPerPage = ItemsPerPage;
-            //pb.Display = DisplayView;
-            //if (podbor_model.Ship==null)
-            //podbor_model.Ship = 0;
+          
 
             int page = podborModel.Page;
-            if (podborModel.Ship == ShipForTyresPodbor.ShipShip || podborModel.Ship == ShipForTyresPodbor.ShipNoShip) podborModel.SeasonId = "winter";
+            //if (podborModel.Ship == ShipForTyresPodbor.ShipShip || podborModel.Ship == ShipForTyresPodbor.ShipNoShip) podborModel.SeasonId = "winter";
            // Products.GetTyres(podborModel, Point.PartnerPointId);
             podborModel.SearchResults = CachedCollectionsService.GetAllTyresByPartnerPoint(podborModel, Point.PartnerPointId);
 

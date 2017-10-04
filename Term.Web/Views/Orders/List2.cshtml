@@ -1,0 +1,310 @@
+﻿@model  Term.Web.Models.OrdersViewModel
+@using Term.Web.Views.Resources;
+@using Term.Utils;
+@using Term.Web.Models;
+
+@{
+    ViewBag.Title = CartAndOrders.ListOfOrders;
+    string invisAddStock = "";
+    string colorNewOrder="";
+    if (!ViewBag.IsForeign) { invisAddStock = "invisibleAddStock"; }
+}
+
+<h2 class="border-form-podbor search-order-title">@ForSearchResult.ChooseOrders</h2>
+
+@using (Html.BeginForm("List", "Orders", FormMethod.Get))
+{
+    <fieldset class="border-form-podbor">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.BeginDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.EndDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">@CartAndOrders.OrderNumber</label>
+                <div>
+                    @Html.TextBoxFor(p => p.OrderNumber, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">@CartAndOrders.Status</label>
+                <div>
+                    @Html.DropDownListFor(p => p.StatusId, Model.Statuses, @CartAndOrders.AllOrders, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 @invisAddStock">
+                <label class="search-order-label">@CartAndOrders.Department</label>
+                <div>
+                    @Html.DropDownListFor(p => p.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name"), "Все", new { @class = "form-control" })
+                </div>
+            </div>
+            @if (ViewBag.IsPartner)
+            {
+                <div class="col-xs-12 col-sm-2">
+                    <label class="search-order-label">@CartAndOrders.Point</label>
+                    <div>
+                        @Html.DropDownListFor(p => p.PointId, Model.PartnerPoints, @CartAndOrders.All, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+
+            <div class="col-xs-12 col-sm-3">
+                <label class="search-order-label">@CartAndOrders.ByProduct</label>
+                <div>
+                    @Html.TextBoxFor(p => p.ProductName, new {@class = "form-control",  @placeholder = @ForSearchResult.CodeOrArt})
+                </div>
+            </div>
+          @if (!ViewBag.IsForeign)
+          {
+              <div class="col-xs-12 col-sm-3">
+                  
+                  <label class="search-order-label">Доставка DPD</label>
+                  <div class="p-t-5">
+                      @Html.CheckBoxFor(m => m.IsDeliveryByTk)
+                  </div>
+              </div>
+          }
+            <div class="col-xs-12 text-center search-order-btn">
+                <button class="form-podbor-btn-submit" type="submit">@CartAndOrders.Filter</button>
+            </div>
+        </div>
+    </fieldset>
+
+   
+
+    <div>
+        <div class="psevdo-select psevdo-select-dispos">
+            <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+            @Html.DropDownListFor(p => p.ItemsPerPage, new SelectList(new int[] { 10, 20, 50, 100, 200 }), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+        </div>
+
+
+    </div>
+}
+<table id="table-orders" class="data-table order-table">
+    <thead>
+        <tr>
+            <th>
+                @CartAndOrders.Point
+            </th>
+            <th>
+                @CartAndOrders.NumberInDatabase
+            </th>
+            <th class="@invisAddStock">
+                @CartAndOrders.Department
+            </th>
+            <th>
+                @CartAndOrders.Status
+            </th>
+@if (ViewBag.IsPartner)
+{
+            <th>
+                @CartAndOrders.TotalSum
+            </th>
+}
+            <th>
+                @CartAndOrders.TotalClient
+            </th>
+            <th>
+                @CartAndOrders.DateOrder
+            </th>
+            <th>
+                @CartAndOrders.DateShipment
+            </th>
+            <th>
+                @CartAndOrders.DateOfPayment
+            </th>
+            <th>
+                @CartAndOrders.Comment
+            </th>
+            <th>
+                @ForSearchResult.Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.OrdersWithGuid)
+        {
+            <tr class="open_order_tr @colorNewOrder" data-idlink="@order.Order.NumberIn1S" data-guid="@order.Order.GuidIn1S">
+                <td>
+                    @order.Guid
+
+                    @Html.ActionLink(order.Order.Point.InternalName, "Edit", "Partner", new {PointId = order.Order.PointId}, null)
+                    <br/>
+
+                    @if (order.Order.IsDeliveryByTk)
+                    {
+                        <i class="icon-dpd"></i>
+                    }
+                </td>
+                <td>
+                    <span class="open_order" data-idlink="@order.Order.NumberIn1S">@Html.DisplayFor(modelItem => order.Order.NumberIn1S)</span>
+                </td>
+                <td class="@invisAddStock">
+
+                    @Html.DisplayFor(modelItem => order.Order.Department.Name)
+                </td>
+
+                <td>
+                    @Html.OrderStatusWithColor(order.Order.OrderStatus)
+
+                    @if (order.Order.IsJoined)
+                    { <span class="label label-success">@CartAndOrders.CombinedOrder</span> }
+                </td>
+                @if (ViewBag.IsPartner)
+                {
+                <td class="price-filds">
+                    @Html.DisplayFor(modelItem => order.Order.Total)
+                </td>
+                }
+                <td class="price-filds">
+                    @if (ViewBag.IsPartner)
+                    {@(order.Order.PointId == ViewBag.CurrentPointId ? order.Order.TotalOfClient : order.Order.TotalOfPoint)
+                    }
+                    else
+                    {
+                        @order.Order.TotalOfClient
+                    }
+
+                </td>
+                <td>
+                    @order.Order.OrderDate.ToShortDateString()
+                </td>
+                <td>
+                    @{
+                        string deliveryDate;
+                        if (order.Order.isReserve)
+                        {
+                            deliveryDate = @CartAndOrders.ReservedTill + " " + order.Order.OrderDate.AddDays(7).ToShortDateString();
+                        }
+                        else
+                        {
+                            deliveryDate = order.Order.DeliveryDate.HasValue ? ((DateTime) order.Order.DeliveryDate).ToShortDateString() : String.Empty;
+                        }
+                    }
+
+                    @(deliveryDate)
+                </td>
+                <td>
+                    @{var dateOfPayment = order.Order.DateOfPayment.HasValue ? ((DateTime) order.Order.DateOfPayment).ToShortDateString() : String.Empty; }
+                    @(dateOfPayment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Order.Comments)
+
+
+                </td>
+                <td>
+                    @Html.ActionLink(@CartAndOrders.Details, "Details", new {guid = order.Order.GuidIn1S }, new {@class = "order-table-details"})
+                </td>
+            </tr>
+            if (ViewBag.IsPartner)
+             {
+                 <tr class="invisible" data-idsource="@order.Order.NumberIn1S">
+                     <td colspan="10">
+                         <div class="row head_order_details">
+                             <div class="col-xs-1">
+                                 №
+                             </div>
+                             <div class="col-xs-2">
+                                 @ForSearchResult.Article
+                             </div>
+                             <div class="col-xs-1">
+                                 @ForSearchResult.StockNumber
+                             </div>
+                             <div class="col-xs-6">
+                                 @ForSearchResult.ProductName
+                             </div>
+
+                             <div class="col-xs-1">
+                                 @ForSearchResult.Available
+                             </div>
+                             <div class="col-xs-1">
+                                 @ForSearchResult.Price
+                             </div>
+                         </div>
+                         @{ var i = 0; }
+
+                         @foreach (var detail in order.Order.OrderDetails)
+                         {
+                         i++;
+                         var bg = "";
+                         if (i%2 != 0)
+                         {
+                         bg = "background_order_details";
+                         }
+                         <div class="row @bg">
+                             <div class="col-xs-1">@i</div>
+                             <div class="col-xs-2">@detail.Product.Article</div>
+                             <div class="col-xs-1">@detail.Product.ProductId</div>
+                             <div class="col-xs-6 name_order_details">@detail.Product.Name</div>
+
+                             <div class="col-xs-1">@detail.Count</div>
+                             <div class="col-xs-1">@detail.Price</div>
+                         </div>
+                         }
+                         
+                     </td>
+                 </tr>
+             }
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+    <div class="m-t-15">
+
+        @Html.PagedListPager(Model.OrdersWithGuid, page => Url.Action("List2", new
+        {
+            page,
+            PointId = Model.PointId,
+            DepartmentId = Model.DepartmentId,
+            BeginDate = Model.BeginDate.ValueForPaginator(),
+            EndDate = Model.EndDate.ValueForPaginator(),
+            StatusId = Model.StatusId,
+            ProductName = Model.ProductName
+        }),
+        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+    </div>
+
+    @section Scripts {
+        <script>
+            
+            // Подключаем iCheck Для radiobutton 
+            $(function () {
+                $('[type=radio],[type=checkbox]').iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue'
+                });
+
+                
+                
+            }())
+           
+        </script>
+    }

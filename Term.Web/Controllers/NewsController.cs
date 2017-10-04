@@ -136,14 +136,30 @@ namespace Term.Web.Controllers
         //Далее контроллеры для юзеров
         public ActionResult Index(NewsViewModel model)
         {
+            var partnerId = Partner.PartnerId;
+            var vipakb = _dbContext.PartnerPropertyValues.Where(p => p.PartnerId == partnerId && p.Name == "akbvip").FirstOrDefault();
             var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
-            model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture).Select(p => new NewsViewModel
+            if (vipakb != null)
             {
-                Id = p.Id,
-                NewsName = p.NewsName,
-                NewsText = p.NewsText,
-                DatePublish = p.DatePublish
-            }).ToList();
+                model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture).Select(p => new NewsViewModel
+                {
+                    Id = p.Id,
+                    NewsName = p.NewsName,
+                    NewsText = p.NewsText,
+                    DatePublish = p.DatePublish
+                }).ToList();
+            }
+            else
+            {
+                model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture && p.Id != 4).Select(p => new NewsViewModel
+                {
+                    Id = p.Id,
+                    NewsName = p.NewsName,
+                    NewsText = p.NewsText,
+                    DatePublish = p.DatePublish
+                }).ToList();
+            }
+            
             return View(model);
         }
 

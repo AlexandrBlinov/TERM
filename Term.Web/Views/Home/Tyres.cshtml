@@ -51,25 +51,32 @@
 
                     @Html.DropDownListFor(p => p.Height, new SelectList(Model.Heights), @ForSearchResult.Height, new {@class = "form-control"})
                 </div>
-                <div class="col-xs-12 col-md-2 m-b-10">
-
-                    @Html.DropDownListFor(p => p.SeasonId, Model.Seasons, @ForSearchResult.Season, new {@class = "form-control"})
-                </div>
+                
             </div>
-            <div class="row m-t-15 m-b-20">
-                <div class="col-xs-12">
+            <div class="row">
+                <div class="col-md-2 m-t-15 m-b-20" style="    position: relative;    top: -5px;">
+                    @Html.DropDownListFor(p => p.SeasonId, Model.Seasons, @ForSearchResult.Season, new { @class = "form-control" })
+                </div>
+                <div class="col-md-7 m-t-15 m-b-20">
                     <div class="form-inline">
-                        <div class="form-group">
-                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipAll, new { @id = "shipall" }) <label class="m-r-20" for="shipall"><span class="radio-label-span">@ForSearchResult.AllShip</span></label>
-                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipShip, new { @id = "shipship" }) <label class="m-r-20" for="shipship"><span class="radio-label-span">@ForSearchResult.Ship</span></label>
-                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipNoShip, new { @id = "shipnoship" }) <label class="m-r-20" for="shipnoship"><span class="radio-label-span">@ForSearchResult.NoShip</span></label>
-                        </div>
+                        <div class="form-group yst-ship-group">
+                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipAll, new { @id = "shipall" }) <label class="m-r-15" for="shipall"><span class="radio-label-span">@ForSearchResult.AllShip</span></label>
+                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipShip, new { @id = "shipship" }) <label class="m-r-15" for="shipship"><span class="radio-label-span">@ForSearchResult.Ship</span></label>
+                                @if (!ViewBag.HideNoStud)
+                                {
+                            @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.ShipNoShip, new { @id = "shipnoship" }) <label class="m-r-15" for="shipnoship" title="без шипов"><span class="radio-label-span">@ForSearchResult.ShipNoShip</span></label>
+                                }
 
-                        <div class="form-group">
-                            @Html.CheckBoxFor(model => model.IsSet4Items, new { @id = "IsSet4Items" }) <label class="m-r-20" for="IsSet4Items"><span class="radio-label-span">@ForSearchResult.IsSet4Items</span></label>
-                        </div>
+                            @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.Friction, new { @id = "friction" }) <label for="friction"><span class="radio-label-span" title="липучка">@ForSearchResult.Friction</span></label>
+                            
+                        </div>                    
                     </div>
                 </div>
+                <div class="col-md-3 m-t-15 m-b-20">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(model => model.IsSet4Items, new { @id = "IsSet4Items" }) <label class="m-r-20" for="IsSet4Items"><span class="radio-label-span">@ForSearchResult.IsSet4Items</span></label>
+                    </div>
+                    </div>
             </div>
             </div>
         <div class="col-sm-3 hidden-xs">

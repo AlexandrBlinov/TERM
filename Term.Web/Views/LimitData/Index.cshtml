@@ -15,31 +15,35 @@
     }
 
 
-    decimal limitrest = limit - debt - orderedsum;
+    // decimal limitrest = limit - debt - orderedsum;
+    decimal limitrest = limit - debt;
 
 }
 
 <a href="#" class="dropdown-toggle yst-limit-link" data-toggle="dropdown" role="button" aria-expanded="false">
 
-    <span class="limit-rest-title">@limitrest.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></span> <span class="caret"></span>
+   <!-- <span class="limit-rest-title">@limitrest.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></span> <span class="caret"></span>-->
+<span class="limit-row-title"> @LimitDataTexts.OrderedSum :  @orderedsum.ToString(specifier)  <i class="fa fa-rub" aria-hidden="true"></i></span>
+<span class="limit-row-title">@LimitDataTexts.RestOfLimit : @limitrest.ToString(specifier)  <i class="fa fa-rub" aria-hidden="true"></i></span>
+<span class="limit-row-title">@LimitDataTexts.Debt (подробно) </span>
 </a>
 <ul class="dropdown-menu yst-limit-menu" role="menu">
 
     <li class="yst-limit-submenu clearfix">
 
-        <div class="limit-label pull-left"> @LimitDataTexts.Limit</div>
-        <div class="limit-value pull-right"> @limit.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+        <span class="limit-label pull-left"> @LimitDataTexts.Limit</span>
+        <span class="limit-value pull-right"> @limit.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></span>
 
     </li>
     <li class="yst-limit-submenu clearfix">
 
-        <div class="limit-label pull-left"> @LimitDataTexts.Debt</div>
-        <div class="limit-value pull-right"> @debt.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+        <span class="limit-label pull-left"> @LimitDataTexts.Debt</span>
+        <span class="limit-value pull-right"> @debt.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></span>
         
     </li>
        
 
-    <li class="yst-limit-submenu  clearfix">
+   <!-- <li class="yst-limit-submenu  clearfix">
         <div class="limit-label pull-left"> @LimitDataTexts.OrderedSum</div>
         <div class="limit-value pull-right"> @orderedsum.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
     </li>
@@ -49,19 +53,19 @@
         <div class="limit-label pull-left"> @LimitDataTexts.RestOfLimit</div>
         <div class="limit-value pull-right"> @limitrest.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
 
-    </li>
+    </li> -->
 
     @if (expireddebt > 0) { 
     <li class="yst-limit-submenu alert-danger hr-line clearfix">
-        <div class="limit-label pull-left"> @LimitDataTexts.ExpiredDebt</div>
-        <div class="limit-value pull-right"> @expireddebt.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></div>
+        <span class="limit-label pull-left"> @LimitDataTexts.ExpiredDebt</span>
+        <span class="limit-value pull-right"> @expireddebt.ToString(specifier) <i class="fa fa-rub" aria-hidden="true"></i></span>
     </li>
         }
 
    <li>
-        <div class="menu-disk-dropdown-text">
+        <span class="menu-disk-dropdown-text">
             
             <a href="@Url.Action("GetDetailedData","LimitData")">@LimitDataTexts.PaymentSchedule</a>
-        </div>
+        </span>
     </li> 
 </ul>

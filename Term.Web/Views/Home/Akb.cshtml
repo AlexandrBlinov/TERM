@@ -21,7 +21,8 @@
     @Html.Hidden("SortBy", Model.SortBy)
     @Html.Hidden("DisplayView", Model.DisplayView)
     @Html.Hidden("ItemsPerPage", Model.ItemsPerPage) 
-    <div class="row border-form-podbor">
+    <div class="row border-form-podbor akb-banners">
+        <a class="warranty-sheet__link" href="~/Content/img/instruction-akb.jpg">Гарантийный талон</a>
         <img class="podbor-tyres-title-img" src="~/Content/img/img-akb-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseBattery</span>
         @{Html.RenderPartial("_AkbSpecialOffer");}
     </div>

@@ -217,9 +217,18 @@ namespace Yst.Services
         public decimal GetPriceOfProduct(int productId, string partnerId = null)
         {
 
+             bool? usePrepayPrices = base.CurrentPoint?.Partner?.UsePrepayPrices;
+
+            Expression<Func<PriceOfPartner, decimal>> funcPrice = p => p.Price;
+            
+            // если есть  предоплатные цены и они активны, то берем цену 2 (предоплатную)
+
+            if (usePrepayPrices.HasValue && usePrepayPrices.Value) funcPrice = p => p.Price2 > 0 ? p.Price2 : p.Price;
+            
+
             if (!String.IsNullOrEmpty(partnerId))
             {
-                decimal partnerPrice = DbContext.PriceOfPartners.Where(p => p.PartnerId == partnerId && p.ProductId == productId).Select(p => p.Price).FirstOrDefault();
+                decimal partnerPrice = DbContext.PriceOfPartners.Where(p => p.PartnerId == partnerId && p.ProductId == productId).Select(funcPrice).FirstOrDefault();
 
                 if (partnerPrice > 0) return partnerPrice;
             }

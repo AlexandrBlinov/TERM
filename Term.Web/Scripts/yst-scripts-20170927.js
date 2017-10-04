@@ -1,48 +1,5 @@
 ﻿(function () {
-    /*
-    $.extend({
-        form: function (url, data, method) {
-            if (method == null) method = 'POST';
-            if (data == null) data = {};
-
-            var form = $("<form enctype='application/json'>").attr({
-                method: method,
-                action: url
-            }).css({
-                display: 'none'
-            });
-
-            var addData = function (name, data) {
-                if ($.isArray(data)) {
-                    for (var i = 0; i < data.length; i++) {
-                        var value = data[i];
-                        addData(name + '[]', value);
-                    }
-                } else if (typeof data === 'object') {
-                    for (var key in data) {
-                        if (data.hasOwnProperty(key)) {
-                            addData(name + '[' + key + ']', data[key]);
-                        }
-                    }
-                } else if (data != null) {
-                    form.append($('<input>').attr({
-                        type: 'hidden',
-                        name: String(name),
-                        value: String(data)
-                    }));
-                }
-            };
-
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
-                    addData(key, data[key]);
-                }
-            }
-
-            return form.appendTo('body');
-        }
-    });
-    */
+   
 
     String.format = function () {
         // The string containing the format items (e.g. "{0}")
@@ -78,7 +35,7 @@
         "debug": false,
         "positionClass": "toast-top-right",
         "onclick": null,
-        "showDuration": "300",
+        "showDuration": "500",
         "hideDuration": "1000",
         "timeOut": "1500",
         "extendedTimeOut": "1000",
@@ -123,7 +80,7 @@ function AddToCart(productId, departmentId,supplierId) {
                 $('#cart-weight').text(data.TotalWeight);
                 $.event.trigger('shoppingcart.changed');
             } else
-                toastr.error(data.Message);
+                toastr.error(data.Message, "Ошибка", { timeOut: 0, closeButton: true });
         });
     }
 }
@@ -312,44 +269,7 @@ function DisplayLoading(message) {
         }
     });
     $(function () { $(".scroll").click(function () { $("html,body").animate({ scrollTop: $(".first-horizontal-menu").offset().top }, "1000"); return false }) })
-/*
-    if ($(window).scrollTop() + $(window).height() + 100 >= getDocHeight())
-        $('.scrolldown').hide();
 
-    // скроллинг
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            $('.scrollup').fadeIn();
-        } else {
-            $('.scrollup').fadeOut();
-        }
-
-
-
-        if ($(window).scrollTop() + $(window).height() + 100 >= getDocHeight())
-            $('.scrolldown').fadeOut();
-
-        else
-            $('.scrolldown').fadeIn();
-    });
-
-    $('.scrollup').click(function () {
-
-        var scrollupTo = Math.max(getCurrentY() - window.innerHeight + $('div.container').height() || 0, 0);
-        $("html, body").animate({ scrollTop: scrollupTo }, 600);
-
-        return false;
-    });
-    $('.scrolldown').click(function () {
-
-        var scrolldownTo = Math.max(Math.min($(document).height(), getCurrentY() + window.innerHeight - $('div.container').height() || 0), 0);
-        // var scrolldownTo = Math.max(getCurrentY() - window.innerHeight + $('div.container').height() || 0, 0);
-        $("html, body").animate({ scrollTop: scrolldownTo }, 600);
-
-        return false;
-    });
-
-    */
 
     // изменение заказа
 function checkIfCanOrderDpdDeliveryDependingOnTime() {
@@ -1144,26 +1064,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
     }());
 
-
-/*
-    // { всплывашка картинки при нажатии
-
-   
-
-
-    $('#popup2').click(function () {
-        //$('#popup2').hide('slow');
-        $(this).hide('slow');
-    });
-
-    $('.open_popup_th').click(function () {
-        var src = $(this).attr('src');
-        $('#large_foto').empty().append('<img class="img_in_popup" src="' + src + '">');
-        $('#popup2').show('slow');
-    });
-
-    // } всплывашка картинки при нажатии
-*/
+    
 
 
 
@@ -1225,14 +1126,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
         });
     }());
 
-    $(document).on("change", ".change-in-cart", UpdateToCart);
-
-
-
-
-
-
-
+   
 
     var moduleAkbPodborByAuto = ( function () {
 
@@ -1336,7 +1230,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
     }());
 
-
+    $(document).on("change", ".change-in-cart", UpdateToCart);
     // begin uploader for excel
     $(document).on('change', '.btn-file :file', function () {
 
@@ -1372,5 +1266,28 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
 
 
+    var modulePrepay = (function () {
+       // console.log('modulePrepay');
+        $(document).on('click', '.btn-group.inmenu-toggle-group .btn',function () {
 
+            $.post("/PrepayToggle/Set",
+                {
+                    "prepay": !!$(this).data("prepay")
+                }
+            ).done(function (data) {
+
+                toastr.success("Тип цен был изменен");
+                setTimeout(() => { location.assign(location.href) }, 3000);
+            }).fail(function () {
+                toastr.success("Ошибка при изменении типа цен");
+            });
+                     
+
+            $(this).toggleClass('btn-default').toggleClass('btn-primary');
+            $(this).siblings().toggleClass('btn-default').toggleClass('btn-primary');
+            //  console.log(this);
+            return false;
+
+        })
+    }());
 

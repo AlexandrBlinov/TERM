@@ -94,11 +94,27 @@ namespace Yst.ViewModels
 
        // public bool isReserve { get; set; }
 
+         // на доставку
         public bool IsDelivery { get; set; }
-        
 
+        
+        // вообще есть договоры со *
+        public bool HasStar { get; set; }
+        
+        // в корзине выбран *
+        public bool IsStar { get; set; }
+
+        // предоплатный
+        public bool IsPrepay { get; set; }
+
+        // способ доставки 1- самовывоз, 0- доставка наша
+        public bool WayOfDelivery { get; set; }
+
+
+        // доставка транспортной компанией
         public bool IsDeliveryByTk { get; set; }
 
+        
         public decimal TotalWeight { get; set; }
     }
 
@@ -116,6 +132,9 @@ namespace Yst.ViewModels
         /// Видит ли пользователь доставку DPD 
         /// </summary>
         /// 
+
+        
+
         public bool CanUserUseDpdDelivery { get; set; }
         // Кладр региона
         public string RegionId { get; set; }

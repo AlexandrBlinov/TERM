@@ -8,7 +8,9 @@ using Term.DAL;
 namespace YstProject.Services
 {
     
-    
+    /// <summary>
+    /// Значения по умолчанию
+    /// </summary>
     public static class Defaults
     {
         
@@ -21,14 +23,33 @@ namespace YstProject.Services
             new Producer {ProducerId = 3656, Name = "BUFFALO", ProductType = ProductType.Disk}
         };
 
+
+        public struct CacheSettings {
+            public static string KeyDisks = "podbor.disks";
+            public static string KeyTyres = "podbor.tyres";
+            public static string KeyAccs = "podbor.accs";
+        }
+
+        public  struct TyresSettings {
+            public static  int ShipNoShipParentId = 9098690; // неошипованные легковые
+            public static int TyresFrictionParentId = 9098689; // нешипуемые легковые
+            public static readonly string Ship = "шип";
+            public static readonly string Winter = "winter";
+        }
+
+        public struct PartnerProperties {
+            public static readonly string HideNoStud = "hidenostud";
+        }
+
         public static readonly string DateFormat = "dd.MM.yyyy";
         public static readonly string ResourceNotFound = "Resource not found";
         public static readonly string FixingCode = "fixingcode";
         public static readonly int DaysAllowedToReturn  = 30;
-        public static readonly string Ship = "шип";
+        
         public static readonly string Invisible = "invisible";
         public static readonly string Space =  " ";
         public static readonly char CommaSign = ',';
+        
         public static readonly double RateNDS = 1.18;
         
         public static readonly int MaxNumberAddToCart = 200;

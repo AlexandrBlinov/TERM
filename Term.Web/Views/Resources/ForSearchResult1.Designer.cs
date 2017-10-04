@@ -448,6 +448,15 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на friction.
+        /// </summary>
+        public static string Friction {
+            get {
+                return ResourceManager.GetString("Friction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на .
         /// </summary>
         public static string From {
@@ -912,6 +921,15 @@ namespace Term.Web.Views.Resources {
         public static string Ship {
             get {
                 return ResourceManager.GetString("Ship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на no studs.
+        /// </summary>
+        public static string ShipNoShip {
+            get {
+                return ResourceManager.GetString("ShipNoShip", resourceCulture);
             }
         }
         

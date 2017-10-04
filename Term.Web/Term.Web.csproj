@@ -220,6 +220,7 @@
     <Compile Include="Controllers\API\RestsOfSuppliersApiController.cs" />
     <Compile Include="Controllers\DocumentImagesShowController.cs" />
     <Compile Include="Controllers\API\NotificationsApiController.cs" />
+    <Compile Include="Controllers\PrepayToggleController.cs" />
     <Compile Include="Controllers\LimitDataController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -375,6 +376,22 @@
     <Compile Include="Migrations\201708230504015_AddressOfPartners_Added.Designer.cs">
       <DependentUpon>201708230504015_AddressOfPartners_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709200732373_Price2_addedToPriceOfPartner.cs" />
+    <Compile Include="Migrations\201709200732373_Price2_addedToPriceOfPartner.Designer.cs">
+      <DependentUpon>201709200732373_Price2_addedToPriceOfPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709260752301_HasPrepay_AddedToPartners.cs" />
+    <Compile Include="Migrations\201709260752301_HasPrepay_AddedToPartners.Designer.cs">
+      <DependentUpon>201709260752301_HasPrepay_AddedToPartners.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709260819528_UsePrepay_AddedToPartners.cs" />
+    <Compile Include="Migrations\201709260819528_UsePrepay_AddedToPartners.Designer.cs">
+      <DependentUpon>201709260819528_UsePrepay_AddedToPartners.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.cs" />
+    <Compile Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.Designer.cs">
+      <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
     <Compile Include="Models\OrderNumberWithStatusDTO.cs" />
@@ -392,6 +409,7 @@
     <Compile Include="Controllers\SeasonProductController.cs" />
     <Compile Include="Controllers\SeasonShoppingCartController.cs" />
     <Compile Include="Filters\AdminHashAuthAttribute.cs" />
+    <Compile Include="Models\OrdersViewModel.cs" />
     <Compile Include="Models\PodborAkbViewModel.cs" />
     <Compile Include="Models\PodborAkbViewResult.cs" />
     <Compile Include="Models\ProductCount.cs" />
@@ -408,7 +426,6 @@
     <Compile Include="Services\NotificationForUserService.cs" />
     <Compile Include="Services\PersistedStorage.cs" />
     <Compile Include="Services\CustomExceptions.cs" />
-    <Compile Include="Services\Disp.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -662,6 +679,8 @@
     <Content Include="Content\img\add-scan.png" />
     <Content Include="Content\img\akb.jpg" />
     <Content Include="Content\img\akk.jpg" />
+    <Content Include="Content\img\autoteplo_1.jpg" />
+    <Content Include="Content\img\autoteplo_2.jpg" />
     <Content Include="Content\img\big_loading.gif" />
     <Content Include="Content\img\button_cancel.png" />
     <Content Include="Content\img\cart-sprite.png" />
@@ -678,6 +697,7 @@
     <Content Include="Content\img\edit-add.png" />
     <Content Include="Content\img\eng_yst.png" />
     <Content Include="Content\img\excel.png" />
+    <Content Include="Content\img\facebook-logo.svg" />
     <Content Include="Content\img\favicon.ico" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
@@ -709,6 +729,7 @@
     <Content Include="Content\img\img-disks-podbor.png" />
     <Content Include="Content\img\img-tyres-podbor.png" />
     <Content Include="Content\img\inci.jpg" />
+    <Content Include="Content\img\instagram-social-network-logo-of-photo-camera.svg" />
     <Content Include="Content\img\item_382_thumb.jpg" />
     <Content Include="Content\img\liquid_1.jpg" />
     <Content Include="Content\img\liquid_2.jpg" />
@@ -736,10 +757,12 @@
     <Content Include="Content\img\sprite.png" />
     <Content Include="Content\img\trebl.jpg" />
     <Content Include="Content\img\trebl_2.jpg" />
+    <Content Include="Content\img\twitter-social-logotype.svg" />
     <Content Include="Content\img\tyre.jpg" />
     <Content Include="Content\img\usd.png" />
     <Content Include="Content\img\usd2.png" />
     <Content Include="Content\img\user-icon.png" />
+    <Content Include="Content\img\vk-social-logotype.svg" />
     <Content Include="Content\img\wallet.svg" />
     <Content Include="Content\img\WheelsBrands\Alcasta.png" />
     <Content Include="Content\img\WheelsBrands\CrossStreet.png" />
@@ -829,7 +852,7 @@
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\dev.pubxml" />
     <None Include="Properties\PublishProfiles\terminal.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -901,7 +924,7 @@
     <Content Include="Scripts\yst-localize-20170619.js" />
     <Content Include="Scripts\yst-shoppingcart-20170506.js" />
     <Content Include="Scripts\yst-notifications.js" />
-    <Content Include="Scripts\yst-scripts-20170506.js" />
+    <Content Include="Scripts\yst-scripts-20170927.js" />
     <Content Include="Scripts\yst-utility.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Partner\CreateOwn.cshtml" />
@@ -1065,6 +1088,8 @@
     <Content Include="Views\LimitData\DetailedData.cshtml" />
     <Content Include="Views\LimitData\GetDetailedData.cshtml" />
     <Content Include="Views\Orders\JoinOrders.cshtml" />
+    <Content Include="Views\Orders\List2.cshtml" />
+    <Content Include="Views\PrepayToggle\Index.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1195,6 +1220,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708230504015_AddressOfPartners_Added.resx">
       <DependentUpon>201708230504015_AddressOfPartners_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709200732373_Price2_addedToPriceOfPartner.resx">
+      <DependentUpon>201709200732373_Price2_addedToPriceOfPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260752301_HasPrepay_AddedToPartners.resx">
+      <DependentUpon>201709260752301_HasPrepay_AddedToPartners.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260819528_UsePrepay_AddedToPartners.resx">
+      <DependentUpon>201709260819528_UsePrepay_AddedToPartners.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.resx">
+      <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
