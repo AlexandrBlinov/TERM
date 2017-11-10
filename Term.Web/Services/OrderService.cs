@@ -23,41 +23,95 @@ namespace Term.Services
     /// <summary>
     /// Сервис для работы с заказами
     /// </summary>
-    public class OrderService  : BaseService
+    public class OrderService : BaseService
     {
 
+
+
+
         /// <summary>
-        /// Получить адреса доставки для текущего партнера или точки
+        
+        /// Получить адреса доставки для  партнера или точки
         /// </summary>
         public SelectList GetAddressesOfDeliveryForCurrentPoint() {
-           var partnerId=  this.CurrentPoint?.PartnerId;
-            var pointId = this.CurrentPoint?.PartnerPointId;
+            var partnerId = this.CurrentPoint?.PartnerId;     
+            var pointId = this.CurrentPoint?.PartnerPointId; // текущий номер точки
 
-             Expression<Func<AddressOfPartner,bool>> predicate = p => p.PartnerId == partnerId ;
+            // Если головной терминал то список точек
+            Expression<Func<AddressOfPartner, bool>> predicateForMain = p => p.PartnerId == partnerId && p.Active; 
 
-            bool flag = false;
-            
-            if (base.IsPartner && partnerId != null)  flag = true;
-            
-            // predicate stays unchanged
 
-            else if (!base.IsPartner && partnerId != null && pointId.HasValue)
+            bool notIsMain = !base.IsPartner && partnerId != null && pointId.HasValue;
+
+            // если не головной терминал
+            if (notIsMain)
             {
-              flag = true;
-              predicate = p => p.PartnerId == partnerId && p.PointId == pointId;
-              }
+                // точка головного терминала
+                var partnerPointId = DbContext.Users.FirstOrDefault(p => p.PartnerId == partnerId && p.IsPartner)?.PartnerPointId;
 
-            if (flag) return new SelectList(DbContext.AddressOfPartners.Where(predicate).Select(p => new {
-                Id = p.AddressId,
-                Name = p.Address
+                // адрес самой точки, пустой или равный головному терминалу
+                // то есть адреса не принадлежащие другим точкам
+                Expression<Func<AddressOfPartner, bool>> predicate = p =>
+                p.PartnerId == partnerId && p.Active &&
+                (p.PointId == pointId || p.PointId == null || (partnerPointId != null && p.PointId == partnerPointId));
 
-            }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+                var list2 = DbContext.AddressOfPartners.Where(predicate).ToList();
 
+                if (list2.Any()) // если есть точки то выгружаем
+                                
+                    return new SelectList(list2.Select(p => new
+                    {
+                        Id = p.AddressId,
+                        Name = p.Address
+
+                    }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+
+            }
+            
+            
+            var list = DbContext.AddressOfPartners.Where(predicateForMain).ToList();
+
+            if (list.Any())
+            {
+
+                return new SelectList(list.Select(p => new
+                {
+                    Id = p.AddressId,
+                    Name = p.Address
+
+                }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+            }
+            
 
             return new SelectList(Enumerable.Empty<SelectListItem>());
-            
+
         }
 
+       /// <summary>
+       /// Получить транспортные компании
+       /// </summary>
+       /// <returns></returns>
+        public SelectList GetTkIds() => new SelectList(DbContext.TransportCompanies.Select(p => new
+                { Id = p.Id, Name = p.Name    }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+
+        /// <summary>
+        /// Получить адрес точки который будет адресом по умолчанию в списке
+        /// </summary>
+        /// <param name="partnerId"></param>
+        /// <param name="pointId"></param>
+        /// <returns></returns>
+        public string GetDefaultAddressId(string partnerId, int pointId)
+        {
+            var result = DbContext.AddressOfPartners.FirstOrDefault(p => p.PartnerId == partnerId && p.Active && p.PointId == pointId)?.AddressId;
+
+            // если результат пустой то выбираем c более широким условием
+            if (result == null) result = DbContext.AddressOfPartners.FirstOrDefault(p => p.PartnerId == partnerId && p.Active)?.AddressId;
+
+            return result;
+            
+            
+
+        }
 
         /// <summary>
         /// Получить заказ при создании из корзины
@@ -81,6 +135,8 @@ namespace Term.Services
                                     PriceOfClient = orderdetail.PriceOfClient,
                                     ProductName = product == null ? "" : product.Name
                                 }).ToList(),
+                Order= GetOrderByGuid(guid)
+                /*, 
                 OrderData = DbContext.Orders.Where(o => o.GuidIn1S == guid).Select(o => new OrderViewModel
                 {
                     NumberIn1S = o.NumberIn1S,
@@ -98,14 +154,12 @@ namespace Term.Services
                     isReserve = o.isReserve,
                     RangeDeliveryDays = o.RangeDeliveryDays,
                     IsDeliveryByTk = o.IsDeliveryByTk,
-                    SupplierId = o.SupplierId
-                }).FirstOrDefault()
+                    SupplierId = o.SupplierId 
+                }).FirstOrDefault() */
             };
 
 
-            if (model.OrderData == null) return null;
-            else
-                return (model);
+            return model;
         } 
 
         /// <summary>
@@ -119,9 +173,7 @@ namespace Term.Services
 
         public OrderViewWithDetailsExtended GetOrderWithDetailsByGuid(Guid guid, bool isPartner, string partnerId, int pointId)
         {
-            
-            
-
+         
             string sqlText = @"SELECT OrderDetails.RowNumber, OrderDetails.ProductId ProductId, ISNULL(Products.Name,'') ProductName , 
                OrderDetails.Count Count, 
                  CASE WHEN {1}=1 THEN OrderDetails.Price ELSE OrderDetails.PriceOfPoint END Price, 
@@ -129,44 +181,40 @@ namespace Term.Services
                 FROM OrderDetails
                 LEFT JOIN  Products ON OrderDetails.ProductId= Products.ProductId
                 WHERE GuidIn1S={0}  ORDER BY OrderDetails.RowNumber DESC";
-
-
-            var model = new OrderViewWithDetailsExtended();
-            model.OrderData = DbContext.Orders.Where(o => o.GuidIn1S == guid).Select(o => new OrderViewModel
-            {   PointId=o.PointId,
-                NumberIn1S = o.NumberIn1S,
-                Comments = o.Comments,
-                OrderStatus = o.OrderStatus,
-                Total = isPartner ? o.Total:o.TotalOfPoint, // входную цену видит только головной Т
-                TotalOfClient = ((isPartner && o.PointId == pointId)||!isPartner) ? o.TotalOfClient : o.TotalOfPoint,
-                OrderDate = o.OrderDate,
-                DeliveryDate = o.DeliveryDate,
-                DateOfPayment = o.DateOfPayment,
-                ContactFIOOfClient = o.ContactFIOOfClient,
-                PhoneNumberOfClient = o.PhoneNumberOfClient,
-                Order_guid = o.GuidIn1S,
-                DaysToDepartment = o.DaysToDepartment,
-                isReserve = o.isReserve,
-                IsDeliveryByTk = o.IsDeliveryByTk,
-                CostOfDelivery = o.CostOfDelivery,
-                DeliveryDataString = o.DeliveryDataString,
-                RangeDeliveryDays = o.RangeDeliveryDays,
-                DpdDeliveryStatus = o.DpdDeliveryStatus ,
-                SupplierId = o.SupplierId
-            }).FirstOrDefault();
-
-            if (model.OrderData == null)  return null;
             
-            bool isPriceOfClient= ((isPartner && model.OrderData.PointId == pointId)||!isPartner) ? true : false;
+            
+            var model = new OrderViewWithDetailsExtended
+            {
+                Order = GetOrderByGuid(guid)
+               
+             };
+            var order = model.Order;
+
+            model.Total = isPartner ? order.Total : order.TotalOfPoint;
+          
+            bool isPriceOfClient = ((isPartner && order.PointId == pointId) || !isPartner);
+
+            model.TotalOfClient = isPriceOfClient ? order.TotalOfClient : order.TotalOfPoint;
+
             model.OrderDetails = DbContext.Database.SqlQuery<OrderViewDetail>(sqlText, guid, isPartner, isPriceOfClient).ToList();
 
-                return (model);
+            model.AddressOfDelivery = order.AddressId != null ? DbContext.AddressOfPartners.FirstOrDefault(p => p.AddressId == order.AddressId && p.PartnerId == partnerId)?.Address :null;
+
+            model.AddressId = order.AddressId;
+
+             return (model);
         }
 
-        public bool CheckIfCanCancelOrder(Order order, out string errorMessage)
-        {
 
-           
+        /// <summary>
+        /// Проверка можно ли отменить заказы
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="errorMessage"></param>
+        /// <returns></returns>
+
+        public bool CheckIfCanCancelOrder(Order order, out string errorMessage)
+        {            
             errorMessage = String.Empty;
 
             if (order == null)
@@ -188,7 +236,11 @@ namespace Term.Services
             return true;
         }
 
-   
+   /// <summary>
+   /// Отменить заказ в базе
+   /// </summary>
+   /// <param name="order"></param>
+   /// <returns></returns>
         public bool ChancelOrder(Order order)
         {
 
@@ -371,8 +423,11 @@ namespace Term.Services
             
         }
 
-
-        public bool ChangeOrder(Guid guid, IEnumerable<ItemInOrderViewModel> items, string comments, bool isReserve, bool IsDeliveryByTk, string deliveryDataString, string rangeDeliveryDays, DeliveryInfo di, DateTime? deliveryDate = null)
+        /// <summary>
+        /// Изменить заказ в базе данных
+        /// </summary>        
+        
+        public void ChangeOrder(Guid guid, IEnumerable<ItemInOrderViewModel> items, string comments, bool isReserve, bool IsDeliveryByTk, string deliveryDataString, string rangeDeliveryDays, DeliveryInfo di, DateTime? deliveryDate , int WayOfDelivery, string AddressId)
         {
 
             var orderToChange = DbContext.Orders.FirstOrDefault(q => q.GuidIn1S == guid);
@@ -382,6 +437,8 @@ namespace Term.Services
             orderToChange.Comments = comments;
             orderToChange.isReserve = isReserve;
             orderToChange.DeliveryDate = deliveryDate;
+            orderToChange.WayOfDelivery = WayOfDelivery;
+            orderToChange.AddressId = (!isReserve || WayOfDelivery > 0) ? AddressId:null; // обнуляем id адреса             
 
             orderToChange.IsDeliveryByTk = IsDeliveryByTk;
             orderToChange.RangeDeliveryDays = rangeDeliveryDays;
@@ -389,6 +446,8 @@ namespace Term.Services
             orderToChange.ContactFIOOfClient = di.ContactFio;
             orderToChange.CostOfDelivery = di.CostOfDelivery;
             orderToChange.PhoneNumberOfClient = di.ContactPhone;
+            
+            
 
             var OrderItems = DbContext.OrderDetails.Where(c => c.GuidIn1S == guid).ToList();
             foreach (var itemOld in OrderItems)
@@ -408,7 +467,7 @@ namespace Term.Services
             orderToChange.CalculateTotals();
 
             DbContext.SaveChanges();
-            return true;
+         
         }
          
 

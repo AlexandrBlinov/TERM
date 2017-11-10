@@ -38,7 +38,7 @@
                 {
                     <tr>
                         <td class="hidden-xs">
-                            <a class="fancybox-btn" href="@Html.FullPathToImage("tyre", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("tyre", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+                            <a class="fancybox-btn" href="@Html.FullPathToImage("tyre", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("tyre", item.PathToImage)"  alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
                         </td>
                         <td class="p-l-25">
                             @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)

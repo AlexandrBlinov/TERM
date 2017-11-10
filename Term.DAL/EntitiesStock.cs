@@ -469,6 +469,9 @@ namespace Term.DAL
         [DisplayName("Крупный опт1")]
         public decimal? PriceOpt1 { get; set; }
 
+        [DisplayName("Цена мин. реккоменд в интернет магазине (для шин)")]
+        public decimal? PriceMin { get; set; }
+
     }
 
 
@@ -564,6 +567,9 @@ namespace Term.DAL
         // есть договоры *
         public bool HasStar { get; set; }
 
+        // основной договор *
+        public bool IsStar { get; set; }
+
         // есть предоплатные договоры
         public bool HasPrepay { get; set; }
 
@@ -580,11 +586,8 @@ namespace Term.DAL
         /// </summary>
         public int? NumberOfDaysForReturn { get; set; }
 
-        public override string ToString()
-        {
-            return String.Format("{0}, {1}, {2}, тел:{3} ", this.INN ?? "", this.FullName ?? "", this.Address ?? "", this.PhoneNumber);
-
-        }
+        public override string ToString() => $"{INN}, {FullName}, {Address}, тел:{PhoneNumber}";
+      
 
         
     }
@@ -628,14 +631,18 @@ namespace Term.DAL
     /// Адрес партнера который берется из 1С
     /// </summary>
     public class AddressOfPartner {
+
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]        
+        public long Id { get; set; }
+
         [ForeignKey("Partner")]
-        [Key, Column(Order = 1)]
+     //   [Key, Column(Order = 1)]
         [MaxLength(7)]
         public string PartnerId { get; set; }
 
         
         [MaxLength(5)]
-        [Key, Column(Order = 2)]
+      //  [Key, Column(Order = 2)]
         public string AddressId { get; set; }
 
         [ForeignKey("PartnerPoint")]
@@ -644,6 +651,9 @@ namespace Term.DAL
 
         [MaxLength(Byte.MaxValue)]        
         public string Address { get; set; }
+
+
+        public bool Active { get; set; }
 
         public virtual Partner Partner { get; set; }
         public virtual PartnerPoint PartnerPoint { get; set; }
@@ -1004,10 +1014,7 @@ namespace Term.DAL
             _orderDetails = new List<OrderDetail>();
         }
 
-
-      
-      
-
+        
         [Key]  
         public Guid GuidIn1S { get; set; }
 
@@ -1032,6 +1039,7 @@ namespace Term.DAL
 
         public int DaysToDepartment { get; set; }
 
+        /*
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string DepartmentIdTo5Simbols
         {
@@ -1042,7 +1050,7 @@ namespace Term.DAL
 
             }
         }
-
+        */
 
         
         [DisplayName("Статус доставки DPD")]
@@ -1128,7 +1136,28 @@ namespace Term.DAL
         [DefaultValue(0)]
         public int SupplierId { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get { return _orderDetails; } set { _orderDetails = value; } }
+        public virtual ICollection<OrderDetail> OrderDetails {
+            get { return _orderDetails; }
+            set { _orderDetails = value; } }
+
+        
+        // данный статус устанавливается только в терминале (без обмена с 1С)
+        // чтобы понять поставщик отменил или это из 1С выгрузилось
+        
+        public StatusForOrderItemOfSupplier StatusOfSupplier { get; set; }
+
+        public DateTime? DateProcessedBySupplier { get; set; }
+
+
+        public bool Prepay { get; set; }
+        public bool IsStar { get; set; }
+        public int WayOfDelivery { get; set; }
+
+        [MaxLength(5)]
+        //[ForeignKey("AddressOfPartner")]
+        public string AddressId { get; set;}
+
+       // public virtual AddressOfPartner AddressOfPartner { get; set; }
 
 
         public void CalculateTotals()
@@ -1138,14 +1167,6 @@ namespace Term.DAL
             TotalOfPoint = OrderDetails.Sum(p => p.PriceOfPoint * p.Count);
 
         }
-
-        // данный статус устанавливается только в терминале (без обмена с 1С)
-        // чтобы понять поставщик отменил или это из 1С выгрузилось
-        
-        public StatusForOrderItemOfSupplier StatusOfSupplier { get; set; }
-
-        public DateTime? DateProcessedBySupplier { get; set; }
-
 
         public override string ToString()
         {
@@ -1603,4 +1624,71 @@ namespace Term.DAL
         public string Id { get; set; }
         public string Name { get; set; }
     }
+
+
+    /// <summary>
+    /// Рекламации на возврат брака
+    /// </summary>
+    public class Claims
+    {
+        [Key]
+        public Guid GuidIn1S { get; set; }
+
+        public int NumberIn1S { get; set; }
+
+        [StringLength(7)]
+        public string PartnerId { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "dd.MM.yyyy")]
+        public System.DateTime ClaimDate { get; set; }
+
+        [StringLength(50)]
+        public string Status { get; set; }
+    }
+
+    public class ClaimsDetails
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long DetailId { get; set; }
+
+        public Guid GuidIn1S { get; set; }
+
+        public int ProductId { get; set; }
+
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [StringLength(50)]
+        public string ProductKind { get; set; }
+
+        public int Count { get; set; }
+
+        [StringLength(10)]
+        public string SaleNumber { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "dd.MM.yyyy")]
+        public DateTime SaleDate { get; set; }
+
+        [StringLength(50)]
+        public string Condition { get; set; }
+
+        [StringLength(50)]
+        public string Defect { get; set; }
+
+        [StringLength(200)]
+        public string DefectComment { get; set; }
+
+        [StringLength(50)]
+        public string DefectCome { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "dd.MM.yyyy")]
+        public DateTime InspectionDate { get; set; }
+
+        [StringLength(200)]
+        public string Resolution { get; set; }
+    }
+
 }

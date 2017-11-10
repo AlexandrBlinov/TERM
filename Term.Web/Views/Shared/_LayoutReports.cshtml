@@ -1,0 +1,73 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/jquery.suggestions/16.6/css/suggestions.css" type="text/css" rel="stylesheet" />
+    <link href="https://oss.maxcdn.com/icheck/1.0.2/skins/square/blue.min.css" rel="stylesheet" />
+
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/content/sitestyles")
+    <link href="~/Content/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default top-menu-second">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logotip-terminal" href="@Url.Action("index", "home")"></a>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container container-main">
+        @RenderSection("featured", required: false)
+
+        @RenderBody()
+
+    </div>
+
+    <div class='scrolltop'>
+        <div class='scroll icon'><i class="fa fa-4x fa-angle-up"></i></div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/bundles/other_service")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $('.date').datetimepicker({
+            format: 'DD.MM.YYYY',
+            locale: 'en',
+            showTodayButton: true,
+            showClear: true
+        });
+
+        (function () {
+            // overrides the jquery date validator method
+            jQuery.validator.methods.date = function (value, element) {
+                // All dates are valid....
+                return true;
+            };
+        })(jQuery)
+    </script>
+
+</body>
+</html>

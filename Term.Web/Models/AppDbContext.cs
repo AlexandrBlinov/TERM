@@ -96,6 +96,8 @@ namespace Yst.Context
         public DbSet<OrderDetail> OrderDetails { get; set; }  
        public DbSet<Sale> Sales { get; set; } 
         public DbSet<SaleDetail> SaleDetails { get; set; }
+        public DbSet<Claims> Claims { get; set; }
+        public DbSet<ClaimsDetails> ClaimsDetails { get; set; }
 
         #endregion
         /// <summary>
@@ -134,6 +136,8 @@ namespace Yst.Context
         public DbSet<DbActionLogs> DbActionLogs { get; set; }
         public DbSet<DbUserActionLog> DbUserActionLogs { get; set; }
         public DbSet<CartActionLog> CartActionLogs { get; set; }
+
+        public DbSet<TransportCompany> TransportCompanies { get; set; }
 
 
         public DbSet<FeedbackForm> FeedbackFormDbSet { get; set; }

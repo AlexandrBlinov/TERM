@@ -26,6 +26,7 @@ namespace Term.Web.Controllers
         private readonly BaseService _service;
         private ServiceTerminal _ws;
         private ILogger _logger;
+        private static readonly string prepaypricediffers = "prepaypricediffers";
 
         protected ILogger ErrorLogger
         {
@@ -73,8 +74,13 @@ namespace Term.Web.Controllers
             if (!_context.Request.IsAuthenticated) return new EmptyResult();
 
             var currentPartner = _service.Partner;
+
             
+
+
           if (currentPartner == null || currentPartner.IsForeign) return new EmptyResult();
+
+            if (String.IsNullOrEmpty(_service.GetPropertyValue(prepaypricediffers, currentPartner.PartnerId))) return new EmptyResult();
 
             if (currentPartner.HasPrepay &&!currentPartner.PrePay )                return PartialView(currentPartner.UsePrepayPrices);
 

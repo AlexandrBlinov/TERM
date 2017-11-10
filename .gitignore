@@ -191,3 +191,4 @@ ModelManifest.xml
 /Term.Web/App_Data/thumbnails
 /Term.Web/Web.*
 
+/Term.Web/Migrations

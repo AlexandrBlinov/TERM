@@ -11,20 +11,26 @@ using Term.DAL;
 using YstTerm.Models;
 
 using YstProject.Services;
+using Term.Web.Services;
 
 namespace Term.Web.Controllers
 {
     public class HelpController : BaseController
     {
+        
         private readonly UserService _userService;
         private readonly SendMailService _smtp;
-        public HelpController():this (new UserService(), new SendMailService())
-        {}
+        private readonly NotificationForUserService _ntf;
+        public HelpController() : this(new UserService(), new SendMailService(), new NotificationForUserService())
+        { }
 
-        public HelpController(UserService userService,SendMailService sms) {
+        public HelpController(UserService userService, SendMailService sms, NotificationForUserService ntf)
+        {
             _userService = userService;
             _smtp = sms;
+            _ntf = ntf;
         }
+
 
 
 
@@ -46,6 +52,13 @@ namespace Term.Web.Controllers
         public ActionResult WheelsPhotos()
         {            
             return View();    
+        }
+
+        public ActionResult UrgentNews()
+        {
+            var user = User.Identity.Name;
+            if (!_ntf.CheckIfExists(user)) _ntf.Add(user, "CartRulesChange");
+            return View();
         }
 
         public ActionResult SendMail()

@@ -219,6 +219,12 @@ namespace YstTerm.Models
         public string House { get; set; }
 
         public string BlockType { get; set; }
+
+        // способ доставки 1- самовывоз, 0- доставка наша, 2 - доставка dpd
+        public int WayOfDelivery { get; set; }
+        
+        // идентификатор 1С адреса доставки ( не dpd)
+        public string AddressId { get; set; }
     }
 
 

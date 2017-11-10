@@ -292,6 +292,12 @@ namespace Yst.Services
                     DeliveryDataString = deliveryString,
                     RangeDeliveryDays = rangeDeliveryDays,
                     SupplierId=orderGuid.SupplierId,
+                    /// новые поля для заказа
+                    Prepay= viewModel.IsPrepay,
+                    IsStar = viewModel.IsStar,
+                    WayOfDelivery=viewModel.WayOfDelivery,
+                    AddressId= viewModel.IsDelivery&& viewModel.WayOfDelivery==0 ? viewModel.AddressId:null,
+
                     OrderDetails = alldata.Where(p => p.OrderGuid == orderGuid.OrderGuid).Select(p => new OrderDetail
                     {
                         RowNumber = ++rowCounter,ProductId = p.ProductId, Count = p.Count, 

@@ -1,0 +1,107 @@
+﻿
+@model Yst.ViewModels.ClaimsViewModel
+@using Term.Utils;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-xs-6">
+        <h2>Рекламации на возврат брака</h2>
+    </div>
+</div>
+@using (Html.BeginForm("ListForAdmin", "Claims", FormMethod.Get))
+{
+    <fieldset class="border-form-podbor">
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">Номер рекламации</label>
+                <div>
+                    @Html.TextBoxFor(p => p.NumberIn1S, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.BeginDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.EndDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 text-center search-order-btn">
+                <button class="form-podbor-btn-submit" type="submit">Отбор</button>
+            </div>
+        </div>
+    </fieldset>
+}
+<div class="order-table-header-block m-t-15">
+    @Html.PagedListPager(Model.Claims, page => Url.Action("ListForAdmin", new
+{
+    page,
+    NumberIn1S = Model.NumberIn1S,
+    BeginDate = Model.BeginDate.ValueForPaginator(),
+    EndDate = Model.EndDate.ValueForPaginator()
+}),
+new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+</div>
+
+<table id="table-orders" class="data-table order-table">
+    <thead>
+        <tr>
+            <th>
+                Номер рекламации
+            </th>
+            <th>
+                Дата рекламации
+            </th>
+            <th>
+                Контрагент
+            </th>
+            <th>
+                Статус
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model.Claims)
+        {
+            <tr>
+                <td>
+                    @claim.NumberIn1S
+                </td>
+                <td>
+                    @claim.ClaimDate.ToShortDateString()
+                </td>
+                <td>
+                    @claim.PartnerId
+                </td>
+                <td>
+                    @claim.Status
+                </td>
+                <td>
+                    @Html.ActionLink("Подробно", "DetailsAdmin", new { guid = claim.GuidIn1S }, new { @class = "order-table-details" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

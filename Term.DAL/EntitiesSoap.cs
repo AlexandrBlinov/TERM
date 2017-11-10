@@ -1097,6 +1097,357 @@ namespace Term.Soapmodels
             }
         }
     }
+
+    // <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
+    public partial class ReturnOfDefectiveResult
+    {
+
+        private ReturnOfDefectiveGoods[] productsField;
+
+        private ReturnOfDefectiveGroups[] groupsField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Element", IsNullable = false)]
+        public ReturnOfDefectiveGoods[] Products
+        {
+            get
+            {
+                return this.productsField;
+            }
+            set
+            {
+                this.productsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("Element", IsNullable = false)]
+        public ReturnOfDefectiveGroups[] Groups
+        {
+            get
+            {
+                return this.groupsField;
+            }
+            set
+            {
+                this.groupsField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
+    public partial class ReturnOfDefectiveGoods
+    {
+
+        private string codeField;
+
+        private string nameField;
+
+        private string itemGroupField;
+
+        private string defectForSaleField;
+
+        private string defectForSaleEnField;
+
+        private string defectComeField;
+
+        private System.DateTime lastDeliveryDateField;
+
+        private int quantityField;
+
+        private decimal sumField;
+
+        private string resolutionField;
+
+        private System.DateTime claimDateField;
+
+        private string claimNumberField;
+
+        private decimal purchasePriceField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Code")]
+        public string Code
+        {
+            get
+            {
+                return this.codeField;
+            }
+            set
+            {
+                this.codeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Name")]
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ItemGroup")]
+        public string ItemGroup
+        {
+            get
+            {
+                return this.itemGroupField;
+            }
+            set
+            {
+                this.itemGroupField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("DefectForSale")]
+        public string DefectForSale
+        {
+            get
+            {
+                return this.defectForSaleField;
+            }
+            set
+            {
+                this.defectForSaleField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("DefectForSaleEn")]
+        public string DefectForSaleEn
+        {
+            get
+            {
+                return this.defectForSaleEnField;
+            }
+            set
+            {
+                this.defectForSaleEnField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("DefectCome")]
+        public string DefectCome
+        {
+            get
+            {
+                return this.defectComeField;
+            }
+            set
+            {
+                this.defectComeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("LastDeliveryDate", DataType = "date")]
+        public System.DateTime LastDeliveryDate
+        {
+            get
+            {
+                return this.lastDeliveryDateField;
+            }
+            set
+            {
+                this.lastDeliveryDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Quantity")]
+        public int Quantity
+        {
+            get
+            {
+                return this.quantityField;
+            }
+            set
+            {
+                this.quantityField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Sum")]
+        public decimal Sum
+        {
+            get
+            {
+                return this.sumField;
+            }
+            set
+            {
+                this.sumField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("Resolution")]
+        public string Resolution
+        {
+            get
+            {
+                return this.resolutionField;
+            }
+            set
+            {
+                this.resolutionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ClaimDate", DataType = "date")]
+        public System.DateTime ClaimDate
+        {
+            get
+            {
+                return this.claimDateField;
+            }
+            set
+            {
+                this.claimDateField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ClaimNumber")]
+        public string ClaimNumber
+        {
+            get
+            {
+                return this.claimNumberField;
+            }
+            set
+            {
+                this.claimNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PurchasePrice")]
+        public decimal PurchasePrice
+        {
+            get
+            {
+                return this.purchasePriceField;
+            }
+            set
+            {
+                this.purchasePriceField = value;
+            }
+        }
+    }
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
+    public partial class ReturnOfDefectiveGroups
+    {
+
+        private string itemGroupField;
+
+        private int quantityDeliveredField;
+
+        private decimal sumDeliveredField;
+
+        private decimal partOfDefectiveGoodsField;
+
+        private decimal sumCompensationField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ItemGroup")]
+        public string ItemGroup
+        {
+            get
+            {
+                return this.itemGroupField;
+            }
+            set
+            {
+                this.itemGroupField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("QuantityDelivered")]
+        public int QuantityDelivered
+        {
+            get
+            {
+                return this.quantityDeliveredField;
+            }
+            set
+            {
+                this.quantityDeliveredField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SumDelivered")]
+        public decimal SumDelivered
+        {
+            get
+            {
+                return this.sumDeliveredField;
+            }
+            set
+            {
+                this.sumDeliveredField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("PartOfDefectiveGoods")]
+        public decimal PartOfDefectiveGoods
+        {
+            get
+            {
+                return this.partOfDefectiveGoodsField;
+            }
+            set
+            {
+                this.partOfDefectiveGoodsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("SumCompensation")]
+        public decimal SumCompensation
+        {
+            get
+            {
+                return this.sumCompensationField;
+            }
+            set
+            {
+                this.sumCompensationField = value;
+            }
+        }
+    }
+
 }
 
 

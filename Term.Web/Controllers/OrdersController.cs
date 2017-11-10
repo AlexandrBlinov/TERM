@@ -124,27 +124,27 @@ namespace Term.Web.Controllers
                 OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
                model.HistoryOfOrderStatuses= await _orderService.GetHistoryOfOrderStatusesAsync(guid);
                 model.CanUserChangeDpdOrder = true;
-                if (model.OrderData.IsDeliveryByTk)
+                if (model.Order.IsDeliveryByTk)
                 {
-                    var date = model.OrderData.DeliveryDate.Value.AddHours(14);
+                    var date = model.Order.DeliveryDate.Value.AddHours(14);
                     model.CanUserChangeDpdOrder = date > DateTime.Now ? true : false;
                 }
                 ViewBag.SaleIsReady = _orderService.GetSaleNumberByOrderGuid(order.GuidIn1S) != String.Empty ? true : false;
 
             // заполняем склад для подтверждения
-            if (!Partner.IsForeign) model.OrderData.DepartmentName = order.Department!=null ? order.Department.Name:"";
+            if (!Partner.IsForeign) model.DepartmentName = order.Department?.Name;
 
 
             // Если доставка транспортной компанией, то считаем дату планируемой доставки
-            if (model.OrderData.IsDeliveryByTk && !String.IsNullOrEmpty(model.OrderData.RangeDeliveryDays) && model.OrderData.DeliveryDate.HasValue)
+            if (model.Order.IsDeliveryByTk && !String.IsNullOrEmpty(model.Order.RangeDeliveryDays) && model.Order.DeliveryDate.HasValue)
             {
-                var lastDay =Int32.Parse(StringUtils.GetLastDayFromRange(model.OrderData.RangeDeliveryDays));
+                var lastDay =Int32.Parse(StringUtils.GetLastDayFromRange(model.Order.RangeDeliveryDays));
 
-              ViewBag.SupposedDateOfDelivery = DateTimeHelper.AddDaysWithoutDaysOff((DateTime) model.OrderData.DeliveryDate, lastDay);
+              ViewBag.SupposedDateOfDelivery = DateTimeHelper.AddDaysWithoutDaysOff((DateTime) model.Order.DeliveryDate, lastDay);
 
             }
             
-           
+           ViewBag.Title = $"{CartAndOrders.Order}   {model.Order.NumberIn1S}";
                  return  View("Details", model);
                
             
@@ -162,10 +162,10 @@ namespace Term.Web.Controllers
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public ActionResult Bill(Guid guid,bool? showPicture)
+        public async Task<ActionResult> Bill(Guid guid,bool? showPicture)
         {
             _isPartner = ServicePP.IsPartner;
-            Order order = _orderService.GetOrderByGuid(guid);
+            Order order = await _orderService.GetOrderByGuidAsync(guid);
 
             if (_orderService.CheckIfCanCancelOrder(order, out errorMessage))
             {
@@ -258,11 +258,11 @@ namespace Term.Web.Controllers
           
         }
 
-        public ActionResult DpdCancelOrder(Guid guid)
+        public async  Task <ActionResult> DpdCancelOrder(Guid guid)
         {
 
             _isPartner = ServicePP.IsPartner;
-            Order order = _orderService.GetOrderByGuid(guid);
+            Order order = await _orderService.GetOrderByGuidAsync(guid);
 
 
             if (base.Partner == null) throw new NullReferenceException("Partner not found in db");
@@ -291,12 +291,12 @@ namespace Term.Web.Controllers
             }
 
             string pattern = @"\(([A-Z]){3}\)";
-            var deliveryType = (Regex.IsMatch(model.OrderData.DeliveryDataString ?? "", pattern)) ? "ТТ" : "ТД";
+            var deliveryType = (Regex.IsMatch(model.DeliveryDataString ?? "", pattern)) ? "ТТ" : "ТД";
 
             var stringSeparators = new string[] { "г." };
             try
             {
-                var citystreet = model.OrderData.DeliveryDataString.Split(stringSeparators, StringSplitOptions.None);
+                var citystreet = model.DeliveryDataString.Split(stringSeparators, StringSplitOptions.None);
                 var city = citystreet[1].Split(',');
 
                 model.FildsForDpdForm.TotalCount = count;
@@ -329,19 +329,19 @@ namespace Term.Web.Controllers
             if (ModelState.IsValid)
             {
               
-                Order order = _orderService.GetOrderByGuid(guid);
+                Order order = await _orderService.GetOrderByGuidAsync(guid);
 
                 if (!_orderService.CheckIfCanCancelOrder(order, out errorMessage))
                 {
 
                     ModelState.AddModelError("OrderError", errorMessage);
 
-                    OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid);
+                   var model = _orderService.GetOrderWithDetailsByGuid(guid);
 
-                    if (model != null)
-                    {
+                   
+                   
                         return View("Details", model);
-                    }
+                   
 
                     throw new HttpException(404, "Not found");
                 }
@@ -357,24 +357,7 @@ namespace Term.Web.Controllers
             throw new HttpException(404, "Not found");
         }
 
-        /// <summary>
-        /// Страница изменения заказа 
-        /// </summary>
-        /// <param name="guid"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult ChangeOrder(Guid guid)
-        {
-            _isPartner = ServicePP.IsPartner;
-            ViewBag.IsForeign = base.Partner.IsForeign;
-
-            OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
-            model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
-
-            return View(model);
-
-
-        }
+       
 
         /// <summary>
         /// Заполнить поля при создании  через dpd
@@ -436,6 +419,30 @@ namespace Term.Web.Controllers
 
         }
 
+
+        /// <summary>
+        /// Страница изменения заказа 
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ChangeOrder(Guid guid)
+        {
+            _isPartner = ServicePP.IsPartner;
+            ViewBag.IsForeign = base.Partner.IsForeign;
+
+            OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+            model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
+            model.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
+
+            if (String.IsNullOrEmpty(model.AddressId))
+            model.AddressId= _orderService.GetDefaultAddressId(Partner.PartnerId, Point.PartnerPointId);
+            
+            return View(model);
+
+
+        }
+
         /// <summary>
         /// Изменение заказа 
         /// </summary>
@@ -471,14 +478,14 @@ namespace Term.Web.Controllers
                     string errMessage = String.Empty;
                     foreach (ModelState modelState in ModelState.Values)
                     {
-                        foreach (ModelError error in modelState.Errors)
+                        foreach (var error in modelState.Errors)
                         {
                             errMessage = error.ErrorMessage;
                         }
                     }
                     return Json(new { Success = false, Message = errMessage });
                 }
-                var order = _orderService.GetOrderByGuid(model.OrderGuid);
+                var order = await _orderService.GetOrderByGuidAsync(model.OrderGuid);
 
                 di.CostOfDelivery = await _deliveryCostService.GetCostOfDelivery(model.CityId, model.TerminalOrAddress, order.DepartmentId, model.OrderGuid);
                 int minNumOfDays = await _deliveryCostService.GetNumberOfDaysOfDeliveryAsync(model.CityId, 0, model.OrderGuid);
@@ -499,10 +506,9 @@ namespace Term.Web.Controllers
             // check if delivery date is valid
             if (!model.IsReserve)
             {
-                var order = _orderService.GetOrderByGuid(model.OrderGuid);
+                var order = await _orderService.GetOrderByGuidAsync(model.OrderGuid);
 
-                if (order == null)
-                    return Json(new { Success = false, Message = "Заказ отсутствует в системе" });
+                if (order == null)     return Json(new { Success = false, Message = "Заказ отсутствует в системе" });
 
                 if (!model.DeliveryDate.HasValue) return Json(new { Success = false, Message = "Введите дату отгрузки" });
 
@@ -526,45 +532,69 @@ namespace Term.Web.Controllers
                 Storage = String.Empty
             }).ToArray();
 
-            bool Success = false;
+            bool success = false;
 
 
             try
             {
-
-                ResultDel res = WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, !model.IsReserve ? String.Format("{0:yyyyMMdd}", model.DeliveryDate) : String.Empty, model.IsDeliveryByTk, di, deliveryDay);
-                Success = res.Success;
+                //  int WayOfDelivery, string AddressId
+                //"{0:yyyyMMdd}"
+                ResultDel res = WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, 
+                    // пустая строка если резерв, иначе дата доставки
+                    !model.IsReserve ? String.Format("{0:yyyyMMdd}", model.DeliveryDate) : String.Empty,
+                    model.IsDeliveryByTk, di, deliveryDay,
+                     model.WayOfDelivery, model.AddressId
+                    );
+                success = res.Success;
                 errorMessage = res.Error;
             }
-            catch
+            catch (Exception e)
             {
-                Success = false;
+                ErrorLogger.Error(e);
+                success = false;
 
             }
 
-            if (Success)
+            // если вызов веб сервиса прошел удачно
+            if (success)
             {
                 try
                 {
                     DateTime? deliveryDate = model.IsReserve ? (DateTime?)null : model.DeliveryDate;
-                    _orderService.ChangeOrder(model.OrderGuid, model.Items, model.Comments ?? String.Empty, model.IsReserve, model.IsDeliveryByTk, deliveryDataString, rangeDeliveryDays, di, deliveryDate);
+                    _orderService.ChangeOrder(model.OrderGuid, model.Items, model.Comments ?? String.Empty, model.IsReserve, model.IsDeliveryByTk, deliveryDataString, rangeDeliveryDays, di, deliveryDate,
+                        model.WayOfDelivery,model.AddressId);
 
                 }
-                catch { Success = false; }
+                catch { success = false; }
                 finally
-                { Session["IsOrderChanged"] = true; }
+                {
+                    Session["IsOrderChanged"] = true;
+
+                }
 
             }
-            return Json(new { Success = Success, Message = errorMessage });
+            return Json(new { Success = success, Message = errorMessage });
         }
 
+
+        /// <summary>
+        /// Получить даты отгрузки в корзине 
+        /// </summary>
+        /// <param name="addressId"></param>
+        /// <returns></returns>
+        public ActionResult GetDatesOfShipment( string addressId)
+        {
+            
+                var result = WS.GetDatesOfShipment(base.Partner.PartnerId, addressId);
+                 return Json(new {result= result } , JsonRequestBehavior.AllowGet );
+        }
 
         /// <summary>
         /// Объединить заказы (представление)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpGet]
+    /*    [HttpGet]
         public ActionResult JoinOrders(ExtendedOrdersViewModel model)
         {
 
@@ -771,7 +801,7 @@ namespace Term.Web.Controllers
 
         }
 
-      
+      */
 
 
 

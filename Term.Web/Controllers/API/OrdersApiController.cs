@@ -85,14 +85,8 @@ namespace Term.Web.Controllers.API
 
         }
 
-/*
-        public Order Get(Guid guid)
-        {
-           return  _dbContext.Set<Order>().Include(p => p.OrderDetails).FirstOrDefault(o=>o.GuidIn1S==guid);
 
-
-        }
- */ 
+       
 
         public IQueryable<OrderNumberWithStatusDTO> GetByPartner([FromUri]DateTime beginDate, [FromUri] DateTime endDate, string partnerId)
         {
@@ -227,11 +221,16 @@ namespace Term.Web.Controllers.API
                 
 
             }).OrderBy(p=>p.OrderData);
-        } 
+        }
 
+        /// <summary>
+        /// Получить даты отгрузки списоком
+        /// </summary>
+        /// <param name="partnerId"></param>
+        /// <param name="addressId"></param>
+        /// <returns></returns>
+       
 
-
-        
 
     }
 }

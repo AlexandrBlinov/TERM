@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Adjournment" xml:space="preserve">
+    <value>Adjournment</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
@@ -315,6 +318,9 @@
   <data name="OrderNumber" xml:space="preserve">
     <value>Order number</value>
   </data>
+  <data name="PaymentConditions" xml:space="preserve">
+    <value>Payment conditions</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone number (11 digits)</value>
   </data>
@@ -324,8 +330,14 @@
   <data name="PointDestination" xml:space="preserve">
     <value>Point of destination</value>
   </data>
+  <data name="Prepay" xml:space="preserve">
+    <value>Prepay</value>
+  </data>
   <data name="PriceClient" xml:space="preserve">
     <value>Price for the client</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Type of price</value>
   </data>
   <data name="Reserve" xml:space="preserve">
     <value>Reserve</value>

@@ -239,4 +239,20 @@ namespace Term.DAL
         public int Rate { get; set; }
         
     }
+
+    /// <summary>
+    /// Транспортные компании
+    /// </summary>
+    /// 
+    public class TransportCompany {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [MaxLength(11)]        
+        public string Id { get; set; }
+
+        
+        [MaxLength(Byte.MaxValue)]        
+        public string Name { get; set; }
+        
+
+    }
 }

@@ -107,6 +107,27 @@ namespace Term.Services
         }
 
 
+
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:CreateOrder2", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return")]
+        public Result CreateOrder2(string Partner, int PointId, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string Comment, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string ShippingDay, bool isReserve, bool TransportCompany, bool Prepay, bool IsStar, int WayOfDelivery, string AddressId)
+        {
+            object[] results = this.Invoke("CreateOrder2", new object[] {
+                        Partner,
+                        PointId,
+                        Goods,
+                        Comment,
+                        ShippingDay,
+                        isReserve,
+                        TransportCompany,
+                        Prepay,
+                        IsStar,
+                        WayOfDelivery,
+                        AddressId});
+            return ((Result)(results[0]));
+        }
+
         /// <summary>
         /// Вызов создания заказа (с информацией о доставке)
         /// </summary>
@@ -145,13 +166,13 @@ namespace Term.Services
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:ChangeOrder", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return")]
-        public ResultDel ChangeOrder(string OrderGUID, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, string Comment, bool isReserve, string ShippingDay, bool TransportCompany, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] DeliveryInfo DeliveryInfo, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string DeliveryDay)
+        public ResultDel ChangeOrder(string OrderGUID, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, string Comment, bool isReserve, string ShippingDay, bool TransportCompany, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] DeliveryInfo DeliveryInfo, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string DeliveryDay, int WayOfDelivery, string AddressId)
         {
             object[] results = this.Invoke("ChangeOrder", new object[] {
                         OrderGUID,
                         Goods,
                         Comment,isReserve,ShippingDay,
-            TransportCompany,DeliveryInfo,DeliveryDay});
+            TransportCompany,DeliveryInfo,DeliveryDay,  WayOfDelivery, AddressId});
             return ((ResultDel)(results[0]));
         }
 
@@ -200,6 +221,21 @@ namespace Term.Services
         }
 
 
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:GetDatesOfShipment", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlArrayAttribute("return")]
+        [return: System.Xml.Serialization.XmlArrayItemAttribute("Date", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)]
+        public string[] GetDatesOfShipment(string Partner, string AddressId)
+        {
+            object[] results = this.Invoke("GetDatesOfShipment", new object[] {
+                        Partner,
+                        AddressId});
+            return ((string[])(results[0]));
+        }
+
+
+
+
         /// <summary>
         /// Объединить заказы
         /// </summary>
@@ -218,6 +254,18 @@ namespace Term.Services
                         ShippingDay,
                         Comment});
             return ((ResaltJoinOrder)(results[0]));
+        }
+
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:ReturnOfDefectiveReport", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return")]
+        public ReturnOfDefectiveResult ReturnOfDefectiveReport(string Partner, [System.Xml.Serialization.XmlElementAttribute(DataType = "date")] System.DateTime StartDate, [System.Xml.Serialization.XmlElementAttribute(DataType = "date")] System.DateTime StopDate)
+        {
+            object[] results = this.Invoke("ReturnOfDefectiveReport", new object[] {
+                    Partner,
+                    StartDate,
+                    StopDate});
+            return ((ReturnOfDefectiveResult)(results[0]));
         }
 
         private bool IsLocalFileSystemWebService(string url)

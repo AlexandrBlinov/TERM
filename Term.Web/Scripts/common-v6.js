@@ -113,6 +113,13 @@ function initialize() {
 };
 
 $(document).ready(function () {
+    $(".modal-dialog-ntf").addClass("center-modal-notify");
+    $('#idModalToNotify').modal();
+
+    $('#Info-ntf').on('click', function () {
+        window.location.href = "/Help/UrgentNews";
+    })
+
     $('#SuccPartnerSettings').on('click', function () {
         if($(this).attr("data-terminal")=='True'){
             
@@ -147,15 +154,16 @@ $(document).ready(function () {
         buttondown_class: "btn btn-link touchspih_settings",
         buttonup_class: "btn btn-link touchspih_settings"
     });
- 
-    $(".count_add_to_cart").TouchSpin({
-        min: 1,
-        max: 200,
-        initval: 1,
-        buttondown_class: "btn btn-link touchspih-podbor-settings",
-        buttonup_class: "btn btn-link touchspih-podbor-settings"
-    });
-
+    // not display buttons on mobile
+    if ($(window).width() >= 768) {
+        $(".count_add_to_cart").TouchSpin({
+            min: 1,
+            max: 200,
+            initval: 1,
+            buttondown_class: "btn btn-link touchspih-podbor-settings",
+            buttonup_class: "btn btn-link touchspih-podbor-settings"
+        });
+    }
 
     $(".count_add_to_seasoncart").each(function () {
         $(this).TouchSpin({

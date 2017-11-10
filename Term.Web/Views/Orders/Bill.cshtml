@@ -3,7 +3,7 @@
     ViewBag.Title = "Счет на оплату";
     Layout = "~/Views/Shared/_LayoutPrint.cshtml";
 
-    var totalSum = Model.OrderData.Total + ((Model.IsDelivery && Model.OrderData.CostOfDelivery > 0) ? Model.OrderData.CostOfDelivery :0);
+    var totalSum = Model.Total + ((!Model.Order.isReserve && Model.Order.CostOfDelivery > 0) ? Model.Order.CostOfDelivery :0);
     var totalNds = totalSum/118*18;
 }
 <div> Внимание! оплата данного счета означает согласие с условиями поставки товара. Уведомление об оплате обязательно, в противном случае не гарантируется наличие товара на складе</div>
@@ -35,8 +35,8 @@
 </table>
 
 <h3>
-    Счет на оплату @(Model.OrderData.NumberIn1S)
-    от @Html.DateFormat(Model.OrderData.OrderDate)
+    Счет на оплату @(Model.Order.NumberIn1S)
+    от @Html.DateFormat(Model.Order.OrderDate)
 </h3>
 
 <hr class="bill" />
@@ -87,7 +87,7 @@
             </tr>
         }
 
-        @if (Model.IsDelivery && Model.OrderData.CostOfDelivery>0)
+        @if (!Model.Order.isReserve && Model.Order.CostOfDelivery>0)
         {
             <tr>
                 <td>@(++counter)</td>
@@ -97,8 +97,8 @@
                 </td>
                 <td class="text-right">1</td>
                 <td>шт</td>
-                <td class="text-right">@Model.OrderData.CostOfDelivery</td>
-                <td class="text-right">@Model.OrderData.CostOfDelivery</td>
+                <td class="text-right">@Model.Order.CostOfDelivery</td>
+                <td class="text-right">@Model.Order.CostOfDelivery</td>
             </tr>
         }
 

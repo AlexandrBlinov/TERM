@@ -1275,8 +1275,8 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
                     "prepay": !!$(this).data("prepay")
                 }
             ).done(function (data) {
-
-                toastr.success("Тип цен был изменен");
+            
+                toastr.success("Условия оплаты были изменены");
                 setTimeout(() => { location.assign(location.href) }, 3000);
             }).fail(function () {
                 toastr.success("Ошибка при изменении типа цен");

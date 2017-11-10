@@ -106,9 +106,9 @@ namespace Yst.ViewModels
 
         // предоплатный
         public bool IsPrepay { get; set; }
-
-        // способ доставки 1- самовывоз, 0- доставка наша
-        public bool WayOfDelivery { get; set; }
+        
+        // способ доставки 1- самовывоз, 0- доставка наша, 2 - доставка dpd
+        public int WayOfDelivery { get; set; }
 
 
         // доставка транспортной компанией
@@ -167,8 +167,13 @@ namespace Yst.ViewModels
         // список адресов
         public SelectList AddressesIds { get; set; }
 
+        // список трансп-х компаний
+        public SelectList TkIds { get; set; }
+
         // идентификатор 1С адреса доставки ( не dpd)
         public string AddressId { get; set; }
+
+        public string TkId { get; set; }
 
     }
 
@@ -327,7 +332,7 @@ namespace Yst.ViewModels
         public IEnumerable<Term.DAL.File> Files { get; set; }
 
         public bool IsDelivery {
-            get { return !OrderData.isReserve; }
+            get { return !Order.isReserve; }
         }
         [DataMember]
         public OrderViewModel OrderData { get; set; }
@@ -335,7 +340,25 @@ namespace Yst.ViewModels
         [DataMember]
         public virtual ICollection<OrderViewDetail> OrderDetails { get; set; }
         public FieldsForDpdViewModel FildsForDpdForm { get; set; }
+
+        // Добавил ссылку на заказ чтобы не раздувать  OrderData
+
+        public Order Order { get; set; }
+        public decimal Total { get; set; }
+        public decimal TotalOfClient { get; set; }
+        
+        public string DepartmentName { get; set; }
+
+        public string OrderStatusName
+        {
+            get
+            {
+                return EnumDescriptionProvider.GetDescription(Order.OrderStatus);
+            }
+        }
     }
+
+
 
     //[DataContract(Namespace = "")]
     public class OrderViewWithDetailsExtended : OrderViewWithDetails
@@ -344,6 +367,7 @@ namespace Yst.ViewModels
         public OrderViewWithDetailsExtended()
         {
             HistoryOfOrderStatuses= new List<HistoryOfOrderstatus>();
+           
         }
 
         /// <summary>
@@ -382,6 +406,22 @@ namespace Yst.ViewModels
         public string BlockType { get; set; }
 
         public IList<HistoryOfOrderstatus> HistoryOfOrderStatuses { get; set; }
+        
+        public string DeliveryDataString { get; set; }
+
+        // адрес доставки не dpd
+        public string AddressOfDelivery { get; set; }
+
+        // способ доставки 1- самовывоз, 0- доставка наша, 2 - доставка dpd
+        public int WayOfDelivery { get; set; }
+
+        // список адресов
+        public SelectList AddressesIds { get; set; }
+
+        // идентификатор 1С адреса доставки ( не dpd)
+        public string AddressId { get; set; }
+
+        public string DefaultAddressId { get; set; }
 
     }
 

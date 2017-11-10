@@ -1,0 +1,86 @@
+﻿@model Yst.ViewModels.ClaimsViewWithDetails
+@{
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+    ViewBag.Title = "Freeman";
+}
+
+<div class="container">
+    <h2>Additional materials (photo, video, text)</h2>
+    @if (Model.Claim != null)
+    {
+        <table class="data-table order-table details-table">
+            <thead>
+                <tr>
+                    <th style="width: 250px;">
+                        Product
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Photo
+                    </th>
+                    <th>
+                        Video
+                    </th>
+                    <th>
+                        Text
+                    </th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ClaimDetails)
+                {
+
+                    <tr class="files" data-claimguid="@Model.Claim.GuidIn1S" data-productid="@item.ProductId" data-count="@item.Count">
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Count
+                        </td>
+                        <td class="@("photo" + item.ProductId + "_" + item.Count)"></td>
+                        <td class="@("video" + item.ProductId + "_" + item.Count)"></td>
+                        <td class="@("other" + item.ProductId + "_" + item.Count)"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>The complaint will soon be uploaded!</p>
+    }
+    @section Scripts {
+        <script>
+$(document).ready(function () {
+
+$(".files").each(function () {
+var folderclaim = $(this).data("claimguid");
+var folderproduct = $(this).data("productid") + "_" + $(this).data("count");
+var uri = '/api/ystapi/getfilesinfolder?claim=' + folderclaim + '&productId=' + folderproduct;
+$.getJSON(uri, function (data) {
+$.each(data, function (key, item) {
+var path = folderclaim + "/" + folderproduct + "/" + item;
+if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
+$('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">" + item + "</a><br />");
+
+}
+if (item.toLowerCase().indexOf(".txt") >= 0 || item.toLowerCase().indexOf(".pdf") >= 0 || item.toLowerCase().indexOf(".doc") >= 0) {
+$('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">" + item + "</a><br />");
+
+}
+if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0 || item.toLowerCase().indexOf(".dvd") >= 0) {
+$('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">" + item + "</a><br />");
+
+}
+});
+});
+});
+});
+        </script>
+    }
+
+
+</div>
+
+

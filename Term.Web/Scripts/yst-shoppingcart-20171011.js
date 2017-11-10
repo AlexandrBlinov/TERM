@@ -5,7 +5,35 @@ var isAdmin = !!$("#isAdmin").val();
 //var isAdmin = false;
 var passShowItemsOfSuppliers = false;
 
+
 (function() {
+
+    var enabledDates = [],
+    today = new Date();
+  
+    $('.js-datefor-shipment').datetimepicker({
+        format: 'DD.MM.YYYY', locale: YstLocale.GetLocale("Culture"),
+        showTodayButton: true,
+        defaultDate: today,
+        minDate: today,
+        showClear: false,
+        enabledDates: enabledDates
+        
+    });
+
+    // Подключаем iCheck Для radiobutton в корзине
+    $('[type=radio],[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+    });
+
+
+    if ($("#CityId").val())
+        if ($('#fromTerminal').is(':checked')) {
+            refreshListOfTerminals(true);
+        } else {
+            enableSuggestionsOnAddress();
+        }
 
     var validationRule = 'requiredifnotcheched';
     $.validator.addMethod(validationRule, function(value, element, params) {
@@ -24,27 +52,36 @@ var passShowItemsOfSuppliers = false;
     $('#PhoneNumberOfClient').mask('9'.repeat(11));
 
 
+
 })();
 
-/*
-function checkIfCanOrderDpdDeliveryDependingOnTime() {
-    try {
-        var timeText = $.ajax({ type: 'HEAD', url: window.location.href.toString(), async: false }).getResponseHeader('Date');
-        var dateText = $('#DeliveryDate').val();
-        if (dateText.length>0) {
-                    
-            var date = new Date(dateText.replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));
-                    
-            var time = new Date(timeText);
-            if ((time.getHours() >= 14 &&  time.getDate()==date.getDate()  ) || date.getDay() == 6 || date.getDay() == 0) return false;
-        }
-    } catch (ex)
+// Устанавливаем дни доставки
+function updateDatepicker()
+{
+    var enabledDates = [];
+    var addressId = $('#AddressId').val();
+    if (addressId && isAdmin)
     {
-        return true;
+        console.log(addressId);
+        // console.log(addressId);
+        $.get('/orders/GetDatesOfShipment', { "addressId": addressId }).done(  (data) =>{
+
+            var result = data.result;
+            for (var i = 0; i < result.length; i++) {
+                          
+                var newDate = new Date(result[i].replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));              
+                enabledDates.push(newDate);
+
+            }
+            var picker = $('.js-datefor-shipment').data("DateTimePicker");
+            picker.options({ 'enabledDates': enabledDates })	
+        });
+
+        
     }
-    return true;
+
+
 }
-*/
 
 supplierModule = {
     checkAndGetNamesForSupplierItems: function() {
@@ -91,22 +128,6 @@ $('#modalFromSupplier .modal-footer button').on('click', function (e) {
 
 });
 
-function checkIfCanOrderDpdDeliveryDependingOnTime() {
-    try {
-        var timeText = $.ajax({ type: 'HEAD', url: window.location.href.toString(), async: false }).getResponseHeader('Date');
-        var dateText = $('#DeliveryDate').val();
-        if (dateText.length > 0) {
-
-            var date = new Date(dateText.replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));
-
-            var time = new Date(timeText);
-            if ((time.getHours() >= 14 && time.getDate() == date.getDate()) || date.getDay() == 6 || date.getDay() == 0) return false;
-        }
-    } catch (ex) {
-        return true;
-    }
-    return true;
-}
 
 $("#shopping-cart-form").on("submit", function(e) {
  
@@ -151,13 +172,10 @@ $("#shopping-cart-form").on("submit", function(e) {
 });
 
 
-// Подключаем iCheck Для radiobutton в корзине
-$('[type=radio],[type=checkbox]').iCheck({
-    checkboxClass: 'icheckbox_square-blue',
-    radioClass: 'iradio_square-blue'
-});
 
 
+
+// перерасчитываем стоимость доставки dpd
 $(document).on("shoppingcart.changed",
     function() {
         // if (@isAdminJs && $('#CityId') && $('#CityId').length > 0) getCostOfDelivery();
@@ -181,17 +199,11 @@ $('#modalConfirmation .modal-footer button').on('click', function(e) {
 
 });
 
-if ($("#CityId").val())
-    if ($('#fromTerminal').is(':checked')) {
-        refreshListOfTerminals(true);
-    } else {
-        enableSuggestionsOnAddress();
-    }
-
-
+//
 // очистка полей при отказе от доставки
+//
 function refuseFromDelivery() {
-    var $transportContainer = $('.transport-container');
+    var $transportContainer = $('.dpd-calc-container');
     $transportContainer.find('input[type=text],input[type=hidden]').each(function() { $(this).val(''); });
     $('#cost-of-delivery').text('');
     $transportContainer.hide();
@@ -201,33 +213,38 @@ function refuseFromDelivery() {
     setValidateOnClient($('#Address'), false);
 }
 
+///
+// выбор способа доставки
+///
 
-$('[name=IsDeliveryByTk]').on('ifChecked', function() {
-    $('.transport-container').show();
-    $('.address-container').hide('slow');
+$('[name=WayOfDelivery]').on('ifChecked', function (event) {
+    var $address_container = $('.address-container');
 
+    switch (event.target.id) {
+        case 'isDpdDelivery': {
+            
+            $('.address-container').hide('slow');
+            $('.dpd-calc-container').show();
+            break;
+        }
+        case 'isSelfDelivery': {
+            $('.address-container').hide('slow');
+            refuseFromDelivery();
+            break;
+        }
+        default: // isDeliveryByOwnTransport
+            {
+                $('.address-container').show('slow');
+                refuseFromDelivery();
+            }
+} });
 
-}).on('ifUnchecked', function() {
-    //$('.transport-container').hide();
-    refuseFromDelivery();
+// пока убираем
+//$('#AddressId').change(() => updateDatepicker());
 
-    // debug
-
-   
-    if ($('#isDelivery').is(':checked')) {
-        console.log('isdelivery checked');
-        $('.address-container').show('slow');
-    }
-
-});
-
-$('#RefuseFromDelivery').on('click', function() {
-    refuseFromDelivery();
-    $('[name=IsDeliveryByTk]').iCheck('uncheck');
-    //  $('.transport-container').hide();
-
-});
-
+///
+// выбор на отгрузку или в резерв
+///
 $('[name=IsDelivery]').on('ifChecked', function(event) {
 
     
@@ -239,8 +256,11 @@ $('[name=IsDelivery]').on('ifChecked', function(event) {
     var $address_container = $('.address-container');
     if (event.target.id === "isDelivery") {
         $deliverydate_container.removeClass('hidden');
-        $deliveryByTk_container.removeClass('hidden');
+// пока убираем
+//  updateDatepicker();
+        if (isUserHasDpdContract)   $deliveryByTk_container.removeClass('hidden');
         $address_container.show('slow');
+        $('.js-wayofdelivery').show('slow');
       ///// вариант с всплавающим окном
       /////  if (isAdmin) $('#modalConfirmation').modal();
       
@@ -253,18 +273,40 @@ $('[name=IsDelivery]').on('ifChecked', function(event) {
         $address_container.hide();
         $deliveryDate.val('');
         $('#IsDeliveryByTk').iCheck('uncheck');
+        $('.js-wayofdelivery').hide('slow');
 
     }
 
 });
 
+////////////////////
+// Блок  Dpd
+///////////////////
 $('[name=TerminalOrAddress]').on('ifChecked', function(event) {
     if (event.target.id === "fromTerminal") refreshListOfTerminals();
 
-    else refreshAllElements();
+    else refreshAllDpdElements();
 
 });
 
+
+
+function checkIfCanOrderDpdDeliveryDependingOnTime() {
+    try {
+        var timeText = $.ajax({ type: 'HEAD', url: window.location.href.toString(), async: false }).getResponseHeader('Date');
+        var dateText = $('#DeliveryDate').val();
+        if (dateText.length > 0) {
+
+            var date = new Date(dateText.replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));
+
+            var time = new Date(timeText);
+            if ((time.getHours() >= 14 && time.getDate() == date.getDate()) || date.getDay() == 6 || date.getDay() == 0) return false;
+        }
+    } catch (ex) {
+        return true;
+    }
+    return true;
+}
 
 function getCostOfDelivery() {
     var daysSuffix = 'дн.';
@@ -272,7 +314,8 @@ function getCostOfDelivery() {
     var orderGuid = $('#OrderGuidIn1S').val() || null;
     var apicallPath = "/api/dpdapi/GetCostAndTimeOfDelivery";
 
-    if (!$('#IsDeliveryByTk').is(':checked')) return;
+    //if (!$('#IsDeliveryByTk').is(':checked')) return;
+    if (!$('#isDpdDelivery').is(':checked')) return;
 
     $.getJSON(apicallPath, { 'cityId': $('#CityId').val(), terminalOrAddress: $('#fromTerminal').is(':checked'), orderGuid: orderGuid })
         .done(function(data) {
@@ -311,9 +354,9 @@ function loadDataToTerminalsDpd(termData) {
 
 
 //
-// обновляет отображение
+// обновляет отображение для dpd
 //
-function refreshAllElements(clearaddress) {
+function refreshAllDpdElements(clearaddress) {
     //      debugger;
     $('#TerminalsDpd').empty();
     $('#Address').val('');
@@ -336,7 +379,7 @@ function refreshAllElements(clearaddress) {
 function refreshListOfTerminals(clearaddress) {
     $.getJSON("/api/dpdapi/getterminalsbycity", { 'kladr': $('#CityId').val() }).done(function(data) {
 
-        refreshAllElements(clearaddress);
+        refreshAllDpdElements(clearaddress);
         loadDataToTerminalsDpd(data);
         var selectedOption = $('#TerminalsDpd').find('option:selected');
         var schedule = selectedOption.data('schedule');

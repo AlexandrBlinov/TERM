@@ -61,6 +61,15 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Adjournment.
+        /// </summary>
+        public static string Adjournment {
+            get {
+                return ResourceManager.GetString("Adjournment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на All.
         /// </summary>
         public static string All {
@@ -655,6 +664,15 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Payment conditions.
+        /// </summary>
+        public static string PaymentConditions {
+            get {
+                return ResourceManager.GetString("PaymentConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Phone number (11 digits).
         /// </summary>
         public static string PhoneNumber {
@@ -682,11 +700,29 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Prepay.
+        /// </summary>
+        public static string Prepay {
+            get {
+                return ResourceManager.GetString("Prepay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Price for the client.
         /// </summary>
         public static string PriceClient {
             get {
                 return ResourceManager.GetString("PriceClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Type of price.
+        /// </summary>
+        public static string PriceType {
+            get {
+                return ResourceManager.GetString("PriceType", resourceCulture);
             }
         }
         

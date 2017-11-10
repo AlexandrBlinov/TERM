@@ -1,5 +1,6 @@
 ﻿@using YstProject.Services;
 @using Term.Web.Views.Resources;
+@using Term.Web.Services;
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,7 @@
    
 </head>
 <body>
-    @{var sps = new SeasonProductService();}
+    @{var sps = new SeasonProductService(); var ntf = new NotificationForUserService();}
 <header>
 <nav class="navbar navbar-default first-horizontal-menu">
     <div class="container">
@@ -260,7 +261,24 @@
         @RenderSection("featured", required: false)
 
         @RenderBody()
-
+        @if (!ntf.CheckIfExists(User.Identity.Name) && User.Identity.IsAuthenticated && System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName=="ru")
+        {
+        <div id="idModalToNotify" class="modal fade">
+            <div class="modal-dialog-ntf" style="width: 600px; margin: auto; padding-top: 21%;">
+                <div class="modal-content">
+                    <div class="modal-header alert-success">
+                        <h4 class="modal-title"><span class="glyphicon glyphicon-ok-circle"> </span> Уважаемые клиенты! ВНИМАНИЕ!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span>С 08.11.2017г. меняется порядок оформления заказов!</span>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="/Help/UrgentNews" id="Info-ntf" class="btn btn-default btn-primary" data-dismiss="modal">Ознакомиться с информацией</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
     </div>
 
     <footer class="footer-bg">

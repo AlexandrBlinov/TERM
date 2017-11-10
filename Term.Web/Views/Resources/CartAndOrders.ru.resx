@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Adjournment" xml:space="preserve">
+    <value>Отсрочка</value>
+  </data>
   <data name="All" xml:space="preserve">
     <value>Все</value>
   </data>
@@ -223,7 +226,7 @@
     <value>Дата отгрузки должна быть в диапазоне</value>
   </data>
   <data name="DeliveryByTransportCompany" xml:space="preserve">
-    <value>Доставка транспортной компанией</value>
+    <value>Доставка транспортной компанией DPD</value>
   </data>
   <data name="Department" xml:space="preserve">
     <value>Подразделение</value>
@@ -315,6 +318,9 @@
   <data name="OrderNumber" xml:space="preserve">
     <value>Номер заказа</value>
   </data>
+  <data name="PaymentConditions" xml:space="preserve">
+    <value>Условия оплаты</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>Номер телефона (11 цифр)</value>
   </data>
@@ -324,8 +330,14 @@
   <data name="PointDestination" xml:space="preserve">
     <value>Пункт назначения</value>
   </data>
+  <data name="Prepay" xml:space="preserve">
+    <value>Предоплата</value>
+  </data>
   <data name="PriceClient" xml:space="preserve">
     <value>Цена клиента</value>
+  </data>
+  <data name="PriceType" xml:space="preserve">
+    <value>Тип цен</value>
   </data>
   <data name="Reserve" xml:space="preserve">
     <value>В резерв</value>

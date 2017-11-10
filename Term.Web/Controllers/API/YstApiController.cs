@@ -85,6 +85,86 @@ namespace Term.Web.Controllers.API
 
 
 
+        [HttpPost]
+        [ActionName("uploadclaimfile")]
+        public bool UploadClaimsFile()
+        {
+            if (HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                // Get the uploaded image from the Files collection
+                var httpPostedFile = HttpContext.Current.Request.Files["UploadedFile"];
+                var UploadedFolderClaim = HttpContext.Current.Request["UploadedFolderClaim"];
+                var UploadedFolderProduct = HttpContext.Current.Request["UploadedFolderProduct"];
+                var name = User.Identity.Name;
+
+                String pathToClaimsPhotos = ConfigurationManager.AppSettings["PathToClaimsPhotos"];
+                var claimfolder = Path.Combine(HttpContext.Current.Server.MapPath(pathToClaimsPhotos));
+                
+                try
+                {
+                    if (!Directory.Exists(System.IO.Path.Combine(claimfolder, UploadedFolderClaim)))
+                    {
+                        DirectoryInfo di = Directory.CreateDirectory(claimfolder + UploadedFolderClaim);
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+
+                try
+                {
+                    if (!Directory.Exists(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct))
+                    {
+                        DirectoryInfo di = Directory.CreateDirectory(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct);
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+
+                if (httpPostedFile != null)
+                {
+                    try
+                    {
+                        var fileSavePath = Path.Combine(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct, httpPostedFile.FileName);
+                        httpPostedFile.SaveAs(fileSavePath);
+
+                    }
+                    catch { return false; }
+                }
+                return true;
+            }
+            return false;
+        }
+
+
+        [HttpGet]
+        [ActionName("GetFilesInFolder")]
+        public IEnumerable<string> GetFilesInFolder(string claim, string productId)
+        {
+            String pathToClaimsPhotos = ConfigurationManager.AppSettings["PathToClaimsPhotos"];
+            var claimfolder = Path.Combine(HttpContext.Current.Server.MapPath(pathToClaimsPhotos));
+
+            string endfolder = claimfolder + claim + "/" + productId;
+            var fileEntries = new List<string>();
+            if (Directory.Exists(endfolder))
+            {
+                DirectoryInfo dir = new DirectoryInfo(endfolder);
+                foreach (FileInfo file in dir.GetFiles())
+                {
+                    fileEntries.Add(file.Name);
+                }
+                return fileEntries;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
 
 
     }

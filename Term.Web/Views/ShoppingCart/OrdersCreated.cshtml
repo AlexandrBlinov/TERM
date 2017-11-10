@@ -5,7 +5,7 @@
 @using Term.Web.HtmlHelpers;
 
 @{
-    string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+  /*  string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName; */
 }
 
 @{
@@ -22,19 +22,19 @@
 @foreach (Yst.ViewModels.OrderViewWithDetails order in Model)
 {
     // по умолчанию показывать DPD иначе число дней из подразделения
-    string daysToShow =String.IsNullOrEmpty(order.OrderData.RangeDeliveryDays)? order.OrderData.DaysToDepartment.ToString() : order.OrderData.RangeDeliveryDays;
+    string daysToShow =String.IsNullOrEmpty(order.Order.RangeDeliveryDays)? order.Order.DaysToDepartment.ToString() : order.Order.RangeDeliveryDays;
 
-    string messageToShow = String.Format("{0} {1} {2} {3} {4}", CartAndOrders.MsgCreate1, order.OrderData.NumberIn1S, CartAndOrders.MsgCreate2, daysToShow, CartAndOrders.MsgCreate3);
+    string messageToShow = String.Format("{0} {1} {2} {3} {4}", CartAndOrders.MsgCreate1, order.Order.NumberIn1S, CartAndOrders.MsgCreate2, daysToShow, CartAndOrders.MsgCreate3);
     
     <div class="row text-center">
         <span class="glyphicon glyphicon-ok order-created" aria-hidden="true"></span><br>
-        <!--<span class="order-created-text">@CartAndOrders.MsgCreate1  @order.OrderData.NumberIn1S  @CartAndOrders.MsgCreate2  @order.OrderData.DaysToDepartment  @CartAndOrders.MsgCreate3</span>-->
+        <!--<span class="order-created-text">@CartAndOrders.MsgCreate1  @order.Order.NumberIn1S  @CartAndOrders.MsgCreate2  @order.Order.DaysToDepartment  @CartAndOrders.MsgCreate3</span>-->
       
-        @Html.ActionLink(messageToShow, "Details", "orders", new { guid = order.OrderData.Order_guid }, new { @class = "order-created-text" })
+        @Html.ActionLink(messageToShow, "Details", "orders", new { guid = order.Order.GuidIn1S }, new { @class = "order-created-text" })
 
-        @if(order.OrderData.IsDeliveryByTk )
+        @if(order.Order.IsDeliveryByTk )
         { 
-            <p class="alert alert-danger lead">Внимание! По данному заказу Вам  необходимо оформить @Html.ActionLink("поручение на отправку", "DpdErrand", "orders", new { guid = order.OrderData.Order_guid },null)</p>
+            <p class="alert alert-danger lead">Внимание! По данному заказу Вам  необходимо оформить @Html.ActionLink("поручение на отправку", "DpdErrand", "orders", new { guid = order.Order.GuidIn1S },null)</p>
         }
 
     </div>
@@ -85,12 +85,12 @@
         <div class="row">
             <div class="col-xs-6 col-sm-3">
                 <span class="data-table-a-text">@CartAndOrders.ForWhom:</span><br>
-                <span class="cart-sum-row-label">@order.OrderData.ContactFIOOfClient</span><br>
-                <span class="cart-sum-row-label">@order.OrderData.PhoneNumberOfClient</span>
+                <span class="cart-sum-row-label">@order.Order.ContactFIOOfClient</span><br>
+                <span class="cart-sum-row-label">@order.Order.PhoneNumberOfClient</span>
             </div>
             <div class="col-xs-6 col-sm-3">
                 <span class="data-table-a-text">@CartAndOrders.Total:</span><br>
-                @Html.Price(order.OrderData.TotalOfClient)
+                @Html.Price(order.Order.TotalOfClient)
             </div>
         </div>
     </div>

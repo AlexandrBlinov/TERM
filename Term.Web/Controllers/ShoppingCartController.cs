@@ -52,24 +52,30 @@ namespace Term.Web.Controllers
         }
 
 
-        private void FillViewModel(ShoppingCartViewModelExtended viewModel)
+        private void FillViewModel(ShoppingCartViewModelExtended vm)
         {
             bool isForeign = this.Partner.IsForeign;
             bool hasStar = this.Partner.HasStar;
 
+            var partnerId = this.Partner.PartnerId;
+
             var cart = this.Cart;
 
-            viewModel.CartItems = cart.GetCartItems();
-            viewModel.CartTotal = cart.GetTotal();
-            viewModel.CartTotalOfClient = cart.GetTotalOfClient();
-            viewModel.CartCount = cart.GetCount();
-            viewModel.TotalWeight = cart.GetCartWeight();
-            viewModel.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
-            viewModel.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
-            viewModel.IsPrepay = cart.IsPrepay || Partner.PrePay;
+            vm.CartItems = cart.GetCartItems();
+            vm.CartTotal = cart.GetTotal();
+            vm.CartTotalOfClient = cart.GetTotalOfClient();
+            vm.CartCount = cart.GetCount();
+            vm.TotalWeight = cart.GetCartWeight();
+            vm.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
+            vm.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
+            vm.TkIds = _orderService.GetTkIds();
+            vm.IsPrepay = cart.IsPrepay || Partner.PrePay;
             // viewModel.IsStar = false;
-            viewModel.HasStar = hasStar && !isForeign;
-            viewModel.WayOfDelivery = this.Partner.WayOfDelivery == 0 ? false : true;
+            vm.HasStar = hasStar && !isForeign;
+            
+
+       //     vm.WayOfDelivery = this.Partner.WayOfDelivery;
+            
         }
 
         /// <summary>
@@ -82,33 +88,20 @@ namespace Term.Web.Controllers
             var cart = this.Cart;
 
 
-            bool isForeign = this.Partner.IsForeign;
-            bool hasStar  = this.Partner.HasStar;
+           /* bool isForeign = this.Partner.IsForeign;
+            bool hasStar  = this.Partner.HasStar; */
+            
             // у иностранных клиентов не показываем в резерв и на отгрузку
-
-            //ViewBag.IsForeign = ServicePP.CurrentPoint.Partner.IsForeign;
-
-            ViewBag.IsForeign = isForeign;
+            
+            ViewBag.IsForeign = Partner.IsForeign;
 
             var viewModel = new  ShoppingCartViewModelExtended();
             FillViewModel(viewModel);
-            /*
-            var viewModel = new ShoppingCartViewModelExtended
-            {
-                CartItems = cart.GetCartItems(),
-                CartTotal = cart.GetTotal(),
-                CartTotalOfClient = cart.GetTotalOfClient(),
-                CartCount = cart.GetCount(),
-                TotalWeight = cart.GetCartWeight(),
-                CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery,
-                AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint(),
-                IsPrepay = cart.IsPrepay || Partner.PrePay,
-                IsStar= false,
-                HasStar = hasStar && !isForeign,
-                WayOfDelivery= this.Partner.WayOfDelivery==0?false:true
-            };
-            */
 
+            viewModel.IsStar = Partner.IsStar;
+            viewModel.WayOfDelivery = Partner.WayOfDelivery;
+
+            viewModel.AddressId = _orderService.GetDefaultAddressId(Partner.PartnerId,Point.PartnerPointId);
 
             // если хотя бы одна позиция в пути - не показываем  в резерв и на отгрузку
             bool hasItemsOnWay = viewModel.CartItems.Any(p => p.DepartmentId == 0);
@@ -180,36 +173,30 @@ namespace Term.Web.Controllers
             var cart = this.Cart;
 
 
-          /*   viewModel.CartTotal = cart.GetTotal();
-             viewModel.CartItems = cart.GetCartItems();
-             viewModel.CartCount = cart.GetCount();
-             viewModel.CartTotalOfClient = cart.GetTotalOfClient();
-            viewModel.TotalWeight = cart.GetCartWeight();
-            viewModel.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
+            viewModel.IsDeliveryByTk = viewModel.WayOfDelivery == 2 && viewModel.IsDelivery;
 
-            viewModel.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
-            viewModel.HasStar = hasStar && !isForeign;
-
-            viewModel.IsPrepay = cart.IsPrepay || Partner.PrePay; */
-
-
-            // ViewBag.IsForeign = ServicePP.CurrentPoint.Partner.IsForeign;
             ViewBag.IsForeign = this.Partner.IsForeign;
 
-            bool hasItemsOnWay = viewModel.CartItems.Any(p => p.DepartmentId == 0);
-            ViewBag.HasitemsOnWay = hasItemsOnWay;
+            ViewBag.HasitemsOnWay = viewModel.CartItems.Any(p => p.DepartmentId == 0);
+           // ViewBag.HasitemsOnWay = hasItemsOnWay;
 
-            if (viewModel.CartCount == 0)    ModelState.AddModelError("DeliveryDate", CartAndOrders.ErrorCartEmpty);
+            if (viewModel.CartCount == 0)    ModelState.AddModelError("", CartAndOrders.ErrorCartEmpty);
 
-
-           /* if (!viewModel.isReserve && !viewModel.isDelivery)
-                ModelState.AddModelError("DeliveryDate", CartAndOrders.ErrorReserveOrShipment); */
-
+                       
 
             if (viewModel.DeliveryDate == null && viewModel.IsDelivery) ModelState.AddModelError("DeliveryDate", CartAndOrders.ErrorShipmentDate);
 
+
+            // проверяем обязательное заполнение адреса если доставка наша и не 
+
+            if (viewModel.IsDelivery && viewModel.WayOfDelivery == 0 && !isForeign && !ViewBag.HasitemsOnWay)
+            {
+                if (String.IsNullOrEmpty(viewModel.AddressId))      ModelState.AddModelError("AddressId", "Выберите адрес доставки");
+            }
+
+
             // проверяем заполнение необходимых полей при доставке транспортной компанией
-            if (viewModel.IsDeliveryByTk)
+                if (viewModel.IsDeliveryByTk)
             { 
                 await CheckTransportFields(viewModel);
 
@@ -261,16 +248,42 @@ namespace Term.Web.Controllers
                var deliveryDateString = viewModel.DeliveryDate.HasValue ? ((DateTime)viewModel.DeliveryDate).ToString(ServiceTerminal.FormatForDate) : String.Empty;
 
                 // создание заказов
-               if (!viewModel.IsDeliveryByTk) result = await Task.Run(() => WS.CreateOrder(partnerId, pointId, productItems, viewModel.Comments ?? String.Empty, deliveryDateString, !viewModel.IsDelivery, viewModel.IsDeliveryByTk));
+              /* if (!viewModel.IsDeliveryByTk) result = await Task.Run(
+                   () => WS.CreateOrder(
+                   partnerId, 
+                   pointId, 
+                   productItems, 
+                   viewModel.Comments ?? String.Empty, 
+                   deliveryDateString, 
+                   !viewModel.IsDelivery, 
+                   viewModel.IsDeliveryByTk));
+                   */
+
+               // Если иностранный клиент, резерв или способ доставки , то адрес передаем пустой
+                string addressId = isForeign || viewModel.WayOfDelivery > 0 || !viewModel.IsDelivery ? String.Empty : viewModel.AddressId;
+
+                if (!viewModel.IsDeliveryByTk)
+                    result = await Task.Run(
+                    () => WS.CreateOrder2(
+                    partnerId,
+                    pointId,
+                    productItems,
+                    viewModel.Comments ?? String.Empty,
+                    deliveryDateString,
+                    !viewModel.IsDelivery,
+                    viewModel.IsDeliveryByTk,
+                    viewModel.IsPrepay,
+                    viewModel.IsStar,
+                    viewModel.WayOfDelivery,
+                    addressId
+                    ));
+
 
                 else
                 {
                      DeliveryInfo di = FillInDeliveryInfo(viewModel);
                      deliveryDataString = await _deliveryCostService.PrepareDeliveryDataString(di);
-
-                     
-
-
+                    
                      int minNumOfDays =  await _deliveryCostService.GetNumberOfDaysOfDeliveryAsync(di.CityId, 0);
                     int maxNumOfDays = await _deliveryCostService.GetNumberOfDaysOfDeliveryAsync(di.CityId,1);
 
@@ -324,7 +337,7 @@ namespace Term.Web.Controllers
                 var modelOrdersInView = orderGuids.Select(orderGuid => _orderService.GetOrderWithDetailsByGuid(Guid.Parse(orderGuid))).ToList();
 
                 // для сторонних поставщиков создаем уведомления
-                foreach (var supplierId in modelOrdersInView.Where(p => p.OrderData.SupplierId > 0).Select(p=>p.OrderData.SupplierId).Distinct())
+                foreach (var supplierId in modelOrdersInView.Where(p => p.Order.SupplierId > 0).Select(p=>p.Order.SupplierId).Distinct())
                 {
                     var userName= _notificationForUserService.GetUserFromSupplierId(supplierId);
 
@@ -434,7 +447,8 @@ namespace Term.Web.Controllers
             bool isPrepay= cart.IsPrepay;
             if (isPrepay != usePrepay)
             {
-                var priceType = isPrepay ? "предоплата" : "отсрочка";
+                    
+                var priceType = isPrepay ? CartAndOrders.Prepay : CartAndOrders.Adjournment;
                 message = "Нельзя добавлять в корзину товары с разными типами цен (предоплата и отсрочка). В корзине уже есть товары с типом цен "+ priceType;
                 message+=". Оформите заказ или вернуте тип цен "+ priceType;
             }

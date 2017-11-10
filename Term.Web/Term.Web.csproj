@@ -218,6 +218,7 @@
     <Compile Include="Controllers\API\SalesApiController.cs" />
     <Compile Include="Controllers\API\SeasonOrdersApiController.cs" />
     <Compile Include="Controllers\API\RestsOfSuppliersApiController.cs" />
+    <Compile Include="Controllers\ClaimsController.cs" />
     <Compile Include="Controllers\DocumentImagesShowController.cs" />
     <Compile Include="Controllers\API\NotificationsApiController.cs" />
     <Compile Include="Controllers\PrepayToggleController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PodborAkbController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\SaleReturnsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
@@ -392,6 +394,31 @@
     <Compile Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.Designer.cs">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710061305423_newProps_AddedToOrder.cs" />
+    <Compile Include="Migrations\201710061305423_newProps_AddedToOrder.Designer.cs">
+      <DependentUpon>201710061305423_newProps_AddedToOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710161127226_IsStarAddedToPartner.cs" />
+    <Compile Include="Migrations\201710161127226_IsStarAddedToPartner.Designer.cs">
+      <DependentUpon>201710161127226_IsStarAddedToPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710171259545_PriceMin_AddedToPriceOfProduct.cs" />
+    <Compile Include="Migrations\201710171259545_PriceMin_AddedToPriceOfProduct.Designer.cs">
+      <DependentUpon>201710171259545_PriceMin_AddedToPriceOfProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710300853432_Id_AsKey_AddedTo_AddressOfPartner.cs" />
+    <Compile Include="Migrations\201710300853432_Id_AsKey_AddedTo_AddressOfPartner.Designer.cs">
+      <DependentUpon>201710300853432_Id_AsKey_AddedTo_AddressOfPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711080531078_CreateClaimsTable.cs" />
+    <Compile Include="Migrations\201711080531078_CreateClaimsTable.Designer.cs">
+      <DependentUpon>201711080531078_CreateClaimsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711101322075_TransportCompanies_Added.cs" />
+    <Compile Include="Migrations\201711101322075_TransportCompanies_Added.Designer.cs">
+      <DependentUpon>201711101322075_TransportCompanies_Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
     <Compile Include="Models\OrderNumberWithStatusDTO.cs" />
@@ -731,6 +758,8 @@
     <Content Include="Content\img\inci.jpg" />
     <Content Include="Content\img\instagram-social-network-logo-of-photo-camera.svg" />
     <Content Include="Content\img\item_382_thumb.jpg" />
+    <Content Include="Content\img\lavr-2.jpg" />
+    <Content Include="Content\img\lavr.jpg" />
     <Content Include="Content\img\liquid_1.jpg" />
     <Content Include="Content\img\liquid_2.jpg" />
     <Content Include="Content\img\logo-yst.png" />
@@ -922,7 +951,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\yst-localize-20170619.js" />
-    <Content Include="Scripts\yst-shoppingcart-20170506.js" />
+    <Content Include="Scripts\yst-shoppingcart-20171011.js" />
     <Content Include="Scripts\yst-notifications.js" />
     <Content Include="Scripts\yst-scripts-20170927.js" />
     <Content Include="Scripts\yst-utility.js" />
@@ -1090,6 +1119,12 @@
     <Content Include="Views\Orders\JoinOrders.cshtml" />
     <Content Include="Views\Orders\List2.cshtml" />
     <Content Include="Views\PrepayToggle\Index.cshtml" />
+    <Content Include="Views\Help\UrgentNews.cshtml" />
+    <Content Include="Views\Claims\ListForAdmin.cshtml" />
+    <Content Include="Views\Claims\DetailsAdmin.cshtml" />
+    <Content Include="Views\Reports\Freeman.cshtml" />
+    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Shared\_LayoutReports.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1232,6 +1267,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.resx">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710061305423_newProps_AddedToOrder.resx">
+      <DependentUpon>201710061305423_newProps_AddedToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710161127226_IsStarAddedToPartner.resx">
+      <DependentUpon>201710161127226_IsStarAddedToPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710171259545_PriceMin_AddedToPriceOfProduct.resx">
+      <DependentUpon>201710171259545_PriceMin_AddedToPriceOfProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710300853432_Id_AsKey_AddedTo_AddressOfPartner.resx">
+      <DependentUpon>201710300853432_Id_AsKey_AddedTo_AddressOfPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711080531078_CreateClaimsTable.resx">
+      <DependentUpon>201711080531078_CreateClaimsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711101322075_TransportCompanies_Added.resx">
+      <DependentUpon>201711101322075_TransportCompanies_Added.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

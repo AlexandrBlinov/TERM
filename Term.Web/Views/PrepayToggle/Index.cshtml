@@ -1,17 +1,18 @@
 ﻿@model bool
+@using Term.Web.Views.Resources;
 
 @{     
       string prepay = Model ? "btn-primary":"btn-default" ;
     string postpay = Model ? "btn-default" : "btn-primary";
 }
 
-<span> Тип цен </span>
+<span> @CartAndOrders.PriceType </span>
 <span class="btn-group inmenu-toggle-group" data-toggle="buttons">
 <label class="btn @prepay" data-prepay="1">
-Предоплата
+@CartAndOrders.Prepay
 </label>
 <label class="btn @postpay" data-prepay="0">
-Отсрочка
+@CartAndOrders.Adjournment
 </label>
 </span> 
 

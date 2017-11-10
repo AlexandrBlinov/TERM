@@ -186,6 +186,7 @@ namespace YstProject.Services
             return -1;
         }
 
+        public string GetPropertyValue(string propertyName, string partnerId) => DbContext.PartnerPropertyValues.FirstOrDefault(p => p.PartnerId == partnerId && p.Name == propertyName)?.Value;
 
 
     }
