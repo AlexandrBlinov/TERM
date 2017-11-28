@@ -38,10 +38,7 @@ namespace Term.Web.Controllers
         private readonly OrderService _orderService;
         private readonly DaysToDepartmentService _daysToDepartmentService;
         private readonly NewsService _newsService;
-    /*    private string _partnerId; int _pointId;
-        private bool _isForeign;
-        private Partner _partner;
-       private PartnerPoint _point; */
+    
 
 
         public HomeController(ProducerForSelectionService producers, SeasonProductService sps, OrderService orderService, DaysToDepartmentService daysToDepartmentService, NewsService newsService, HttpContextBase context)
@@ -82,9 +79,7 @@ namespace Term.Web.Controllers
             podborModel.Producers = CachedCollectionsService.GetProducers(ProductType.Disk);
             podborModel.CarsList = CachedCollectionsService.GetCarsList;
 
-            //  int pointId = ServicePP.getPointID();
-
-            // var isPartner = ServicePP.IsPartner;
+            
             bool isSale = ServicePP.IsSaleAvailable;
             ViewBag.SaleMode = isSale;
            
@@ -253,7 +248,7 @@ namespace Term.Web.Controllers
             podborModel.AkbTypes = CachedCollectionsService.GetAkbProperties("akbtype");
           
 
-            if (!base.Partner.IsForeign)
+            if (!Partner.IsForeign)
             {
                 ViewBag.MaxPrice = Defaults.PriceMaxRus;
                 ViewBag.PriceStepSlide = Defaults.PriceStepSlideRus;
@@ -277,10 +272,7 @@ namespace Term.Web.Controllers
 
         public ActionResult Accs(AccPodborView podborModel /* , int page = 1, int ItemsPerPage = 50, Display DisplayView = Display.Table */ )
         {
-         /*   podborModel.Page = page;
-            podborModel.ItemsPerPage = ItemsPerPage;
-            podborModel.DisplayView = DisplayView; */
-
+        
             podborModel.DisplayView = Display.Table;
             var categories = CachedCollectionsService.GetParentFolderForOthersProduct(ProductType.Acc);
             ViewBag.Categories = categories;

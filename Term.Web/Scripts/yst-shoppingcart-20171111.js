@@ -4,7 +4,7 @@ var isUserHasDpdContract = !!$("#isUserHasDpdContract").val();
 var isAdmin = !!$("#isAdmin").val();
 //var isAdmin = false;
 var passShowItemsOfSuppliers = false;
-
+var mainDepCode = "00005";
 
 (function() {
 
@@ -13,13 +13,29 @@ var passShowItemsOfSuppliers = false;
   
     $('.js-datefor-shipment').datetimepicker({
         format: 'DD.MM.YYYY', locale: YstLocale.GetLocale("Culture"),
+        allowInputToggle: true,
         showTodayButton: true,
         defaultDate: today,
         minDate: today,
         showClear: false,
         enabledDates: enabledDates
-        
+
     });
+
+
+        // событие при клике на input
+        /*
+    $('#DeliveryDate').click(function (event) {
+        event.preventDefault();
+        $('.js-datefor-shipment').data("DateTimePicker").show();
+    });
+    */
+    
+    /*
+    $('.open-datetimepicker').click(function (event) {
+        event.preventDefault();
+        $('#datetimepicker').click();
+    }); */
 
     // Подключаем iCheck Для radiobutton в корзине
     $('[type=radio],[type=checkbox]').iCheck({
@@ -55,16 +71,23 @@ var passShowItemsOfSuppliers = false;
 
 })();
 
-// Устанавливаем дни доставки
+/*
+/* Устанавливаем дни доставки
+*/
 function updateDatepicker()
 {
     var enabledDates = [];
+    var picker = $('.js-datefor-shipment').data("DateTimePicker");
+    var $ld = $("#LogistikDepartment").val();
+    if ($ld && $ld != mainDepCode) return;
+        
     var addressId = $('#AddressId').val();
     if (addressId && isAdmin)
     {
-        console.log(addressId);
-        // console.log(addressId);
-        $.get('/orders/GetDatesOfShipment', { "addressId": addressId }).done(  (data) =>{
+        //console.log(addressId);
+        
+        $.get('/orders/GetDatesOfShipment', { "addressId": addressId })
+            .done(function (data) {
 
             var result = data.result;
             for (var i = 0; i < result.length; i++) {
@@ -73,9 +96,12 @@ function updateDatepicker()
                 enabledDates.push(newDate);
 
             }
-            var picker = $('.js-datefor-shipment').data("DateTimePicker");
+           
             picker.options({ 'enabledDates': enabledDates })	
-        });
+            })
+            .fail(function () {
+                console.error("------AJAX error");
+            })
 
         
     }
@@ -106,27 +132,12 @@ supplierModule = {
         for (var i = 0; i <= namesOfSupplierProducts.length-1;i++) {
             $list.append('<li class="list-group-item data-table-a-text">' + namesOfSupplierProducts[i] + '</li>');
         }
-        $result.append('<h3> Внимание! Вы заказали товары </h3>').append($list).append('<span class="lead"> с поставкой с удаленного склада. Срок доставки до Вашего склада составит ' + daysToStr + '. Вы не сможете отказаться от получения этих товаров. <br/> Оформить заказ? </span>');
+        $result.append('<h3> Внимание! Вы заказали товары </h3>').append($list).append(' с поставкой с удаленного склада.  Вы должны поставить этот товар <mark> в отгрузку </mark>, а не резерв. <br/> Срок доставки до Вашего склада составит ' + daysToStr + '.  ');
       
         return $result;
     }
 };
 
-/*
-$('#modalFromSupplier').on('hidden.bs.modal', function() {
-    $("#shopping-cart-form").submit();
-}); */
-
-$('#modalFromSupplier .modal-footer button').on('click', function (e) {
-    var $target = $(e.target);
-    // если Да, то сабмитим форму
-    if ($target.val() == 1) 
-        {
-            passShowItemsOfSuppliers = true;
-            $("#shopping-cart-form").submit();
-        }
-
-});
 
 
 $("#shopping-cart-form").on("submit", function(e) {
@@ -156,7 +167,8 @@ $("#shopping-cart-form").on("submit", function(e) {
           //  passShowItemsOfSuppliers = true;
             var namesOfSupplierProducts = supplierModule.checkAndGetNamesForSupplierItems();
 
-            if (namesOfSupplierProducts.length) {
+            // если есть товары в пути то должна быть указана -> на доставку, а не резерв
+            if (namesOfSupplierProducts.length && !$('#isDelivery').is(':checked')) {
 
                 var stringOfSupplierProducts = supplierModule.createStringForSupplierItems(namesOfSupplierProducts);
                 $('#modalFromSupplier').find('.modal-body p').text('').append(stringOfSupplierProducts);
@@ -182,23 +194,7 @@ $(document).on("shoppingcart.changed",
         if (isAdmin && $('#CityId') && $('#CityId').length > 0) getCostOfDelivery();
     });
 
-$('#modalConfirmation .modal-footer button').on('click', function(e) {
-    var $target = $(e.target), // Clicked button element
-        $deliveryByTk_container = $('#deliveryByTk_container');
-    // если Да
-    if ($target.val() == 1) {
-
-        //if (@isAdminJs) $deliveryByTk_container.removeClass('hidden');
-        if (isAdmin) $deliveryByTk_container.removeClass('hidden');
-        $('[name=IsDeliveryByTk]').iCheck('check');
-
-        //if (!@isUserHasDpdContractJs) $('#modalNotification').modal();
-        if (!isUserHasDpdContract) $('#modalNotification').modal();
-    } else
-        $('[name=IsDeliveryByTk]').iCheck('uncheck');
-
-});
-
+   
 //
 // очистка полей при отказе от доставки
 //
@@ -218,29 +214,50 @@ function refuseFromDelivery() {
 ///
 
 $('[name=WayOfDelivery]').on('ifChecked', function (event) {
-    var $address_container = $('.address-container');
+    var $address_container = $('.address-container'),
+        $tk_container = $('.tk-container'),
+        $sdk = $('.selfDelivery-container'),
+        $dcc = $('.dpd-calc-container');
+
+
 
     switch (event.target.id) {
         case 'isDpdDelivery': {
             
-            $('.address-container').hide('slow');
-            $('.dpd-calc-container').show();
+            $address_container.hide('slow');
+            $tk_container.hide('slow');
+            $sdk.hide('slow');
+            $dcc.show();
             break;
         }
         case 'isSelfDelivery': {
-            $('.address-container').hide('slow');
+            $address_container.hide('slow');
+            $tk_container.hide('slow');
+            $sdk.show('slow');
             refuseFromDelivery();
             break;
         }
+        case 'isTransportCompany':
+            {
+             
+                $address_container.hide();
+                $tk_container.show('slow');
+                $sdk.hide();
+                refuseFromDelivery();
+                break;
+
+            }
         default: // isDeliveryByOwnTransport
             {
-                $('.address-container').show('slow');
+                $address_container.show('slow');
+                $tk_container.hide('slow');
+                $sdk.hide('slow');
                 refuseFromDelivery();
             }
 } });
 
 // пока убираем
-//$('#AddressId').change(() => updateDatepicker());
+$('#AddressId').change(function () { updateDatepicker() });
 
 ///
 // выбор на отгрузку или в резерв
@@ -257,7 +274,7 @@ $('[name=IsDelivery]').on('ifChecked', function(event) {
     if (event.target.id === "isDelivery") {
         $deliverydate_container.removeClass('hidden');
 // пока убираем
-//  updateDatepicker();
+  updateDatepicker();
         if (isUserHasDpdContract)   $deliveryByTk_container.removeClass('hidden');
         $address_container.show('slow');
         $('.js-wayofdelivery').show('slow');
@@ -278,6 +295,8 @@ $('[name=IsDelivery]').on('ifChecked', function(event) {
     }
 
 });
+
+
 
 ////////////////////
 // Блок  Dpd
@@ -508,3 +527,39 @@ $('#City').autocomplete({
     delay: 200
 });
 
+/*
+$('#modalFromSupplier').on('hidden.bs.modal', function() {
+    $("#shopping-cart-form").submit();
+}); */
+
+/*
+$('#modalFromSupplier .modal-footer button').on('click', function (e) {
+    var $target = $(e.target);
+    // если Да, то сабмитим форму
+    if ($target.val() == 1) 
+        {
+            passShowItemsOfSuppliers = true;
+            $("#shopping-cart-form").submit();
+        }
+
+});
+*/
+
+ /*
+$('#modalConfirmation .modal-footer button').on('click', function(e) {
+    var $target = $(e.target), // Clicked button element
+        $deliveryByTk_container = $('#deliveryByTk_container');
+    // если Да
+    if ($target.val() == 1) {
+
+        //if (@isAdminJs) $deliveryByTk_container.removeClass('hidden');
+        if (isAdmin) $deliveryByTk_container.removeClass('hidden');
+        $('[name=IsDeliveryByTk]').iCheck('check');
+
+        //if (!@isUserHasDpdContractJs) $('#modalNotification').modal();
+        if (!isUserHasDpdContract) $('#modalNotification').modal();
+    } else
+        $('[name=IsDeliveryByTk]').iCheck('uncheck');
+
+});
+*/

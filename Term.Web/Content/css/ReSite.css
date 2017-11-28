@@ -67,7 +67,7 @@
 .nav>li>a.second:hover, .nav>li>a.second:focus, .nav>li>a.second:active, .nav>li>a.second:active:focus {
     text-decoration: none;
     color: #009efe;
-    background-color: #18355d;
+    background-color: #18355d !important;
     border-bottom: 3px solid #009efe;
 }
 
@@ -1989,7 +1989,7 @@ hr.cart-divider {
     color: rgb(255, 255, 255);
     border: none;
     text-transform: uppercase;
-    margin-bottom:10px;
+    margin-bottom:10px; 
 }
 
 .btn.btn-styled, .btn.btn-styled:hover, .btn.btn-styled:visited, .btn.btn-styled:focus {
@@ -2275,10 +2275,16 @@ width: 165px;
  }
 
 
+.navbar-default .navbar-nav > .open > a.collapse-1, .navbar-default .navbar-nav > .open > a.collapse-1:hover, .navbar-default .navbar-nav > .open > acollapse-1:focus {
+    color: #009efe !important;
+    border-bottom: 3px solid rgb(0, 158, 254) !important;
+    background-color: #f8f8f8 !important;
+}
+
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-    color: rgb(85, 85, 85);
-    background-color: rgb(231, 231, 231);
+    color: #009efe;
     border-bottom: 3px solid rgb(0, 158, 254);
+    background-color: #18355d;
 }
 
 /*
@@ -2764,24 +2770,32 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
     background: url("/Content/img/tyre.jpg") no-repeat 18px 0px;
     height: 300px;
     display: block;
+    background-size: contain;
+    background-position: center;
 }
 
 .link_disks {
     background: url("/Content/img/disk.jpg") no-repeat 18px 0px;
     height: 300px;
     display: block;
+    background-size: contain;
+    background-position: center;
 }
 
 .link_akb {
     background: url("/Content/img/akk.jpg") no-repeat 18px 0px;
     height: 300px;
     display: block;
+    background-size: contain;
+    background-position: center;
 }
 
 .link_accs {
     background: url("/Content/img/accs.jpg") no-repeat 18px 0px;
     height: 300px;
     display: block;
+    background-size: contain;
+    background-position: center;
 }
 
 .btn-group.inmenu-toggle-group .btn {
@@ -2857,4 +2871,12 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
 
 .js-datefor-shipment {
     max-width:170px;
+}
+
+.modal-footer .btn.btn-styled {
+    margin-bottom:0;
+}
+
+.input-group .input-group-addon.date-pick-btn {
+    border: 0;
 }

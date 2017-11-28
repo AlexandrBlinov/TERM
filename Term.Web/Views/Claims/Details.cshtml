@@ -93,6 +93,9 @@
         }
     </tbody>
 </table>
+
+@Html.ActionLink("Печать рекламационной карточки", "ClaimPrintForm", "Claims", new { guid = @Model.Claim.GuidIn1S }, new { @class = "btn btn-styled m-t-30", @target = "_blank" }) 
+
 @section Scripts {
     <script>
 $(document).ready(function () {
@@ -144,13 +147,13 @@ var uri = '/api/ystapi/getfilesinfolder?claim=' + folderclaim + '&productId=' + 
 $.getJSON(uri, function (data) {
 $.each(data, function (key, item) {
 var path = folderclaim + "/" + folderproduct + "/" + item;
-    if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
-        $('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a><br />");
-    } else if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mpeg") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0) {
-        $('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a><br />");
-    } else {
-        $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a><br />");
-    }
+if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
+$('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a><br />");
+}else if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mpeg") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0) {
+$('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a><br />");
+} else {
+    $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a><br />");
+}
 });
 });
 }

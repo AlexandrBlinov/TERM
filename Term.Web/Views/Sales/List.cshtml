@@ -62,7 +62,7 @@
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                 <label class="search-order-label">@ForSearchResult.PerPage</label>
                 <div>
-                    @Html.DropDownListFor(p => p.ItemsPerPage, new SelectList(new int[] { 10, 20, 50, 100, 200 }), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+                    @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 search-order-btn text-center">

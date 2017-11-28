@@ -67,15 +67,17 @@ namespace Term.Web.Controllers
             vm.CartCount = cart.GetCount();
             vm.TotalWeight = cart.GetCartWeight();
             vm.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
-            vm.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
-            vm.TkIds = _orderService.GetTkIds();
+            vm.AddressesIds = _orderService.AddressesOfDelivery;
+            vm.TkIds = _orderService.TkIds;
             vm.IsPrepay = cart.IsPrepay || Partner.PrePay;
             // viewModel.IsStar = false;
             vm.HasStar = hasStar && !isForeign;
-            
 
+            vm.LogistikDepartment = !isForeign && !String.IsNullOrEmpty(Partner.LogistikDepartment) ? Partner.LogistikDepartment : null;
+
+            vm.SelfDeliveryIds = _orderService.SelfDeliveryAddresses;
        //     vm.WayOfDelivery = this.Partner.WayOfDelivery;
-            
+
         }
 
         /// <summary>
@@ -173,7 +175,7 @@ namespace Term.Web.Controllers
             var cart = this.Cart;
 
 
-            viewModel.IsDeliveryByTk = viewModel.WayOfDelivery == 2 && viewModel.IsDelivery;
+            viewModel.IsDeliveryByTk = viewModel.WayOfDelivery == (int)WaysOfDelivery.ByDpd && viewModel.IsDelivery;
 
             ViewBag.IsForeign = this.Partner.IsForeign;
 
@@ -189,7 +191,7 @@ namespace Term.Web.Controllers
 
             // проверяем обязательное заполнение адреса если доставка наша и не 
 
-            if (viewModel.IsDelivery && viewModel.WayOfDelivery == 0 && !isForeign && !ViewBag.HasitemsOnWay)
+            if (viewModel.IsDelivery && viewModel.WayOfDelivery == (int)WaysOfDelivery.Delivery && !isForeign && !ViewBag.HasitemsOnWay)
             {
                 if (String.IsNullOrEmpty(viewModel.AddressId))      ModelState.AddModelError("AddressId", "Выберите адрес доставки");
             }
@@ -275,7 +277,8 @@ namespace Term.Web.Controllers
                     viewModel.IsPrepay,
                     viewModel.IsStar,
                     viewModel.WayOfDelivery,
-                    addressId
+                    addressId,
+                    viewModel.TkId ?? String.Empty
                     ));
 
 
@@ -639,10 +642,10 @@ namespace Term.Web.Controllers
                         var priceOfPoint = Products.GetPriceOfPoint(entry.Key, PointId, PartnerId);
 
                         var priceOfClient = Products.GetPriceOfClient(entry.Key, PointId, PartnerId);
-
-                        var departmentId = 5;
+                                                
+                        var departmentId = Defaults.MainDepartment;
                         int count = entry.Value;
-                        int days = ServicePP.GetDaysToDepartment(PointId, 5);
+                        int days = ServicePP.GetDaysToDepartment(PointId, departmentId);
 
                         cart.AddToCart(addedProduct, departmentId, days, ref count, price, priceOfPoint, priceOfClient);
                     }

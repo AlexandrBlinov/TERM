@@ -1,0 +1,63 @@
+﻿<div id="hidden_tmpl_disk" class="invisible">
+    <div id="disk_[i]" class="disks" data-rowdisk="[i]">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>Диск</span>
+                <span class="glyphicon glyphicon-remove" style="float: right;cursor: pointer;" aria-hidden="true" data-remove="disk_[i]"></span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label" for="disks-doc_number_[i]">Номер документа</label>
+                        <input type="text" id="disks-doc_number_[i]" name="disks-doc_number_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Номер документа" />
+                        <span class="field-validation-error" data-valmsg-for="disks-doc_number_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="disks-doc_date_[i]">Дата документа</label>
+                        <input type="text" id="disks-doc_date_[i]" name="disks-doc_date_[i]" class="form-control date" maxlength="255" required data-val="true" data-val-required="Заполните Дата документа" />
+                        <span class="field-validation-error" data-valmsg-for="disks-doc_date_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-2">
+                        <label class="control-label" for="disks-code_[i]">Код товара</label>
+                        <input type="text" id="disks-code_[i]" name="disks-code_[i]" class="form-control code-autocomplete" maxlength="255" required data-val="true" data-val-required="Заполните Код товара" />
+                        <span class="field-validation-error" data-valmsg-for="disks-code_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-6">
+                        <label class="control-label" for="disks-name_[i]">Наименование</label>
+                        <input type="text" id="disks-name_[i]" name="disks-name_[i]" class="form-control item-product-name" maxlength="255" required data-val="true" data-val-required="Заполните Наименование" />
+                        <span class="field-validation-error" data-valmsg-for="disks-name_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="disks-count_[i]">Количество</label>
+                        <input type="text" id="disks-count_[i]" name="disks-count_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Количество" />
+                        <span class="field-validation-error" data-valmsg-for="disks-count_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="disks-date_[i]">Дата производства</label>
+                        <input type="text" id="disks-date_[i]" name="disks-date_[i]" class="form-control date" maxlength="255" required data-val="true" data-val-required="Заполните Дата производства" />
+                        <span class="field-validation-error" data-valmsg-for="disks-date_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-4">
+                        <label class="control-label" for="disks_defect_[i]">Дефект</label>
+                        <select id="disks_defect_[i]" name="disks_defect_[i]" class="form-control" required data-val="true" data-val-required="Выберите Дефект"><option value="">Выберите дефект...</option><optgroup label="Другой дефект"><option value="99">Другой дефект...</option></optgroup><optgroup label="Биение"><option value="11">Торцевое биение</option><option value="11">Радиальное биение</option></optgroup><optgroup label="Дефект литья"><option value="12">Трещины</option><option value="12">Полное разрушение диска</option><option value="12">Частичное разрушение диска</option><option value="12">Негерметичный</option><option value="12">Поры и группы микроотверстий</option></optgroup><optgroup label="Дефект лакокрасочного покрытия"><option value="13">Некачественная покраска</option><option value="13">Коррозия</option></optgroup><optgroup label="Дисбаланс"><option value="14">Дисбаланс</option></optgroup><optgroup label="Механические повреждения"><option value="15">Забоины</option><option value="15">Замятие</option><option value="15">Сколы</option><option value="15">Царапины</option></optgroup><optgroup label="Не подходит на автомобиль"><option value="16">Описание атомобиля</option></optgroup><optgroup label="Дефект комплектации"><option value="17">Описание дефекта</option></optgroup><optgroup label="Пересорт"><option value="18">Описание пересорта</option></optgroup></select>
+                        <span class="field-validation-error" data-valmsg-for="disks_defect_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-5">
+                        <label class="control-label" for="disks_defect_full_[i]">Подробное описание дефекта</label>
+                        <input type="text" id="disks_defect_full_[i]" name="disks_defect_full_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Подробное описание дефекта" />
+                        <span class="field-validation-error" data-valmsg-for="disks_defect_full_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="disks_condition_[i]">Состояние</label>
+                        <select id="disks_condition_[i]" name="disks_condition_[i]" class="form-control" required data-val="true" data-val-required="Выберите Состояние"><option value="">Выберите состояние...</option><option value="1">Новый</option><option value="2">Б/У</option></select>
+                        <span class="field-validation-error" data-valmsg-for="disks_condition_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -429,6 +429,31 @@ namespace Term.Web.Controllers.API
 
             return new HttpResponseMessage { Content = new StringContent(result.ToString()) };
         }
+
+        /// <summary>
+        /// Возвраты товаров загружаем обратно
+        /// </summary>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> ImportClaims()
+        {
+            int result = 0;
+            string errorMsg;
+
+            var stream = await Request.Content.ReadAsStreamAsync();
+
+
+            var parameters = new[] {
+
+                new SqlParameter{ParameterName="@xmlData",SqlDbType=SqlDbType.Xml, Direction = ParameterDirection.Input, Value = new SqlXml( stream)},
+                new SqlParameter { ParameterName="@b",SqlDbType=SqlDbType.Int, Direction=ParameterDirection.ReturnValue },
+               new SqlParameter("@Message", SqlDbType.NVarChar, 500) { Direction = ParameterDirection.Output }};
+
+            result = SPExecutor.Execute("spImportClaims", parameters, out errorMsg);
+
+            if (result != 0) return new HttpResponseMessage { Content = new StringContent("Error  " + errorMsg), StatusCode = HttpStatusCode.InternalServerError };
+
+            return new HttpResponseMessage { Content = new StringContent(result.ToString()) };
+        }
     }
 
 

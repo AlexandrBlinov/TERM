@@ -1,0 +1,117 @@
+﻿<div id="hidden_tmpl_tyre" class="invisible">
+    <div id="tyre_[i]" class="tyres" data-rowtyre="[i]">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>Шина</span>
+                <span class="glyphicon glyphicon-remove" style="float: right;cursor: pointer;" aria-hidden="true" data-remove="tyre_[i]"></span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label" for="tyres-doc_number_[i]">Номер документа</label>
+                        <input type="text" id="tyres-doc_number_[i]" name="tyres-doc_number_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Номер документа" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-doc_number_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="tyres-doc_date_[i]">Дата документа</label>
+                        <input type="text" id="tyres-doc_date_[i]" name="tyres-doc_date_[i]" class="form-control date" maxlength="255" required data-val="true" data-val-required="Заполните Дата документа" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-doc_date_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-2">
+                        <label class="control-label" for="tyres-code_[i]">Код товара</label>
+                        <input type="text" id="tyres-code_[i]" name="tyres-code_[i]" class="form-control code-autocomplete" maxlength="255" required data-val="true" data-val-required="Заполните Код товара" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-code_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-4">
+                        <label class="control-label" for="tyres-name_[i]">Наименование</label>
+                        <input type="text" id="tyres-name_[i]" name="tyres-name_[i]" class="form-control item-product-name" maxlength="255" required data-val="true" data-val-required="Заполните Наименование" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-name_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="tyres-count_[i]">Количество</label>
+                        <input type="text" id="tyres-count_[i]" name="tyres-count_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Количество" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-count_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="tyres-date_[i]">Дата производства</label>
+                        <input type="text" id="tyres-date_[i]" name="tyres-date_[i]" class="form-control date" maxlength="255" required data-val="true" data-val-required="Заполните Дата производства" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-date_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="tyres-serial_[i]">Серийный номер</label>
+                        <input type="text" id="tyres-serial_[i]" name="tyres-serial_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Серийный номер" />
+                        <span class="field-validation-error" data-valmsg-for="tyres-serial_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-4">
+                        <label class="control-label" for="tyres_defect_[i]">Дефект</label>
+                        <select id="tyres_defect_[i]" name="tyres_defect_[i]" class="form-control" required data-val="true" data-val-required="Выберите Дефект"><option value="">Выберите дефект...</option><optgroup label="Другой дефект"><option value="99">Другой дефект...</option></optgroup><optgroup label="Дефекты протектора"><option value="21">Вздутие</option><option value="21">Сквозное повреждение</option><option value="21">Расслоение</option><option value="21">Неравномерный износ</option><option value="21">Постороннее включение</option></optgroup><optgroup label="Дефекты герметичного слоя или дефекты обкладки первого слоя каркаса по всей окружности с образованием намола - резиновой крошки."><option value="22">Трещины</option><option value="22">Дефекты герметичного слоя или дефекты обкладки первого слоя каркаса по всей окружности с образованием намола - резиновой крошки.</option></optgroup><optgroup label="Дефекты боковины"><option value="23">Вздутие</option><option value="23">Сквозное повреждение</option><option value="23">Трещины</option><option value="23">Постороннее включение</option></optgroup><optgroup label="Дефекты борта"><option value="24">Деформация боковых колец</option><option value="24">Разрушение с оголением проволоки бортового кольца</option><option value="24">Разрушение обкладки бортового кольца</option></optgroup></select>
+                        <span class="field-validation-error" data-valmsg-for="tyres_defect_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-5">
+                        <label class="control-label" for="tyres_defect_full_[i]">Подробное описание дефекта</label>
+                        <input type="text" id="tyres_defect_full_[i]" name="tyres_defect_full_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Серийный номер" />
+                        <span class="field-validation-error" data-valmsg-for="tyres_defect_full_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="tyres_condition_[i]">Состояние</label>
+                        <select id="tyres_condition_[i]" name="tyres_condition_[i]" class="form-control" required data-val="true" data-val-required="Выберите Состояние"><option value="">Выберите состояние...</option><option value="1">Новый</option><option value="2">Б/У</option></select>
+                        <span class="field-validation-error" data-valmsg-for="tyres_condition_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="tyres_carInfo_[i] invisible">
+                    <h3>БУ шина&nbsp;— дополнительная информация</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group tyres_auto_[i]">
+                                <label class="control-label" for="tyres_auto_[i]">Марка автомобиля</label>
+                                <input type="text" id="tyres_auto_[i]" class="form-control" maxlength="255">
+                                <div class="help-block"></div>
+                            </div>
+                            <div class="form-group field-tyres_position_[i]">
+                                <label class="control-label" for="tyres_position_[i]">Расположение шины на автомобиле</label>
+                                <input type="text" id="tyres_position_[i]" class="form-control" maxlength="255">
+                                <div class="help-block"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group tyres_run_[i]">
+                                        <label class="control-label" for="tyres_run_[i]">Пробег шины</label>
+                                        <input type="text" id="tyres_run_[i]" class="form-control">
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group tyres_pressure_[i]">
+                                        <label class="control-label" for="tyres_pressure_[i]">Давление в шине при эксплуатации</label>
+                                        <select id="tyres_pressure_[i]" class="form-control"><option value="0">0.0</option><option value="0.1">0.1</option><option value="0.2">0.2</option><option value="0.3">0.3</option><option value="0.4">0.4</option><option value="0.5">0.5</option><option value="0.6">0.6</option><option value="0.7">0.7</option><option value="0.8">0.8</option><option value="0.9">0.9</option><option value="1">1.0</option><option value="1.1">1.1</option><option value="1.2">1.2</option><option value="1.3">1.3</option><option value="1.4">1.4</option><option value="1.5">1.5</option><option value="1.6">1.6</option><option value="1.7">1.7</option><option value="1.8">1.8</option><option value="1.9">1.9</option><option value="2">2.0</option><option value="2.1">2.1</option><option value="2.2">2.2</option><option value="2.3">2.3</option><option value="2.4">2.4</option><option value="2.5">2.5</option><option value="2.6">2.6</option><option value="2.7">2.7</option><option value="2.8">2.8</option><option value="2.9">2.9</option><option value="3">3.0</option><option value="3.1">3.1</option><option value="3.2">3.2</option><option value="3.3">3.3</option><option value="3.4">3.4</option><option value="3.5">3.5</option><option value="3.6">3.6</option><option value="3.7">3.7</option><option value="3.8">3.8</option><option value="3.9">3.9</option><option value="4">4.0</option><option value="4.1">4.1</option><option value="4.2">4.2</option><option value="4.3">4.3</option><option value="4.4">4.4</option><option value="4.5">4.5</option><option value="4.6">4.6</option><option value="4.7">4.7</option><option value="4.8">4.8</option><option value="4.9">4.9</option><option value="5">5.0</option><option value="5.1">5.1</option><option value="5.2">5.2</option><option value="5.3">5.3</option><option value="5.4">5.4</option><option value="5.5">5.5</option><option value="5.6">5.6</option><option value="5.7">5.7</option><option value="5.8">5.8</option><option value="5.9">5.9</option><option value="6">6.0</option><option value="6.1">6.1</option><option value="6.2">6.2</option><option value="6.3">6.3</option><option value="6.4">6.4</option><option value="6.5">6.5</option><option value="6.6">6.6</option><option value="6.7">6.7</option><option value="6.8">6.8</option><option value="6.9">6.9</option><option value="7">7.0</option><option value="7.1">7.1</option><option value="7.2">7.2</option><option value="7.3">7.3</option><option value="7.4">7.4</option><option value="7.5">7.5</option><option value="7.6">7.6</option><option value="7.7">7.7</option><option value="7.8">7.8</option><option value="7.9">7.9</option><option value="8">8.0</option><option value="8.1">8.1</option><option value="8.2">8.2</option><option value="8.3">8.3</option><option value="8.4">8.4</option><option value="8.5">8.5</option><option value="8.6">8.6</option><option value="8.7">8.7</option><option value="8.8">8.8</option><option value="8.9">8.9</option><option value="9">9.0</option><option value="9.1">9.1</option><option value="9.2">9.2</option><option value="9.3">9.3</option><option value="9.4">9.4</option><option value="9.5">9.5</option><option value="9.6">9.6</option><option value="9.7">9.7</option><option value="9.8">9.8</option><option value="9.9">9.9</option><option value="10">10.0</option><option value="10.1">10.1</option><option value="10.2">10.2</option><option value="10.3">10.3</option><option value="10.4">10.4</option><option value="10.5">10.5</option><option value="10.6">10.6</option><option value="10.7">10.7</option><option value="10.8">10.8</option><option value="10.9">10.9</option><option value="11">11.0</option><option value="11.1">11.1</option><option value="11.2">11.2</option><option value="11.3">11.3</option><option value="11.4">11.4</option><option value="11.5">11.5</option><option value="11.6">11.6</option><option value="11.7">11.7</option><option value="11.8">11.8</option><option value="11.9">11.9</option><option value="12">12.0</option></select><div class="help-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group tyres_wheel_width_[i]">
+                                        <label class="control-label" for="tyres_wheel_width_[i]">Ширина обода диска</label>
+                                        <select id="tyres_wheel_width_[i]" class="form-control"><option value="0">0.0</option><option value="0.5">0.5</option><option value="1">1.0</option><option value="1.5">1.5</option><option value="2">2.0</option><option value="2.5">2.5</option><option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option><option value="4.5">4.5</option><option value="5">5.0</option><option value="5.5">5.5</option><option value="6">6.0</option><option value="6.5">6.5</option><option value="7">7.0</option><option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option><option value="9.5">9.5</option><option value="10">10.0</option><option value="10.5">10.5</option><option value="11">11.0</option><option value="11.5">11.5</option><option value="12">12.0</option><option value="12.5">12.5</option><option value="13">13.0</option><option value="13.5">13.5</option><option value="14">14.0</option><option value="14.5">14.5</option><option value="15">15.0</option><option value="15.5">15.5</option><option value="16">16.0</option><option value="16.5">16.5</option><option value="17">17.0</option><option value="17.5">17.5</option><option value="18">18.0</option><option value="18.5">18.5</option><option value="19">19.0</option><option value="19.5">19.5</option><option value="20">20.0</option><option value="20.5">20.5</option><option value="21">21.0</option><option value="21.5">21.5</option><option value="22">22.0</option><option value="22.5">22.5</option><option value="23">23.0</option><option value="23.5">23.5</option><option value="24">24.0</option><option value="24.5">24.5</option><option value="25">25.0</option><option value="25.5">25.5</option><option value="26">26.0</option><option value="26.5">26.5</option><option value="27">27.0</option><option value="27.5">27.5</option><option value="28">28.0</option><option value="28.5">28.5</option><option value="29">29.0</option><option value="29.5">29.5</option><option value="30">30.0</option><option value="30.5">30.5</option><option value="31">31.0</option><option value="31.5">31.5</option><option value="32">32.0</option><option value="32.5">32.5</option><option value="33">33.0</option><option value="33.5">33.5</option><option value="34">34.0</option><option value="34.5">34.5</option><option value="35">35.0</option><option value="35.5">35.5</option><option value="36">36.0</option><option value="36.5">36.5</option><option value="37">37.0</option><option value="37.5">37.5</option><option value="38">38.0</option><option value="38.5">38.5</option><option value="39">39.0</option><option value="39.5">39.5</option><option value="40">40.0</option><option value="40.5">40.5</option><option value="41">41.0</option><option value="41.5">41.5</option><option value="42">42.0</option><option value="42.5">42.5</option><option value="43">43.0</option><option value="43.5">43.5</option><option value="44">44.0</option><option value="44.5">44.5</option><option value="45">45.0</option><option value="45.5">45.5</option><option value="46">46.0</option><option value="46.5">46.5</option><option value="47">47.0</option><option value="47.5">47.5</option><option value="48">48.0</option><option value="48.5">48.5</option><option value="49">49.0</option><option value="49.5">49.5</option><option value="50">50.0</option><option value="50.5">50.5</option><option value="51">51.0</option><option value="51.5">51.5</option><option value="52">52.0</option><option value="52.5">52.5</option><option value="53">53.0</option><option value="53.5">53.5</option><option value="54">54.0</option><option value="54.5">54.5</option><option value="55">55.0</option><option value="55.5">55.5</option><option value="56">56.0</option><option value="56.5">56.5</option><option value="57">57.0</option><option value="57.5">57.5</option><option value="58">58.0</option><option value="58.5">58.5</option><option value="59">59.0</option><option value="59.5">59.5</option><option value="60">60.0</option><option value="60.5">60.5</option><option value="61">61.0</option><option value="61.5">61.5</option><option value="62">62.0</option><option value="62.5">62.5</option><option value="63">63.0</option><option value="63.5">63.5</option><option value="64">64.0</option><option value="64.5">64.5</option><option value="65">65.0</option><option value="65.5">65.5</option><option value="66">66.0</option><option value="66.5">66.5</option><option value="67">67.0</option><option value="67.5">67.5</option><option value="68">68.0</option><option value="68.5">68.5</option><option value="69">69.0</option><option value="69.5">69.5</option><option value="70">70.0</option><option value="70.5">70.5</option><option value="71">71.0</option><option value="71.5">71.5</option><option value="72">72.0</option><option value="72.5">72.5</option><option value="73">73.0</option><option value="73.5">73.5</option><option value="74">74.0</option><option value="74.5">74.5</option><option value="75">75.0</option><option value="75.5">75.5</option><option value="76">76.0</option><option value="76.5">76.5</option><option value="77">77.0</option><option value="77.5">77.5</option><option value="78">78.0</option><option value="78.5">78.5</option><option value="79">79.0</option><option value="79.5">79.5</option><option value="80">80.0</option><option value="80.5">80.5</option><option value="81">81.0</option><option value="81.5">81.5</option><option value="82">82.0</option><option value="82.5">82.5</option><option value="83">83.0</option><option value="83.5">83.5</option><option value="84">84.0</option><option value="84.5">84.5</option><option value="85">85.0</option><option value="85.5">85.5</option><option value="86">86.0</option><option value="86.5">86.5</option><option value="87">87.0</option><option value="87.5">87.5</option><option value="88">88.0</option><option value="88.5">88.5</option><option value="89">89.0</option><option value="89.5">89.5</option><option value="90">90.0</option><option value="90.5">90.5</option><option value="91">91.0</option><option value="91.5">91.5</option><option value="92">92.0</option><option value="92.5">92.5</option><option value="93">93.0</option><option value="93.5">93.5</option><option value="94">94.0</option><option value="94.5">94.5</option><option value="95">95.0</option><option value="95.5">95.5</option><option value="96">96.0</option><option value="96.5">96.5</option><option value="97">97.0</option><option value="97.5">97.5</option><option value="98">98.0</option><option value="98.5">98.5</option><option value="99">99.0</option><option value="99.5">99.5</option><option value="100">100.0</option></select><div class="help-block"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group tyres_wheel_diametr_[i]">
+                                        <label class="control-label" for="tyres_wheel_diametr_[i]">Посадочный диаметр диска</label>
+                                        <select id="tyres_wheel_diametr_[i]" class="form-control"><option value="0">0.0</option><option value="0.5">0.5</option><option value="1">1.0</option><option value="1.5">1.5</option><option value="2">2.0</option><option value="2.5">2.5</option><option value="3">3.0</option><option value="3.5">3.5</option><option value="4">4.0</option><option value="4.5">4.5</option><option value="5">5.0</option><option value="5.5">5.5</option><option value="6">6.0</option><option value="6.5">6.5</option><option value="7">7.0</option><option value="7.5">7.5</option><option value="8">8.0</option><option value="8.5">8.5</option><option value="9">9.0</option><option value="9.5">9.5</option><option value="10">10.0</option><option value="10.5">10.5</option><option value="11">11.0</option><option value="11.5">11.5</option><option value="12">12.0</option><option value="12.5">12.5</option><option value="13">13.0</option><option value="13.5">13.5</option><option value="14">14.0</option><option value="14.5">14.5</option><option value="15">15.0</option><option value="15.5">15.5</option><option value="16">16.0</option><option value="16.5">16.5</option><option value="17">17.0</option><option value="17.5">17.5</option><option value="18">18.0</option><option value="18.5">18.5</option><option value="19">19.0</option><option value="19.5">19.5</option><option value="20">20.0</option><option value="20.5">20.5</option><option value="21">21.0</option><option value="21.5">21.5</option><option value="22">22.0</option><option value="22.5">22.5</option><option value="23">23.0</option><option value="23.5">23.5</option><option value="24">24.0</option><option value="24.5">24.5</option><option value="25">25.0</option><option value="25.5">25.5</option><option value="26">26.0</option><option value="26.5">26.5</option><option value="27">27.0</option><option value="27.5">27.5</option><option value="28">28.0</option><option value="28.5">28.5</option><option value="29">29.0</option><option value="29.5">29.5</option><option value="30">30.0</option><option value="30.5">30.5</option><option value="31">31.0</option><option value="31.5">31.5</option><option value="32">32.0</option><option value="32.5">32.5</option><option value="33">33.0</option><option value="33.5">33.5</option><option value="34">34.0</option><option value="34.5">34.5</option><option value="35">35.0</option><option value="35.5">35.5</option><option value="36">36.0</option><option value="36.5">36.5</option><option value="37">37.0</option><option value="37.5">37.5</option><option value="38">38.0</option><option value="38.5">38.5</option><option value="39">39.0</option><option value="39.5">39.5</option><option value="40">40.0</option></select><div class="help-block"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

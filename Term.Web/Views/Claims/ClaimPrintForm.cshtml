@@ -1,0 +1,68 @@
+﻿@model Yst.ViewModels.ClaimsViewWithDetails
+@{
+    ViewBag.Title = "Рекламационная карточка";
+    Layout = "~/Views/Shared/_LayoutPrint.cshtml";
+}
+
+
+<table class="table text_bold border-none m-b-20">
+    <tr> <td class="w100" style="width: 205px;text-align:right;">Наименование организации:</td><td style="text-align:left;"> @ViewBag.PartnerName</td></tr>
+    <tr> <td class="w100" style="text-align:right;">ИНН организации:</td><td style="text-align:left;"> @ViewBag.PartnerINN</td></tr>
+    <tr> <td class="w100" style="text-align:right;">Адрес и телефон:</td><td style="text-align:left;"> @ViewBag.PartnerAddressPhone</td></tr>
+    <tr> <td class="w100" style="text-align:right;">Дата:</td><td style="text-align:left;"> @DateTime.Now.ToShortDateString()</td></tr>
+</table>
+
+<p style="text-align:center;">ЗАО ТК "ЯРШИНТОРГ"</p>
+<p style="text-align:center;">150044 г. Ярославль, ул. Базовая д. 3 стр.2</p>
+<p style="text-align:center;">тел. (4852) 200-200</p>
+
+<h3 style="text-align:center;">РЕКЛАМАЦИОННАЯ КАРТОЧКА</h3>
+<p>Заполнить таблицу с указанием типоразмера, производителя и выявленным дефектом:</p>
+<table class="table table-bill m-b-20">
+    <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Код</th>
+            <th>Кол-во, шт</th>
+            <th>№ счёт-фактуры</th>
+            <th>Выявленные дефекты</th>
+            <th>Дата производства</th>
+            <th>Доп. информация (ставленый или нет, пробег, др.)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClaimDetails)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.ProductId</td>
+                <td>@item.Count</td>
+                <td>@item.SaleNumber</td>
+                <td>@item.Defect</td>
+                <td>@item.ProductionDate</td>
+                <td>@item.AdditionalInfo</td>
+            </tr>
+        }      
+    </tbody>
+</table>
+<h3 style="text-align:center;">ЗАЯВЛЕНИЕ</h3>
+<p style="text-align:center;">о проведении рекламационной экспертизы товара</p>
+<p>Прошу провести экспертизу и выдать "Заключение" О причинах возникновения дефектов, а так же возможности его дальнейшей эксплуатации</p>
+<p>Дополнительные требования при рассмотрении рекламации:</p>
+<ul>
+    <li>В случае наприятия рекламации и отсутствии требования клиента вернуть предъявленную продукцию, шина будет утилизирована по истечении 30 дней с момента получения Заявителем уведомления о результатах</li>
+    <li>Автошины и/или диски, представленные на экспертизу, должны быть очищены от грязи, места предполагаемых дефектов обозначены (в противном случае ЗАО ТК "Яршинторг" оставляет за собой право отказать в рассмотрении предъявленной продукции).</li>
+    <li>Максимальное возможное заполнение рекламационной карточки может ускорить рассмотрение рекламационной претензии.</li>
+</ul>
+<table class="table text_bold border-none m-b-20" style="width: 500px;float: right;">
+    <tr> <td class="w100" style="text-align:right;">Подпись заявителя</td><td>____________________________________</td></tr>
+    <tr> <td class="w100" style="text-align:right;">Расшифровка подписи</td><td>____________________________________</td></tr>
+    <tr> <td class="w100" style="text-align:right;">Дата</td><td>_____________________________20___г.</td></tr>
+    <tr> <td class="w100"></td><td></td></tr>
+    <tr> <td class="w100"></td><td></td></tr>
+    <tr> <td class="w100" style="text-align:right;">М/П</td><td></td></tr>
+</table>
+
+<script type="text/javascript">
+    window.print();
+</script>

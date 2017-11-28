@@ -1,0 +1,96 @@
+﻿@using Yst.ViewModels
+@model NewClaimViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>1. Организация и ответственный</h2>
+
+<div class="row m-t-15">
+    <div class="col-xs-5">
+        <label>Название организации</label>
+        @Html.TextBoxFor(m => m.PartnerName, new { @class = "form-control" }).DisabledIf(true)
+    </div>
+    <div class="col-xs-3">
+        <label>ИНН</label>
+        @Html.TextBoxFor(m => m.Inn, new { @class = "form-control" }).DisabledIf(true)
+    </div>
+    <div class="col-xs-4">
+        <label>ФИО ответственного</label>
+        @Html.TextBoxFor(m => m.Fio, new { @class = "form-control" })
+    </div>
+</div>
+<div class="row m-t-15">
+    <div class="col-xs-8">
+        <label>Адрес организации</label>
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+    </div>
+    <div class="col-xs-4">
+        <label>Номер телефона ответственного</label>
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-3"><h2>2. Список товаров</h2></div>
+    <div class="col-xs-2 margin-top-20">
+        <div class="btn-group">
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> Добавить товар <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+                <li style="cursor:pointer;"><a id="tyre">Шины</a></li>
+                <li style="cursor:pointer;"><a id="disk">Диски</a></li>
+                <li style="cursor:pointer;"><a id="akb">АКБ</a></li>
+                <li style="cursor:pointer;"><a id="acc">Аксессуар</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-2 margin-top-20">
+        <div class="btn-group">
+            <button id="formpost" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-send"></span> Отправить</button>
+        </div>
+    </div>
+</div>
+   
+<form id="createClaim">
+    <div id="claim_items">
+
+    </div>
+</form>
+    <div id="idModalToNotifySuccess" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header alert-success">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-ok-circle"> </span> Рекламация успешно создана</h4>
+                </div>
+                <div class="modal-footer">
+                    <button id="SuccPartnerSettings" data-terminal="@ViewBag.IsPartner" type="button" class="btn btn-default btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="idModalToNotifyFailure" class="modal fade">
+        <div class="modal-dialog center-modal-notify">
+            <div class="modal-content">
+                <div class="modal-header alert-error">
+                    <h4 class="modal-title">Ошибка при создании рекламации</h4>
+                </div>
+                <div class="modal-body toError">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{Html.RenderPartial("_TyresTmplItem");}
+    @{Html.RenderPartial("_WheelsTmplItem");}
+    @{Html.RenderPartial("_BatsTmplItem");}
+    @{Html.RenderPartial("_AccsTmplItem");}
+    @section Scripts
+{
+        <script src="~/Scripts/term-claims-scripts.js"></script>
+    }

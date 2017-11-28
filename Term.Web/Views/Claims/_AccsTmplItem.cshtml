@@ -1,0 +1,64 @@
+﻿<div id="hidden_tmpl_acc" class="invisible">
+    <div id="acc_[i]" class="accs" data-rowacc="[i]">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>Аксессуар</span>
+                <span class="glyphicon glyphicon-remove" style="float: right;cursor: pointer;" aria-hidden="true" data-remove="acc_[i]"></span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label class="control-label" for="accs-doc_number_[i]">Номер документа</label>
+                        <input type="text" id="accs-doc_number_[i]" name="accs-doc_number_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Номер документа" />
+                        <span class="field-validation-error" data-valmsg-for="accs-doc_number_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="accs-doc_date_[i]">Дата документа</label>
+                        <input type="text" id="accs-doc_date_[i]" name="accs-doc_date_[i]" class="form-control date" maxlength="255" required data-val="true" data-val-required="Заполните Дата документа" />
+                        <span class="field-validation-error" data-valmsg-for="accs-doc_date_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-2">
+                        <label class="control-label" for="accs-code_[i]">Код товара</label>
+                        <input type="text" id="accs-code_[i]" name="accs-code_[i]" class="form-control code-autocomplete" maxlength="255" required data-val="true" data-val-required="Заполните Код товара" />
+                        <span class="field-validation-error" data-valmsg-for="accs-code_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-6">
+                        <label class="control-label" for="accs-name_[i]">Наименование</label>
+                        <input type="text" id="accs-name_[i]" name="accs-name_[i]" class="form-control item-product-name" maxlength="255" required data-val="true" data-val-required="Заполните Наименование" />
+                        <span class="field-validation-error" data-valmsg-for="accs-name_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="accs-count_[i]">Количество</label>
+                        <input type="text" id="accs-count_[i]" name="accs-count_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Количество" />
+                        <span class="field-validation-error" data-valmsg-for="accs-count_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-2">
+                        <label class="control-label" for="accs-date_[i]">Дата производства</label>
+                        <input type="text" id="accs-date_[i]" name="accs-date_[i]" class="form-control date" maxlength="255" required data-val="true" data-val-required="Заполните Дата производства" />
+                        <span class="field-validation-error" data-valmsg-for="accs-date_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-4">
+                        <label class="control-label" for="accs_defect_[i]">Дефект</label>
+                        <select id="accs_defect_[i]" name="accs_defect_[i]" class="form-control" required data-val="true" data-val-required="Выберите Дефект"><option value="">Выберите дефект...</option><option value="31">Дефект упаковки</option><option value="32">Производственный дефект</option><option value="15">Механические повреждения</option><option value="33">Мелкие механические повреждения, не нарушающие основной функции товара</option><option value="34">Неполная ёмкость</option><option value="35">Истечение сроков годности</option><option value="36">Несоответствие товара заявленным характеристикам</option><option value="99">Другой дефект...</option></select>
+                        <span class="field-validation-error" data-valmsg-for="accs_defect_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-5">
+                        <label class="control-label" for="accs_defect_full_[i]">Подробное описание дефекта</label>
+                        <input type="text" id="accs_defect_full_[i]" name="accs_defect_full_[i]" class="form-control" maxlength="255" required data-val="true" data-val-required="Заполните Подробное описание дефекта" />
+                        <span class="field-validation-error" data-valmsg-for="accs_defect_full_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="col-xs-3">
+                        <label class="control-label" for="accs_condition_[i]">Состояние</label>
+                        <select id="accs_condition_[i]" name="accs_condition_[i]" class="form-control" required data-val="true" data-val-required="Выберите Состояние"><option value="">Выберите состояние...</option><option value="1">Новый</option><option value="2">Б/У</option></select>
+                        <span class="field-validation-error" data-valmsg-for="accs_condition_[i]" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

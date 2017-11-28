@@ -45,7 +45,7 @@ namespace Term.Web
                        "~/Scripts/common-v6.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/term_seasonscripts").Include("~/Scripts/term-season-scripts.js"));
-            bundles.Add(new ScriptBundle("~/bundles/term_shoppingcart").Include("~/Scripts/yst-shoppingcart-20171011.js"));
+            bundles.Add(new ScriptBundle("~/bundles/term_shoppingcart").Include("~/Scripts/yst-shoppingcart-20171111.js"));
 
             // Используйте версию Modernizr для разработчиков, чтобы учиться работать. Когда вы будете готовы перейти к работе,
             // используйте средство построения на сайте http://modernizr.com, чтобы выбрать только нужные тесты.

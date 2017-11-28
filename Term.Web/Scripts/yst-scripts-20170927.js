@@ -1253,6 +1253,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
     $('.open_order_tr').on('click', function (e) {
 
+        if (event.target.nodeName == "A") return;
         var productId = $(this).data("idlink");
 
         if ($('tr[data-idsource = ' + productId + ']').hasClass("invisible")) {
@@ -1277,7 +1278,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
             ).done(function (data) {
             
                 toastr.success("Условия оплаты были изменены");
-                setTimeout(() => { location.assign(location.href) }, 3000);
+                setTimeout(function()  { location.assign(location.href) }, 3000);
             }).fail(function () {
                 toastr.success("Ошибка при изменении типа цен");
             });

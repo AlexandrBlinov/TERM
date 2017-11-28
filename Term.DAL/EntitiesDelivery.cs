@@ -255,4 +255,34 @@ namespace Term.DAL
         
 
     }
+
+    /// <summary>
+    /// Перечисление способов доставки
+    /// </summary>
+    public enum WaysOfDelivery
+    {
+        [EnumDescription("Доставка")]
+        Delivery = 0,
+        [EnumDescription("Самовывоз")]
+        SelfDelivery,
+        [EnumDescription("Dpd")]
+        ByDpd,
+        [EnumDescription("Транспортная компания")]
+        ByTk
+    }
+
+    /// <summary>
+    /// Адреса самодоставки
+    /// привязка в партнерах через ;
+    /// </summary>
+    public class SelfDeliveryAddress {
+
+        [MaxLength(5)]
+        public string Id { get; set; }
+
+        [MaxLength(50)]
+        public string Name { get; set; }
+    }
+
+
 }

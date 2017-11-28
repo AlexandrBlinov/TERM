@@ -24,8 +24,8 @@ namespace Term.Web.Controllers
     [CheckSettings]
     public class OrdersController : BaseController
     {
-       
 
+        private static readonly int maxDaysToChangeOrder = 7;
         private bool _isPartner;
       
        private string errorMessage;
@@ -80,19 +80,7 @@ namespace Term.Web.Controllers
                    return View(model); 
 
 
-       /*     if (_isPartner) // PartnerId is set too
-            {
-                model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
-                _orderService.GetListOfOrdersByPartnerIdWithGuid(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
-
-            }
-            else
-            {
-                model.PartnerPoints = null;
-                if (base.Point.PartnerPointId > 0) _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
-            }
-            return View("List2",model);
-            */
+      
         }
 
 
@@ -324,7 +312,7 @@ namespace Term.Web.Controllers
         /// <param name="guid"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> ChancelOrder(Guid guid)
+        public async Task<ActionResult> CancelOrder(Guid guid)
         {
             if (ModelState.IsValid)
             {
@@ -337,12 +325,9 @@ namespace Term.Web.Controllers
                     ModelState.AddModelError("OrderError", errorMessage);
 
                    var model = _orderService.GetOrderWithDetailsByGuid(guid);
-
-                   
-                   
+                    
                         return View("Details", model);
                    
-
                     throw new HttpException(404, "Not found");
                 }
 
@@ -433,7 +418,10 @@ namespace Term.Web.Controllers
 
             OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
             model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
-            model.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
+            model.AddressesIds = _orderService.AddressesOfDelivery;
+
+            model.TkIds = _orderService.TkIds;
+            
 
             if (String.IsNullOrEmpty(model.AddressId))
             model.AddressId= _orderService.GetDefaultAddressId(Partner.PartnerId, Point.PartnerPointId);
@@ -452,6 +440,7 @@ namespace Term.Web.Controllers
         [ActionName("ChangeOrder")]
         public async Task<ActionResult> ChangeOrder(ChangeOrderViewModel model)
         {
+            
             string deliveryDataString = null;
             string rangeDeliveryDays = null;
             string deliveryDay = String.Empty;
@@ -515,9 +504,11 @@ namespace Term.Web.Controllers
                 //int totalDays = (int)(oc.DeliveryDate.Date - order.OrderDate.Date).TotalDays;
                 int totalDays = (int)(((DateTime)model.DeliveryDate).Date - order.OrderDate.Date).TotalDays;
 
-                if (totalDays < 0 || totalDays > 7)
+                
+                if (totalDays < 0 || totalDays > maxDaysToChangeOrder)
                 {
-                    errorMessage = string.Format(CartAndOrders.DateShipmentRange + " {0} - {1}", order.OrderDate.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture), order.OrderDate.AddDays(7).ToString("dd.MM.yyyy", CultureInfo.InvariantCulture));
+                    errorMessage = $"{ CartAndOrders.DateShipmentRange} { order.OrderDate.Date} - { order.OrderDate.AddDays(maxDaysToChangeOrder).Date}";
+                        
                     return Json(new { Success = false, Message = errorMessage });
                 }
 
@@ -542,8 +533,12 @@ namespace Term.Web.Controllers
                 ResultDel res = WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, 
                     // пустая строка если резерв, иначе дата доставки
                     !model.IsReserve ? String.Format("{0:yyyyMMdd}", model.DeliveryDate) : String.Empty,
-                    model.IsDeliveryByTk, di, deliveryDay,
-                     model.WayOfDelivery, model.AddressId
+                     model.IsDeliveryByTk, 
+                     di, 
+                     deliveryDay,
+                     model.WayOfDelivery,
+                     model.AddressId ?? String.Empty , 
+                     model.TkId 
                     );
                 success = res.Success;
                 errorMessage = res.Error;
@@ -561,16 +556,26 @@ namespace Term.Web.Controllers
                 try
                 {
                     DateTime? deliveryDate = model.IsReserve ? (DateTime?)null : model.DeliveryDate;
-                    _orderService.ChangeOrder(model.OrderGuid, model.Items, model.Comments ?? String.Empty, model.IsReserve, model.IsDeliveryByTk, deliveryDataString, rangeDeliveryDays, di, deliveryDate,
-                        model.WayOfDelivery,model.AddressId);
+                    _orderService.ChangeOrder(model.OrderGuid,
+                        model.Items,
+                        model.Comments ?? String.Empty,
+                        model.IsReserve,
+                        model.IsDeliveryByTk, 
+                        deliveryDataString,
+                        rangeDeliveryDays,
+                        di, 
+                        deliveryDate,
+                        model.WayOfDelivery,
+                        model.AddressId,
+                        model.TkId);
 
                 }
-                catch { success = false; }
-                finally
+                catch (Exception e)
                 {
-                    Session["IsOrderChanged"] = true;
-
+                    ErrorLogger.Error(e);
+                    success = false;
                 }
+              
 
             }
             return Json(new { Success = success, Message = errorMessage });

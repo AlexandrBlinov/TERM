@@ -296,9 +296,11 @@ namespace Yst.Services
                     Prepay= viewModel.IsPrepay,
                     IsStar = viewModel.IsStar,
                     WayOfDelivery=viewModel.WayOfDelivery,
-                    AddressId= viewModel.IsDelivery&& viewModel.WayOfDelivery==0 ? viewModel.AddressId:null,
+                    AddressId= viewModel.IsDelivery&& viewModel.WayOfDelivery== (int) WaysOfDelivery.Delivery ? viewModel.AddressId:null,
+                    TkId = viewModel.IsDelivery && viewModel.WayOfDelivery == (int)WaysOfDelivery.ByTk ? viewModel.TkId : null,
 
-                    OrderDetails = alldata.Where(p => p.OrderGuid == orderGuid.OrderGuid).Select(p => new OrderDetail
+                    OrderDetails = alldata.Where(p => p.OrderGuid == orderGuid.OrderGuid).Select(p => 
+                    new OrderDetail
                     {
                         RowNumber = ++rowCounter,ProductId = p.ProductId, Count = p.Count, 
                         Price = p.Price, PriceOfClient = p.PriceOfClient, PriceOfPoint = p.PriceOfPoint, PriceInitial = p.Price

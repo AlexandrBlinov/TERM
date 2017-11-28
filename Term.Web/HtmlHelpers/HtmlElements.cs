@@ -215,5 +215,20 @@ namespace Term.Web.HtmlHelpers
 
         }
 
+        public static SelectList ListItemsPerPage(int maxValue, int step)
+        {
+            var items = new List<SelectListItem>();
+            for (var i = step; i <= maxValue; i = i + step)
+            {
+                var item = new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString()
+                };
+                items.Add(item);
+            }
+            return new SelectList(items, "Value", "Text", 1);
+        }
+
     }
 }

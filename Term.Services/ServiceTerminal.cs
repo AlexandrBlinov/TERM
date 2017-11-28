@@ -111,7 +111,7 @@ namespace Term.Services
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:CreateOrder2", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return")]
-        public Result CreateOrder2(string Partner, int PointId, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string Comment, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string ShippingDay, bool isReserve, bool TransportCompany, bool Prepay, bool IsStar, int WayOfDelivery, string AddressId)
+        public Result CreateOrder2(string Partner, int PointId, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string Comment, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string ShippingDay, bool isReserve, bool TransportCompany, bool Prepay, bool IsStar, int WayOfDelivery, string AddressId , string TkId)
         {
             object[] results = this.Invoke("CreateOrder2", new object[] {
                         Partner,
@@ -124,7 +124,9 @@ namespace Term.Services
                         Prepay,
                         IsStar,
                         WayOfDelivery,
-                        AddressId});
+                        AddressId,
+                        TkId
+            });
             return ((Result)(results[0]));
         }
 
@@ -166,13 +168,20 @@ namespace Term.Services
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:ChangeOrder", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return")]
-        public ResultDel ChangeOrder(string OrderGUID, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, string Comment, bool isReserve, string ShippingDay, bool TransportCompany, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] DeliveryInfo DeliveryInfo, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string DeliveryDay, int WayOfDelivery, string AddressId)
+        public ResultDel ChangeOrder(string OrderGUID, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, string Comment, bool isReserve, string ShippingDay, bool TransportCompany, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] DeliveryInfo DeliveryInfo, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string DeliveryDay, int WayOfDelivery, string AddressId, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string TkId)
         {
             object[] results = this.Invoke("ChangeOrder", new object[] {
                         OrderGUID,
                         Goods,
-                        Comment,isReserve,ShippingDay,
-            TransportCompany,DeliveryInfo,DeliveryDay,  WayOfDelivery, AddressId});
+                        Comment,
+                        isReserve,
+                        ShippingDay,
+                        TransportCompany,
+                        DeliveryInfo,
+                        DeliveryDay,
+                        WayOfDelivery,
+                        AddressId,
+                        TkId });
             return ((ResultDel)(results[0]));
         }
 

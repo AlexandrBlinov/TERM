@@ -236,8 +236,8 @@ DIV#podbortiporazmerresult.loading {
 	font-size: 16px !important;
 }
 
-.navbar-nav li a:hover{
-	color: #428bca !important;
+.navbar-nav li a:hover {
+    color: #009efe !important;
 }
 
 .text_main:hover{

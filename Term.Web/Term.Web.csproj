@@ -29,6 +29,7 @@
     <SccProvider>
     </SccProvider>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,9 +41,10 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+    <ExcludeGeneratedDebugSymbol>false</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -418,6 +420,38 @@
     <Compile Include="Migrations\201711101322075_TransportCompanies_Added.Designer.cs">
       <DependentUpon>201711101322075_TransportCompanies_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711120946176_UpdateClaims.cs" />
+    <Compile Include="Migrations\201711120946176_UpdateClaims.Designer.cs">
+      <DependentUpon>201711120946176_UpdateClaims.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711130821055_TkId_AddedToOrder.cs" />
+    <Compile Include="Migrations\201711130821055_TkId_AddedToOrder.Designer.cs">
+      <DependentUpon>201711130821055_TkId_AddedToOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711140837103_DepId_AddedToManager.cs" />
+    <Compile Include="Migrations\201711140837103_DepId_AddedToManager.Designer.cs">
+      <DependentUpon>201711140837103_DepId_AddedToManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711150440550_Claims_proddatetostring.cs" />
+    <Compile Include="Migrations\201711150440550_Claims_proddatetostring.Designer.cs">
+      <DependentUpon>201711150440550_Claims_proddatetostring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711150551593_CnangeIndexes_OnProducts.cs" />
+    <Compile Include="Migrations\201711150551593_CnangeIndexes_OnProducts.Designer.cs">
+      <DependentUpon>201711150551593_CnangeIndexes_OnProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711210603303_LogistikDepartment_AddedToPartner.cs" />
+    <Compile Include="Migrations\201711210603303_LogistikDepartment_AddedToPartner.Designer.cs">
+      <DependentUpon>201711210603303_LogistikDepartment_AddedToPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711241236429_AddTable_AssistantsOfManagers.cs" />
+    <Compile Include="Migrations\201711241236429_AddTable_AssistantsOfManagers.Designer.cs">
+      <DependentUpon>201711241236429_AddTable_AssistantsOfManagers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.cs" />
+    <Compile Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.Designer.cs">
+      <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
@@ -444,6 +478,7 @@
     <Compile Include="Models\ViewPodborModels.cs" />
     <Compile Include="Services\CachedListForPodborsProvider.cs" />
     <Compile Include="Services\CheckerCountExeedsRest.cs" />
+    <Compile Include="Services\ClaimLocalService.cs" />
     <Compile Include="Services\DaysToDepartmentService.cs" />
     <Compile Include="Services\Defaults.cs" />
     <Compile Include="Services\DeliveryCostCalculatorService.cs" />
@@ -758,6 +793,7 @@
     <Content Include="Content\img\inci.jpg" />
     <Content Include="Content\img\instagram-social-network-logo-of-photo-camera.svg" />
     <Content Include="Content\img\item_382_thumb.jpg" />
+    <Content Include="Content\img\jidk.jpg" />
     <Content Include="Content\img\lavr-2.jpg" />
     <Content Include="Content\img\lavr.jpg" />
     <Content Include="Content\img\liquid_1.jpg" />
@@ -770,6 +806,7 @@
     <Content Include="Content\img\menu-disk-icon.png" />
     <Content Include="Content\img\menu-tyre-icon.png" />
     <Content Include="Content\img\NotActiv.png" />
+    <Content Include="Content\img\novinki.jpg" />
     <Content Include="Content\img\rub.png" />
     <Content Include="Content\img\rub2.png" />
     <Content Include="Content\img\sale-icon.png" />
@@ -777,6 +814,7 @@
     <Content Include="Content\img\season_all.png" />
     <Content Include="Content\img\season_summer.png" />
     <Content Include="Content\img\season_winter.png" />
+    <Content Include="Content\img\shetki.jpg" />
     <Content Include="Content\img\socials.jpg" />
     <Content Include="Content\img\solite_1.jpg" />
     <Content Include="Content\img\solite_2.jpg" />
@@ -807,18 +845,12 @@
     <Content Include="Content\img\_Concept-FD504_S.png" />
     <Content Include="Content\img\azard_1.jpg" />
     <Content Include="Content\img\azard_2.jpg" />
-    <Content Include="Content\img\акб_1.jpg" />
-    <Content Include="Content\img\акб_2.jpg" />
     <Content Include="Content\img\varta.jpg" />
     <Content Include="Content\img\varta_2.jpg" />
     <Content Include="Content\img\gruz_1.jpg" />
     <Content Include="Content\img\gruz_2.jpg" />
     <Content Include="Content\img\deflector_1.jpg" />
     <Content Include="Content\img\deflector_2.jpg" />
-    <Content Include="Content\img\колпаки_1.jpg" />
-    <Content Include="Content\img\колпаки_2.jpg" />
-    <Content Include="Content\img\компрессоры_1.jpg" />
-    <Content Include="Content\img\компрессоры_2.jpg" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -878,6 +910,10 @@
     <Content Include="CustomForPartners\partline_wheels.ashx" />
     <Content Include="CustomForPartners\partline_accs.ashx" />
     <Content Include="CustomForPartners\partline_akb.ashx" />
+    <Content Include="CustomForPartners\deniz_accs.ashx" />
+    <Content Include="CustomForPartners\deniz_akb.ashx" />
+    <Content Include="CustomForPartners\deniz_tyres.ashx" />
+    <Content Include="CustomForPartners\deniz_wheels.ashx" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -934,6 +970,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\term-claims-scripts.js" />
     <Content Include="Scripts\term-season-scripts.js" />
     <Content Include="Scripts\term-scripts-20170906.js" />
     <Content Include="Scripts\toastr.js" />
@@ -951,7 +988,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\yst-localize-20170619.js" />
-    <Content Include="Scripts\yst-shoppingcart-20171011.js" />
+    <Content Include="Scripts\yst-shoppingcart-20171111.js" />
     <Content Include="Scripts\yst-notifications.js" />
     <Content Include="Scripts\yst-scripts-20170927.js" />
     <Content Include="Scripts\yst-utility.js" />
@@ -1125,6 +1162,14 @@
     <Content Include="Views\Reports\Freeman.cshtml" />
     <Content Include="Views\Reports\Details.cshtml" />
     <Content Include="Views\Shared\_LayoutReports.cshtml" />
+    <Content Include="Views\Claims\Index.cshtml" />
+    <Content Include="Views\Claims\Details.cshtml" />
+    <Content Include="Views\Claims\Create.cshtml" />
+    <Content Include="Views\Claims\_WheelsTmplItem.cshtml" />
+    <Content Include="Views\Claims\_TyresTmplItem.cshtml" />
+    <Content Include="Views\Claims\_BatsTmplItem.cshtml" />
+    <Content Include="Views\Claims\_AccsTmplItem.cshtml" />
+    <Content Include="Views\Claims\ClaimPrintForm.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1285,6 +1330,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711101322075_TransportCompanies_Added.resx">
       <DependentUpon>201711101322075_TransportCompanies_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711120946176_UpdateClaims.resx">
+      <DependentUpon>201711120946176_UpdateClaims.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711130821055_TkId_AddedToOrder.resx">
+      <DependentUpon>201711130821055_TkId_AddedToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711140837103_DepId_AddedToManager.resx">
+      <DependentUpon>201711140837103_DepId_AddedToManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711150440550_Claims_proddatetostring.resx">
+      <DependentUpon>201711150440550_Claims_proddatetostring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711150551593_CnangeIndexes_OnProducts.resx">
+      <DependentUpon>201711150551593_CnangeIndexes_OnProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711210603303_LogistikDepartment_AddedToPartner.resx">
+      <DependentUpon>201711210603303_LogistikDepartment_AddedToPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241236429_AddTable_AssistantsOfManagers.resx">
+      <DependentUpon>201711241236429_AddTable_AssistantsOfManagers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.resx">
+      <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

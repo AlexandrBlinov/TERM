@@ -35,7 +35,6 @@
 
 } */
 
-;
 
 function getValueById(Id)
 { return (document.getElementById(Id).value);}
@@ -132,8 +131,7 @@ $(function () {
     $('table#table-points tr').click(function () {
         window.location.assign('/Partner/Edit?PointId=' + $(this).data('id'));
 
-    }
-    )
+    });
 
     $("#ButDeletePartnerPoint").on('click', function () {
         var pointId = parseInt($(this).data('partnerpointid'))||0;
@@ -416,12 +414,12 @@ $(function () {
         dataValue.VatVal = parseInt($('#vat_val').val()) || 0;
         //}--added 20150701
 
-        if ($("#IsInetShop").is(":checked")) {
+        /*if ($("#IsInetShop").is(":checked")) {
             if (!$("#compname").hasClass('invisible') && $("#WebSite").val().length == 0) {
                 showAlert(YstLocale.Get("errsite"), false);
                 return false;
             }
-        }
+        }*/
 
         if (!$("#compname").hasClass('invisible')) {
             /*if (!$("#LatLng").val()) {

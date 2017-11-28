@@ -71,26 +71,33 @@ namespace Term.DAL
         [MaxLength(Byte.MaxValue)]
         public string PersonalPhoto { get; set; }
 
+        [MaxLength(5)]
+        public string DepartmentId { get; set; }
+
 
     }
 
 
     /// <summary>
-    /// class to store managers of partners
+    /// Помощники менеджеров ( у одного помощника 
+    /// может быть несколько менеджеров)
     /// </summary>
-    public class ManagersOfPartner {
+
+    [Table("AssistantsOfManagers")]
+    public class AssistantOfManager {
         [Key, Column(Order = 1)]
-        [ForeignKey("Partner")]
-        public string  PartnerId { get; set; }
+        [ForeignKey("Assistant")]
+        public Guid AssistantId { get; set; }
 
         [Key, Column(Order = 2)]
         [ForeignKey("Manager")]
-        public Guid ManagerId { get; set; }
-
-        public Partner Partner { get; set; }
+        public Guid ManagerId { get; set; }                
         
         public Manager Manager { get; set; }
+        public Manager Assistant { get; set; }
     }
+
+
 
     /// <summary>
     /// class used to store collection of primitive serialized objects like constants
@@ -289,7 +296,7 @@ namespace Term.DAL
         [Index]
         public string ProductType { get; set; } */
 
-        [Index]
+        
         public ProductType ProductType { get; set; }
 
         //[DisplayName("Производитель")]
@@ -329,6 +336,7 @@ namespace Term.DAL
 
         public bool IsFolder { get; set; }
 
+        [Index]
         public int? ParentId { get; set; }
 
         [DefaultValue(0)]
@@ -576,6 +584,8 @@ namespace Term.DAL
         // способ доставки 1- самовывоз, 0- доставка наша
         public int  WayOfDelivery { get; set; }
 
+        
+
         // реквизит нужен для подсчета цены исходя из предоплатной цены (в настройках клиента)
         // считать цену исходя из предоплатной цены (только если PrePay=0 и HasPrepay=1)
         // данный реквизит не синхронизируется
@@ -586,9 +596,16 @@ namespace Term.DAL
         /// </summary>
         public int? NumberOfDaysForReturn { get; set; }
 
-        public override string ToString() => $"{INN}, {FullName}, {Address}, тел:{PhoneNumber}";
-      
 
+        // основное подразделение продаж
+        [MaxLength(5)]
+        public string LogistikDepartment { get; set; }
+
+        // коды адресов доставки через ;
+        [MaxLength(50)]
+        public string SelfDeliveryAddresses { get; set; }
+
+        public override string ToString() => $"{INN}, {FullName}, {Address}, тел:{PhoneNumber}";
         
     }
 
@@ -1157,7 +1174,10 @@ namespace Term.DAL
         //[ForeignKey("AddressOfPartner")]
         public string AddressId { get; set;}
 
-       // public virtual AddressOfPartner AddressOfPartner { get; set; }
+        [MaxLength(5)]        
+        public string TkId { get; set; }
+
+        // public virtual AddressOfPartner AddressOfPartner { get; set; }
 
 
         public void CalculateTotals()
@@ -1187,6 +1207,9 @@ namespace Term.DAL
         Confirmed=1
 
     }
+
+
+    
 
     public class OrderDetail
     {
@@ -1689,6 +1712,12 @@ namespace Term.DAL
 
         [StringLength(200)]
         public string Resolution { get; set; }
+        
+        [StringLength(50)]
+        public string ProductionDate { get; set; }
+
+        [StringLength(400)]
+        public string AdditionalInfo { get; set; }
     }
 
 }

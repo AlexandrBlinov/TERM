@@ -26,72 +26,99 @@ namespace Term.Services
     public class OrderService : BaseService
     {
 
+        /// <summary>
+        /// получить адреса самодоставки из поля Partners SelfDeliveryAddresses, разделенного ;
+        /// </summary>
+        /// <returns></returns>
+        public SelectList SelfDeliveryAddresses
+        {
+            get {
+                var partnerId = this.CurrentPoint?.PartnerId;
+                string sda = DbContext.Partners.FirstOrDefault(p => p.PartnerId == partnerId)?.SelfDeliveryAddresses;
+                string[] ids = { };
+                if (sda != null)
+                {
+                    ids = sda.Split(Defaults.Semicolon);
+                    if (ids.Any())
+                    {
+                        return new SelectList(DbContext.SelfDeliveryAddresses.Where(p => ids.Contains(p.Id)).Select(p => new
+                        {
+                            Id = p.Id,
+                            Name = p.Name
 
-
+                        }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+                    }
+                }
+                return new SelectList(Enumerable.Empty<SelectListItem>());
+            }
+        }
 
         /// <summary>
         
         /// Получить адреса доставки для  партнера или точки
         /// </summary>
-        public SelectList GetAddressesOfDeliveryForCurrentPoint() {
-            var partnerId = this.CurrentPoint?.PartnerId;     
-            var pointId = this.CurrentPoint?.PartnerPointId; // текущий номер точки
+        public SelectList AddressesOfDelivery {
 
-            // Если головной терминал то список точек
-            Expression<Func<AddressOfPartner, bool>> predicateForMain = p => p.PartnerId == partnerId && p.Active; 
-
-
-            bool notIsMain = !base.IsPartner && partnerId != null && pointId.HasValue;
-
-            // если не головной терминал
-            if (notIsMain)
+            get
             {
-                // точка головного терминала
-                var partnerPointId = DbContext.Users.FirstOrDefault(p => p.PartnerId == partnerId && p.IsPartner)?.PartnerPointId;
+                var partnerId = this.CurrentPoint?.PartnerId;
+                var pointId = this.CurrentPoint?.PartnerPointId; // текущий номер точки
 
-                // адрес самой точки, пустой или равный головному терминалу
-                // то есть адреса не принадлежащие другим точкам
-                Expression<Func<AddressOfPartner, bool>> predicate = p =>
-                p.PartnerId == partnerId && p.Active &&
-                (p.PointId == pointId || p.PointId == null || (partnerPointId != null && p.PointId == partnerPointId));
+                // Если головной терминал то список точек
+                Expression<Func<AddressOfPartner, bool>> predicateForMain = p => p.PartnerId == partnerId && p.Active;
 
-                var list2 = DbContext.AddressOfPartners.Where(predicate).ToList();
 
-                if (list2.Any()) // если есть точки то выгружаем
-                                
-                    return new SelectList(list2.Select(p => new
+                bool notIsMain = !base.IsPartner && partnerId != null && pointId.HasValue;
+
+                // если не головной терминал
+                if (notIsMain)
+                {
+                    // точка головного терминала
+                    var partnerPointId = DbContext.Users.FirstOrDefault(p => p.PartnerId == partnerId && p.IsPartner)?.PartnerPointId;
+
+                    // адрес самой точки, пустой или равный головному терминалу
+                    // то есть адреса не принадлежащие другим точкам
+                    Expression<Func<AddressOfPartner, bool>> predicate = p =>
+                    p.PartnerId == partnerId && p.Active &&
+                    (p.PointId == pointId || p.PointId == null || (partnerPointId != null && p.PointId == partnerPointId));
+
+                    var list2 = DbContext.AddressOfPartners.Where(predicate).ToList();
+
+                    if (list2.Any()) // если есть точки то выгружаем
+
+                        return new SelectList(list2.Select(p => new
+                        {
+                            Id = p.AddressId,
+                            Name = p.Address
+
+                        }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+
+                }
+
+
+                var list = DbContext.AddressOfPartners.Where(predicateForMain).ToList();
+
+                if (list.Any())
+                {
+
+                    return new SelectList(list.Select(p => new
                     {
                         Id = p.AddressId,
                         Name = p.Address
 
                     }).OrderBy(p => p.Name).ToList(), "Id", "Name");
+                }
 
+
+                return new SelectList(Enumerable.Empty<SelectListItem>());
             }
-            
-            
-            var list = DbContext.AddressOfPartners.Where(predicateForMain).ToList();
-
-            if (list.Any())
-            {
-
-                return new SelectList(list.Select(p => new
-                {
-                    Id = p.AddressId,
-                    Name = p.Address
-
-                }).OrderBy(p => p.Name).ToList(), "Id", "Name");
-            }
-            
-
-            return new SelectList(Enumerable.Empty<SelectListItem>());
-
         }
 
        /// <summary>
        /// Получить транспортные компании
        /// </summary>
        /// <returns></returns>
-        public SelectList GetTkIds() => new SelectList(DbContext.TransportCompanies.Select(p => new
+        public SelectList TkIds => new SelectList(DbContext.TransportCompanies.Select(p => new
                 { Id = p.Id, Name = p.Name    }).OrderBy(p => p.Name).ToList(), "Id", "Name");
 
         /// <summary>
@@ -202,7 +229,11 @@ namespace Term.Services
 
             model.AddressId = order.AddressId;
 
-             return (model);
+            model.TkId = order.TkId;
+
+            model.WayOfDelivery = order.WayOfDelivery;
+
+            return (model);
         }
 
 
@@ -427,7 +458,9 @@ namespace Term.Services
         /// Изменить заказ в базе данных
         /// </summary>        
         
-        public void ChangeOrder(Guid guid, IEnumerable<ItemInOrderViewModel> items, string comments, bool isReserve, bool IsDeliveryByTk, string deliveryDataString, string rangeDeliveryDays, DeliveryInfo di, DateTime? deliveryDate , int WayOfDelivery, string AddressId)
+        public void ChangeOrder(Guid guid, IEnumerable<ItemInOrderViewModel> items, string comments, bool isReserve, bool IsDeliveryByTk, 
+            string deliveryDataString, string rangeDeliveryDays, DeliveryInfo di, DateTime? deliveryDate , 
+            int wayOfDelivery, string AddressId, string TkId)
         {
 
             var orderToChange = DbContext.Orders.FirstOrDefault(q => q.GuidIn1S == guid);
@@ -437,8 +470,10 @@ namespace Term.Services
             orderToChange.Comments = comments;
             orderToChange.isReserve = isReserve;
             orderToChange.DeliveryDate = deliveryDate;
-            orderToChange.WayOfDelivery = WayOfDelivery;
-            orderToChange.AddressId = (!isReserve || WayOfDelivery > 0) ? AddressId:null; // обнуляем id адреса             
+            orderToChange.WayOfDelivery = wayOfDelivery;
+            orderToChange.AddressId = !isReserve && wayOfDelivery == 0 ? AddressId:null; // обнуляем id адреса             
+
+            orderToChange.TkId = !isReserve && wayOfDelivery == 3? TkId: null;
 
             orderToChange.IsDeliveryByTk = IsDeliveryByTk;
             orderToChange.RangeDeliveryDays = rangeDeliveryDays;

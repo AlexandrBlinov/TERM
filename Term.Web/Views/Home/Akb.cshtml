@@ -20,7 +20,6 @@
     @Html.Hidden("PriceMax", Model.PriceMax)
     @Html.Hidden("SortBy", Model.SortBy)
     @Html.Hidden("DisplayView", Model.DisplayView)
-    @Html.Hidden("ItemsPerPage", Model.ItemsPerPage) 
     <div class="row border-form-podbor akb-banners">
         <a class="warranty-sheet__link" href="~/Content/img/instruction-akb.jpg">Гарантийный талон</a>
         <img class="podbor-tyres-title-img" src="~/Content/img/img-akb-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseBattery</span>
@@ -269,13 +268,7 @@
             <div class="col-xs-8">
                 <div class="psevdo-select">
                     <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
-                    <select class="form-control" id="ItemsPerPageForm">
-                        <option @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
-                        <option @(Model.ItemsPerPage == 20 ? "selected" : "")>20</option>
-                        <option @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
-                        <option @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
-                        <option @(Model.ItemsPerPage == 200 ? "selected" : "")>200</option>
-                    </select>
+                    @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @class = "form-control" })
                 </div>
             </div>
         </div>

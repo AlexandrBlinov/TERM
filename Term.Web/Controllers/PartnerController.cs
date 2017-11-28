@@ -408,7 +408,7 @@ namespace Term.Web.Controllers
             string Message = String.Empty;
             if (ServicePP.IsPartner) ServicePP.UpdatePartnerIfNeeded(psc);
             bool Success = ServicePP.UpdatePricingRules(psc, ref Message);
-            CachedCollectionsService.RemoveCacheWheels(psc.PointId.ToString());
+            CachedCollectionsService.RemoveCacheAll(psc.PointId.ToString());
             return Json(new { Success, Message });
         }
 

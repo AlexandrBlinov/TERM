@@ -17,6 +17,7 @@ using System.Web;
 using Term.Services;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.AspNet.Identity.Owin;
+using Term.ClaimServiceSoap;
 
 //using Term.Web.ResultDel.datasource;
 //using Term.Web.WebReferenceTerm;
@@ -36,6 +37,7 @@ namespace Term.Web.Controllers
         private ServicePartnerPoint _servicePartnerPoint;
        // private OrderService _orderService;
         private ServiceTerminal _ws;
+        private ServiceClaim _wsclaims;
         private ILogger _logger;
         private SeasonProductService _sps;
 
@@ -60,11 +62,21 @@ namespace Term.Web.Controllers
                     Credentials = new NetworkCredential(ConfigurationManager.AppSettings["LoginWS"], 
                         ConfigurationManager.AppSettings["PasswordWS"])
                 });
-
-                
-
             }
+        }
 
+        protected ServiceClaim WsClaims
+        {
+            get
+            {
+                return _wsclaims ?? (_wsclaims =
+                new ServiceClaim
+                {
+                    PreAuthenticate = true,
+                    Credentials = new NetworkCredential(ConfigurationManager.AppSettings["LoginWS"],
+                ConfigurationManager.AppSettings["PasswordWS"])
+                });
+            }
         }
 
         protected AppDbContext DbContext

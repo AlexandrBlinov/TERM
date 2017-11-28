@@ -192,3 +192,8 @@ ModelManifest.xml
 /Term.Web/Web.*
 
 /Term.Web/Migrations
+/.vs/YstTerminal/v15/Server/sqlite3/db.lock
+/.vs/YstTerminal/v15/Server/sqlite3/storage.ide
+/.vs/YstTerminal/v15/Server/sqlite3/storage.ide-shm
+/.vs/YstTerminal/v15/Server/sqlite3/storage.ide-wal
+/Term.Web/Content/claimsphotos/c40efb81-c780-11e7-8063-d4ae52b5e909/9178066_1

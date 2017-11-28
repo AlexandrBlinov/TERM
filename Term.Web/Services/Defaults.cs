@@ -49,11 +49,14 @@ namespace YstProject.Services
         public static readonly string Invisible = "invisible";
         public static readonly string Space =  " ";
         public static readonly char CommaSign = ',';
-        
+        public static readonly char Semicolon = ';';
+
         public static readonly double RateNDS = 1.18;
         
         public static readonly int MaxNumberAddToCart = 200;
         public static readonly double RateForDelivery = 1.75;
+
+        public static readonly string MainDepartmentCode = "00005";
         public static readonly string StubDepartmentCode = "00005";
         public static readonly string EmptyDepartmentCode = "00000";
         public static readonly uint MaxUploadedFileSize = 10485760; // 10Mb

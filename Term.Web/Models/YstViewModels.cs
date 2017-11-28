@@ -170,10 +170,17 @@ namespace Yst.ViewModels
         // список трансп-х компаний
         public SelectList TkIds { get; set; }
 
+        // Id самодоставки
+        public SelectList SelfDeliveryIds { get; set; }
+
         // идентификатор 1С адреса доставки ( не dpd)
         public string AddressId { get; set; }
 
         public string TkId { get; set; }
+
+        public string SelfDeliveryId { get; set; }
+
+        public string LogistikDepartment { get; set; }
 
     }
 
@@ -422,6 +429,12 @@ namespace Yst.ViewModels
         public string AddressId { get; set; }
 
         public string DefaultAddressId { get; set; }
+
+        // список трансп-х компаний
+        public SelectList TkIds { get; set; }
+
+        public string TkId { get; set; }
+
 
     }
 

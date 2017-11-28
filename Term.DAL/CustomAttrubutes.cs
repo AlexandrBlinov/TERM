@@ -72,18 +72,27 @@ namespace Term.CustomAttributes
     }
 
    
-
+    /// <summary>
+    /// Класс аттрибутов только для русских названий (упрощенный)
+    /// </summary>
+    
         [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
         public sealed class EnumDescriptionAttribute : Attribute
         {
-            public EnumDescriptionAttribute(string description)
+         /*   public EnumDescriptionAttribute(string description)
             {
                 //Description = description;
                 string _resourceKey = description;
                 ResourceManager _resource = new ResourceManager(typeof(Resource));
                 Description = _resource.GetString(_resourceKey);
             }
+            */
 
-            public string Description { get; private set; }
+        public EnumDescriptionAttribute(string description)
+        {   
+            Description = description;
+        }
+
+        public string Description { get; private set; }
         } 
 }

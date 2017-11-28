@@ -43,8 +43,10 @@ namespace Yst.Context
         public DbSet<Countries> Countries { get; set; }
         public DbSet<ReplicaDisksForCars> ReplicaDisksForCars { get; set; }
 
-        public DbSet<ManagersOfPartner> ManagersOfPartners { get; set; }
-        
+        // public DbSet<ManagersOfPartner> ManagersOfPartners { get; set; }
+
+        public DbSet<AssistantOfManager> AssistantsOfManagers { get; set; }
+
 
         public DbSet<Producer> Producers { get; set; }
         public DbSet<Model> Models { get; set; }
@@ -125,6 +127,8 @@ namespace Yst.Context
         public DbSet<TimeOfDelivery> TimesOfDelivery { get; set; }
         #endregion
 
+
+        public DbSet<SelfDeliveryAddress> SelfDeliveryAddresses { get; set; }
 
         public DbSet<SaleReturn> SaleReturns { get; set; }
 

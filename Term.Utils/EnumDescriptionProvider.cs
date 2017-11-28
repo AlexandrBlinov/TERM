@@ -52,6 +52,31 @@ namespace Term.Utils
             return ((MultiCultureDescriptionAttribute)userTextAttribute).Description;
         }
 
+        public static string GetOneCultureDescription(Enum enumValue)
+        {
+            var enumType = enumValue.GetType();
+
+            var enumValueName = Enum.GetName(enumType, enumValue);
+            if (enumValueName == null)
+            {
+                return "Unknown";
+            }
+
+            var enumField = enumType.GetField(enumValueName);
+            if (enumField == null)
+            {
+                return enumValueName;
+            }
+
+            var userTextAttribute = enumField.GetCustomAttributes(typeof(EnumDescriptionAttribute), false).FirstOrDefault();
+            if (userTextAttribute == null)
+            {
+                return enumValueName;
+            }
+
+            return ((EnumDescriptionAttribute)userTextAttribute).Description;
+        }
+
         /// <summary>
         /// Used for multiculture decriptions
         /// Get resource key in current culture

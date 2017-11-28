@@ -2,17 +2,20 @@
 @using Term.DAL
 @using Term.Utils
 @using Term.Web.Views.Resources;
+@using Term.Utils;
 
 @{
   // ViewBag.Title = $"{CartAndOrders.Order}   {Model.Order.NumberIn1S}";
-    var reservedTill = Model.Order.OrderDate.AddDays(7).ToShortDateString();
+    var reservedTill = Html.DateFormat(Model.Order.OrderDate.AddDays(7));
+
+    
 }
 
 
 
 
 <fieldset class="border-form-podbor">
-    <h2 class="border-form-podbor search-order-title">@(ViewBag.OrderInfo) @CartAndOrders.InfoOrder № @(Model.Order.NumberIn1S) @CartAndOrders.From @Model.Order.OrderDate.ToShortDateString()</h2>
+    <h2 class="border-form-podbor search-order-title">@(ViewBag.OrderInfo) @CartAndOrders.InfoOrder № @(Model.Order.NumberIn1S) @CartAndOrders.From @Model.Order.OrderDate.ToString("d")</h2>
 
     @if (!String.IsNullOrEmpty(ViewBag.errorMessage))
     {
@@ -52,6 +55,8 @@
         {
             <dt>@CartAndOrders.DateShipment:</dt>
             <dd>@Html.DateFormat(Model.Order.DeliveryDate)</dd>
+
+            
         }
 
         
@@ -78,12 +83,14 @@
         <dt>Способ оплаты:</dt>
         <dd><span class="glyphicon glyphicon-asterisk"></span></dd>
       }
+         
+    <dt>Способ доставки:</dt>
+    <dd>
+        @EnumDescriptionProvider.GetOneCultureDescription((WaysOfDelivery) Model.Order.WayOfDelivery)
 
-        if (Model.Order.WayOfDelivery == 1)
-        {
-            <dt>Способ доставки:</dt>
-            <dd>cамовывоз</dd>
-        }
+    </dd>
+
+
 
 }
 
@@ -161,9 +168,7 @@
             <td>
                 @(item.ProductId.ToString().PadLeft(7, '0'))
             </td>
-            <td class="name-filds">
-
-                @* {item.ProductName = item.ProductName != "" ? item.ProductName : "---";}*@
+            <td class="name-filds">                
                 @Html.ActionLink(item.ProductName, "Details", "Home", new { id = item.ProductId }, new { @class = "data-table-a-text" })
             </td>
             <td>
@@ -251,14 +256,15 @@
     
             @if (Model.Order.OrderStatus == OrderStatuses.Confirmed && Model.CanUserChangeDpdOrder) // && !Model.OrderData.IsDeliveryByTk
             {
-                using (Html.BeginForm("ChancelOrder", "Orders", FormMethod.Post, new { @class = "form-inside-button", @id="cancelorder" }))
+                using (Html.BeginForm("CancelOrder", "Orders", FormMethod.Post, new { @class = "form-inside-button", @id="cancelorder" }))
                 {
 
                     @Html.Hidden("guid", Model.Order.GuidIn1S)
-               
+
                 }
+                <input class="btn btn-styled btn-cancel" type="submit" value="@CartAndOrders.Cancel" name="ChancelOrder" form="cancelorder" />
             }
-        <input class="btn btn-styled btn-cancel" type="submit" value="@CartAndOrders.Cancel" name="ChancelOrder" form="cancelorder"/>
+        
         @if (Model.Order.OrderStatus == OrderStatuses.Confirmed && Model.CanUserChangeDpdOrder)
         {
         @Html.ActionLink(@CartAndOrders.EditOrder, "ChangeOrder", "Orders", new { guid = @Model.Order.GuidIn1S }, new { @class = "btn btn-styled" })

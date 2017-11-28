@@ -12,9 +12,11 @@
 
 <div class="row border-form-podbor">
     <img class="podbor-tyres-title-img" src="~/Content/img/img-acc-podbor.png"/> <span class="podbor-tyres-title">@Header.Accessories (@Model.SearchResults.TotalItemCount)</span>
+    
+</div>
+<div class="row border-form-podbor">
     @{Html.RenderPartial("_AccsSpecialOffer");}
 </div>
-
 
 <div class="row m-t-15">
 
@@ -192,13 +194,7 @@
 
                         <div class="psevdo-select">
                             <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
-                            <select class="form-control" id="ItemsPerPageForm">
-                                <option @(Model.ItemsPerPage == 10 ? "selected" : "")>10</option>
-                                <option @(Model.ItemsPerPage == 20 ? "selected" : "")>20</option>
-                                <option @(Model.ItemsPerPage == 50 ? "selected" : "")>50</option>
-                                <option @(Model.ItemsPerPage == 100 ? "selected" : "")>100</option>
-                                <option @(Model.ItemsPerPage == 200 ? "selected" : "")>200</option>
-                            </select>
+                            @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @id = "ItemsPerPageForm", @class = "form-control" })
                         </div>
                     </div>
                 </div>

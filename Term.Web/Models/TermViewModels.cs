@@ -225,6 +225,8 @@ namespace YstTerm.Models
         
         // идентификатор 1С адреса доставки ( не dpd)
         public string AddressId { get; set; }
+
+        public string TkId { get; set; }
     }
 
 
@@ -1097,6 +1099,8 @@ namespace YstTerm.Models
 
         public string Language { get; set; }
 
+        
+        [Required(ErrorMessage = "Заполните поле сайт вашей компании")]
         public string WebSite { get; set; }
 
         [EmailAddress]

@@ -106,7 +106,7 @@
     <div>
         <div class="psevdo-select psevdo-select-dispos">
             <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
-            @Html.DropDownListFor(p => p.ItemsPerPage, new SelectList(new int[] { 10, 20, 50, 100, 200 }), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+            @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
         </div>
 
 
