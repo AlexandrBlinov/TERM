@@ -73,6 +73,7 @@ var mainDepCode = "00005";
 
 /*
 /* Устанавливаем дни доставки
+123
 */
 function updateDatepicker()
 {
