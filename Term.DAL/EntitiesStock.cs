@@ -1700,7 +1700,7 @@ namespace Term.DAL
         [StringLength(50)]
         public string Defect { get; set; }
 
-        [StringLength(200)]
+        [StringLength(500)]
         public string DefectComment { get; set; }
 
         [StringLength(50)]
@@ -1710,7 +1710,7 @@ namespace Term.DAL
         [DisplayFormat(DataFormatString = "dd.MM.yyyy")]
         public DateTime InspectionDate { get; set; }
 
-        [StringLength(200)]
+        [StringLength(500)]
         public string Resolution { get; set; }
         
         [StringLength(50)]

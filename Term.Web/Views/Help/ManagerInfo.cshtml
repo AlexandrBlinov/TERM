@@ -1,73 +1,118 @@
 ﻿@using Term.DAL.Resources
-@model Term.DAL.Manager
+@model ManagerViewModel
 
 @{
-    var personalPhoto = Model.PersonalPhoto;
+    var personalPhoto = Model.Manager.PersonalPhoto;
 }
 
-<div>
-    <h1 class="text-center"> @Term.DAL.Resources.ResourceManagerInfo.YourManager</h1>
-    <div class="contact-container text-center" id="contact">
+<section class="manager-container">
+    <h1 class="text-center"> @Term.DAL.Resources.ResourceManagerInfo.YourManager</h1>    
+    <div class="contact-container text-center">
         @if (personalPhoto != null)
         {
-        <div class="avatar inline-block m-b-50" style="background-image: url(@personalPhoto)"></div>
+        <div class="avatar inline-block m-b-20" style="background-image: url(@personalPhoto)"></div>
         }
         <div class="text-center">
             <div class="inline-block">
                 <dl class="dl-horizontal manager-data">
                     <dt>
-                        @Html.DisplayNameFor(model => model.Fio)
+                        @Html.DisplayNameFor(model => model.Manager.Fio)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Fio)
+                        @Html.DisplayFor(model => model.Manager.Fio)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.EMail)
+                        @Html.DisplayNameFor(model => model.Manager.EMail)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.EMail)
+                        @Html.DisplayFor(model => model.Manager.EMail)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.MobilePhoneNumber)
+                        @Html.DisplayNameFor(model => model.Manager.MobilePhoneNumber)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.MobilePhoneNumber)
+                        @Html.DisplayFor(model => model.Manager.MobilePhoneNumber)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.InternalPhoneNumber)
+                        @Html.DisplayNameFor(model => model.Manager.InternalPhoneNumber)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.InternalPhoneNumber)
+                        @Html.DisplayFor(model => model.Manager.InternalPhoneNumber)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.Skype)
+                        @Html.DisplayNameFor(model => model.Manager.Skype)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Skype)
+                        @Html.DisplayFor(model => model.Manager.Skype)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.ICQ)
+                        @Html.DisplayNameFor(model => model.Manager.ICQ)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.ICQ)
+                        @Html.DisplayFor(model => model.Manager.ICQ)
                     </dd>
 
                 </dl>
             </div>
         </div>
     </div>
+        
+</section>
+@if (Model.Assistants.Any())
+{
+    <hr class="cart-divider"/>
+<section class="assistants-container">
+    <h3 class="text-center"> помощники менеджера</h3>
+    <ul class="list-inline text-center">
+    @foreach (var a in Model.Assistants)
+    {
+        <li class="assistant-item">
+            @if (a.PersonalPhoto != null)
+            {
+                <div class="avatar inline-block m-b-10 h-200" style="background-image: url(@a.PersonalPhoto)"></div>
+            }
 
-    
-</div>
+            <dl class="dl-horizontal assistant-info-items">
+               
+                <dd>
+                    @Html.DisplayFor(model => a.Fio)
+                </dd>
 
+                <dd>
+                    @Html.DisplayFor(model => a.EMail)
+                </dd>
+
+                
+                <dd>
+                    @Html.DisplayFor(model => a.MobilePhoneNumber)
+                </dd>
+
+                <dd>
+                    @Html.DisplayFor(model => a.InternalPhoneNumber)
+                </dd>
+
+                <dd>
+                    @Html.DisplayFor(model => a.Skype)
+                </dd>
+
+                <dd>
+                    @Html.DisplayFor(model => a.ICQ)
+                </dd>
+
+            </dl>
+        </li>
+    }
+        </ul>
+    </section>
+}

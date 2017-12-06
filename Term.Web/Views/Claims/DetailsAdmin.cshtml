@@ -100,19 +100,36 @@ $(document).ready(function () {
 $(".files").each(function () {
 var folderclaim = $(this).data("claimguid");
 var folderproduct = $(this).data("productid") + "_" + $(this).data("count");
+var removefolder = folderclaim + "/" + folderproduct + "/";
 var uri = '/api/ystapi/getfilesinfolder?claim=' + folderclaim + '&productId=' + folderproduct;
 $.getJSON(uri, function (data) {
 $.each(data, function (key, item) {
 var path = folderclaim + "/" + folderproduct + "/" + item;
     if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
-        $('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a><br />");
+        $('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a> <span class=\"glyphicon glyphicon-remove fileremove\" data-remove=\"" + removefolder + item +"\" aria-hidden=\"true\"></span><br />");
     } else if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mpeg") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0) {
-        $('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a><br />");
+        $('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a> <span class=\"glyphicon glyphicon-remove fileremove\" data-remove=\"" + removefolder + item +"\" aria-hidden=\"true\"></span><br />");
     } else {
-        $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a><br />");
+        $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a> <span class=\"glyphicon glyphicon-remove fileremove\" data-remove=\"" + removefolder + item +"\" aria-hidden=\"true\"></span><br />");
     }
 });
 });
+});
+
+$('body').on('click', '.fileremove', function () {
+    var removefolder = $(this).data("remove");
+        var uri = '/api/ystapi/removefilesinfolder?path=' + removefolder;
+        var ajaxRequest = $.ajax({
+            type: "POST",
+            url: uri,
+            contentType: false,
+            processData: false
+        }).done(function (result) {
+            result ? toastr.success('Файл удалён!') : toastr.error('Ошибка при удалении файла!');
+            if (result) {
+                location.reload();
+            }
+        });
 });
 
 $('.upload').on('change', function () {
@@ -141,15 +158,16 @@ $('.photo' + folderproduct).empty();
 $('.other' + folderproduct).empty();
 $('.video' + folderproduct).empty();
 var uri = '/api/ystapi/getfilesinfolder?claim=' + folderclaim + '&productId=' + folderproduct;
+var removefolder = folderclaim + "/" + folderproduct + "/";
 $.getJSON(uri, function (data) {
 $.each(data, function (key, item) {
 var path = folderclaim + "/" + folderproduct + "/" + item;
     if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
-        $('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a><br />");
+        $('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a> <span class=\"glyphicon glyphicon-remove fileremove\" data-remove=\"" + removefolder + item +"\" aria-hidden=\"true\"></span><br />");
     } else if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mpeg") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0) {
-        $('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a><br />");
+        $('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a> <span class=\"glyphicon glyphicon-remove fileremove\" data-remove=\"" + removefolder + item +"\" aria-hidden=\"true\"></span><br />");
     } else {
-        $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a><br />");
+        $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a> <span class=\"glyphicon glyphicon-remove fileremove\" data-remove=\"" + removefolder + item +"\" aria-hidden=\"true\"></span><br />");
     }
 });
 });

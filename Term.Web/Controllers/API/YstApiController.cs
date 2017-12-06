@@ -164,7 +164,19 @@ namespace Term.Web.Controllers.API
             }
         }
 
-
+        [HttpPost]
+        [ActionName("removefilesinfolder")]
+        public bool RemoveFilesInFolder(string path)
+        {
+            String pathToClaimsPhotos = ConfigurationManager.AppSettings["PathToClaimsPhotos"];
+            var claimfolder = Path.Combine(HttpContext.Current.Server.MapPath(pathToClaimsPhotos));
+            var url = claimfolder + path;
+            if (System.IO.File.Exists(url))
+            {
+                System.IO.File.Delete(url);
+            }
+            return true;
+        }
 
 
     }

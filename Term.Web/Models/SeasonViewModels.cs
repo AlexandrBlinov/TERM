@@ -9,6 +9,8 @@ using Term.Utils;
 using Term.DAL;
 using Term.Soapmodels;
 using YstTerm.Models;
+using Term.Web.Views.Resources;
+using Term.Web.Models;
 
 namespace YstTerm.Models
 
@@ -169,14 +171,13 @@ namespace YstTerm.Models
 
     }
 
-   
+
     /// <summary>
     /// Used  for list of season orders
     /// </summary>
     /// 
-
-
-    public class SeasonOrderViewModel
+    
+    public class SeasonOrderViewModel: BaseViewPodborModel
     {
 
         public SeasonOrderViewModel()
@@ -184,24 +185,13 @@ namespace YstTerm.Models
             FromOnWay = false;
         }
         public bool FromOnWay { get; set; }
-        public DateTime? BeginDate { get; set; }
-        public DateTime? EndDate { get; set; }
 
         public string OrderNumber { get; set; }
+
         public SeasonOrderStatus? OrderStatus { get; set; }
     
         public IPagedList<SeasonOrder> SeasonOrders { get; set; }
-
-       
-        public int ItemsPerPage { get; set; }
-                     
-
-        public IEnumerable<int> PagerList
-        {
-            get { return new int[] { 10, 20, 50, 100, 200 }; }
-        }
-
-       
+        
         public IEnumerable<SelectListItem> OrderStatuses {get; set;}
 
     

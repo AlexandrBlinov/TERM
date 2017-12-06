@@ -71,11 +71,12 @@ namespace Term.Web.Controllers
                 
         public ActionResult Index()
         {
+          
+
             if (!_context.Request.IsAuthenticated) return new EmptyResult();
 
             var currentPartner = _service.Partner;
-
-            
+                       
 
 
           if (currentPartner == null || currentPartner.IsForeign) return new EmptyResult();
@@ -147,7 +148,7 @@ namespace Term.Web.Controllers
 
         }
         */
-
+       
         protected override void Initialize(RequestContext requestContext)
         {
 
@@ -167,6 +168,6 @@ namespace Term.Web.Controllers
 
             }
                 base.Initialize(requestContext);
-        }
+        } 
     }
 }

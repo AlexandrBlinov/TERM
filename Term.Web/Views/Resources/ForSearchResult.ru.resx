@@ -471,4 +471,7 @@
   <data name="ShipNoShip" xml:space="preserve">
     <value>Неошипованные</value>
   </data>
+  <data name="ChooseSeasonOrders" xml:space="preserve">
+    <value>Подбор сезонных заказов</value>
+  </data>
 </root>

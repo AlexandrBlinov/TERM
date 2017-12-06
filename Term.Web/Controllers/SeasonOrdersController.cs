@@ -76,8 +76,8 @@ namespace Term.Web.Controllers
 
             if (model.OrderStatus.HasValue && (int)model.OrderStatus > 0) query = query.Where(so => so.OrderStatus == model.OrderStatus);
             
-            model.SeasonOrders=query.OrderByDescending(o => o.OrderDate).ToPagedList(1, 100);
-
+            model.SeasonOrders=query.OrderByDescending(o => o.OrderDate).ToPagedList(model.Page, model.ItemsPerPage);
+           
             model.OrderStatuses = EnumDescriptionProvider.GetSelectListFromEnum<SeasonOrderStatus>();
 
             ViewBag.isForeign = isForeign;

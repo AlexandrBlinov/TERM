@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
-    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/jquery.suggestions/16.6/css/suggestions.css" type="text/css" rel="stylesheet"/>
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />  
+    @RenderSection("styles", false)
     <link href="https://oss.maxcdn.com/icheck/1.0.2/skins/square/blue.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
     
@@ -19,15 +19,15 @@
     <link href="~/Content/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
     @{
-        string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-        string srcgooglemapslibrary = "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" + "&language=" + lang + "&key=AIzaSyDN7YSVCGitkbM-gZ4h7dT5eVw1bo6CgnU";
-
-
+      /*  string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+        string srcgooglemapslibrary = "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" + "&language=" + lang + "&key=AIzaSyDN7YSVCGitkbM-gZ4h7dT5eVw1bo6CgnU"; */
+        
     }
    
 </head>
 <body>
-    @{var sps = new SeasonProductService(); var ntf = new NotificationForUserService();}
+    @{var sps = new SeasonProductService(); 
+        }
 <header>
 <nav class="navbar navbar-default first-horizontal-menu">
     <div class="container">
@@ -56,7 +56,7 @@
                 @if (ViewBag.CurrentPartner != null && !ViewBag.CurrentPartner.IsForeign)
                 {
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.SaleReturns </a>
+                        <a href="#" class="dropdown-toggle collapse-1" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.SaleReturns </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("по невостребованным товарам", "List", "SaleReturns")</li>
                             <li>@Html.ActionLink("по браку", "Index", "Claims")</li>
@@ -71,15 +71,16 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
-
+                    <li><a class="m-r-20" href="@Url.Action("ManagerInfo", "Help")">@Header.YourManagers</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle icon-user collapse-1" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.Name <span class="caret"></span></a>
+                        
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="@Url.Action("Index", "Partner")"><i class=" fa fa-cog" aria-hidden="true"></i> @Header.Settings</a></li>
-                            <li><a href="@Url.Action("ManagerInfo", "Help")">@Header.YourManagers</a></li>
-                            
-                            <li class="text-center m-t-15 menu-item-divider" id="yst-menuitem-prepay">
                            
+                            
+                            <li class="text-center m-t-15 menu-item-divider js-autoaction" id="yst-menuitem-prepay" data-autoaction="@Url.Action("Index","PrepayToggle")">
+                               &nbsp;
                             </li>
                         </ul>
                     </li>
@@ -242,8 +243,8 @@
 
                 </li>
 
-                <li class="dropdown yst-limit-container" id="yst-limit-container" > &nbsp;
-                    @* {Html.RenderAction("index","LimitData");}*@
+                <li class="dropdown yst-limit-container js-autoaction" id="yst-limit-container" data-autoaction="@Url.Action("Index","LimitData")" > &nbsp;
+                    
                 </li>
                 <li> @Html.Partial("_LoginMenu")</li>
             </ul>
@@ -261,32 +262,13 @@
         @RenderSection("featured", required: false)
 
         @RenderBody()
-        @if (!ntf.CheckIfExists(User.Identity.Name) && User.Identity.IsAuthenticated && System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName=="ru")
-        {
-        <div id="idModalToNotify" class="modal fade">
-            <div class="modal-dialog-ntf" style="width: 600px; margin: auto; padding-top: 21%;">
-                <div class="modal-content">
-                    <div class="modal-header alert-success">
-                        <h4 class="modal-title"><span class="glyphicon glyphicon-ok-circle"> </span> Уважаемые клиенты! ВНИМАНИЕ!</h4>
-                    </div>
-                    <div class="modal-body">
-                        <span>С 08.11.2017г. меняется порядок оформления заказов!</span>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="/Help/UrgentNews" id="Info-ntf" class="btn btn-default btn-primary" data-dismiss="modal">Ознакомиться с информацией</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        }
+        
     </div>
 
     <footer class="footer-bg">
         @Html.Partial("_Footer")
         </footer>
-
-        <!-- <a href="#" class="scrollup">Наверх</a>
-         <a href="#" class="scrolldown">Вниз</a> -->
+         
     <div class='scrolltop'>
         <div class='scroll icon'><i class="fa fa-4x fa-angle-up"></i></div>
     </div>
@@ -297,7 +279,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
         @*Scripts.Render("~/bundles/modernizr")*@
 
-        <script src=@srcgooglemapslibrary></script>
+       
         @Scripts.Render("~/bundles/other_service")
         @Scripts.Render("~/bundles/term_service")
 
@@ -306,17 +288,15 @@
         'use strict';
         var cartContainer = $('#cart-container').data('controller');
         $('#cart-container').load("/" + cartContainer + "/CartSummary");
+
+        
+        $('.js-autoaction').each(function () {
+            var action = $(this).data("autoaction");
+            if (action) $(this).load(action);           
+        });
+        
     }());
 
-       (function () {
-            'use strict';
-            var $limitContainer = $('#yst-limit-container');
-            $limitContainer.load("/LimitData/Index");
-        }());         (function () {
-            'use strict';
-            var $prepayToggleContainer = $('#yst-menuitem-prepay');
-            $prepayToggleContainer.load("/PrepayToggle/Index");
-        }());                 
 </script>
 
     

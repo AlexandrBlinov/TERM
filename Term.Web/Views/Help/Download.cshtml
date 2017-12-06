@@ -6,74 +6,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<table class="data-table order-table">
+    <thead>
+        <tr>
+            <th>Тип файла</th>
+            <th>Вид товара</th>
+            <th>Ссылка</th>
+        </tr>
+    </thead>
+    <tr>
+        <td><img style="width:40px;" src="~/Content/img/excel.png" /></td>
+        <td>Все группы товаров</td>
+        @if (new ServicePartnerPoint().IsPartner)
+        {
+            <td><a href=@ViewBag.urlPriceAllDep>@ViewBag.urlPriceAllDep</a></td>
+        }
+        else
+        {
+            <td><a href=@ViewBag.urlPrice>@ViewBag.urlPrice</a></td>
+        }
+    </tr>
+    @if (new ServicePartnerPoint().IsPartner)
+    {
+        <tr>
+            <td><img style="width:40px;" src="~/Content/img/xml.png" /></td>
+            <td>Шины (все остатки)</td>
+            <td><a href=@ViewBag.urlTyre>@ViewBag.urlTyre</a></td>
+        </tr>
+        <tr>
+            <td><img style="width:40px;" src="~/Content/img/xml.png" /></td>
+            <td>Шины (без сторонних)</td>
+            <td><a href=@ViewBag.urlTyreOnlyYst>@ViewBag.urlTyreOnlyYst</a></td>
+        </tr>
+        <tr>
+            <td><img style="width:40px;" src="~/Content/img/xml.png" /></td>
+            <td>Диски</td>
+            <td><a href=@ViewBag.urlDisk>@ViewBag.urlDisk</a></td>
+        </tr>
+        <tr>
+            <td><img style="width:40px;" src="~/Content/img/xml.png" /></td>
+            <td>Аккумуляторы</td>
+            <td><a href=@ViewBag.urlAkb>@ViewBag.urlAkb</a></td>
+        </tr>
+        <tr>
+            <td><img style="width:40px;" src="~/Content/img/xml.png" /></td>
+            <td>Аксессуары</td>
+            <td><a href=@ViewBag.urlAcc>@ViewBag.urlAcc</a></td>
+        </tr>
+    }
+</table>
 
 
-<h2>@Header.Download EXCEL</h2>
-<div class="row">
-   
-@if (new ServicePartnerPoint().IsPartner)
-{
-    <div class="col-sm-6 col-md-2">
-        <div class="thumbnail">
-            <img src="~/Content/img/excel.png"/>
-            <div class="caption">
-                <p class="text-center"><a href=@ViewBag.urlPriceAllDep class="btn btn-primary" role="button">Прайс-лист по всем складам</a>
-                </p>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    <div class="col-sm-6 col-md-2">
-        <div class="thumbnail">
-            <img src="~/Content/img/excel.png" />
-            <div class="caption">
-                <p class="text-center"><a href=@ViewBag.urlPrice class="btn btn-primary" role="button">@Header.Pricelist</a></p>
-            </div>
-        </div>
-    </div>
-}
-    
-</div>
 
-
-@if (new ServicePartnerPoint().IsPartner)
-{
-    <h2>@Header.Download XML</h2>
-    <div class="row">
-        <div class="col-sm-6 col-md-2">
-            <div class="thumbnail">
-                <img src="~/Content/img/xml.png" />
-                <div class="caption">
-                    <p class="text-center"><a href=@ViewBag.urlTyre class="btn btn-primary" role="button">@Header.Tyres (все остатки)</a></p>
-                    <p class="text-center"><a href=@ViewBag.urlTyreOnlyYst class="btn btn-primary" role="button">@Header.Tyres (без сторонних)</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-2">
-            <div class="thumbnail">
-                <img src="~/Content/img/xml.png" />
-                <div class="caption">
-                    <p class="text-center"><a href=@ViewBag.urlDisk class="btn btn-primary" role="button">@Header.Wheels</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-2">
-            <div class="thumbnail">
-                <img src="~/Content/img/xml.png" />
-                <div class="caption">
-                    <p class="text-center"><a href=@ViewBag.urlAkb class="btn btn-primary" role="button">@Header.CarBatteries</a></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-2">
-            <div class="thumbnail">
-                <img src="~/Content/img/xml.png" />
-                <div class="caption">
-                    <p class="text-center"><a href=@ViewBag.urlAcc class="btn btn-primary" role="button">@Header.Accessories</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
-}

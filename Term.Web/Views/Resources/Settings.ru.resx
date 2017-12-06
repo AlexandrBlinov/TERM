@@ -393,4 +393,13 @@
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
   </data>
+  <data name="ConfBlock" xml:space="preserve">
+    <value>Подтвердите блокировку</value>
+  </data>
+  <data name="ConfBlockAsk" xml:space="preserve">
+    <value>Вы действительно хотите заблокировать партнерскую точку</value>
+  </data>
+  <data name="ConfBlockText" xml:space="preserve">
+    <value />
+  </data>
 </root>

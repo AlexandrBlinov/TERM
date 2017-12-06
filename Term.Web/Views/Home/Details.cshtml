@@ -225,7 +225,7 @@
                     <br />
                     <span class="podbor-tyres-title">@ForSearchResult.VehicleFitmentGuide</span>
                     <span style="padding: 20px 30px 30px 30px;" class="btn-group btn-group-sm term-refresh-cars" data-exactsize="1" data-id="@Model.ProductId">
-                        <button type="button" class="btn btn-default active">@ForSearchResult.WithTolerances</button>
+                        <button type="button" class="btn btn-default active withtolerances">@ForSearchResult.WithTolerances *</button>
                         <button type="button" class="btn btn-default">OEM</button>
                     </span>
                     <br />
@@ -233,6 +233,16 @@
                 @Html.Partial("_AppToCars", Model)
     }
         </div>
+<p class="m-t-30 note">
+    *Данные значения являются условно-рекомендованными.
+    Приобретая диски с параметрами, отличающимися от установленных
+    заводом-изготовителем, клиент подтверждает, что он ознакомился с техническими
+    характеристиками товара, условиями гарантии, правилами и условиями
+    использования товара, обеспечивающими его безопасность и эффективность.
+    Клиент принимает на себя риски, которые могут возникнуть при эксплуатации дисков на автомобиле. 
+    В том числе, невозможность возврата данных дисков в случае потери ими товарного вида, если они не подойдут на автомобиль,
+    не указанный в таблице применяемости по заводским параметрам.
+</p>
 
         @section Scripts {
             <script>
@@ -268,17 +278,24 @@
 
                           });
 
-
+                        if (exactsize == 1) {
+                            $('.note').addClass('invisible');
+                        } else {
+                            $('.note').removeClass('invisible');
+                        }
                     });
 
                     $(document).ready(function () {
+                        
                         $('.small-photo').click(function () {
                             var src = $(this).attr('src');
                             $('.main-photo').attr('src', src);
                         });
+
                         $('.thumbnail').each(function () {
                             if ($(this).attr("id") > 4) $(this).addClass('invisible');
                         });
+                        
                     });
 
                     

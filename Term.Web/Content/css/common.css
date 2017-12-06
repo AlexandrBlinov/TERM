@@ -248,9 +248,10 @@ DIV#podbortiporazmerresult.loading {
 	display: none !important;
 }
 
-.text_main{
-	font-weight: bold;
-	font-size: 20px;
+.text_main {
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(24, 53, 93);
 }
 
 .text_sub{

@@ -291,6 +291,11 @@ namespace Term.Web.Controllers
                     brand = wsDisks.GetValue(i, 2).ToString();
                     if (brand == "VISSOL")
                     {
+                        var restYar = wsDisks.GetValue(i, 14).ToString();
+                        if (restYar == "50")
+                        {
+                            wsDisks.Cells[i, 14].Value = "Под заказ";
+                        }
                         for (int j = 1; j < 22; j++)
                         {
                             wsDisks.Cells[i, j].Style.Fill.PatternType = ExcelFillStyle.Solid;

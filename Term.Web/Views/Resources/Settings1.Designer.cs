@@ -19,7 +19,7 @@ namespace Term.Web.Views.Resources {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Settings {
@@ -210,6 +210,33 @@ namespace Term.Web.Views.Resources {
         public static string CompName {
             get {
                 return ResourceManager.GetString("CompName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Block?.
+        /// </summary>
+        public static string ConfBlock {
+            get {
+                return ResourceManager.GetString("ConfBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Sure to block point.
+        /// </summary>
+        public static string ConfBlockAsk {
+            get {
+                return ResourceManager.GetString("ConfBlockAsk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на .
+        /// </summary>
+        public static string ConfBlockText {
+            get {
+                return ResourceManager.GetString("ConfBlockText", resourceCulture);
             }
         }
         

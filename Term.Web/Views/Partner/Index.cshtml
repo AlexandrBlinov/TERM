@@ -46,7 +46,7 @@
             @*Html.ActionLink(" ", "Edit", new { PointId = item.PartnerPointId }, new { @class = "a_glif glyphicon glyphicon-edit", @title="Редактировать"})*@
                 @{ var faClass = item.IsLocked ? "fa-unlock" : "fa-lock";}
                 <a class="delete-point" title="@Settings.Delete" data-point="@item.PartnerPointId"><i class="fa fa-ban"></i> @Settings.Delete </a><br/>
-                <a class="@(item.IsLocked ? "enable": "disable")-point" title="@(item.IsLocked ? @Settings.Unblock : @Settings.Block)" data-point="@item.PartnerPointId"> <i class="fa @faClass"> </i>   @(item.IsLocked ? Settings.Unblock : Settings.Block)</a>
+                <a class="@(item.IsLocked ? "enable": "disable")-point block-point" title="@(item.IsLocked ? @Settings.Unblock : @Settings.Block)" data-point="@item.PartnerPointId"> <i class="fa @faClass"> </i>   @(item.IsLocked ? Settings.Unblock : Settings.Block)</a>
             </td>
 
         </tr>
@@ -67,6 +67,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">@Settings.Cancel</button>
                 <button type="button" class="btn btn-primary" id="ButDeletePartnerPoint" data-partnerpointid="19">@Settings.Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="idModalToBlockPoint" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@Settings.ConfBlock</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Settings.ConfBlockAsk<span> </span>?</p>
+                <p class="text-warning"><small>@Settings.ConfBlockText</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Settings.Cancel</button>
+                <button type="button" class="btn btn-primary" id="ButBlockPartnerPoint" data-partnerpointid="19">Ok</button>
             </div>
         </div>
     </div>

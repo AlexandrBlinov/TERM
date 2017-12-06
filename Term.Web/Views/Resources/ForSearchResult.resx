@@ -471,4 +471,7 @@
   <data name="ShipNoShip" xml:space="preserve">
     <value>no studs</value>
   </data>
+  <data name="ChooseSeasonOrders" xml:space="preserve">
+    <value>Choose orders</value>
+  </data>
 </root>

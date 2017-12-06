@@ -4,7 +4,7 @@ var isUserHasDpdContract = !!$("#isUserHasDpdContract").val();
 var isAdmin = !!$("#isAdmin").val();
 //var isAdmin = false;
 var passShowItemsOfSuppliers = false;
-var mainDepCode = "00005";
+var mainDepCodes = ["00005","00112"];
 
 (function() {
 
@@ -73,38 +73,36 @@ var mainDepCode = "00005";
 
 /*
 /* Устанавливаем дни доставки
-123
+
 */
 function updateDatepicker()
 {
     var enabledDates = [];
     var picker = $('.js-datefor-shipment').data("DateTimePicker");
     var $ld = $("#LogistikDepartment").val();
-    if ($ld && $ld != mainDepCode) return;
+    if (!$ld ||  mainDepCodes.indexOf($ld)<0) return;
         
     var addressId = $('#AddressId').val();
     if (addressId && isAdmin)
-    {
-        //console.log(addressId);
+    {       
         
         $.get('/orders/GetDatesOfShipment', { "addressId": addressId })
             .done(function (data) {
 
-            var result = data.result;
-            for (var i = 0; i < result.length; i++) {
-                          
-                var newDate = new Date(result[i].replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));              
-                enabledDates.push(newDate);
+                var result = data.result;
+                for (var i = 0; i < result.length; i++) {
 
-            }
-           
-            picker.options({ 'enabledDates': enabledDates })	
-            })
-            .fail(function () {
-                console.error("------AJAX error");
-            })
+                    var newDate = new Date(result[i].replace(/(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"));
+                    enabledDates.push(newDate);
 
-        
+                }
+
+                picker.options({ 'enabledDates': enabledDates })
+            })
+            .fail(function (xhr, status) {
+                console.error(xhr.responseText);
+            });
+                    
     }
 
 

@@ -452,6 +452,10 @@
     <Compile Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.Designer.cs">
       <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712040539317_ClaimsDetailsLenghtFilds.cs" />
+    <Compile Include="Migrations\201712040539317_ClaimsDetailsLenghtFilds.Designer.cs">
+      <DependentUpon>201712040539317_ClaimsDetailsLenghtFilds.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
@@ -741,8 +745,6 @@
     <Content Include="Content\img\add-scan.png" />
     <Content Include="Content\img\akb.jpg" />
     <Content Include="Content\img\akk.jpg" />
-    <Content Include="Content\img\autoteplo_1.jpg" />
-    <Content Include="Content\img\autoteplo_2.jpg" />
     <Content Include="Content\img\big_loading.gif" />
     <Content Include="Content\img\button_cancel.png" />
     <Content Include="Content\img\cart-sprite.png" />
@@ -778,8 +780,6 @@
     <Content Include="Content\img\Help\7_en.png" />
     <Content Include="Content\img\Help\8.png" />
     <Content Include="Content\img\Help\8_en.png" />
-    <Content Include="Content\img\grass.jpg" />
-    <Content Include="Content\img\grass_2.jpg" />
     <Content Include="Content\img\icon-error.png" />
     <Content Include="Content\img\icon-success.png" />
     <Content Include="Content\img\icon_bottom.png" />
@@ -793,11 +793,6 @@
     <Content Include="Content\img\inci.jpg" />
     <Content Include="Content\img\instagram-social-network-logo-of-photo-camera.svg" />
     <Content Include="Content\img\item_382_thumb.jpg" />
-    <Content Include="Content\img\jidk.jpg" />
-    <Content Include="Content\img\lavr-2.jpg" />
-    <Content Include="Content\img\lavr.jpg" />
-    <Content Include="Content\img\liquid_1.jpg" />
-    <Content Include="Content\img\liquid_2.jpg" />
     <Content Include="Content\img\logo-yst.png" />
     <Content Include="Content\img\logotip.png" />
     <Content Include="Content\img\math_1.jpg" />
@@ -805,6 +800,10 @@
     <Content Include="Content\img\menu-akb-icon.png" />
     <Content Include="Content\img\menu-disk-icon.png" />
     <Content Include="Content\img\menu-tyre-icon.png" />
+    <Content Include="Content\img\ng1.jpg" />
+    <Content Include="Content\img\ng2.jpg" />
+    <Content Include="Content\img\ng3.jpg" />
+    <Content Include="Content\img\ng4.jpg" />
     <Content Include="Content\img\NotActiv.png" />
     <Content Include="Content\img\novinki.jpg" />
     <Content Include="Content\img\rub.png" />
@@ -814,7 +813,6 @@
     <Content Include="Content\img\season_all.png" />
     <Content Include="Content\img\season_summer.png" />
     <Content Include="Content\img\season_winter.png" />
-    <Content Include="Content\img\shetki.jpg" />
     <Content Include="Content\img\socials.jpg" />
     <Content Include="Content\img\solite_1.jpg" />
     <Content Include="Content\img\solite_2.jpg" />
@@ -847,10 +845,6 @@
     <Content Include="Content\img\azard_2.jpg" />
     <Content Include="Content\img\varta.jpg" />
     <Content Include="Content\img\varta_2.jpg" />
-    <Content Include="Content\img\gruz_1.jpg" />
-    <Content Include="Content\img\gruz_2.jpg" />
-    <Content Include="Content\img\deflector_1.jpg" />
-    <Content Include="Content\img\deflector_2.jpg" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -988,7 +982,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\yst-localize-20170619.js" />
-    <Content Include="Scripts\yst-shoppingcart-20171111.js" />
+    <Content Include="Scripts\yst-shoppingcart-20171205.js" />
     <Content Include="Scripts\yst-notifications.js" />
     <Content Include="Scripts\yst-scripts-20170927.js" />
     <Content Include="Scripts\yst-utility.js" />
@@ -1354,6 +1348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.resx">
       <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712040539317_ClaimsDetailsLenghtFilds.resx">
+      <DependentUpon>201712040539317_ClaimsDetailsLenghtFilds.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

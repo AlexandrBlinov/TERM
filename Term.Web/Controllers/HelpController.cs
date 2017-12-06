@@ -12,6 +12,7 @@ using YstTerm.Models;
 
 using YstProject.Services;
 using Term.Web.Services;
+using System.Data.Entity;
 
 namespace Term.Web.Controllers
 {
@@ -134,14 +135,23 @@ namespace Term.Web.Controllers
 
         }
 
-        public ActionResult ManagerInfo() {
+        public  async Task<ActionResult> ManagerInfo() {
 
 
             var partner = base.Partner;
 
-            var managerModel = partner == null ? null : partner.MainManager;
+            var model = new ManagerViewModel {Manager= partner?.MainManager };
 
-            return View(managerModel);
+
+            if (model.Manager != null)
+
+            { var assistantIds = DbContext.AssistantsOfManagers.Where(m => m.ManagerId == model.Manager.GuidIn1S).Select(p => p.AssistantId);
+
+             model.Assistants  =await DbContext.Managers.Where(m => assistantIds.Contains(m.GuidIn1S)).ToListAsync();
+                    }
+           
+
+            return View(model);
             
         }
         protected override void Dispose(bool disposing)

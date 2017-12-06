@@ -7,59 +7,74 @@
     ViewBag.Title = Model.FromOnWay? Header.OrdersFromArrivals : Header.SeasonOrders;
 }
 
-<div class="row">
-    <div class="col-xs-12 form_podbor">
-        <div class="form_border">
-            <h2 class="form_header_text text-center">@ViewBag.Title</h2>
-            <form class="form-inline form_documents">
-                @Html.HiddenFor(model=>model.FromOnWay)
-                <div class="form-group">
-                    <label for="BeginDate">@SeasonOrdersTexts.BeginDate</label>
+<h2 class="border-form-podbor search-order-title">@ForSearchResult.ChooseSeasonOrders</h2>
+@using (Html.BeginForm("Index", "SeasonOrders", FormMethod.Get))
+{
+    <fieldset class="border-form-podbor">
+        @Html.HiddenFor(model => model.FromOnWay)
+        <div class="row">
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
+                <div>
                     <div class="input-group date">
-
-                        @Html.TextBoxFor(model => model.BeginDate, "{0:dd.MM.yyyy}", new { @class = "form-control w_lg_100" })
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-time"></span>
-                        </span>
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <label for="EndDate">@SeasonOrdersTexts.EndDate</label>
-                    <div class="input-group date">
-
-                        @Html.TextBoxFor(model => model.EndDate, "{0:dd.MM.yyyy}", new { @class = "form-control w_lg_100" })
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-time"></span>
+                        @Html.TextBoxFor(model => model.BeginDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="input-group">
-                    <label class="sr-only" for="OrderNumber">Order number</label>
-
-                    @Html.TextBoxFor(model => model.OrderNumber, new { @class = "form-control form-control__searchbynumber" ,@placeholder=@SeasonOrdersTexts.SearchByOrderNamber})
-                        <div class="input-group-btn">
-                            <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button>
-                        </div>
-                        </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                @Html.LabelFor(p => p.EndDate, new { @class = "search-order-label" })
+                <div>
+                    <div class="input-group date">
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
+                        <span class="input-group-addon date-pick-btn">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label>@SeasonOrdersTexts.Status</label>
-
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">@CartAndOrders.OrderNumber</label>
+                <div>
+                    @Html.TextBoxFor(p => p.OrderNumber, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">@CartAndOrders.Status</label>
+                <div>
                     @Html.DropDownListFor(p => p.OrderStatus, Model.OrderStatuses, "Все", new { @class = "form-control" })
-
                 </div>
-
-                <div class="form-group text-center">
-                    <button type="submit" class="btn btn-primary btn-default">@CartAndOrders.Filter</button>
-                    </div>
-</form>
+            </div>
+            <div class="col-xs-12 text-center search-order-btn">
+                <button class="form-podbor-btn-submit" type="submit">@CartAndOrders.Filter</button>
+            </div>
         </div>
+    </fieldset>
+
+    <div class="order-table-header-block m-t-15">
+
+        <span class="order-table-header">@CartAndOrders.ListOfOrders</span>
+        @Html.PagedListPager(Model.SeasonOrders, page => Url.Action("Index", new
+   {
+       page,
+       BeginDate = Model.BeginDate.ValueForPaginator(),
+       EndDate = Model.EndDate.ValueForPaginator(),
+       StatusId = Model.OrderStatus
+   }),
+    new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
     </div>
 
-</div>
+    <div>
+        <div class="psevdo-select psevdo-select-dispos">
+            <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+            @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+        </div>
+
+
+    </div>
+}
 <div class="row">
     <div class="col-xs-12">
         <table class="data-table order-table">

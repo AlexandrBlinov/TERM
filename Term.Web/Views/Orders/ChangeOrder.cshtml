@@ -1,6 +1,10 @@
 ﻿@model Yst.ViewModels.OrderViewWithDetailsExtended
 @using Term.Web.Views.Resources;
 
+@section styles{
+    <link href="https://cdn.jsdelivr.net/npm/suggestions-jquery@17.10.1/dist/css/suggestions.min.css" type="text/css" rel="stylesheet" />
+}
+
 @{
     ViewBag.Title = String.Concat(CartAndOrders.Order," ", @CartAndOrders.From," ", Model.Order.NumberIn1S);
     var deliveryDate = Model.Order.DeliveryDate.HasValue ? ((DateTime)Model.Order.DeliveryDate).ToString("yyyy-MM-dd") : "";

@@ -164,7 +164,35 @@ $(function () {
         
     });
 
-    $('.disable-point,.enable-point').on('click', function ()
+    $('#ButBlockPartnerPoint').on('click', function () {
+        var pointId = parseInt($(this).data('partnerpointid')) || 0;
+        var action =false;
+        console.log({ "PointId": pointId, "action": action });
+        $.post("/Partner/DisableEnable", { "PointId": pointId, "action": action }, function (data) {
+            if (!data.Success)
+                toastr.error(data.Message);
+
+            else
+                window.location.reload(true); // success
+
+        });
+        return false;
+    }
+    );
+
+    $('.disable-point').on('click', function (evt) {
+        var partnerPointId = $(this).data('point');
+        var modalWindow = $('#idModalToBlockPoint');
+
+        modalWindow.find('#ButBlockPartnerPoint').data('partnerpointid', partnerPointId);
+        modalWindow.find('span').text(partnerPointId);
+        modalWindow.modal();
+        evt.stopPropagation();
+
+
+    });
+
+    $('.enable-point').on('click', function ()
     {
         var pointId = parseInt($(this).data('point')) || 0;
         var action = $(this).hasClass('disable-point') ? false: true;

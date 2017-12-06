@@ -1361,4 +1361,15 @@ namespace YstTerm.Models
         public string ContentType { get; set; }
         public byte[] Photo { get; set; }
     }
+
+    public class ManagerViewModel
+    {
+        public ManagerViewModel()
+        {
+            Assistants = new List<Manager>();
+        }
+        public Manager Manager { get; set; }
+
+        public IList<Manager> Assistants { get; set; }
+    }
 }

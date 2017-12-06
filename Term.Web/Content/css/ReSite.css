@@ -2381,8 +2381,26 @@ margin-left: 30px;
     border-radius: 50%;
 }
 
+    .avatar.h-200 {
+        width: 200px;
+        height: 200px;
+    }
+
+.assistant-info-items dd {
+    margin-left:0;
+}
+
 .m-b-50 {
-    margin-bottom:50px;
+    margin-bottom: 50px;
+}
+
+.m-b-20 {
+    margin-bottom:20px;
+}
+
+
+.assistant-item {
+   margin: 0 15px;
 }
 
 .navbar-nav .open .dropdown-menu.menu-tyre-dropdown, .navbar-nav .open .dropdown-menu.menu-disk-dropdown, 

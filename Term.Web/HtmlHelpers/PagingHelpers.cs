@@ -48,6 +48,13 @@ namespace Term.Web.HtmlHelpers
 
         }
 
+        public static string Thumbnail(this HtmlHelper htmlHelper,  string file)
+        {
+            var result = $"/thlink/{file}.png";
+            return result;
+
+        }
+
         public static string FullPathToImage(this HtmlHelper htmlHelper, string productType, string file)
         {
           //  return string.Format("/Thumbnail/{0}/{1}", productType, file);

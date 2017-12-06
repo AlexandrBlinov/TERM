@@ -18,12 +18,16 @@
     <div class="col-sm-2"></div>
     <div class="col-xs-12 col-sm-4">
         <a href="@Url.RouteUrl(new {@controller="home",@action="tyres" })" class="link_tyres"></a>
-        <p class="text-center text_main top20">@Header.Tyres</p>
+        <a href="@Url.RouteUrl(new {@controller="home",@action="tyres" })">
+            <p class="text-center text_main top20">@Header.Tyres</p>
+        </a>
         <p class="text-center text_sub">@ViewData["Tyre"] @Header.MoreThan</p>
     </div>
     <div class="col-xs-12 col-sm-4">
         <a href="@Url.RouteUrl(new {@controller="home",@action="disks" })" class="link_disks"></a>
-        <p class="text-center text_main top20">@Header.Wheels</p>
+        <a href="@Url.RouteUrl(new {@controller="home",@action="disks" })">
+            <p class="text-center text_main top20">@Header.Wheels</p>
+        </a>
         <p class="text-center text_sub">@ViewData["Disk"] @Header.MoreThan</p>
     </div>
     <div class="col-sm-2"></div>
@@ -32,12 +36,16 @@
     <div class="col-sm-2"></div>
     <div class="col-xs-12 col-sm-4">
         <a href="@Url.RouteUrl(new {@controller="home",@action="accs" })" class="link_accs"></a>
-        <p class="text-center text_main top20">@Header.Accessories</p>
+        <a href="@Url.RouteUrl(new {@controller="home",@action="accs" })">
+            <p class="text-center text_main top20">@Header.Accessories</p>
+        </a>
         <p class="text-center text_sub">@ViewData["Acc"] @Header.MoreThan</p>
     </div>
     <div class="col-xs-12 col-sm-4">
         <a href="@Url.RouteUrl(new {@controller="home",@action="akb" })" class="link_akb"></a>
-        <p class="text-center text_main top20">@Header.CarBatteries</p>
+        <a href="@Url.RouteUrl(new {@controller="home",@action="akb" })">
+            <p class="text-center text_main top20">@Header.CarBatteries</p>
+        </a>
         <p class="text-center text_sub">@ViewData["Akb"] @Header.MoreThan</p>
     </div>
     <div class="col-sm-2"></div>
