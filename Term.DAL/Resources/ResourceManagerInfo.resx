@@ -129,6 +129,9 @@
   <data name="InternalPhoneNumber" xml:space="preserve">
     <value>Internal phone number</value>
   </data>
+  <data name="ManagerAssistants" xml:space="preserve">
+    <value>Assistants</value>
+  </data>
   <data name="MobilePhoneNumber" xml:space="preserve">
     <value>Mobile phone number</value>
   </data>

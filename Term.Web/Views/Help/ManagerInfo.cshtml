@@ -3,14 +3,16 @@
 
 @{
     var personalPhoto = Model.Manager.PersonalPhoto;
+    ViewBag.Title = ResourceManagerInfo.YourManager;
+
 }
 
 <section class="manager-container">
-    <h1 class="text-center"> @Term.DAL.Resources.ResourceManagerInfo.YourManager</h1>    
+    <h1 class="text-center"> @ResourceManagerInfo.YourManager</h1>    
     <div class="contact-container text-center">
         
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-4 col-md-offset-2">
                 @if (personalPhoto != null)
                 {
                 <div class="avatar inline-block m-b-20" style="background-image: url(@personalPhoto)"></div>
@@ -83,16 +85,16 @@
 {
     <hr class="cart-divider"/>
 <section class="assistants-container">
-    <h3 class="text-center"> помощники менеджера</h3>
+    <h3 class="text-center m-b-20"> @ResourceManagerInfo.ManagerAssistants</h3>
     <ul class="list-inline text-center">
     @foreach (var a in Model.Assistants)
     {
         <li class="assistant-item">
             @if (a.PersonalPhoto != null)
             {
-                <div class="avatar inline-block m-b-10 h-200 pull-left" style="background-image: url(@a.PersonalPhoto)"></div>
+                <div class="avatar inline-block m-b-10 h-200 " style="background-image: url(@a.PersonalPhoto)"></div>
             }
-            <div class="pull-left">
+            <div class="">
             <dl class="dl-horizontal assistant-info-items">
                
                 <dd>
