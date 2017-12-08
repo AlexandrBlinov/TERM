@@ -9,7 +9,7 @@
 
 <section class="manager-container">
     <h1 class="text-center"> @ResourceManagerInfo.YourManager</h1>    
-    <div class="contact-container text-center">
+  <!--  <div class="contact-container text-center">-->
         
         <div class="row">
             <div class="col-md-4 col-md-offset-2">
@@ -78,54 +78,84 @@
         </div>
         
         
-    </div>
+  <!--  </div>-->
         
 </section>
+
 @if (Model.Assistants.Any())
 {
     <hr class="cart-divider"/>
 <section class="assistants-container">
     <h3 class="text-center m-b-20"> @ResourceManagerInfo.ManagerAssistants</h3>
-    <ul class="list-inline text-center">
+    
     @foreach (var a in Model.Assistants)
     {
-        <li class="assistant-item">
-            @if (a.PersonalPhoto != null)
-            {
-                <div class="avatar inline-block m-b-10 h-200 " style="background-image: url(@a.PersonalPhoto)"></div>
-            }
-            <div class="">
-            <dl class="dl-horizontal assistant-info-items">
-               
-                <dd>
-                    @Html.DisplayFor(model => a.Fio)
-                </dd>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                @if (personalPhoto != null)
+                {
+                    <div class="avatar inline-block m-b-20" style="background-image: url(@a.PersonalPhoto)"></div>
+                }
+            </div>
+            <div class="col-md-4">
 
-                <dd>
-                    @Html.DisplayFor(model => a.EMail)
-                </dd>
+                <div class="inline-block">
+                    <dl class="dl-horizontal manager-data">
+                        <dt>
+                            @Html.DisplayNameFor(model =>a.Fio)
+                        </dt>
 
-                
-                <dd>
-                    @Html.DisplayFor(model => a.MobilePhoneNumber)
-                </dd>
+                        <dd>
+                            @Html.DisplayFor(model => a.Fio)
+                        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => a.InternalPhoneNumber)
-                </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => a.EMail)
+                        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => a.Skype)
-                </dd>
+                        <dd>
+                            @Html.DisplayFor(model => a.EMail)
+                        </dd>
 
-                <dd>
-                    @Html.DisplayFor(model => a.ICQ)
-                </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => a.MobilePhoneNumber)
+                        </dt>
 
-            </dl>
+                        <dd>
+                            @Html.DisplayFor(model =>a.MobilePhoneNumber)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => a.InternalPhoneNumber)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => a.InternalPhoneNumber)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => a.Skype)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => a.Skype)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => a.ICQ)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => a.ICQ)
+                        </dd>
+
+                    </dl>
                 </div>
-        </li>
+            </div>
+
+
+        </div>
     }
-        </ul>
+
     </section>
 }
