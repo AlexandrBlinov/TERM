@@ -8,64 +8,74 @@
 <section class="manager-container">
     <h1 class="text-center"> @Term.DAL.Resources.ResourceManagerInfo.YourManager</h1>    
     <div class="contact-container text-center">
-        @if (personalPhoto != null)
-        {
-        <div class="avatar inline-block m-b-20" style="background-image: url(@personalPhoto)"></div>
-        }
-        <div class="text-center">
-            <div class="inline-block">
-                <dl class="dl-horizontal manager-data">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Manager.Fio)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Manager.Fio)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Manager.EMail)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Manager.EMail)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Manager.MobilePhoneNumber)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Manager.MobilePhoneNumber)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Manager.InternalPhoneNumber)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Manager.InternalPhoneNumber)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Manager.Skype)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Manager.Skype)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Manager.ICQ)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Manager.ICQ)
-                    </dd>
-
-                </dl>
+        <div class="row"> </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                @if (personalPhoto != null)
+                {
+                    <div class="avatar inline-block m-b-20" style="background-image: url(@personalPhoto)"></div>
+                }
             </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <div class="inline-block">
+                            <dl class="dl-horizontal manager-data">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Manager.Fio)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Manager.Fio)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Manager.EMail)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Manager.EMail)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Manager.MobilePhoneNumber)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Manager.MobilePhoneNumber)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Manager.InternalPhoneNumber)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Manager.InternalPhoneNumber)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Manager.Skype)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Manager.Skype)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Manager.ICQ)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.Manager.ICQ)
+                                </dd>
+
+                            </dl>
+                        </div>
+                    </div>
+                    </div>
+            
         </div>
+        
+        
     </div>
         
 </section>
