@@ -2356,10 +2356,14 @@ margin-left: 30px;
 .manager-image {
 
 }
-.manager-data {
- min-width:400px;
- 
+
+@media (min-width: 992px) {
+    .manager-data {
+        margin-top: 50px;
+        min-width: 400px;
+    }
 }
+
 
     .manager-data dt, .manager-data dd {
         padding: 2px 5px;
@@ -2373,9 +2377,9 @@ margin-left: 30px;
         }
 
 .avatar {
-    background-image: url('http://placehold.it/400x400.png');
-    width: 400px;
-    height: 400px;
+    background-image: url('http://placehold.it/300x300.png');
+    width: 300px;
+    height: 300px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
