@@ -1361,7 +1361,9 @@ namespace YstTerm.Models
         public string ContentType { get; set; }
         public byte[] Photo { get; set; }
     }
-
+    /*
+     *  Модель для отображения менеджеров
+     */
     public class ManagerViewModel
     {
         public ManagerViewModel()
