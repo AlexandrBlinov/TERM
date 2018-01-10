@@ -474,4 +474,7 @@
   <data name="ChooseSeasonOrders" xml:space="preserve">
     <value>Подбор сезонных заказов</value>
   </data>
+  <data name="PriceRecIm" xml:space="preserve">
+    <value>Рек. цена инт-маг.</value>
+  </data>
 </root>

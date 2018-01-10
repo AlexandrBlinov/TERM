@@ -25,8 +25,8 @@
     @Html.Hidden("AllOrByCarReplica", Model.AllOrByCarReplica)
     @Html.Hidden("CarName", Model.CarName)
     <div class="row border-form-podbor">
-        <img class="podbor-tyres-title-img" src="~/Content/img/img-disks-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseDisks</span>
-        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img src="~/Content/img/clear-param.png" /></a>
+        <img class="podbor-tyres-title-img" alt="@ForSearchResult.ChooseDisks" src="~/Content/img/img-disks-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseDisks</span>
+        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img alt="@ForSearchResult.ClearAll" src="~/Content/img/clear-param.png" /></a>
         <a href="@Url.Action("Disks", "Home")" class="btn change-cargo-or-all-wheels"><span class="link_item-dashed @(Model.CargoWheels ? "" : "active")">@Header.AllWheels</span></a>
         <a href="@Url.Action("CargoDisks", "Home")" class="btn change-cargo-or-all-wheels"><span class="link_item-dashed @(Model.CargoWheels ? "active" : "")">@Header.CargoWheels</span></a>
     </div>
@@ -45,7 +45,7 @@
                     <span class="podbor-tyres-param">@ForSearchResult.ProducerName</span>
                 </div>
             </div>
-            <div id="Brands" class="row">
+            <div id="Brand" class="row">
                 @foreach (var producer in Model.Producers)
                 {
                     var brands = Model.Brands != null ? Model.Brands.Split(',') : String.Empty.Split(',');
@@ -393,7 +393,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="psevdo-select">
-                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                    <label for="ItemsPerPageForm">@ForSearchResult.PerPage:</label>
                     @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @id = "ItemsPerPageForm", @class = "form-control" })
                 </div>
 

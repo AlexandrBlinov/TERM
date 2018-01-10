@@ -33,7 +33,7 @@ namespace Term.DAL
         Forged
     }
 
-    
+
 
     /// 
     /// <summary>
@@ -468,7 +468,7 @@ namespace Term.DAL
         [DisplayName("Рекоммендованная цена опт")]
         public decimal? Price1 { get; set; }
 
-        [DisplayName("Рекоммендованная цена розница")]
+        [DisplayName("МРИЦ")]
         public decimal? Price2 { get; set; }
 
         [DisplayName("Базовая цена")]
@@ -477,7 +477,8 @@ namespace Term.DAL
         [DisplayName("Крупный опт1")]
         public decimal? PriceOpt1 { get; set; }
 
-        [DisplayName("Цена мин. реккоменд в интернет магазине (для шин)")]
+        
+        [DisplayName("РРЦ")]
         public decimal? PriceMin { get; set; }
 
     }
@@ -1654,6 +1655,8 @@ namespace Term.DAL
     /// </summary>
     public class Claims
     {
+        public virtual ICollection<ClaimsDetails> ClaimsDetails { get; set; }
+
         [Key]
         public Guid GuidIn1S { get; set; }
 
@@ -1675,6 +1678,7 @@ namespace Term.DAL
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long DetailId { get; set; }
 
+        [ForeignKey("Claims")]
         public Guid GuidIn1S { get; set; }
 
         public int ProductId { get; set; }
@@ -1718,6 +1722,8 @@ namespace Term.DAL
 
         [StringLength(400)]
         public string AdditionalInfo { get; set; }
+
+        public virtual Claims Claims { get; set; }
     }
 
 }

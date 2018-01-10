@@ -58,11 +58,11 @@
 
 @if (ViewBag.NewsId != 0)
 {
-    <div id="news" style="z-index: 1;
+    <div id="news" class="hidden-xs" style="z-index: 1;
     width: 400px;
     position: fixed;
     top: 66%;
-    left: 69%;
+    right: 50px;
     ">
         <img style="width: 16px;
         float: right;
@@ -78,6 +78,7 @@
 @section Scripts {
 
     <script>
+      
         function AddNotifications(newsId) {
 
             $.post("/News/AddNotifications",
@@ -97,6 +98,6 @@
         $(document).on("click", "#news_details", function () {
             var newsId = $(this).attr("data-newsId");
             AddNotifications(newsId);
-        });
+        }); 
     </script>
 }

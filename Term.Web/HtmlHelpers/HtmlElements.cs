@@ -117,14 +117,14 @@ namespace Term.Web.HtmlHelpers
             {
                 
                 img.MergeAttribute("src", ConfigurationManager.AppSettings["PathToUsdPicture"]);
-
+                img.MergeAttribute("alt", ConfigurationManager.AppSettings["PathToUsdPicture"]);
                 result = img.ToString() + span.ToString();
                 
             }
             else
             {
                 img.MergeAttribute("src", ConfigurationManager.AppSettings["PathToRubPicture"]);
-
+                img.MergeAttribute("alt", ConfigurationManager.AppSettings["PathToUsdPicture"]);
                 result = span.ToString() + img.ToString();
             
             }

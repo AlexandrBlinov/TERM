@@ -89,9 +89,7 @@ namespace Term.Web.Controllers
         {
             var cart = this.Cart;
 
-
-           /* bool isForeign = this.Partner.IsForeign;
-            bool hasStar  = this.Partner.HasStar; */
+                    
             
             // у иностранных клиентов не показываем в резерв и на отгрузку
             
@@ -159,9 +157,9 @@ namespace Term.Web.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> CreateOrder(ShoppingCartViewModelExtended viewModel)
+        public async Task<ActionResult> CreateOrder(ShoppingCartViewModelExtended viewModel )
         {
-
+            
             bool isForeign = this.Partner.IsForeign;
             bool hasStar = this.Partner.HasStar;
 
@@ -249,17 +247,7 @@ namespace Term.Web.Controllers
 
                var deliveryDateString = viewModel.DeliveryDate.HasValue ? ((DateTime)viewModel.DeliveryDate).ToString(ServiceTerminal.FormatForDate) : String.Empty;
 
-                // создание заказов
-              /* if (!viewModel.IsDeliveryByTk) result = await Task.Run(
-                   () => WS.CreateOrder(
-                   partnerId, 
-                   pointId, 
-                   productItems, 
-                   viewModel.Comments ?? String.Empty, 
-                   deliveryDateString, 
-                   !viewModel.IsDelivery, 
-                   viewModel.IsDeliveryByTk));
-                   */
+              
 
                // Если иностранный клиент, резерв или способ доставки , то адрес передаем пустой
                 string addressId = isForeign || viewModel.WayOfDelivery > 0 || !viewModel.IsDelivery ? String.Empty : viewModel.AddressId;
@@ -675,8 +663,9 @@ namespace Term.Web.Controllers
                 CartCount = cart.GetCount(),
                 TotalWeight = cart.GetCartWeight(),
                 IsDelivery = false,
-                IsDeliveryByTk = false
-            };
+                IsDeliveryByTk = false,
+                TkIds = _orderService.TkIds
+        };
 
 
             return View("Index", viewModel);

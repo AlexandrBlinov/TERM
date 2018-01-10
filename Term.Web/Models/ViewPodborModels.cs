@@ -113,6 +113,9 @@ namespace Term.Web.Models
 
     public class SaleReturnViewModel : BaseViewPodborModel
     {
+        public string ProductId { get; set; }
+        public string SaleNumber { get; set; }
+        public int? NumberIn1S { get; set; }
         public IPagedList<SaleReturnDto> SaleReturns { get; set; }
 
     }

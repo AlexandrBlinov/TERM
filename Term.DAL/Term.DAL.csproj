@@ -63,6 +63,7 @@
     <Compile Include="EntitiesSoap.cs" />
     <Compile Include="EntitiesStock.cs" />
     <Compile Include="EntitiesUtils.cs" />
+    <Compile Include="IDocument.cs" />
     <Compile Include="Resources\ProductPropertiesTexts.ru.Designer.cs">
       <DependentUpon>ProductPropertiesTexts.ru.resx</DependentUpon>
       <AutoGen>True</AutoGen>

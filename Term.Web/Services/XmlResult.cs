@@ -216,7 +216,7 @@ namespace YstProject.Services
 
         [Display(Order = 11)]
         [LocalizedDisplayNameAttribute("Height")]
-        [DataMember(Order = 8, Name = "height")]
+        [DataMember(Order = 8, Name = "height",EmitDefaultValue = false)]
         public string Height { get; set; }
 
         [Display(Order = 12)]
@@ -260,7 +260,7 @@ namespace YstProject.Services
         {
             get
             {
-                return (byte)(Name.ToLower().Contains(_ship) == true ? 1 : 0);
+                return (byte)(Name.ToLower().Contains(_ship) ? 1 : 0);
 
             }
             set { }
@@ -271,7 +271,7 @@ namespace YstProject.Services
         {
             get
             {
-                return (byte)(Regex.IsMatch(Name.ToLower(), _patternRF) == true ? 1 : 0);
+                return (byte)(Regex.IsMatch(Name.ToLower(), _patternRF)  ? 1 : 0);
 
             }
             set { }
@@ -304,8 +304,15 @@ namespace YstProject.Services
 
         [Display(Order = 19)]
         [LocalizedDisplayNameAttribute("PriceRecRozn")]
-        [DataMember(Order = 17, Name = "price_recomend_rozn")]
+        [DataMember(Order = 17, Name = "price_recomend_rozn",EmitDefaultValue =false)]
+        public decimal? PriceIm { get; set; }
+        
+
+        [Display(Order = 33)]
+        [LocalizedDisplayNameAttribute("PriceRecIm")]
+        [DataMember(Order = 33, Name = "price_recomend_im",EmitDefaultValue = false)]
         public decimal? Price2 { get; set; }
+
 
         [Display(Order = 13)]
         [LocalizedDisplayNameAttribute("RestYar")]

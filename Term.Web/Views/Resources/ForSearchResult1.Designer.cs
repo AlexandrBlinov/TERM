@@ -745,6 +745,15 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на PriceRecIm.
+        /// </summary>
+        public static string PriceRecIm {
+            get {
+                return ResourceManager.GetString("PriceRecIm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на PriceRecRozn.
         /// </summary>
         public static string PriceRecRozn {

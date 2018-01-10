@@ -13,10 +13,13 @@ namespace Yst.ViewModels
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public ReturnOfDefectiveResult ReturnItems { get; set; }
+        public ReturnWheelsTest[] ReturnWheelsTest { get; set; }
     }
     
     public class ClaimsViewModel : BaseViewPodborModel
     {
+        public string ProductId { get; set; }
+        public string SaleNumber { get; set; }
         public int? NumberIn1S { get; set; }
         public IPagedList<Claims> Claims { get; set; }
     }

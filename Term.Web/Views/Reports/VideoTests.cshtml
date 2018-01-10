@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "VideoTests";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+<h2>VideoTests</h2>
+
+@foreach (var item in ViewBag.Files)
+{
+    string name = item.ToString();
+    @Html.ActionLink(name, "Download", new { name = name }, new { @class = "order-table-details" })
+    <br />
+}

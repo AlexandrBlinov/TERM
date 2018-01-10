@@ -168,7 +168,7 @@ namespace Term.Services
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:ChangeOrder", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return")]
-        public ResultDel ChangeOrder(string OrderGUID, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, string Comment, bool isReserve, string ShippingDay, bool TransportCompany, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] DeliveryInfo DeliveryInfo, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string DeliveryDay, int WayOfDelivery, string AddressId, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string TkId)
+        public ResultDel ChangeOrder(string OrderGUID, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, string Comment, bool isReserve, string ShippingDay, bool TransportCompany, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] DeliveryInfo DeliveryInfo, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string DeliveryDay, int WayOfDelivery,bool IsStar , string AddressId, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string TkId)
         {
             object[] results = this.Invoke("ChangeOrder", new object[] {
                         OrderGUID,
@@ -180,6 +180,7 @@ namespace Term.Services
                         DeliveryInfo,
                         DeliveryDay,
                         WayOfDelivery,
+                        IsStar,
                         AddressId,
                         TkId });
             return ((ResultDel)(results[0]));
@@ -275,6 +276,18 @@ namespace Term.Services
                     StartDate,
                     StopDate});
             return ((ReturnOfDefectiveResult)(results[0]));
+        }
+
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:WheelsTestReport", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlArrayAttribute("return")]
+        [return: System.Xml.Serialization.XmlArrayItemAttribute("Element", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)]
+        public ReturnWheelsTest[] WheelsTestReport(string Partner, [System.Xml.Serialization.XmlElementAttribute(DataType = "date")] System.DateTime StartDate, [System.Xml.Serialization.XmlElementAttribute(DataType = "date")] System.DateTime StopDate)
+        {
+            object[] results = this.Invoke("WheelsTestReport", new object[] {
+                    Partner,
+                    StartDate,
+                    StopDate});
+            return ((ReturnWheelsTest[])(results[0]));
         }
 
         private bool IsLocalFileSystemWebService(string url)

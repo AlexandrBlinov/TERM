@@ -32,8 +32,14 @@
                     <a class="navbar-brand logotip-terminal" href="@Url.Action("index", "home")"></a>
 
                 </div>
-            </div>
-        </nav>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Bad quality wheels", "Freeman", "Reports", null, new { @class = "second" })</li>
+                        <li>@Html.ActionLink("Wheels test", "FreemanWheelsTest", "Reports", null, new { @class = "second" })</li>
+                        </ul>
+                </div>
+             </div>
+</nav>
     </header>
     <div class="container container-main">
         @RenderSection("featured", required: false)

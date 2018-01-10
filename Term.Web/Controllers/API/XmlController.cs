@@ -88,8 +88,13 @@ namespace Term.Web.Controllers.API
             int pointId = _servicePartnerPoint.GetPointByUserID(id);
 
             CheckPointId(pointId);
-            if (typeofrests == 0) return _xmlService.getTyreForPriceList(pointId);
-            else return _xmlService.getTyreForPriceList(pointId).Where(p => (p.RestOtherStock == 0) || (p.RestMain > 0 || p.RestEkb > 0 || p.RestMsk > 0 || p.RestRnd > 0 || p.RestSpb > 0));
+            /* if (typeofrests == 0) return _xmlService.getTyreForPriceList(pointId);
+             else return _xmlService.getTyreForPriceList(pointId).Where(p => (p.RestOtherStock == 0) || (p.RestMain > 0 || p.RestEkb > 0 || p.RestMsk > 0 || p.RestRnd > 0 || p.RestSpb > 0));
+             */
+
+            var result = _xmlService.getTyreForPriceList(pointId);
+             if (typeofrests != 0) result = result.Where(p => (p.RestOtherStock == 0 && (p.RestMain > 0 || p.RestEkb > 0 || p.RestMsk > 0 || p.RestRnd > 0 || p.RestSpb > 0)));
+            return result;
         }
 
         /// <summary>

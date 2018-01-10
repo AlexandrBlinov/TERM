@@ -40,12 +40,12 @@ namespace Term.Web
             bundles.Add(new ScriptBundle("~/bundles/term_service").Include(
                        "~/Scripts/yst-localize-20170619.js",
                        "~/Scripts/yst-utility.js",
-                       "~/Scripts/yst-scripts-20170927.js",
+                       "~/Scripts/yst-scripts-20171215.js",
                        "~/Scripts/term-scripts-20170906.js",
                        "~/Scripts/common-v6.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/term_seasonscripts").Include("~/Scripts/term-season-scripts.js"));
-            bundles.Add(new ScriptBundle("~/bundles/term_shoppingcart").Include("~/Scripts/yst-shoppingcart-20171205.js"));
+            bundles.Add(new ScriptBundle("~/bundles/term_shoppingcart").Include("~/Scripts/yst-shoppingcart-20171228.js"));
 
             // Используйте версию Modernizr для разработчиков, чтобы учиться работать. Когда вы будете готовы перейти к работе,
             // используйте средство построения на сайте http://modernizr.com, чтобы выбрать только нужные тесты.
@@ -72,7 +72,8 @@ namespace Term.Web
                 "~/Content/css/toastr.css",
                 "~/Content/seasonstyles.css",
                 "~/Content/bootstrap-datetimepicker.css",
-                "~/Content/css/ReSite.css"));
+                "~/Content/css/ReSite.css",
+                "~/Content/css/addon.css"));
             
             
    

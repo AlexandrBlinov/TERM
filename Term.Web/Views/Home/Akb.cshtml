@@ -22,7 +22,7 @@
     @Html.Hidden("DisplayView", Model.DisplayView)
     <div class="row border-form-podbor akb-banners">
         <a class="warranty-sheet__link" href="~/Content/img/instruction-akb.jpg">Гарантийный талон</a>
-        <img class="podbor-tyres-title-img" src="~/Content/img/img-akb-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseBattery</span>
+        <img class="podbor-tyres-title-img" alt="@ForSearchResult.ChooseBattery" src="~/Content/img/img-akb-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseBattery</span>
         @{Html.RenderPartial("_AkbSpecialOffer");}
     </div>
 
@@ -340,11 +340,11 @@
             </td>
 
             <td>
-                @Html.Price(item.PriceOfClient ?? 0)
+                @Html.Price3((decimal)(item.PriceOfClient ?? 0))
             </td>
 
             <td>
-                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new {@id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200})
+                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new {@id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200})
 
             </td>
             <td>

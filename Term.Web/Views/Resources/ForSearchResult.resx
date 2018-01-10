@@ -474,4 +474,7 @@
   <data name="ChooseSeasonOrders" xml:space="preserve">
     <value>Choose orders</value>
   </data>
+  <data name="PriceRecIm" xml:space="preserve">
+    <value>PriceRecIm</value>
+  </data>
 </root>

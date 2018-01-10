@@ -180,13 +180,15 @@
                 @item.Price
             </td>
             <td id="item-sum-@item.ProductId">
-                <span class="data-table-price">@(item.Count * item.Price) </span>
+                @Html.Price3(item.Count * item.Price)
+                
             </td>
             <td>
-                @item.PriceOfClient
+                @Html.Price3(item.PriceOfClient)
             </td>
             <td>
-                <span class="data-table-price">@(item.Count * item.PriceOfClient) </span>
+@Html.Price3(item.Count * item.PriceOfClient)
+                
             </td>
 
         </tr>
@@ -201,13 +203,14 @@
                 <td>
                     <b>@Count</b>
                 </td>
-                <td />
+                <td></td>
                 <td>
-                    <span class="data-table-price">@Model.Order.Total </span>
+                    @Html.Price3(Model.Order.Total)
+                  
                 </td>
-                <td />
+                <td></td>
                 <td>
-                    <span class="data-table-price">@Model.Order.TotalOfClient </span>
+                    @Html.Price3(Model.Order.TotalOfClient) 
                 </td>
             </tr>
         }

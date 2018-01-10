@@ -41,6 +41,7 @@ namespace YstProject.Services
             public static readonly string HideNoStud = "hidenostud";
         }
 
+        public static readonly int MaxDaysToChangeOrder = 7;
         public static readonly string DateFormat = "dd.MM.yyyy";
         public static readonly string ResourceNotFound = "Resource not found";
         public static readonly string FixingCode = "fixingcode";
@@ -56,6 +57,8 @@ namespace YstProject.Services
         public static readonly int MaxNumberAddToCart = 200;
         public static readonly double RateForDelivery = 1.75;
 
+        public static readonly string FreemanCode = "91735";
+        public static readonly string VideoLabFTP = "ftp://37.1.84.54:2121/CONVERT_VIDEO/";
         public static readonly string MainDepartmentCode = "00005";
         public static readonly string StubDepartmentCode = "00005";
         public static readonly string EmptyDepartmentCode = "00000";

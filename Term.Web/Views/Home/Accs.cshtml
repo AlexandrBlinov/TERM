@@ -11,7 +11,7 @@
 
 
 <div class="row border-form-podbor">
-    <img class="podbor-tyres-title-img" src="~/Content/img/img-acc-podbor.png"/> <span class="podbor-tyres-title">@Header.Accessories (@Model.SearchResults.TotalItemCount)</span>
+    <img class="podbor-tyres-title-img" alt="@Header.Accessories" src="~/Content/img/img-acc-podbor.png"/> <span class="podbor-tyres-title">@Header.Accessories (@Model.SearchResults.TotalItemCount)</span>
     
 </div>
 <div class="row border-form-podbor">
@@ -193,7 +193,7 @@
                     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 
                         <div class="psevdo-select">
-                            <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                            <label for="ItemsPerPageForm">@ForSearchResult.PerPage:</label>
                             @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @id = "ItemsPerPageForm", @class = "form-control" })
                         </div>
                     </div>
@@ -259,7 +259,7 @@
                     </td>
 
                     <td>
-                        @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
+                        @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200 })
 
                     </td>
                     <td>

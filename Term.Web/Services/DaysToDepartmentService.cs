@@ -327,10 +327,12 @@ namespace YstProject.Services
         /// <returns></returns>
         public  int GetDaysToDepartment(int pointId, int departmentId, int? supplierId, int productid = 0)
         {
+
              var result =base.GetDaysToDepartment(pointId, departmentId, productid);
+            
 
             return result + GetDaysFromSupplierToMainDepartment( supplierId??0);
-            if(supplierId==null || (int)supplierId==0) return result;
+            if(supplierId==null || supplierId==0) return result;
             
             
              var supplierFound =_dbContext.Suppliers.Find((int) supplierId);

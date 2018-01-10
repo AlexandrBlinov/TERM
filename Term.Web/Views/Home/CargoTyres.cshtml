@@ -21,8 +21,8 @@
     @Html.Hidden("PriceMin", Model.PriceMin)
     @Html.Hidden("PriceMax", Model.PriceMax)
     <div class="row border-form-podbor">
-        <img class="podbor-tyres-title-img" src="~/Content/img/img-tyres-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseCargoTyres</span>
-        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img src="~/Content/img/clear-param.png" /></a>
+        <img class="podbor-tyres-title-img" alt="@ForSearchResult.ChooseCargoTyres" src="~/Content/img/img-tyres-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseCargoTyres</span>
+        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img alt="@ForSearchResult.ClearAll" src="~/Content/img/clear-param.png" /></a>
     </div>
     <div class="row m-t-15">
        
@@ -222,7 +222,7 @@
         <div class="row">
             <div class="col-xs-8">
                 <div class="psevdo-select">
-                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                    <label for="ItemsPerPageForm">@ForSearchResult.PerPage:</label>
                     @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @id = "ItemsPerPageForm", @class = "form-control" })
                 </div>
 

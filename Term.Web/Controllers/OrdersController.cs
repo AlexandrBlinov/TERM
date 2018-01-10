@@ -24,12 +24,10 @@ namespace Term.Web.Controllers
     [CheckSettings]
     public class OrdersController : BaseController
     {
-
-        private static readonly int maxDaysToChangeOrder = 7;
         private bool _isPartner;
-      
-       private string errorMessage;
-
+        private string errorMessage;
+        private static readonly int maxDaysToChangeOrder = Defaults.MaxDaysToChangeOrder;
+       
         readonly Func<PartnerPoint, string> _propertyToDisplay = p => p.InternalName ?? String.Empty;
 
         private readonly OrderService _orderService;
@@ -220,13 +218,14 @@ namespace Term.Web.Controllers
             }
 
             string pattern = @"\(([A-Z]){3}\)";
-            var deliveryType = (Regex.IsMatch(model.OrderData.DeliveryDataString ?? "", pattern)) ? "ТТ" : "ТД";
+            var deliveryType = (Regex.IsMatch(model.OrderData.DeliveryDataString ?? String.Empty, pattern)) ? "ТТ" : "ТД";
 
             var stringSeparators = new string[] { "г." };
             try
             {
+                
                 var citystreet = model.OrderData.DeliveryDataString.Split(stringSeparators, StringSplitOptions.None);
-                var city = citystreet[1].Split(',');
+                var city = citystreet[1].Split(Defaults.CommaSign);
 
                 model.FildsForDpdForm.TotalCount = count;
                 model.FildsForDpdForm.TotalWeight = weight;
@@ -414,14 +413,19 @@ namespace Term.Web.Controllers
         public ActionResult ChangeOrder(Guid guid)
         {
             _isPartner = ServicePP.IsPartner;
-            ViewBag.IsForeign = base.Partner.IsForeign;
+            bool hasStar = this.Partner.HasStar;
+            bool isForeign = Partner.IsForeign;
+            ViewBag.IsForeign = isForeign;
 
             OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
             model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
             model.AddressesIds = _orderService.AddressesOfDelivery;
 
             model.TkIds = _orderService.TkIds;
-            
+            model.HasStar = hasStar && !isForeign;
+            model.IsStar = model.Order.IsStar;
+            model.IsPrepay= model.Order.Prepay;
+
 
             if (String.IsNullOrEmpty(model.AddressId))
             model.AddressId= _orderService.GetDefaultAddressId(Partner.PartnerId, Point.PartnerPointId);
@@ -530,17 +534,19 @@ namespace Term.Web.Controllers
             {
                 //  int WayOfDelivery, string AddressId
                 //"{0:yyyyMMdd}"
-                ResultDel res = WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, 
-                    // пустая строка если резерв, иначе дата доставки
-                    !model.IsReserve ? String.Format("{0:yyyyMMdd}", model.DeliveryDate) : String.Empty,
-                     model.IsDeliveryByTk, 
-                     di, 
-                     deliveryDay,
-                     model.WayOfDelivery,
-                     model.AddressId ?? String.Empty , 
-                     model.TkId 
-                    );
-                success = res.Success;
+                 ResultDel res = WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, 
+                      // пустая строка если резерв, иначе дата доставки
+                      !model.IsReserve ? String.Format("{0:yyyyMMdd}", model.DeliveryDate) : String.Empty,
+                       model.IsDeliveryByTk, 
+                       di, 
+                       deliveryDay,
+                       model.WayOfDelivery,
+                       model.IsStar,
+                       model.AddressId ?? String.Empty , 
+                       model.TkId 
+                      ); 
+              
+               success = res.Success;
                 errorMessage = res.Error;
             }
             catch (Exception e)
@@ -566,6 +572,7 @@ namespace Term.Web.Controllers
                         di, 
                         deliveryDate,
                         model.WayOfDelivery,
+                        model.IsStar,
                         model.AddressId,
                         model.TkId);
 

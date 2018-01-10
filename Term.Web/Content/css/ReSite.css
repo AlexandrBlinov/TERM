@@ -6,6 +6,10 @@
 }
 
 
+textarea.cart-create-personal-input-comment {
+    resize: none;
+}
+
 /*Layout верхнее меню*/
 
 .scroll_line {
@@ -2362,6 +2366,10 @@ margin-left: 30px;
         margin-top: 50px;
         min-width: 400px;
     }
+    .assistant-data {
+        margin-top: 45px;
+        min-width: 400px;
+    }
 }
 
 
@@ -2376,21 +2384,44 @@ margin-left: 30px;
             display: inline-block !important;
         }
 
-.avatar {
-    background-image: url('http://placehold.it/300x300.png');
+.inline {
+    display: inline !important;
+}
+
+.user-avatar {
+    background: #fff  no-repeat center;
     width: 300px;
     height: 300px;
     background-size: cover;
     background-position: center;
     border-radius: 50%;
+    border:none;
+    margin:auto; /*центр для mibile*/
 }
 
-    .avatar.h-200 {
-        width: 200px;
-        height: 200px;
+    .user-avatar.h-250 {
+        width: 250px;
+        height: 250px;
     }
 
-.assistant-info-items dd {
+.user-default-avatar {
+    background: #535c6a url('http://cp.yst.ru/bitrix/templates/bitrix24/images/user-default-avatar.svg') no-repeat center;
+    background-size: 50%;
+}
+    /*
+.user-default-avatar {
+    background: #535c6a url('http://cp.yst.ru/bitrix/templates/bitrix24/images/user-default-avatar.svg') no-repeat center;
+    background-size: 50%;
+}
+
+.user-profile-img-default {
+    height: 200px;
+    width: 200px;
+    border: none;
+    border-radius: 50%;
+}
+        */
+    .assistant-info-items dd {
     margin-left:0;
 }
 
@@ -2901,4 +2932,48 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
 
 .input-group .input-group-addon.date-pick-btn {
     border: 0;
+}
+
+.table.borderless td, .table.borderless th {
+    border: none !important;
+}
+
+.cart-label.no-padding {
+    padding:0;
+}
+
+.load_xls {
+    padding: 20px;
+    border: 1px dashed grey;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.load_xls p {
+    text-align: center;
+    font-size: 18px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.uploadButton {
+    display: block;
+    width: 150px;
+    background: #009efe;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    text-align: center;
+    margin: 0 auto;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.uploadButton:hover {
+    background: #2489c5;
 }

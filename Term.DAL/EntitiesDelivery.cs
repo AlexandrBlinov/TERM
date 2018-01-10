@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -15,33 +16,33 @@ namespace Term.DAL
     /// <summary>
     /// Статусы доставки ДПД
     /// </summary>
-   public  enum DpdDeliveryStatus
+    public enum DpdDeliveryStatus
     {
         [MultiCultureDescription(typeof(OrderStatusesTexts), "OnTerminalPickup")]
-       OnTerminalPickup,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "OnRoad")]
-       OnRoad,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "OnTerminal")]
-       OnTerminal,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "Problem")]
-       Problem,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "OnTerminalDelivery")]
-       OnTerminalDelivery,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "Delivering")]
+        OnTerminalPickup,
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "OnRoad")]
+        OnRoad,
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "OnTerminal")]
+        OnTerminal,
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "Problem")]
+        Problem,
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "OnTerminalDelivery")]
+        OnTerminalDelivery,
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "Delivering")]
         Delivering,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "Delivered")]
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "Delivered")]
         Delivered,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "ReturnedFromDelivery")]
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "ReturnedFromDelivery")]
         ReturnedFromDelivery,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "Lost")]
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "Lost")]
         Lost,
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "NewOrderByClient")]
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "NewOrderByClient")]
         NewOrderByClient,
 
-       [MultiCultureDescription(typeof(OrderStatusesTexts), "NewOrderByDpd")]
+        [MultiCultureDescription(typeof(OrderStatusesTexts), "NewOrderByDpd")]
         NewOrderByDpd
     }
-     
+
     /// <summary>
     /// Сроки доставки от подразделений до городов (если везем через DPD)
     /// </summary>
@@ -50,11 +51,11 @@ namespace Term.DAL
     public class TimeOfDelivery
     {
         // подразделение откуда везем
-         [Key, Column(Order = 1)]
+        [Key, Column(Order = 1)]
         public int DepartmentId { get; set; }
 
         // город куда везем
-         [Key, Column(Order = 2)]
+        [Key, Column(Order = 2)]
         public string CityId { get; set; }
 
         // занимает дней (от)
@@ -71,7 +72,7 @@ namespace Term.DAL
     /// </summary>
     public class DpdTerminal
     {
-        
+
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [MaxLength(4)]
         public string TerminalCode { get; set; }
@@ -84,10 +85,10 @@ namespace Term.DAL
 
         [MaxLength(Byte.MaxValue)]
         public string RegionCode { get; set; }
-        
+
         [MaxLength(Byte.MaxValue)]
         public string CityCode { get; set; }
-        
+
         [MaxLength(Byte.MaxValue)]
         public string CityName { get; set; }
 
@@ -129,7 +130,7 @@ namespace Term.DAL
         /// Код области 76 - Ярославская
         /// </summary>
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public  int Id{ get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(Byte.MaxValue)]
@@ -139,7 +140,7 @@ namespace Term.DAL
     /// <summary>
     /// Города
     /// </summary>
-     [DataContract(Namespace = "", Name = "city")]
+    [DataContract(Namespace = "", Name = "city")]
     public class City
     {
         /// <summary>
@@ -147,7 +148,7 @@ namespace Term.DAL
         /// </summary>
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [MaxLength(11)]
-         [DataMember]
+        [DataMember]
         public string Id { get; set; }
 
         [MaxLength(11)]
@@ -164,11 +165,11 @@ namespace Term.DAL
         [DataMember]
         public string Name { get; set; }
 
-        
+
         [MaxLength(Byte.MaxValue)]
         [DataMember]
         public string Abbreviation { get; set; }
-        
+
         [ForeignKey("Region")]
         public int RegionId { get; set; }
 
@@ -179,7 +180,7 @@ namespace Term.DAL
 
     }
 
-   
+
     /// <summary>
     /// Тарифы доставки до основных городов
     /// </summary>
@@ -189,7 +190,7 @@ namespace Term.DAL
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         [MaxLength(11)]
         [ForeignKey("City")]
-        
+
         public string CityId { get; set; }
         public virtual City City { get; set; }
 
@@ -237,22 +238,23 @@ namespace Term.DAL
         public virtual City MainCity { get; set; }
 
         public int Rate { get; set; }
-        
+
     }
 
     /// <summary>
     /// Транспортные компании
     /// </summary>
     /// 
-    public class TransportCompany {
+    public class TransportCompany
+    {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [MaxLength(11)]        
+        [MaxLength(11)]
         public string Id { get; set; }
 
-        
-        [MaxLength(Byte.MaxValue)]        
+
+        [MaxLength(Byte.MaxValue)]
         public string Name { get; set; }
-        
+
 
     }
 
@@ -275,7 +277,8 @@ namespace Term.DAL
     /// Адреса самодоставки
     /// привязка в партнерах через ;
     /// </summary>
-    public class SelfDeliveryAddress {
+    public class SelfDeliveryAddress
+    {
 
         [MaxLength(5)]
         public string Id { get; set; }
@@ -284,5 +287,66 @@ namespace Term.DAL
         public string Name { get; set; }
     }
 
+    /*
+     *  Задание на отгрузку
+     */
+   
+    public class JobForShipment : IDocument
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid GuidIn1S { get; set; }
 
+        [MaxLength(8)]
+        public string NumberIn1S { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DocDate { get; set; }
+
+        public DateTime DepartureDate { get; set; }
+
+        // начальные координаты (Ярославль, филиал)
+        public DbGeography Location { get; set; }
+
+        private ICollection<JobForShipmentDetail> _details;
+
+        public virtual ICollection<JobForShipmentDetail> Details
+        {
+            get
+            {
+                return this._details ?? (this._details = new List<JobForShipmentDetail>());
+            }
+        }
+    }
+
+    /// <summary>
+    /// Табличная часть задания на отгрузку
+    /// </summary>
+   
+    public class JobForShipmentDetail : IDocumentDetails
+        {
+        [Key]
+            public long Id { get; set; }
+
+            [ForeignKey("JobForShipment")]
+            public Guid GuidIn1S { get; set; }
+
+            public virtual JobForShipment JobForShipment { get; set; }
+
+            //Номер очереди
+            public int NumberOfQueue { get; set; }
+
+            // Координаты
+            public DbGeography Location { get; set; }
+
+            // Guid заказа
+            public Guid GuidOfOrderIn1S { get; set; }
+
+            //Время разгрузки в секундах
+            public int PlanUnloadTime { get; set; }
+
+       
+        }
+
+
+    
 }

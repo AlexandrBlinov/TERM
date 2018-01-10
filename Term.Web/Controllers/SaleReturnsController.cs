@@ -231,7 +231,11 @@ namespace Term.Web.Controllers
                     DbContext.SaleReturns.Include(p => p.SaleReturnDetails)
                         .Where(o => o.PartnerId == partnerId &&
                         (model.BeginDate == null || o.DocDate >= model.BeginDate)
-                && (model.EndDate == null || o.DocDate <= endDate))
+                && (model.EndDate == null || o.DocDate <= endDate)
+                && (model.NumberIn1S == null || o.NumberIn1S.Contains(model.NumberIn1S.ToString()))
+            && (model.ProductId == null || o.SaleReturnDetails.Any(p => p.ProductId.ToString().Contains(model.ProductId)))
+            && (model.SaleNumber == null || o.SaleReturnDetails.Any(p => p.SaleNumber.Contains(model.SaleNumber)))
+                )
                         .Select(p => new SaleReturnDto
                         {
                             GuidIn1S = p.GuidIn1S,

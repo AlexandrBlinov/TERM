@@ -163,26 +163,7 @@ namespace Term.Services
                                     ProductName = product == null ? "" : product.Name
                                 }).ToList(),
                 Order= GetOrderByGuid(guid)
-                /*, 
-                OrderData = DbContext.Orders.Where(o => o.GuidIn1S == guid).Select(o => new OrderViewModel
-                {
-                    NumberIn1S = o.NumberIn1S,
-                    Comments = o.Comments,
-                    OrderStatus = o.OrderStatus,
-                    Total = o.Total,
-                    TotalOfClient = o.TotalOfClient,
-                    TotalOfPoint = o.TotalOfPoint,
-                    OrderDate = o.OrderDate,
-                    DeliveryDate = o.DeliveryDate,
-                    ContactFIOOfClient = o.ContactFIOOfClient,
-                    PhoneNumberOfClient = o.PhoneNumberOfClient,
-                    Order_guid = o.GuidIn1S,
-                    DaysToDepartment = o.DaysToDepartment,
-                    isReserve = o.isReserve,
-                    RangeDeliveryDays = o.RangeDeliveryDays,
-                    IsDeliveryByTk = o.IsDeliveryByTk,
-                    SupplierId = o.SupplierId 
-                }).FirstOrDefault() */
+                
             };
 
 
@@ -232,6 +213,9 @@ namespace Term.Services
             model.TkId = order.TkId;
 
             model.WayOfDelivery = order.WayOfDelivery;
+            
+            
+            
 
             return (model);
         }
@@ -460,7 +444,7 @@ namespace Term.Services
         
         public void ChangeOrder(Guid guid, IEnumerable<ItemInOrderViewModel> items, string comments, bool isReserve, bool IsDeliveryByTk, 
             string deliveryDataString, string rangeDeliveryDays, DeliveryInfo di, DateTime? deliveryDate , 
-            int wayOfDelivery, string AddressId, string TkId)
+            int wayOfDelivery, bool isStar, string AddressId, string TkId)
         {
 
             var orderToChange = DbContext.Orders.FirstOrDefault(q => q.GuidIn1S == guid);
@@ -471,9 +455,10 @@ namespace Term.Services
             orderToChange.isReserve = isReserve;
             orderToChange.DeliveryDate = deliveryDate;
             orderToChange.WayOfDelivery = wayOfDelivery;
-            orderToChange.AddressId = !isReserve && wayOfDelivery == 0 ? AddressId:null; // обнуляем id адреса             
+            orderToChange.AddressId = !isReserve && wayOfDelivery == (int)WaysOfDelivery.Delivery ? AddressId:null; // обнуляем id адреса             
+            orderToChange.IsStar = isStar;
 
-            orderToChange.TkId = !isReserve && wayOfDelivery == 3? TkId: null;
+            orderToChange.TkId = !isReserve && wayOfDelivery == (int)WaysOfDelivery.ByTk? TkId: null;
 
             orderToChange.IsDeliveryByTk = IsDeliveryByTk;
             orderToChange.RangeDeliveryDays = rangeDeliveryDays;
@@ -482,7 +467,9 @@ namespace Term.Services
             orderToChange.CostOfDelivery = di.CostOfDelivery;
             orderToChange.PhoneNumberOfClient = di.ContactPhone;
             
-            
+
+
+
 
             var OrderItems = DbContext.OrderDetails.Where(c => c.GuidIn1S == guid).ToList();
             foreach (var itemOld in OrderItems)

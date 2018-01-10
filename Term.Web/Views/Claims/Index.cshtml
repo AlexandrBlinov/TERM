@@ -24,6 +24,18 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">Код товара</label>
+                <div>
+                    @Html.TextBoxFor(p => p.ProductId, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <label class="search-order-label">Номер УПД</label>
+                <div>
+                    @Html.TextBoxFor(p => p.SaleNumber, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-2">
                 @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
                 <div>
                     <div class="input-group date">

@@ -1448,6 +1448,107 @@ namespace Term.Soapmodels
         }
     }
 
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://37.1.84.50:8080/Terminal")]
+    public partial class ReturnWheelsTest
+    {
+
+        private System.DateTime dataField;
+
+        private string codeField;
+
+        private string nomberOfComingField;
+
+        private string partyField;
+
+        private string nameField;
+
+        private string maxloadField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(DataType = "date")]
+        public System.DateTime Data
+        {
+            get
+            {
+                return this.dataField;
+            }
+            set
+            {
+                this.dataField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Code
+        {
+            get
+            {
+                return this.codeField;
+            }
+            set
+            {
+                this.codeField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string NomberOfComing
+        {
+            get
+            {
+                return this.nomberOfComingField;
+            }
+            set
+            {
+                this.nomberOfComingField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Party
+        {
+            get
+            {
+                return this.partyField;
+            }
+            set
+            {
+                this.partyField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string Maxload
+        {
+            get
+            {
+                return this.maxloadField;
+            }
+            set
+            {
+                this.maxloadField = value;
+            }
+        }
+    }
+
 }
 
 

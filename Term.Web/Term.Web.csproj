@@ -452,9 +452,13 @@
     <Compile Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.Designer.cs">
       <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201712040539317_ClaimsDetailsLenghtFilds.cs" />
-    <Compile Include="Migrations\201712040539317_ClaimsDetailsLenghtFilds.Designer.cs">
-      <DependentUpon>201712040539317_ClaimsDetailsLenghtFilds.cs</DependentUpon>
+    <Compile Include="Migrations\201712130951172_claimsFK.cs" />
+    <Compile Include="Migrations\201712130951172_claimsFK.Designer.cs">
+      <DependentUpon>201712130951172_claimsFK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801100834196_JobForShipment_Added.cs" />
+    <Compile Include="Migrations\201801100834196_JobForShipment_Added.Designer.cs">
+      <DependentUpon>201801100834196_JobForShipment_Added.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
@@ -726,6 +730,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\addon.css" />
     <Content Include="Content\css\common.css" />
     <Content Include="Content\css\ReSite.css" />
     <Content Include="Content\css\toastr.css" />
@@ -745,6 +750,7 @@
     <Content Include="Content\img\add-scan.png" />
     <Content Include="Content\img\akb.jpg" />
     <Content Include="Content\img\akk.jpg" />
+    <Content Include="Content\img\aytoprofi_2.jpg" />
     <Content Include="Content\img\big_loading.gif" />
     <Content Include="Content\img\button_cancel.png" />
     <Content Include="Content\img\cart-sprite.png" />
@@ -765,6 +771,7 @@
     <Content Include="Content\img\favicon.ico" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
+    <Content Include="Content\img\goodyear_2.jpg" />
     <Content Include="Content\img\Help\1.png" />
     <Content Include="Content\img\Help\1_en.png" />
     <Content Include="Content\img\Help\2.png" />
@@ -800,12 +807,9 @@
     <Content Include="Content\img\menu-akb-icon.png" />
     <Content Include="Content\img\menu-disk-icon.png" />
     <Content Include="Content\img\menu-tyre-icon.png" />
-    <Content Include="Content\img\ng1.jpg" />
-    <Content Include="Content\img\ng2.jpg" />
-    <Content Include="Content\img\ng3.jpg" />
-    <Content Include="Content\img\ng4.jpg" />
     <Content Include="Content\img\NotActiv.png" />
     <Content Include="Content\img\novinki.jpg" />
+    <Content Include="Content\img\psv_2.jpg" />
     <Content Include="Content\img\rub.png" />
     <Content Include="Content\img\rub2.png" />
     <Content Include="Content\img\sale-icon.png" />
@@ -841,7 +845,6 @@
     <Content Include="Content\img\xml.png" />
     <Content Include="Content\img\YST.png" />
     <Content Include="Content\img\_Concept-FD504_S.png" />
-    <Content Include="Content\img\azard_1.jpg" />
     <Content Include="Content\img\azard_2.jpg" />
     <Content Include="Content\img\varta.jpg" />
     <Content Include="Content\img\varta_2.jpg" />
@@ -908,6 +911,9 @@
     <Content Include="CustomForPartners\deniz_akb.ashx" />
     <Content Include="CustomForPartners\deniz_tyres.ashx" />
     <Content Include="CustomForPartners\deniz_wheels.ashx" />
+    <Content Include="CustomForPartners\expressdetal_wheels.ashx" />
+    <Content Include="CustomForPartners\expressdetal_akb.ashx" />
+    <Content Include="CustomForPartners\expressdetal_accs.ashx" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -982,9 +988,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\yst-localize-20170619.js" />
-    <Content Include="Scripts\yst-shoppingcart-20171205.js" />
+    <Content Include="Scripts\yst-shoppingcart-20171228.js" />
     <Content Include="Scripts\yst-notifications.js" />
-    <Content Include="Scripts\yst-scripts-20170927.js" />
+    <Content Include="Scripts\yst-scripts-20171215.js" />
     <Content Include="Scripts\yst-utility.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Partner\CreateOwn.cshtml" />
@@ -1164,6 +1170,10 @@
     <Content Include="Views\Claims\_BatsTmplItem.cshtml" />
     <Content Include="Views\Claims\_AccsTmplItem.cshtml" />
     <Content Include="Views\Claims\ClaimPrintForm.cshtml" />
+    <Content Include="Views\Reports\FreemanWheelsTest.cshtml" />
+    <Content Include="Views\Reports\VideoTests.cshtml" />
+    <Content Include="Views\ShoppingCart\Index2.cshtml" />
+    <Content Include="Views\Shared\_ModalChooseOption.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1349,8 +1359,11 @@
     <EmbeddedResource Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.resx">
       <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712040539317_ClaimsDetailsLenghtFilds.resx">
-      <DependentUpon>201712040539317_ClaimsDetailsLenghtFilds.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712130951172_claimsFK.resx">
+      <DependentUpon>201712130951172_claimsFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801100834196_JobForShipment_Added.resx">
+      <DependentUpon>201801100834196_JobForShipment_Added.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

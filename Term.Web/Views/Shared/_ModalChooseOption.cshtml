@@ -1,0 +1,33 @@
+﻿@using Term.Web.Views.Resources
+@{
+    Layout = null;
+    string oname = "optionname";
+    string optionName =ViewData[oname] !=null? ViewData[oname].ToString(): "option1";
+}
+
+<div class="top-200 modal fade" id="@( ViewData["idModal"] ?? "modalConfirmation")"  role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header alert alert-warning">
+               <!-- <button type="button" class="close" data-dismiss="modal">×</button>-->
+                <h4 class="modal-title"> <span class="glyphicon glyphicon-question-sign"> </span> @(ViewData["ModalTitle"] ?? @ModalWindows.Confirmation)</h4>
+            </div>
+            <div class="modal-body">
+                <p class="alert">@ViewData["ModalBodyText"] <span id="@ViewData["daysId"]"></span> @ViewData["days"]</p>
+               <div class="row">
+                   <div class="col-xs-1">@Html.RadioButton(optionName, "true", new { @id = @ViewData["id1"] })</div>
+                   <div class="col-xs-11"><label class="no-padding cart-label" for="@ViewData["id1"]">@ViewData["Option1"]</label></div>
+                   </div>
+                <div class="row">
+                    <div class="col-xs-1">@Html.RadioButton(optionName, "false", new { @id = @ViewData["id2"] })</div>
+                    <div class="col-xs-11"><label class="no-padding cart-label" for="@ViewData["id2"]">@ViewData["Option2"]</label></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-styled" value="1">@( ViewData["buttonYesTitle"] ?? ModalWindows.Yes)</button>
+              
+            </div>
+        </div>
+
+    </div>
+</div>

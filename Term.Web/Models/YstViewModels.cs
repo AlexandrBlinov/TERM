@@ -57,8 +57,29 @@ namespace Yst.ViewModels
     }
 
 
+    /*
+    *  Выбор логистики по отправке товаров
+    */
+    public enum CaseLogistik
+    {
+        // Логистика Головное подразделение
+        // С головного подразделения от поставщика не ждем
+        FromSupplierNotWait = 21,
+        
+        // С головного подразделения от поставщика  ждем
+        FromSupplierWait = 22,
 
-    
+
+        // Логистика Филиал
+        // Только головного подразделения через филиал  ждем
+        FromMainToDep = 41,
+
+        // С головного подразделения через филиал не  ждем
+        FromMainDepNotWait = 51,
+
+        // С головного подразделения через филиал не  ждем
+        FromMainDepWait = 52,
+    }
 
     /// <summary>
     /// Модель для корзины
@@ -117,6 +138,8 @@ namespace Yst.ViewModels
         
         public decimal TotalWeight { get; set; }
     }
+
+   
 
     /// <summary>
     /// Данные модели корзины с информацией о доставке
@@ -182,6 +205,11 @@ namespace Yst.ViewModels
 
         public string LogistikDepartment { get; set; }
 
+        // новое ТЗ
+        public DateTime? DeliveryDate2 { get; set; }
+       public   CaseLogistik? CaseForLogistik { get; set; }
+
+
     }
 
 
@@ -210,11 +238,6 @@ namespace Yst.ViewModels
     public class OrderViewModel 
     {
 
-
-      /*  public OrderViewModel()
-        {
-            OrderDetails = new List<OrderDetail>();
-        }*/
 
         [DataMember(Order = 1)]
       public Guid Order_guid { get; set; }
@@ -435,7 +458,12 @@ namespace Yst.ViewModels
 
         public string TkId { get; set; }
 
+        // вообще есть договоры со *
+        public bool HasStar { get; set; }
 
+        // в корзине выбран *
+        public bool IsStar { get; set; }
+        public bool IsPrepay { get;  set; }
     }
 
     [DataContract(Namespace = "")]
@@ -471,7 +499,9 @@ namespace Yst.ViewModels
         }
         
     }
-
+    /*
+     *  Доп. поля для клиента для Dpd
+     */
     public class FieldsForDpdViewModel
     {
         public string PartnerName { get; set; }

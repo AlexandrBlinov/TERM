@@ -12,26 +12,28 @@
     var reservedTill = Model.Order.OrderDate.AddDays(7).ToShortDateString();
     string InvisReservOrShipment = ViewBag.IsForeign ? "hidden" : "";
 
+    string notDisplay = "display: none;";
+    
 
     string hiddenDeliveryDate = Model.Order.isReserve ? "hidden" : "";
     bool isUserHasDpdContract = Model.CanUserUseDpdDelivery;
-    string hiddensectionTransportContainer = Model.Order.IsDeliveryByTk && isUserHasDpdContract ? "" : "display: none;";
+    string hiddensectionTransportContainer = Model.Order.IsDeliveryByTk && isUserHasDpdContract ? "" : notDisplay;
 
 
-    var styleTerminal = Model.Order.IsDeliveryByTk && Model.TerminalOrAddress ? "" : "display: none;";
-    var styleAddress = Model.Order.IsDeliveryByTk && !Model.TerminalOrAddress ? "" : "display: none;";
+    var styleTerminal = Model.Order.IsDeliveryByTk && Model.TerminalOrAddress ? "" : notDisplay;
+    var styleAddress = Model.Order.IsDeliveryByTk && !Model.TerminalOrAddress ? "" : notDisplay;
 
     var styleCostOfDelivery = Model.Order.IsDeliveryByTk && Model.CostOfDelivery > 0;
 
 
-    var styleCityDependingDataHidden = String.IsNullOrEmpty(Model.City) ? "display: none;" : "";
+    var styleCityDependingDataHidden = String.IsNullOrEmpty(Model.City) ? notDisplay : "";
 
-    string styleDeliveryConditions = !Model.IsDelivery ? "display: none;" : "";
+    string styleDeliveryConditions = !Model.IsDelivery ? notDisplay : "";
 
     string hiddenDeliveryByTk = Model.Order.IsDeliveryByTk && isUserHasDpdContract ? "" : "hidden";
     bool isAdmin = true;
 
-    string hiddenTk = !Model.IsDelivery ||  Model.WayOfDelivery != 3 ? "display: none;" : "";
+    string hiddenTk = !Model.IsDelivery ||  Model.WayOfDelivery != 3 ? notDisplay : "";
     string hiddenAddress = !Model.IsDelivery  || Model.WayOfDelivery > 0 ? "display: none;" : "";
 
 }
@@ -159,6 +161,54 @@
         </div>
 
     </section>
+
+    <section class="row cart-properties @InvisReservOrShipment">
+      
+        <!--Тип  цен предоплата или отсрочка-->
+        <div class="col-md-2 cart-property">
+            <div class="row">
+                <div class="col-md-12 cart-property__header">
+                    <span class="cart-property__caption"> Тип цен </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="cart-property__text"> @( Model.IsPrepay ? @CartAndOrders.Prepay : CartAndOrders.Adjournment) </span>
+                </div>
+            </div>
+        </div>
+
+        <!--Способ оплаты -->
+        
+
+        @if (Model.HasStar)
+        {
+            <div class="col-md-12 hidden-lg hidden-sm hidden-md">
+                <hr class="cart-divider" />
+            </div>
+                        <div class="col-md-offset-1 col-md-4 cart-property">
+                            <div class="row">
+                                <div class="col-md-12 cart-property__header">
+                                    <span class="cart-property__caption">  Способ оплаты</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(m => m.IsStar, "false", new { @id = "isBankTransfer" })
+                                    <label class="cart-label m-t-5" for="isBankTransfer">БН</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(m => m.IsStar, "true", new { @id = "isStar" })
+                                    <label class="cart-label m-t-5" for="isStar"><span class="glyphicon glyphicon-asterisk"></span></label>
+                                </div>
+                            </div>
+                        </div>
+        }
+
+
+    </section>
+
+
 
     <div class="transport-container" style="@hiddensectionTransportContainer">
         <hr class="cart-divider" />
@@ -450,6 +500,9 @@
             var deliveryDate = $('#DeliveryDate').val();
             var comments = $('#Comments').val() || "";
             var addressId = $('#AddressId').val() || "";
+
+            var isStar=   $('#isStar').is(':checked');
+
           //  var wayOfDelivery = $("#isDeliveryByOwnTransport").is(":checked") ? 0 : 1; // 0 - своя доставка 1 - самовывоз
 
             var woD = $('[name=WayOfDelivery]:checked').val();
@@ -472,7 +525,8 @@
                 'BlockType': BlockType, 'RegionId': RegionId, 'ContactFIOOfClient': ContactFIOOfClient, 'PhoneNumberOfClient': PhoneNumberOfClient,
                 'AddressId': addressId,
                 'WayOfDelivery': wayOfDelivery,
-                'TkId' :tkId
+                'TkId': tkId,
+                'IsStar':isStar
 
             };
                         

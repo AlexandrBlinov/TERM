@@ -9,6 +9,7 @@ using Term.ClaimServiceSoap;
 using Yst.Services;
 using System.Web;
 using System.Globalization;
+using System.Data.Entity;
 
 namespace Term.Web.Controllers
 {
@@ -28,14 +29,28 @@ namespace Term.Web.Controllers
 
         public ActionResult Index(ClaimsViewModel model)
         {
-            model.Claims = DbContext.Claims.Where(p => p.PartnerId == this.Partner.PartnerId && (model.EndDate == null || p.ClaimDate <= model.BeginDate) && (model.BeginDate == null || p.ClaimDate >= model.BeginDate) && (model.NumberIn1S == null || p.NumberIn1S == model.NumberIn1S)).OrderByDescending(p => p.ClaimDate).ToPagedList(model.Page, model.ItemsPerPage);
+            model.Claims = DbContext.Claims.Include(o => o.ClaimsDetails).Where(p => p.PartnerId == this.Partner.PartnerId 
+            && (model.EndDate == null || p.ClaimDate <= model.BeginDate) 
+            && (model.BeginDate == null || p.ClaimDate >= model.BeginDate) 
+            && (model.NumberIn1S == null || p.NumberIn1S == model.NumberIn1S)
+            && (model.ProductId == null || p.ClaimsDetails.Any(o => o.ProductId.ToString().Contains(model.ProductId)))
+            && (model.SaleNumber == null || p.ClaimsDetails.Any(o => o.SaleNumber.Contains(model.SaleNumber)))
+            )
+            .OrderByDescending(p => p.ClaimDate).ToPagedList(model.Page, model.ItemsPerPage);
             return View(model);
         }
 
         [Authorize(Roles = "Newsmaker")]
         public ActionResult ListForAdmin(ClaimsViewModel model)
         {
-            model.Claims = DbContext.Claims.Where(p => (model.EndDate == null || p.ClaimDate <= model.BeginDate) && (model.BeginDate == null || p.ClaimDate >= model.BeginDate) && (model.NumberIn1S == null || p.NumberIn1S == model.NumberIn1S)).OrderByDescending(p => p.ClaimDate).ToPagedList(model.Page, model.ItemsPerPage);
+            model.Claims = DbContext.Claims.Include(o => o.ClaimsDetails).Where(p => (
+            model.EndDate == null || p.ClaimDate <= model.BeginDate) 
+            && (model.BeginDate == null || p.ClaimDate >= model.BeginDate) 
+            && (model.NumberIn1S == null || p.NumberIn1S == model.NumberIn1S)
+            && (model.ProductId == null || p.ClaimsDetails.Any(o => o.ProductId.ToString().Contains(model.ProductId)))
+            && (model.SaleNumber == null || p.ClaimsDetails.Any(o => o.SaleNumber.Contains(model.SaleNumber)))
+            ).
+            OrderByDescending(p => p.ClaimDate).ToPagedList(model.Page, model.ItemsPerPage);
             return View(model);
         }
 

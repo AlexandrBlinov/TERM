@@ -150,6 +150,7 @@ namespace Term.DAL
         [DataType(DataType.DateTime)]
         public System.DateTime Date { get; set; }
         
+        
     }
 
 }

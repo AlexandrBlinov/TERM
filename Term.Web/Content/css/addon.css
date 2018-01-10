@@ -1,0 +1,273 @@
+.breadcrumb
+{
+	padding-left:15px !important;
+	padding-right:15px !important;
+}
+
+
+
+.addon .thead
+{
+display: flex;
+color: #606060;
+text-transform: uppercase;	
+font-weight: bold;
+border-bottom: 1px solid #a7a7a7;
+padding-bottom: 20px;
+}
+
+.cart-item-cell {
+    text-align:center;
+}
+.addon .thead > div {
+    padding-left: 0 !important;
+    text-align: center;
+}
+.addon .cart-item
+{
+    border-bottom: 1px solid #a7a7a7;
+    display: flex;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    align-items: center;
+}
+
+.addon .cart-item:last-child
+{
+	   border-bottom: none;
+}
+.addon .cart-item:nth-child(2n+1)
+{
+	background-color: #ececec;
+}
+.addon .cart-item .count_add_to_cart
+{
+	background: transparent;
+}
+.cart-sum-row
+{
+    display: flex;
+	flex-direction: row-reverse;
+	padding-right: 15px;
+}
+.addon-psevdo-select
+ {
+    clear: both;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.addon .order-item
+{
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #edecec;
+    margin-bottom: 3px;
+	text-align: center;
+	border: 1px solid #edecec;
+	
+}
+.addon .order-item:hover
+{
+border: 1px solid #36adf9;	
+}
+.addon .order-item .mw104, .addon .order-item  .reserve
+{
+	 
+	line-height: 1.1;
+}
+.addon .order-item .mw104 
+{
+	font-size:13px;
+ 
+}
+.sort_ask, .sort_ask .sort-btn-style
+{
+    margin-bottom: 15px;
+}
+
+.rall .price
+{
+padding: 0;	
+}
+.cart-item.rall
+{text-align: center;}
+
+
+
+ @media  (min-width: 718px) and   (max-width:772px) { 
+  .rall-items .p-l-25
+ {
+	 padding:0;
+ }
+ .rall
+ {
+	font-size: 12px;
+line-height: 1; 
+ }
+  .rall-items .data-table-a-text
+  {
+    font-size: 11px;
+}
+  .rall-items .seasons img
+ {
+    width: 100%;
+}
+ .rall .data-table-price {
+    font-size: 12px;
+}
+ .rall  .touchspih-podbor-settings
+{
+    width: 26px;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0;
+}
+ .rall  .data-table-add-to-cart {
+    font-size: 25px;
+}
+ 
+ }
+
+
+
+ @media  (min-width: 770px) and   (max-width:1005px) { 
+ .border-form-podbor label
+ {
+	min-height: 40px; 
+ }
+ .order-table .thead, .rall-items .thead
+ {
+	 font-size: 10px;
+ }
+ .rall-items .p-l-25
+ {
+	 padding:0;
+ }
+ .rall
+ {
+	font-size: 12px;
+line-height: 1; 
+ }
+  .rall-items .data-table-a-text
+  {
+    font-size: 11px;
+}
+  .rall-items .seasons img
+ {
+    width: 100%;
+}
+ .rall .data-table-price {
+    font-size: 12px;
+}
+ .rall  .touchspih-podbor-settings
+{
+    width: 26px;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0;
+}
+ .rall  .data-table-add-to-cart {
+    font-size: 25px;
+}
+ .addon  .order-item, .addon  .order-item .open_order, .addon  .order-item .price-filds
+ {font-size: 11px;}
+ .addon  .order-item >div:last-child
+ {
+    padding-left: 0;
+}
+ .addon  .order-item .text{
+    padding-left: 0;
+}
+.addon .order-item .mw104 
+{
+	font-size:11px;
+ 
+}
+ }
+
+  @media    (max-width: 772px) { 
+ .addon .order-item
+{
+    display: grid;
+}
+#table-orders .thead
+{
+	display: none;
+}
+ }
+
+ 
+
+ 
+ @media    (max-width: 717px) { 
+ 
+ .addon .cart-item
+{
+    display: grid;
+}
+.addon .cart-item > div
+{
+	    padding-top: 15px;
+}
+.addon .cart-item > div:last-child
+{
+	    padding-top: 25px;
+		text-align: center;
+}
+.cart-sum-row 
+{
+    display: block;
+}
+.cart-sum-row >div
+{
+	padding-right:15px;
+}
+.cart-sum-row .cart-sum-row-padding
+{
+	padding:0;
+}
+.logotip-terminal, .logotip-yst
+{
+	margin-left: 15px;
+}
+.footer-row-a.col-xs-3
+{
+	width:50%
+}
+.footer-row-text.col-xs-3
+{
+	width:100%;
+	margin-bottom:15px;
+}
+    /* #CreateOrder
+{
+    width: 100%;
+}*/
+.border-form-podbor
+{
+	padding-left:15px;
+	padding-right:15px;
+}
+.podbor-tyres-title
+{
+	font-size: 19px !important;
+	line-height: 4;
+}
+.yst-ship-group
+{
+	display:grid
+}
+.sort_ask .radio-label-span
+ {
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+}
+    /*
+    .input-group.bootstrap-touchspin {
+        max-width:200px;
+    }
+    */
+ }

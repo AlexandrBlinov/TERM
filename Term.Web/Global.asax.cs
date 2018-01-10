@@ -17,6 +17,7 @@ using System.Globalization;
 using System.Net.Http.Formatting;
 using Term.Utils;
 using YstProject;
+using Yst.ViewModels;
 
 namespace Term.Web
 {
@@ -34,6 +35,9 @@ namespace Term.Web
      //       ModelBinders.Binders.Add(typeof(AkbPodborView), new AkbModelBinder());
             ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
+        //    ModelBinders.Binders.Add(typeof(CaseLogistik), new EnumModelBinder<CaseLogistik>(CaseLogistik.NoCase));
+
+
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
            // WebApiConfig.Register(GlobalConfiguration.Configuration);

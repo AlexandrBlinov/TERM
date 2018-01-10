@@ -199,6 +199,61 @@ namespace Yst.Services
                 if (itemAdded) ItemAddedToCart(this, new ShoppingCartInfoArgs(ShoppingCartId,product, count, price, priceOfPoint, priceOfClient));  
         }
 
+        /*
+         * Рассчитать дату отгрузки
+         */ 
+        private DateTime? calculateDeliveryDate(ShoppingCartViewModelExtended viewModel, IList<Guid> list, Guid guidIn1S, int departmentId)
+        {
+            DateTime? deliveryDateNewCase = null;
+            if (!viewModel.DeliveryDate2.HasValue) return deliveryDateNewCase;
+
+            switch (viewModel.CaseForLogistik)
+            {
+                //21 - сперва один заказ потом другой
+                case CaseLogistik.FromSupplierNotWait:
+                    {
+                        // для заказа  от поставщика  меняем дату отгрузки 
+                        bool orderFromSupplier = list.Any(item => item == guidIn1S);
+
+                        // для заказа не от поставщика (со склада) ничего не меняем
+                        if (orderFromSupplier) deliveryDateNewCase = viewModel.DeliveryDate2.Value;
+
+                        break;
+                    }
+                //22 - все заказа везти вместе
+                case CaseLogistik.FromSupplierWait:
+                    {
+                        // для всех заказов ставим дату доставки от поставщика
+                        deliveryDateNewCase = viewModel.DeliveryDate2.Value;
+
+                        break;
+                    }
+                //41
+                case CaseLogistik.FromMainToDep:
+                    {
+                        deliveryDateNewCase = viewModel.DeliveryDate2.Value;
+                        break;
+                    }
+                //51
+                case CaseLogistik.FromMainDepNotWait:
+                    {
+
+                        if (departmentId == Defaults.MainDepartment)
+                            deliveryDateNewCase = viewModel.DeliveryDate2.Value;
+                        break;
+                    }
+                //52 ждем для обоих заказов до прихода с головного подр-я на склад филиала
+                case CaseLogistik.FromMainDepWait:
+                    {
+                        deliveryDateNewCase = viewModel.DeliveryDate2.Value;
+                        break;
+                    }
+
+                default:
+                    break;
+            }
+            return deliveryDateNewCase;
+        }
 
         /// <summary>
         /// Создает заказы в локальной базе
@@ -268,7 +323,7 @@ namespace Yst.Services
                 int rowCounter = 0;
 
                 var guidIn1S = Guid.Parse(orderGuid.OrderGuid);
-
+                
                 var newOrder = new Order
                 {
 
@@ -283,7 +338,7 @@ namespace Yst.Services
                     Username = userName,
                     OrderStatus = guidsOfOrdersFromSuppliers.Any(item => item == guidIn1S) ? OrderStatuses.BeingConfirmedBySupplier : OrderStatuses.Confirmed, 
                     Comments = viewModel.Comments ?? String.Empty,
-                    DeliveryDate = viewModel.DeliveryDate,
+                    DeliveryDate = calculateDeliveryDate(viewModel, guidsOfOrdersFromSuppliers, guidIn1S, orderGuid.DepartmentId) ?? viewModel.DeliveryDate,
                     isReserve =!viewModel.IsDelivery,
                     OrderDate = DateTime.Now,
                     NumberIn1S = orderGuid.NumberIn1S,

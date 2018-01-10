@@ -227,6 +227,8 @@ namespace YstTerm.Models
         public string AddressId { get; set; }
 
         public string TkId { get; set; }
+
+        public bool IsStar { get; set; }
     }
 
 

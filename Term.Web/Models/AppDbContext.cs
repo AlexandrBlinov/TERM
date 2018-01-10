@@ -101,6 +101,9 @@ namespace Yst.Context
         public DbSet<Claims> Claims { get; set; }
         public DbSet<ClaimsDetails> ClaimsDetails { get; set; }
 
+        public DbSet<JobForShipment> JobForShipments { get; set; }
+        public DbSet<JobForShipmentDetail> JobForShipmentDetails { get; set; }
+
         #endregion
         /// <summary>
         /// season entities
@@ -151,6 +154,8 @@ namespace Yst.Context
      //   public DbSet<FilesForDocument> FilesForDocuments { get; set; }
 
         public DbSet<HistoryOfOrderstatus> HistoryOfOrderstatuses { get; set; }
+
+
      
 
         

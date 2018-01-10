@@ -460,7 +460,7 @@ namespace Term.Web.Controllers
             podborModel.Widths = CachedCollectionsService.GetOtherProperties("Width", podborModel.Folder);
             podborModel.ProductFolders = CachedCollectionsService.GetParentFolderForOthersProduct(ProductType.Other);
 
-            podborModel.ProductFolders = podborModel.OthersType == OthersProductType.Cams ? podborModel.ProductFolders.Where(p => p.ParentId == 1746) : podborModel.ProductFolders.Where(p => p.ParentId == 701);
+            podborModel.ProductFolders = podborModel.OthersType == OthersProductType.Cams ? podborModel.ProductFolders.Where(p => p.ParentId == Defaults.TyreOthersFolder) : podborModel.ProductFolders.Where(p => p.ParentId == Defaults.WheelsOthersFolder);
 
             Products.GetOthersFromPodbor(podborModel, Point.PartnerPointId);
             return View(podborModel);
@@ -495,6 +495,9 @@ namespace Term.Web.Controllers
             return View(podborModel);
         }
 
+        /*
+         *  Подбор  дисков по авто по спарке
+         */
         public ActionResult SparDisks(SparPodborView spar_param)
         {
             var podborModel = new SeasonDisksPodborView
@@ -544,6 +547,9 @@ namespace Term.Web.Controllers
             return PartialView("_Disks", podborModelResult);
         }
 
+        /*
+         *  Подбор  шин по авто по спарке
+         */
         public ActionResult SparTyres(SparPodborView spar_param)
         {
             var podborModel = new TyresPodborView

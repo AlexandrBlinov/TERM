@@ -11,6 +11,7 @@ using Term.Utils;
 using Term.CustomAttributes;
 using YstProject.Services;
 using YstTerm.Models;
+using Yst.ViewModels;
 
 namespace UnitTestProject1
 {
@@ -80,6 +81,14 @@ namespace UnitTestProject1
 
             var result=producers2.Union(producers1,new ProducerEqualityComparer()).ToArray();
             Assert.AreEqual(result.Count(),3);
+        }
+        [TestMethod]
+        public void EqualityFromString()
+        {
+          CaseLogistik cs=  (CaseLogistik)Enum.Parse(typeof(CaseLogistik), "525");
+
+            Assert.AreEqual(cs, CaseLogistik.FromMainDepWait);
+
         }
 
         
