@@ -14,6 +14,7 @@ using YstProject.Services;
 using Yst.Terminal.FakeViewModels;
 using YstProject.Models;
 using File = Term.DAL.File;
+using Term.Web.Models;
 
 #if DEBUG
 namespace Term.Web.Controllers
@@ -22,10 +23,12 @@ namespace Term.Web.Controllers
     public class FakeController : Controller
     {
         private AppDbContext _dbContext = new AppDbContext();
+
+        private MtsLocationsContext _dbMtsContext = new MtsLocationsContext();
         //
         // GET: /Fake/ 3+2
         //
-        
+
 
         public ActionResult Create()
         {
@@ -55,7 +58,13 @@ namespace Term.Web.Controllers
         }
 
 
-        
+        public ActionResult Index()
+        {
+            var lr= _dbMtsContext.LocationsRecords.First();
+
+            return Content($"{ lr.Latitude}");
+
+        }
 
 
         public ActionResult Test(int id)
@@ -150,12 +159,12 @@ namespace Term.Web.Controllers
             return View(model);
         }
 
-
+/*
         public ActionResult Index()
         {
             return View();
         }
-
+        */
         [HttpPost]
         public ActionResult Index(FakeSecondViewModel model)
         {

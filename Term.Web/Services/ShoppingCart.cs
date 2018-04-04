@@ -350,7 +350,8 @@ namespace Yst.Services
                     /// новые поля для заказа
                     Prepay= viewModel.IsPrepay,
                     IsStar = viewModel.IsStar,
-                    WayOfDelivery=viewModel.WayOfDelivery,
+                    IsSeasonAdjournment = viewModel.IsSeasonAdjournment,
+                    WayOfDelivery =viewModel.WayOfDelivery,
                     AddressId= viewModel.IsDelivery&& viewModel.WayOfDelivery== (int) WaysOfDelivery.Delivery ? viewModel.AddressId:null,
                     TkId = viewModel.IsDelivery && viewModel.WayOfDelivery == (int)WaysOfDelivery.ByTk ? viewModel.TkId : null,
 

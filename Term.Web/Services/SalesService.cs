@@ -160,5 +160,12 @@ namespace Term.Services
 
 
         }
+
+        public Guid GetSaleGuidByNumber(string numberIn1s)
+        {
+            Sale sale = DbContext.Sales.FirstOrDefault(o => o.NumberIn1S == numberIn1s && o.PartnerId == Partner.PartnerId);
+            if (sale == null) return Guid.Empty;
+            return sale.GuidIn1S;
+        }
     }
 }

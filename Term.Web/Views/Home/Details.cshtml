@@ -38,18 +38,19 @@
                 }
        
         <div class="col-xs-4">
+            <!--picture @Html.RemotePicture(Model.ProductId) -->
             <div class="details-conteiner-img">
                 <img class="img-responsive main-photo" src="@Html.RemotePicture(Model.ProductId)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
             </div>
 
             <ul class="list-group">
                 @foreach (var item in ViewBag.DepartmentWithRests as IEnumerable<DepartmentWithRests>)
-            {
-                    <li class="list-group-item view-pl-text-caption">
-                        @ForSearchResult.DeliveryTime: @item.Days @ForSearchResult.Days
-                        @ForSearchResult.Amount: @item.Rest @Header.Pc
-                    </li>
-            }
+        {
+            <li class="list-group-item view-pl-text-caption">
+                @ForSearchResult.DeliveryTime: @item.Days @ForSearchResult.Days
+                @ForSearchResult.Amount: @item.Rest @Header.Pc
+            </li>
+}
             </ul>
         </div>
 

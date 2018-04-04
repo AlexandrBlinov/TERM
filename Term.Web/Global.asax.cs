@@ -18,6 +18,7 @@ using System.Net.Http.Formatting;
 using Term.Utils;
 using YstProject;
 using Yst.ViewModels;
+using Term.Web.Models;
 
 namespace Term.Web
 {
@@ -48,6 +49,7 @@ namespace Term.Web
         // не указывать автомиграции ни на локальном ни на product серверах!!!
        //   Database.SetInitializer(new MigrateDatabaseToLatestVersion<AppDbContext, YstProject.Migrations.Configuration>());
                      Database.SetInitializer<AppDbContext>(null);
+                    Database.SetInitializer<MtsLocationsContext>(null);
 
 #if !DEBUG
                 JobScheduler.Start();

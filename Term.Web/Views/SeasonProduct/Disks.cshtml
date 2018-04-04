@@ -21,6 +21,7 @@
 {
     @Html.Hidden("SortBy", Model.SortBy)
     @Html.Hidden("DisplayView", Model.DisplayView)
+    @Html.Hidden("OnProduction", Model.OnProduction)
 
     <div class="row m-t-15">
 
@@ -93,23 +94,24 @@
 <div class="row m-t-15">
     <span class="podbor-tyres-title">@Header.Wheels (@Model.SearchResults.TotalItemCount)</span>
     @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("SeasonDisks", new
-    {
-        page,
-        ProducerId = Model.ProducerId,
-        Article = Model.Article,
-        Name = Model.Name,
-        Width = Model.Width,
-        Diametr = Model.Diametr,
-        Hole = Model.Hole,
-        ET = Model.ET,
-        PCD = Model.PCD,
-        DIA = Model.DIA,
-        DiskColor = Model.DiskColor,
-        ItemsPerPage = Model.ItemsPerPage,
-        DisplayView = Model.DisplayView,
-        SortBy = Model.SortBy,
+{
+    page,
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    SortBy = Model.SortBy,
+    OnProduction = Model.OnProduction
 
-    }),
+}),
     new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 
 </div>
@@ -121,22 +123,23 @@
 
 <div class="row m-t-15">
     @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("SeasonDisks", new
-    {
-        page,
-        ProducerId = Model.ProducerId,
-        Article = Model.Article,
-        Name = Model.Name,
-        Width = Model.Width,
-        Diametr = Model.Diametr,
-        Hole = Model.Hole,
-        ET = Model.ET,
-        PCD = Model.PCD,
-        DIA = Model.DIA,
-        DiskColor = Model.DiskColor,
-        ItemsPerPage = Model.ItemsPerPage,
-        DisplayView = Model.DisplayView,
-        SortBy = Model.SortBy
-    }),
+{
+    page,
+    ProducerId = Model.ProducerId,
+    Article = Model.Article,
+    Name = Model.Name,
+    Width = Model.Width,
+    Diametr = Model.Diametr,
+    Hole = Model.Hole,
+    ET = Model.ET,
+    PCD = Model.PCD,
+    DIA = Model.DIA,
+    DiskColor = Model.DiskColor,
+    ItemsPerPage = Model.ItemsPerPage,
+    DisplayView = Model.DisplayView,
+    SortBy = Model.SortBy,
+    OnProduction = Model.OnProduction
+}),
     new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 5 })
 </div>
 

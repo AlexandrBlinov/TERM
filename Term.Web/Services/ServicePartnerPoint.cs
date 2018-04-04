@@ -238,6 +238,7 @@ namespace YstProject.Services
                         partnerPoint.Email = psc.Email;
                         partnerPoint.Language = psc.Language;
                         partnerPoint.AddressForDelivery = psc.AddressForDelivery;
+                        partnerPoint.ShowOnlySeasonOrder = psc.ShowOnlySeasonOrder;
                         partnerPoint.LatLng = psc.LatLng.Trim(new Char[] { '(', ')'});
                     //    partnerPoint.CustomDutyVal = psc.VatVal;
                      //   partnerPoint.VatVal = psc.VatVal;

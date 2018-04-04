@@ -37,12 +37,12 @@
                 @foreach (var item in Model.SearchResults as IPagedList<DiskSearchResult>)
                 {
                     <tr>
-                        <td class="hidden-xs">
+                        <td class="hidden-xs" data-img="@item.PathToImage">
                             @{
                                 string sale_img_class = item.IsSaleProduct && ViewBag.SaleMode ? "sale-img" : "";
                             }
                             <span class="@sale_img_class"></span>
-                            <a class="fancybox-btn-disks" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.Thumbnail(item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';"></a>
+                            <a class="fancybox-btn-disks" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk",item.PathToImage)" alt="@item.Name" class="min_img" ></a>
                              @{
                                  if (item.CountPhoto > 0)
                                  {
@@ -95,7 +95,7 @@
                         </td>
 
                         <td>
-                            @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200 })
+                            @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number",  @min = 1, @max = 200 })
 
                         </td>
 

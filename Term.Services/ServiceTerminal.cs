@@ -109,11 +109,13 @@ namespace Term.Services
 
 
         /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:CreateOrder2", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:CreateOrder3", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return")]
-        public Result CreateOrder2(string Partner, int PointId, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string Comment, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string ShippingDay, bool isReserve, bool TransportCompany, bool Prepay, bool IsStar, int WayOfDelivery, string AddressId , string TkId)
+        public Result CreateOrder3(string Partner, int PointId, [System.Xml.Serialization.XmlArrayItemAttribute("Products", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] SoapProduct[] Goods, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string Comment, 
+            [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string ShippingDay, bool isReserve, bool TransportCompany, 
+            bool Prepay, bool IsStar, int WayOfDelivery, string AddressId , string TkId, string DeliveryDate2,int CaseForLogistik ,bool IsSeasonAdjournment , int DayOfWeekToDeliver=0)
         {
-            object[] results = this.Invoke("CreateOrder2", new object[] {
+            object[] results = this.Invoke("CreateOrder3", new object[] {
                         Partner,
                         PointId,
                         Goods,
@@ -125,7 +127,11 @@ namespace Term.Services
                         IsStar,
                         WayOfDelivery,
                         AddressId,
-                        TkId
+                        TkId,
+                        DeliveryDate2,
+                        CaseForLogistik,
+                        IsSeasonAdjournment,
+                        DayOfWeekToDeliver
             });
             return ((Result)(results[0]));
         }

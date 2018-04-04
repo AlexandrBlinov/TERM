@@ -6,13 +6,13 @@
 @{
     ViewBag.Title = Header.Accessories;
 }
-
+@{Html.RenderPartial("_AkbBigSale");}
 @Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Accessories })
 
 
 <div class="row border-form-podbor">
-    <img class="podbor-tyres-title-img" alt="@Header.Accessories" src="~/Content/img/img-acc-podbor.png"/> <span class="podbor-tyres-title">@Header.Accessories (@Model.SearchResults.TotalItemCount)</span>
-    
+    <img class="podbor-tyres-title-img" alt="@Header.Accessories" src="~/Content/img/img-acc-podbor.png" /> <span class="podbor-tyres-title">@Header.Accessories (@Model.SearchResults.TotalItemCount)</span>
+
 </div>
 <div class="row border-form-podbor">
     @{Html.RenderPartial("_AccsSpecialOffer");}
@@ -33,65 +33,65 @@
                 <div class="m-t-15">
                     @Html.TextBoxFor(p => p.Article, new { @placeholder = @ForSearchResult.CodeOrArt, @class = "form-control" })
                 </div>
-    
-    <div class="m-t-15">
-        @Html.DropDownListFor(p => p.ProducerId, new SelectList(Model.Producers, "ProducerId", "Name"), @ForSearchResult.ChooseSupplier, new { @class = "form-control" })
-    </div>
-    <div class="m-t-15">
-        @Html.CheckBoxFor(p => p.OnlySale, new { @class = "icheck" }) <label class="m-r-20" for="OnlySale"><span class="radio-label-span">@ForSearchResult.Sale</span></label>
-    </div>
-                    <div id="acc-categories">
-                        @foreach (var producer in (IList<ProductCategory>) ViewBag.Categories)
+
+                <div class="m-t-15">
+                    @Html.DropDownListFor(p => p.ProducerId, new SelectList(Model.Producers, "ProducerId", "Name"), @ForSearchResult.ChooseSupplier, new { @class = "form-control" })
+                </div>
+                <div class="m-t-15">
+                    @Html.CheckBoxFor(p => p.OnlySale, new { @class = "icheck" }) <label class="m-r-20" for="OnlySale"><span class="radio-label-span">@ForSearchResult.Sale</span></label>
+                </div>
+                <div id="acc-categories">
+                    @foreach (var producer in (IList<ProductCategory>)ViewBag.Categories)
+                    {
+                        if (producer.ParentId == null)
                         {
-                            if (producer.ParentId == null)
-                            {
-                                var isChecked = Model.SelectedCategories.Contains(producer.ProductId.ToString()) ? " checked" : "";
-                                var selectedFolder = Model.SelectedFolders.Contains(producer.ProductId.ToString()) ? " glyphicon glyphicon-minus multiplue" : "glyphicon glyphicon-plus multiplue";
-                                var hiddenLev2 = Model.SelectedFolders.Contains(producer.ProductId.ToString()) ? "" : "hidden";
-                                <div class="accs-podbor-category">
-                                    @if (producer.CountOfProducts == 0)
-                                    {
-                                        <span style="float: left; margin-right: 5px; cursor: pointer;" class="@selectedFolder" data-child="@producer.ProductId"></span>
-                                    }
-                                    <input type="checkbox" id="@("id" + producer.ProductId)" class="checkbox-form-podbor accs-category" value="@producer.ProductId" @isChecked/>
-                                    <label class="checkbox-form-podbor-label" for="@("id" + producer.ProductId)">&nbsp;@producer.Name</label>
-                                </div>
-                                foreach (var producerLev2 in (IList<ProductCategory>) ViewBag.Categories)
+                            var isChecked = Model.SelectedCategories.Contains(producer.ProductId.ToString()) ? " checked" : "";
+                            var selectedFolder = Model.SelectedFolders.Contains(producer.ProductId.ToString()) ? " glyphicon glyphicon-minus multiplue" : "glyphicon glyphicon-plus multiplue";
+                            var hiddenLev2 = Model.SelectedFolders.Contains(producer.ProductId.ToString()) ? "" : "hidden";
+                            <div class="accs-podbor-category">
+                                @if (producer.CountOfProducts == 0)
                                 {
-                                    if (producer.ProductId == producerLev2.ParentId)
-                                    {
-                                        var isCheckedLev2 = Model.SelectedCategories.Contains(producerLev2.ProductId.ToString()) ? " checked" : "";
-                                        <div class="accs-podbor-category" data-level="2" data-parent="@producerLev2.ParentId" @hiddenLev2>
-                                            <input type="checkbox" id="@("id" + producerLev2.ProductId)" class="checkbox-form-podbor accs-category" value="@producerLev2.ProductId" @isCheckedLev2/>
-                                            <label class="checkbox-form-podbor-label accs_cat_lev2" for="@("id" + producerLev2.ProductId)">&nbsp;@producerLev2.Name</label>
-                                        </div>
-                                    }
+                                    <span style="float: left; margin-right: 5px; cursor: pointer;" class="@selectedFolder" data-child="@producer.ProductId"></span>
+                                }
+                                <input type="checkbox" id="@("id" + producer.ProductId)" class="checkbox-form-podbor accs-category" value="@producer.ProductId" @isChecked />
+                                <label class="checkbox-form-podbor-label" for="@("id" + producer.ProductId)">&nbsp;@producer.Name</label>
+                            </div>
+                            foreach (var producerLev2 in (IList<ProductCategory>)ViewBag.Categories)
+                            {
+                                if (producer.ProductId == producerLev2.ParentId)
+                                {
+                                    var isCheckedLev2 = Model.SelectedCategories.Contains(producerLev2.ProductId.ToString()) ? " checked" : "";
+                                    <div class="accs-podbor-category" data-level="2" data-parent="@producerLev2.ParentId" @hiddenLev2>
+                                        <input type="checkbox" id="@("id" + producerLev2.ProductId)" class="checkbox-form-podbor accs-category" value="@producerLev2.ProductId" @isCheckedLev2 />
+                                        <label class="checkbox-form-podbor-label accs_cat_lev2" for="@("id" + producerLev2.ProductId)">&nbsp;@producerLev2.Name</label>
+                                    </div>
                                 }
                             }
-
-
                         }
 
-                    </div>
+
                     }
+
                 </div>
+            }
+        </div>
     </div>
 
 
     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
         <div class="row">
             @Html.PagedListPager(Model.SearchResults, page => Url.Action("Accs", new
-        {
-            page,
-            ProducerId = Model.ProducerId,
-            Article = Model.Article,
-            Name = Model.Name,
-            ItemsPerPage = Model.ItemsPerPage,
-            categories = Server.HtmlDecode(Request.QueryString["Categories"]),
-            SortBy = Model.SortBy
+            {
+                page,
+                ProducerId = Model.ProducerId,
+                Article = Model.Article,
+                Name = Model.Name,
+                ItemsPerPage = Model.ItemsPerPage,
+                categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                SortBy = Model.SortBy
 
-        }),
-                                 new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+            }),
+                                      new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 
 
         </div>
@@ -102,14 +102,14 @@
 
                 <div class="btn btn-default sort-btn-style" aria-label="Left Align">
                     @Html.ActionLink(@ForSearchResult.Name, "Accs", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
-                                    SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
-                                }, new { @class = "sort-btn-a" })
+                    {
+                        ProducerId = Model.ProducerId,
+                        Article = Model.Article,
+                        Name = Model.Name,
+                        ItemsPerPage = Model.ItemsPerPage,
+                        categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                        SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
+                    }, new { @class = "sort-btn-a" })
                     @{
                         if (Model.SortBy == SortBy.NameAsc || Model.SortBy == SortBy.NameDesc)
                         {
@@ -123,14 +123,14 @@
                 </div>
                 <div class="btn btn-default sort-btn-style" aria-label="Left Align">
                     @Html.ActionLink(@ForSearchResult.Amount, "Accs", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
-                                    SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
-                                }, new { @class = "sort-btn-a" })
+                    {
+                        ProducerId = Model.ProducerId,
+                        Article = Model.Article,
+                        Name = Model.Name,
+                        ItemsPerPage = Model.ItemsPerPage,
+                        categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                        SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
+                    }, new { @class = "sort-btn-a" })
                     @{
                         if (Model.SortBy == SortBy.AmountAsc || Model.SortBy == SortBy.AmountDesc)
                         {
@@ -144,14 +144,14 @@
                 </div>
                 <div class="btn btn-default sort-btn-style" aria-label="Left Align">
                     @Html.ActionLink(@ForSearchResult.Price, "Accs", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
-                                    SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
-                                }, new { @class = "sort-btn-a" })
+                    {
+                        ProducerId = Model.ProducerId,
+                        Article = Model.Article,
+                        Name = Model.Name,
+                        ItemsPerPage = Model.ItemsPerPage,
+                        categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                        SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
+                    }, new { @class = "sort-btn-a" })
                     @{
                         if (Model.SortBy == SortBy.PriceAsc || Model.SortBy == SortBy.PriceDesc)
                         {
@@ -165,14 +165,14 @@
                 </div>
                 <div class="btn btn-default sort-btn-style" aria-label="Left Align">
                     @Html.ActionLink(@ForSearchResult.DeliveryTime, "Accs", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    categories = Server.HtmlDecode(Request.QueryString["Categories"]),
-                                    SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
-                                }, new { @class = "sort-btn-a" })
+                    {
+                        ProducerId = Model.ProducerId,
+                        Article = Model.Article,
+                        Name = Model.Name,
+                        ItemsPerPage = Model.ItemsPerPage,
+                        categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                        SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
+                    }, new { @class = "sort-btn-a" })
                     @{
                         if (Model.SortBy == SortBy.DeliveryAsc || Model.SortBy == SortBy.DeliveryDesc)
                         {
@@ -201,7 +201,7 @@
             </div>
         </div>
 
-        
+
         <table class="data-table order-table accs-data-table m-t-15">
 
             <thead>
@@ -271,20 +271,20 @@
 
         </table>
 
-        
+
         <div class="row m-t-15">
             @Html.PagedListPager(Model.SearchResults, page => Url.Action("Accs", new
-        {
-            page,
-            ProducerId = Model.ProducerId,
-            Article = Model.Article,
-            Name = Model.Name,
-            ItemsPerPage = Model.ItemsPerPage,
-            categories = Server.HtmlDecode(Request.QueryString["Categories"]),
-            SortBy = Model.SortBy
-        }), new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+            {
+                page,
+                ProducerId = Model.ProducerId,
+                Article = Model.Article,
+                Name = Model.Name,
+                ItemsPerPage = Model.ItemsPerPage,
+                categories = Server.HtmlDecode(Request.QueryString["Categories"]),
+                SortBy = Model.SortBy
+            }), new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
         </div>
-        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -295,4 +295,4 @@
             radioClass: 'iradio_square-blue'
         });
     </script>
-    }
+}

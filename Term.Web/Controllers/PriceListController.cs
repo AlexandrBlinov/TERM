@@ -286,13 +286,15 @@ namespace Term.Web.Controllers
             wsDisks.Cells["A1:P1"].AutoFilter = true;
             //wsDisks.Cells["A1"].LoadFromCollection(disks, true);
                 string brand = String.Empty;
+                string model = String.Empty;
                 for (int i = 1; i < wsDisks.Dimension.Rows; i++)
                 {
                     brand = wsDisks.GetValue(i, 2).ToString();
+                    model = wsDisks.GetValue(i, 3).ToString();
                     if (brand == "VISSOL")
                     {
                         var restYar = wsDisks.GetValue(i, 14).ToString();
-                        if (restYar == "50")
+                        if (restYar == "50" && model.Contains("F"))
                         {
                             wsDisks.Cells[i, 14].Value = "Под заказ";
                         }

@@ -1,0 +1,26 @@
+﻿@using Term.Web.Views.Resources;
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-xs-12 col-sm-4">
+        @Html.ActionLink(" ", "Disks", "SeasonProduct", new { @WheelType = "Forged" }, new { @class = "link_forged" })
+        <p class="text-center text_main top20">@Header.Wheels_SeasonForged</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        @Html.ActionLink(" ", "Disks", "SeasonProduct", new { @WheelType = "Alloy" }, new { @class = "link_disks" })
+        <p class="text-center text_main top20">@Header.Wheels_SeasonAlloy</p>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-xs-12 col-sm-4">
+        @Html.ActionLink(" ", "Disks", "SeasonProduct", new { @WheelType = "Steel" }, new { @class = "link_steel" })
+        <p class="text-center text_main top20">@Header.Wheels_SeasonSteel</p>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+        @Html.ActionLink(" ", "Disks", "SeasonProduct", new { @WheelType = "Alloy", @OnProduction = true }, new { @class = "link_production" })
+        <p class="text-center text_main top20">Stock in China</p>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

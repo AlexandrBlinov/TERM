@@ -474,19 +474,20 @@ namespace Term.Web.Controllers
             podborModel.CargoWidth = CachedCollectionsService.GetCargoProperties(ProductType.Tyre, "Width");
             podborModel.CargoHeight = CachedCollectionsService.GetCargoProperties(ProductType.Tyre, "Height");
             podborModel.CargoDiametr= CachedCollectionsService.GetCargoProperties(ProductType.Tyre, "Diametr");
-
             
+
+
             if (!Partner.IsForeign)
             {
                 ViewBag.MaxPrice = Defaults.CargoPriceMaxRus;
                 ViewBag.PriceStepSlide = Defaults.PriceStepSlideRus;
-                if (podborModel.PriceMax == 0) { podborModel.PriceMax = Defaults.CargoPriceMaxRus; }
+                podborModel.PriceMax = Defaults.CargoPriceMaxRus;
             }
             else
             {
                 ViewBag.MaxPrice = Defaults.CargoPriceMaxEng;
                 ViewBag.PriceStepSlide = Defaults.PriceStepSlideEng;
-                if (podborModel.PriceMax == 0) { podborModel.PriceMax = Defaults.CargoPriceMaxEng; }
+                podborModel.PriceMax = Defaults.CargoPriceMaxEng; 
             }
 
           //  int page = podborModel.Page;

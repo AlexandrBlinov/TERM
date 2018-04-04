@@ -1175,6 +1175,8 @@ namespace Term.Soapmodels
 
         private decimal purchasePriceField;
 
+        private string resolutionENField;
+
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("Code")]
         public string Code
@@ -1354,6 +1356,20 @@ namespace Term.Soapmodels
             set
             {
                 this.purchasePriceField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("ResolutionEN")]
+        public string ResolutionEN
+        {
+            get
+            {
+                return this.resolutionENField;
+            }
+            set
+            {
+                this.resolutionENField = value;
             }
         }
     }

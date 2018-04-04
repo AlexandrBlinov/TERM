@@ -24,7 +24,7 @@ using System.Globalization;
 namespace Term.Web.Controllers
 {
     /// <summary>
-    ///     Класс - подборщик товаров для шин и дисков
+    ///     Класс - подборщик товаров для шин и дисков по всему сезонному ассортименту (SeasonStockItem)
     /// </summary>
     [Authorize]
     public class SeasonProductController : BaseController
@@ -119,21 +119,30 @@ namespace Term.Web.Controllers
             podborModel.HasSteelOffers = _seasonproductservice.HasSteelOffers;
             podborModel.HasAlloyOffers = _seasonproductservice.HasAlloyOffers;
 
+            IQueryable<Product> results;
 
             ViewBag.ShowSeasonCart = true;
 
-            // общий сезонный ассортимент
-            var ssitemsIds = DbContext.Set<SeasonStockItem>().Where
-                (p => p.Product.ProductType == ProductType.Disk && p.Product.WheelType == podborModel.WheelType).Select(p=>p.ProductId).
+            if (podborModel.OnProduction)
+            {
+                var onProdItemsIds = DbContext.Set<OnWayItem>().Where
+                    (p => p.Product.ProductType == ProductType.Disk && p.ProdOrWay == ProdOrWay.InProduction).Select(p => p.ProductId).Distinct();
+                results = DbContext.Set<Product>().Where(p => onProdItemsIds.Contains(p.ProductId) && p.ProductType == ProductType.Disk);
+            }
+            else
+            {
+                // общий сезонный ассортимент
+                var ssitemsIds = DbContext.Set<SeasonStockItem>().Where
+                    (p => p.Product.ProductType == ProductType.Disk && p.Product.WheelType == podborModel.WheelType).Select(p => p.ProductId).
                 // объединяются с персональным сезонным ассортиментом
-            Union(DbContext.Set<SeasonStockItemOfPartner>()
-                .Where(p => p.PartnerId == partnerId)
-                .Select(p => p.ProductId)).Distinct();
+                Union(DbContext.Set<SeasonStockItemOfPartner>()
+                    .Where(p => p.PartnerId == partnerId)
+                    .Select(p => p.ProductId)).Distinct();
 
-            var results = DbContext.Set<Product>().Where(p => ssitemsIds.Contains(p.ProductId) && p.ProductType == ProductType.Disk && p.WheelType == podborModel.WheelType);
+                results = DbContext.Set<Product>().Where(p => ssitemsIds.Contains(p.ProductId) && p.ProductType == ProductType.Disk && p.WheelType == podborModel.WheelType);
 
-           
-
+            }
+            
             podborModel.Diametrs = CachedCollectionsService.GetTiporazmerProperties(ProductType.Disk, "Diametr",podborModel.WheelType);
             podborModel.Widths = CachedCollectionsService.GetTiporazmerProperties(ProductType.Disk, "Width", podborModel.WheelType);
             podborModel.Pcds = CachedCollectionsService.GetTiporazmerProperties(ProductType.Disk, "PCD", podborModel.WheelType);

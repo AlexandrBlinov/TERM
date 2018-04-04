@@ -149,7 +149,7 @@ namespace Term.Web.Controllers.API
        /// <returns></returns>
         public IQueryable<AutoCompleteResult> GetProductsByCode(string term)
         {
-            return _dbContext.Products.Where(p =>  p.ProductId.ToString().StartsWith(term)).Select(p => new AutoCompleteResult { Label = p.Name, ProductType =(int)p.ProductType, Value = p.ProductId.ToString() }).Take(DefaultNumberToShow).OrderBy(p => p.Label);
+            return _dbContext.Products.Where(p =>  p.ProductId.ToString().StartsWith(term) || p.Article.StartsWith(term)).Select(p => new AutoCompleteResult { Label = p.Name, ProductType =(int)p.ProductType, Value = p.ProductId.ToString() }).Take(DefaultNumberToShow).OrderBy(p => p.Label);
             
         }
 

@@ -96,17 +96,17 @@ namespace Yst.Services
             return DbContext.Database.SqlQuery<TyreSearchResult>(sqltext, parameters.ToArray()).ToList();
 
         }
-        /// <summary>
-        /// Подбор грузовых шин по параметрам
-        /// </summary>
-        /// <param name="pb"></param>
-        /// <param name="pointId"></param>
+
         public void GetCargoTyres(CargoTyresPodborView pb, int pointId)
         {
 
             string partnerId = GetPartnerIdByPointId(pointId);
+            if (pb.Width != null && Defaults.CargoTyreWidthAnalog.TryGetValue(pb.Width, out string value))
+            {
+                pb.WidthAnalog = Defaults.CargoTyreWidthAnalog[pb.Width];
+            }
 
-            string parametersStr = "@PartnerId, @PartnerPointId, @ProducerId,@Diametr, @Width, @Height, @Article, @ProductName, @SortBy, @PriceMin, @PriceMax";
+            string parametersStr = "@PartnerId, @PartnerPointId, @ProducerId,@Diametr, @Width, @Height, @Article, @ProductName, @SortBy, @PriceMin, @PriceMax, @WidthAnalog";
             string sqltext = String.Format("exec {0} {1}", IsPartner ? "spGetCargoTyresPartnerToClient" : "spGetCargoTyresPointToClient", parametersStr);
 
 
@@ -115,7 +115,7 @@ namespace Yst.Services
             parameters.Add("PartnerPointID", pointId);
             parameters.Add("ProductName", pb.Name);
             parameters.Add("SortBy", pb.SortBy.ToString());
-            parameters.GetParametersFromObject(pb, "ProducerId", "Diametr", "Width", "Height",  "Article", "PriceMin", "PriceMax");
+            parameters.GetParametersFromObject(pb, "ProducerId", "Diametr", "Width", "Height", "Article", "PriceMin", "PriceMax", "WidthAnalog");
 
             pb.SearchResults = DbContext.Database.SqlQuery<TyreSearchResult>(sqltext, parameters.ToArray()).ToArray().ToPagedList(pb.Page, pb.ItemsPerPage);
 

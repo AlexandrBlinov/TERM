@@ -296,6 +296,9 @@ namespace Term.DAL
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid GuidIn1S { get; set; }
 
+        [MaxLength(100)]
+        public string Driver { get; set; }
+        
         [MaxLength(8)]
         public string NumberIn1S { get; set; }
 
@@ -305,12 +308,19 @@ namespace Term.DAL
         public DateTime DepartureDate { get; set; }
 
         // начальные координаты (Ярославль, филиал)
-        public DbGeography Location { get; set; }
+        // public DbGeography Location { get; set; }
+
+        public float Latitude { get; set; }
+
+        public float Longitude { get; set; }
 
         private ICollection<JobForShipmentDetail> _details;
 
         public virtual ICollection<JobForShipmentDetail> Details
         {
+            set {
+                this._details = value;
+            }
             get
             {
                 return this._details ?? (this._details = new List<JobForShipmentDetail>());
@@ -324,7 +334,7 @@ namespace Term.DAL
    
     public class JobForShipmentDetail : IDocumentDetails
         {
-        [Key]
+           [Key]
             public long Id { get; set; }
 
             [ForeignKey("JobForShipment")]
@@ -336,7 +346,11 @@ namespace Term.DAL
             public int NumberOfQueue { get; set; }
 
             // Координаты
-            public DbGeography Location { get; set; }
+         //   public DbGeography Location { get; set; }
+
+            public float Latitude { get; set; }
+
+            public float Longitude { get; set; }
 
             // Guid заказа
             public Guid GuidOfOrderIn1S { get; set; }
@@ -344,7 +358,11 @@ namespace Term.DAL
             //Время разгрузки в секундах
             public int PlanUnloadTime { get; set; }
 
-       
+            public DateTime? PlanTimeOfArrival { get; set; }
+
+            public bool IsDelivered { get; set; }
+
+
         }
 
 

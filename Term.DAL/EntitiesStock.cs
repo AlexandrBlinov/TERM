@@ -582,6 +582,9 @@ namespace Term.DAL
         // есть предоплатные договоры
         public bool HasPrepay { get; set; }
 
+        // есть договоры c сезонной отсрочкой
+        public bool HasSeasonAdjournment { get; set; }
+
         // способ доставки 1- самовывоз, 0- доставка наша
         public int  WayOfDelivery { get; set; }
 
@@ -1168,7 +1171,11 @@ namespace Term.DAL
 
 
         public bool Prepay { get; set; }
+
         public bool IsStar { get; set; }
+
+        public bool IsSeasonAdjournment { get; set; }
+
         public int WayOfDelivery { get; set; }
 
         [MaxLength(5)]
@@ -1177,8 +1184,6 @@ namespace Term.DAL
 
         [MaxLength(5)]        
         public string TkId { get; set; }
-
-        // public virtual AddressOfPartner AddressOfPartner { get; set; }
 
 
         public void CalculateTotals()
@@ -1360,7 +1365,8 @@ namespace Term.DAL
 
         public virtual Partner Partner { get; set; }
 
-
+        [DefaultValue(false)]
+        public bool ShowOnlySeasonOrder { get; set; }
     }
 
     /// <summary>

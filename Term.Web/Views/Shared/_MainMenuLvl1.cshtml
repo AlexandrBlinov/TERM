@@ -1,0 +1,50 @@
+﻿@using Term.Web.Views.Resources;
+<ul class="nav navbar-nav">
+
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle collapse-1" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.OrdersAll <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <li>@Html.ActionLink(@Header.Orders, "List", "Orders")</li>
+            <li>@Html.ActionLink(@Header.SeasonOrders, "Index", "SeasonOrders")</li>
+            <li>@Html.ActionLink(@Header.OrdersFromArrivals, "Index", "SeasonOrders", new { @FromOnWay = true }, null)</li>
+        </ul>
+    </li>
+    <li>@Html.ActionLink(@Header.Sales, "List", "Sales")</li>
+
+    @if (ViewBag.CurrentPartner != null && !ViewBag.CurrentPartner.IsForeign)
+    {
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle collapse-1" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.SaleReturns </a>
+            <ul class="dropdown-menu" role="menu">
+                <li>@Html.ActionLink("по невостребованным товарам", "List", "SaleReturns")</li>
+                <li>@Html.ActionLink("по браку", "Index", "Claims")</li>
+            </ul>
+        </li>
+
+
+
+                    <!-- <li>@Html.ActionLink(@Header.SaleReturns, "List", "SaleReturns")</li>-->
+                }
+        <li> </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li><a class="m-r-20" href="@Url.Action("ManagerInfo", "Help")">@Header.YourManagers</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-user collapse-1" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.Name <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Action("Index", "Partner")"><i class=" fa fa-cog" aria-hidden="true"></i> @Header.Settings</a></li>
+
+
+                            <li class="text-center m-t-15 menu-item-divider js-autoaction" id="yst-menuitem-prepay" data-autoaction="@Url.Action("Index","PrepayToggle")">
+                                &nbsp;
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">@Header.Exit</a></li>
+        }
+    </ul>

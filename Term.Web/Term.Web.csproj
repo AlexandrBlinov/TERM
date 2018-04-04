@@ -16,7 +16,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44350</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
@@ -212,6 +213,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\DbActionLogsApiController.cs" />
     <Compile Include="Controllers\API\DpdApiController.cs" />
+    <Compile Include="Controllers\API\GlonasApiController.cs" />
     <Compile Include="Controllers\API\OnWayItemsController.cs" />
     <Compile Include="Controllers\API\PartnerServiceApiController.cs" />
     <Compile Include="Controllers\API\AppToCarsApiController.cs" />
@@ -460,9 +462,38 @@
     <Compile Include="Migrations\201801100834196_JobForShipment_Added.Designer.cs">
       <DependentUpon>201801100834196_JobForShipment_Added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201802011237320_JobForShipmentDetail_Changed.cs" />
+    <Compile Include="Migrations\201802011237320_JobForShipmentDetail_Changed.Designer.cs">
+      <DependentUpon>201802011237320_JobForShipmentDetail_Changed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802011318340_JobForShipmentDetail_Changed2.cs" />
+    <Compile Include="Migrations\201802011318340_JobForShipmentDetail_Changed2.Designer.cs">
+      <DependentUpon>201802011318340_JobForShipmentDetail_Changed2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802020626282_JobForShipment_Changed.cs" />
+    <Compile Include="Migrations\201802020626282_JobForShipment_Changed.Designer.cs">
+      <DependentUpon>201802020626282_JobForShipment_Changed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802070744485_JobForShipment_DriverAddedTo.cs" />
+    <Compile Include="Migrations\201802070744485_JobForShipment_DriverAddedTo.Designer.cs">
+      <DependentUpon>201802070744485_JobForShipment_DriverAddedTo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802100741045_AddInPPShowOnlySeasonOrder.cs" />
+    <Compile Include="Migrations\201802100741045_AddInPPShowOnlySeasonOrder.Designer.cs">
+      <DependentUpon>201802100741045_AddInPPShowOnlySeasonOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803230559004_HasSeasonAdjournment_ChangedToPartner.cs" />
+    <Compile Include="Migrations\201803230559004_HasSeasonAdjournment_ChangedToPartner.Designer.cs">
+      <DependentUpon>201803230559004_HasSeasonAdjournment_ChangedToPartner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.cs" />
+    <Compile Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.Designer.cs">
+      <DependentUpon>201803231133371_IsSeasonAdjournment_AddedToOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
+    <Compile Include="Models\MtsLocationsContext.cs" />
     <Compile Include="Models\OrderNumberWithStatusDTO.cs" />
     <Compile Include="Controllers\API\OrdersApiController.cs" />
     <Compile Include="Controllers\API\PartnerApiController.cs" />
@@ -483,6 +514,7 @@
     <Compile Include="Models\PodborAkbViewResult.cs" />
     <Compile Include="Models\ProductCount.cs" />
     <Compile Include="Models\SeasonViewModels.cs" />
+    <Compile Include="Models\Subscriber.cs" />
     <Compile Include="Models\ViewPodborModels.cs" />
     <Compile Include="Services\CachedListForPodborsProvider.cs" />
     <Compile Include="Services\CheckerCountExeedsRest.cs" />
@@ -491,7 +523,9 @@
     <Compile Include="Services\Defaults.cs" />
     <Compile Include="Services\DeliveryCostCalculatorService.cs" />
     <Compile Include="Services\ExceptionUtility.cs" />
+    <Compile Include="Services\GlonasService.cs" />
     <Compile Include="Services\JobScheduler.cs" />
+    <Compile Include="Services\JsonContent.cs" />
     <Compile Include="Services\NewsService.cs" />
     <Compile Include="Services\NotificationForUserService.cs" />
     <Compile Include="Services\PersistedStorage.cs" />
@@ -750,7 +784,6 @@
     <Content Include="Content\img\add-scan.png" />
     <Content Include="Content\img\akb.jpg" />
     <Content Include="Content\img\akk.jpg" />
-    <Content Include="Content\img\aytoprofi_2.jpg" />
     <Content Include="Content\img\big_loading.gif" />
     <Content Include="Content\img\button_cancel.png" />
     <Content Include="Content\img\cart-sprite.png" />
@@ -769,9 +802,9 @@
     <Content Include="Content\img\excel.png" />
     <Content Include="Content\img\facebook-logo.svg" />
     <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\forged.png" />
     <Content Include="Content\img\glyphicons-halflings-white.png" />
     <Content Include="Content\img\glyphicons-halflings.png" />
-    <Content Include="Content\img\goodyear_2.jpg" />
     <Content Include="Content\img\Help\1.png" />
     <Content Include="Content\img\Help\1_en.png" />
     <Content Include="Content\img\Help\2.png" />
@@ -802,14 +835,14 @@
     <Content Include="Content\img\item_382_thumb.jpg" />
     <Content Include="Content\img\logo-yst.png" />
     <Content Include="Content\img\logotip.png" />
-    <Content Include="Content\img\math_1.jpg" />
-    <Content Include="Content\img\math_2.jpg" />
     <Content Include="Content\img\menu-akb-icon.png" />
     <Content Include="Content\img\menu-disk-icon.png" />
     <Content Include="Content\img\menu-tyre-icon.png" />
+    <Content Include="Content\img\ng1.jpg" />
+    <Content Include="Content\img\ng2.jpg" />
+    <Content Include="Content\img\ng3.jpg" />
+    <Content Include="Content\img\ng4.jpg" />
     <Content Include="Content\img\NotActiv.png" />
-    <Content Include="Content\img\novinki.jpg" />
-    <Content Include="Content\img\psv_2.jpg" />
     <Content Include="Content\img\rub.png" />
     <Content Include="Content\img\rub2.png" />
     <Content Include="Content\img\sale-icon.png" />
@@ -818,14 +851,11 @@
     <Content Include="Content\img\season_summer.png" />
     <Content Include="Content\img\season_winter.png" />
     <Content Include="Content\img\socials.jpg" />
-    <Content Include="Content\img\solite_1.jpg" />
-    <Content Include="Content\img\solite_2.jpg" />
     <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\sprite-socials.png" />
     <Content Include="Content\img\sprite-sort.png" />
     <Content Include="Content\img\sprite.png" />
-    <Content Include="Content\img\trebl.jpg" />
-    <Content Include="Content\img\trebl_2.jpg" />
+    <Content Include="Content\img\steel.png" />
     <Content Include="Content\img\twitter-social-logotype.svg" />
     <Content Include="Content\img\tyre.jpg" />
     <Content Include="Content\img\usd.png" />
@@ -842,12 +872,10 @@
     <Content Include="Content\img\WheelsBrands\X-Race.png" />
     <Content Include="Content\img\WheelsBrands\Yokatta.png" />
     <Content Include="Content\img\WheelsBrands\YST.png" />
+    <Content Include="Content\img\wheels_prod.png" />
     <Content Include="Content\img\xml.png" />
     <Content Include="Content\img\YST.png" />
     <Content Include="Content\img\_Concept-FD504_S.png" />
-    <Content Include="Content\img\azard_2.jpg" />
-    <Content Include="Content\img\varta.jpg" />
-    <Content Include="Content\img\varta_2.jpg" />
     <Content Include="Content\jquery.fancybox-buttons.css" />
     <Content Include="Content\jquery.fancybox-thumbs.css" />
     <Content Include="Content\jquery.fancybox.css" />
@@ -882,7 +910,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\img\Thumbs.db" />
-    <Content Include="CustomForPartners\autodoc_wheels.ashx" />
     <Content Include="CustomForPartners\autodoc_tyres.ashx" />
     <Content Include="CustomForPartners\autoto.ashx" />
     <Content Include="CustomForPartners\berg.ashx" />
@@ -1172,8 +1199,18 @@
     <Content Include="Views\Claims\ClaimPrintForm.cshtml" />
     <Content Include="Views\Reports\FreemanWheelsTest.cshtml" />
     <Content Include="Views\Reports\VideoTests.cshtml" />
-    <Content Include="Views\ShoppingCart\Index2.cshtml" />
     <Content Include="Views\Shared\_ModalChooseOption.cshtml" />
+    <Content Include="Views\Reports\Logistic.cshtml" />
+    <Content Include="Views\Reports\ClaimDetails.cshtml" />
+    <Content Include="Views\Shared\_OnlySeasonMenuLvl1.cshtml" />
+    <Content Include="Views\Shared\_MainMenuLvl1.cshtml" />
+    <Content Include="Views\Shared\_MainMenuLvl2.cshtml" />
+    <Content Include="Views\Shared\_OnlySeasonMenuLvl2.cshtml" />
+    <Content Include="Views\Home\_OnlySeasonOrderMainPage.cshtml" />
+    <Content Include="Views\Home\_MainPage.cshtml" />
+    <Content Include="Views\Home\_AkbBigSale.cshtml" />
+    <Content Include="Views\Reports\Jiangsu.cshtml" />
+    <Content Include="Views\Reports\JiangsuWheelsTest.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1364,6 +1401,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801100834196_JobForShipment_Added.resx">
       <DependentUpon>201801100834196_JobForShipment_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802011237320_JobForShipmentDetail_Changed.resx">
+      <DependentUpon>201802011237320_JobForShipmentDetail_Changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802011318340_JobForShipmentDetail_Changed2.resx">
+      <DependentUpon>201802011318340_JobForShipmentDetail_Changed2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802020626282_JobForShipment_Changed.resx">
+      <DependentUpon>201802020626282_JobForShipment_Changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802070744485_JobForShipment_DriverAddedTo.resx">
+      <DependentUpon>201802070744485_JobForShipment_DriverAddedTo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802100741045_AddInPPShowOnlySeasonOrder.resx">
+      <DependentUpon>201802100741045_AddInPPShowOnlySeasonOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803230559004_HasSeasonAdjournment_ChangedToPartner.resx">
+      <DependentUpon>201803230559004_HasSeasonAdjournment_ChangedToPartner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.resx">
+      <DependentUpon>201803231133371_IsSeasonAdjournment_AddedToOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

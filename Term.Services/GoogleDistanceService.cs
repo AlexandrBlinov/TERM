@@ -16,8 +16,10 @@ namespace Term.Services
  public  class GoogleDistanceService
  {
      //https://maps.googleapis.com/maps/api/distancematrix/json?destinations=55.752121,37.617664&origins=57.636927,39.8228632&key=AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM&language=ru&unit=metric&departure_time=now
+
+
      private static readonly string GoogleApiKey = "AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM";
-        public static int GetDurationInSeconds(string origin, string destination)
+        public  async Task<int> GetDurationInSeconds(string origin, string destination)
         {
             int result = 0;
             string url = @"https://maps.googleapis.com/maps/api/distancematrix/xml?origins=" +
@@ -25,16 +27,22 @@ namespace Term.Services
               "&key="+GoogleApiKey+
               "&mode=driving&language=ru&unit=metric";
 
-            var request = (HttpWebRequest)WebRequest.Create(url);
-           
-            using (var response = request.GetResponse())
-            {
-                using (var dataStream = response.GetResponseStream())
-                {
-                result = GetTotalValueFromXml(dataStream,"duration");
-                }
-            }
             
+            var request = (HttpWebRequest)WebRequest.Create(url);
+                        
+            try
+            {
+                using (var response = await request.GetResponseAsync())
+                {            
+                    using (var dataStream =  response.GetResponseStream())
+                    {
+                        result = GetTotalValueFromXml(dataStream, "duration");
+                    }
+                }
+
+            }
+            catch { }
+
             return result;
         }
 
@@ -59,5 +67,21 @@ namespace Term.Services
 
          return duration;
      }
- }
+
+        public static int GetTotalValueFromXml(string  stream, string parameterName)
+        {
+            var xdoc = XDocument.Load(stream);
+
+            var result = xdoc.Elements("DistanceMatrixResponse").Elements("status").Any(el => el.Value == "OK");
+
+            if (!result) return 0;
+
+            var duration = xdoc.Descendants("element")
+                   .Elements(parameterName)
+                   .Elements("value")
+                   .Sum(el => int.Parse(el.Value));
+
+            return duration;
+        }
+    }
 }

@@ -82,6 +82,16 @@ namespace Yst.ViewModels
     }
 
     /// <summary>
+    /// День доставки , когда отгрузка в пятницу
+    /// </summary>
+    public enum DayOfWeekToDeliver
+    {
+        Saturday,
+        Monday
+    }
+
+
+    /// <summary>
     /// Модель для корзины
     /// </summary>
     public class ShoppingCartViewModel
@@ -137,6 +147,14 @@ namespace Yst.ViewModels
 
         
         public decimal TotalWeight { get; set; }
+
+       // договором предусмотрена сезонная отсрочка (только для головного терминала)
+        public bool HasSeasonAdjournment { get; set; }
+
+        // выбрал сезонную отсрочку (только для головного терминала)
+        public bool IsSeasonAdjournment { get; set; }
+
+        public DayOfWeekToDeliver DayOfWeekToDeliver { get; set; }
     }
 
    

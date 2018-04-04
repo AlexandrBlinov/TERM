@@ -3,10 +3,13 @@
     Layout = "~/Views/Shared/_LayoutReports.cshtml";
     ViewBag.Title = "FreemanWheelsTest";
 }
-
+<div class="text-center search-order-btn">
+    @Html.ActionLink("Bad quality wheels", "Freeman", "Reports", null, new { @class = "list-points-create-btn" })
+    @Html.ActionLink("Wheels test", "FreemanWheelsTest", "Reports", null, new { @class = "list-points-create-btn" })
+</div>
 <div class="container">
     <h2>Freeman Racing Wheels INC</h2>
-    <h3> Wheels test</h3>
+    <h2>Wheels test</h2>
     @using (Html.BeginForm("FreemanWheelsTest", "Reports", FormMethod.Get))
     {
         <fieldset class="border-form-podbor">

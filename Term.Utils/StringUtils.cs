@@ -93,5 +93,20 @@ namespace Term.Utils
             }
             return resultOfGuids;
         }
+
+        /// <summary>
+        /// Получить инициалы ФИО Иванов И.И.
+        /// </summary>
+        /// <param name="Fio"></param>
+        /// <returns></returns>
+        public  static string GetFioInitials(string Fio)
+        {            
+            Char space = ' ';
+            string[] words = Fio.TrimStart(space).TrimEnd(space).Split(space);
+            if (words.Length != 3) return Fio;
+           return words[0]+space+ words[1][0] + "." + words[2][0] + ".";
+
+        }
+        
     }
 }

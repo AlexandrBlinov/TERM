@@ -7,24 +7,41 @@
 }
 
 
-    <fieldset class="border-form-podbor">
-        <h2 class="border-form-podbor search-order-title">@ViewBag.Title</h2>
+<fieldset class="border-form-podbor">
+    <h2 class="border-form-podbor search-order-title">@ViewBag.Title</h2>
 
-        <dl class="dl-horizontal doc-info">
-            <dt>@CartAndOrders.Driver:</dt> <dd> @Html.DisplayFor(model => model.SaleData.Driver)</dd>
-            <dt>@Settings.PhoneNumber:</dt> <dd> @Html.DisplayFor(model => model.SaleData.PhoneNumberOfDriver)</dd>
-            <dt>@CartAndOrders.CarBrand:</dt> <dd> @Html.DisplayFor(model => model.SaleData.BrandOfAuto)</dd>
-            <dt>@CartAndOrders.CarNumber:</dt> <dd> @Html.DisplayFor(model => model.SaleData.RegNumOfAuto)</dd>
-            <dt>@CartAndOrders.Status:</dt><dd> @EnumDescriptionProvider.GetDescription(ViewBag.OrderStatus)</dd>
-            <dt>@CartAndOrders.Comment:</dt> <dd>@Html.DisplayFor(model => model.SaleData.Comments) </dd>
-            <dt>@CartAndOrders.PointDestination:</dt><dd>@Html.DisplayFor(model => model.SaleData.DischargePoint) </dd>
-            
-            @if (Model.SaleData.DpdDeliveryStatus.HasValue)
-            {
-                <dt>Статус Dpd:</dt> <dd>@Html.DisplayFor(model => model.SaleData.DpdDeliveryStatusName)</dd>
-                
-            }
-            </dl>
+    <dl class="dl-horizontal doc-info sale-info">
+        <dt>@CartAndOrders.Driver:</dt>
+        <dd> @Html.DisplayFor(model => model.SaleData.Driver)</dd>
+        <dt>@Settings.PhoneNumber:</dt>
+        <dd> @Html.DisplayFor(model => model.SaleData.PhoneNumberOfDriver)</dd>
+        <dt>@CartAndOrders.CarBrand:</dt>
+        <dd> @Html.DisplayFor(model => model.SaleData.BrandOfAuto)</dd>
+        <dt>@CartAndOrders.CarNumber:</dt>
+        <dd> @Html.DisplayFor(model => model.SaleData.RegNumOfAuto)</dd>
+        <dt>@CartAndOrders.Status:</dt>
+        <dd> @EnumDescriptionProvider.GetDescription(ViewBag.OrderStatus)</dd>
+        <dt>@CartAndOrders.Comment:</dt>
+        <dd>@Html.DisplayFor(model => model.SaleData.Comments) </dd>
+
+
+        @if (!String.IsNullOrEmpty(Model.SaleData.DischargePoint))
+    {
+        <dt>@CartAndOrders.PointDestination:</dt>
+        <dd>@Html.DisplayFor(model => model.SaleData.DischargePoint) </dd>}
+
+        @if (Model.SaleData.DpdDeliveryStatus.HasValue)
+    {
+        <dt>Статус Dpd:</dt>
+        <dd>@Html.DisplayFor(model => model.SaleData.DpdDeliveryStatusName)</dd>
+}
+
+        <dt class="hidden js-arrival-date"><span style="color:rgb(169, 68, 66); font-size:1.15em;">Ориент. дата прибытия:</span></dt>
+        <dd class="hidden js-arrival-date" id="arrival-id" style="color:rgb(169, 68, 66); font-size:1.15em; font-weight:bold;">
+            <span class="hidden js-arrival-date"><a class="js-scrollto-map scrollto-link" href="#">показать на карте</a></span>
+        </dd>
+        
+    </dl>
 </fieldset>
 
 <table class="data-table order-table details-table">
@@ -103,11 +120,121 @@
 
 <div class="row m-t-15">
     <div class="col-xs-12">
-        @Html.ActionLink("<< " + SalesTexts.ToSalesList, "List", "Sales", null, new { @class = "list-points-create-btn" })
+        @*Html.ActionLink("<< " + SalesTexts.ToSalesList, "List", "Sales", null, new { @class = "list-points-create-btn" })*@
+
+        @Html.ActionLink(SalesTexts.ToSalesList, "List", "Sales", new { guid = @Model.SaleData.GuidIn1S }, new { @class = "btn btn-styled", @target = "_blank" })
         @if (ViewBag.IsPartner && !ViewBag.IsForeign)
         {
-            @Html.ActionLink("Печать счета", "Bill", "Sales", new { guid = @Model.SaleData.GuidIn1S }, new { @class = "list-points-create-btn", @target = "_blank" })
+            @*Html.ActionLink("Печать счета", "Bill", "Sales", new { guid = @Model.SaleData.GuidIn1S }, new { @class = "list-points-create-btn", @target = "_blank" })*@
+            @Html.ActionLink("Печать счета", "Bill", "Sales", new { guid = @Model.SaleData.GuidIn1S }, new { @class = "btn btn-styled", @target = "_blank" })
         }
+
 
     </div>
 </div>
+
+<section id="js-g-map" class="b-map-container">
+
+    </section>
+
+@section Scripts {
+    <!--<script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzjj_xjy9MA-PtgOiaGu5QJAWafCaZpD8&callback=initMap">
+    </script>-->
+    <script>
+
+        
+
+        var googleMapModule = (function () {
+           var latitude, longitude, fio,requestDate;
+            
+            var addMarker = function (location) {
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+
+                
+                var infowindow = new google.maps.InfoWindow({
+                    content: '<p>' + fio + '</p>' +
+                    '<p>' + requestDate + '</p>' 
+                });
+
+                marker.addListener('click', function () {
+                    infowindow.open(map, marker);
+                }); 
+                markers.push(marker);
+            };
+
+            return {
+                initMap: function (lat, lng) {
+                    console.log('init Map');
+                 
+                    var centerLatLng = { lat: latitude, lng: longitude };
+                    console.log(centerLatLng);
+
+                    map = new google.maps.Map(document.getElementById('js-g-map'), {
+                        zoom: 6,
+                        center: centerLatLng
+                    });
+                    addMarker(centerLatLng);
+                },
+                setCoords: function(lat, lng) {
+                    latitude = lat;
+                    longitude = lng;
+                },
+                setInfo: function (infoObj) {
+                    latitude = infoObj.DriverLatitude;
+                    longitude = infoObj.DriverLongitude;
+                    fio = infoObj.Fio;
+                    requestDate = infoObj.RequestDate;                    
+                },
+
+                url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDzjj_xjy9MA-PtgOiaGu5QJAWafCaZpD8&callback=googleMapModule.initMap&async=2"
+                /*
+                addMarker: function (location) {
+                    var marker = new google.maps.Marker({
+                        position: location,
+                        map: map
+                    });
+                    markers.push(marker);
+                } */
+            }
+        }());
+
+        (function () {
+
+            $('.js-scrollto-map').on('click', function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $('#js-g-map').offset().top }, 500);
+            })
+
+        //http://localhost:49640/Sales/Details?GuidSaleIn1S=ad1c7bfd-9e9b-11e7-96a9-d4ae52b5e909
+            // Client593 Эксклюзив
+            var saleGuid = '@Model.SaleData.GuidIn1S';
+
+            console.log(saleGuid);
+            
+            $.get('/api/GlonasApi/get?saleguid=' + saleGuid)
+                .done(function (result) {
+                  
+                    if (typeof result === 'object') {
+                        $('#arrival-id').prepend(result.Contents);
+                         console.log(result);
+                        $('#js-g-map').addClass('visible');
+                        
+                        googleMapModule.setInfo(result);
+                        $.getScript(googleMapModule.url, function () {});
+                    }
+                    else $('#arrival-id').text(result);
+
+                    $('.js-arrival-date').removeClass('hidden');
+                }).fail(function (err) {
+                    console.log(err);
+                }
+                );
+     
+        }());
+    </script>
+
+}

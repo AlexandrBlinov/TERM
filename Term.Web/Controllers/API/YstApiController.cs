@@ -91,48 +91,48 @@ namespace Term.Web.Controllers.API
         {
             if (HttpContext.Current.Request.Files.AllKeys.Any())
             {
-                // Get the uploaded image from the Files collection
-                var httpPostedFile = HttpContext.Current.Request.Files["UploadedFile"];
                 var UploadedFolderClaim = HttpContext.Current.Request["UploadedFolderClaim"];
                 var UploadedFolderProduct = HttpContext.Current.Request["UploadedFolderProduct"];
                 var name = User.Identity.Name;
-
                 String pathToClaimsPhotos = ConfigurationManager.AppSettings["PathToClaimsPhotos"];
                 var claimfolder = Path.Combine(HttpContext.Current.Server.MapPath(pathToClaimsPhotos));
-                
-                try
+                foreach (string file in HttpContext.Current.Request.Files)
                 {
-                    if (!Directory.Exists(System.IO.Path.Combine(claimfolder, UploadedFolderClaim)))
-                    {
-                        DirectoryInfo di = Directory.CreateDirectory(claimfolder + UploadedFolderClaim);
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-
-                try
-                {
-                    if (!Directory.Exists(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct))
-                    {
-                        DirectoryInfo di = Directory.CreateDirectory(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct);
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-
-                if (httpPostedFile != null)
-                {
+                    var httpPostedFile = HttpContext.Current.Request.Files[file];
                     try
                     {
-                        var fileSavePath = Path.Combine(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct, httpPostedFile.FileName);
-                        httpPostedFile.SaveAs(fileSavePath);
-
+                        if (!Directory.Exists(System.IO.Path.Combine(claimfolder, UploadedFolderClaim)))
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(claimfolder + UploadedFolderClaim);
+                        }
                     }
-                    catch { return false; }
+                    catch
+                    {
+                        return false;
+                    }
+
+                    try
+                    {
+                        if (!Directory.Exists(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct))
+                        {
+                            DirectoryInfo di = Directory.CreateDirectory(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct);
+                        }
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+
+                    if (httpPostedFile != null)
+                    {
+                        try
+                        {
+                            var fileSavePath = Path.Combine(claimfolder + UploadedFolderClaim + "/" + UploadedFolderProduct, httpPostedFile.FileName);
+                            httpPostedFile.SaveAs(fileSavePath);
+
+                        }
+                        catch { return false; }
+                    }
                 }
                 return true;
             }

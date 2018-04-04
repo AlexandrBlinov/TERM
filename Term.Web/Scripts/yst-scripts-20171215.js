@@ -115,7 +115,7 @@ function init()
     });
 
 
-    $('.open_order_tr').on('click', function (e) {
+    $('.js-open-orderInList').on('click', function (e) {
 
         if (event.target.nodeName == "A") return;
         var productId = $(this).data("idlink");

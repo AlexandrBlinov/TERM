@@ -1,0 +1,25 @@
+﻿@using Term.Web.Views.Resources;
+
+<ul class="nav navbar-nav">
+    <li>@Html.ActionLink(@Header.SeasonOrders, "Index", "SeasonOrders")</li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle icon-user collapse-1" data-toggle="dropdown" role="button" aria-expanded="false"> @User.Identity.Name <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="@Url.Action("Index", "Partner")"><i class=" fa fa-cog" aria-hidden="true"></i> @Header.Settings</a></li>
+                <li><a href="@Url.Action("ManagerInfo", "Help")">@Header.YourManagers</a></li>
+
+                <li class="text-center m-t-15 menu-item-divider" id="yst-menuitem-prepay">
+
+                </li>
+            </ul>
+        </li>
+
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">@Header.Exit</a></li>
+    }
+</ul>
+

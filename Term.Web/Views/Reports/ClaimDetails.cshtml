@@ -1,0 +1,167 @@
+﻿@model Yst.ViewModels.ClaimsViewWithDetails
+@{
+    ViewBag.Title = "ClaimDetails";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+
+<h2>Рекламация №@Model.Claim.NumberIn1S от @Model.Claim.ClaimDate.ToShortDateString()</h2>
+
+
+<h2>Список товаров</h2>
+
+<table class="data-table order-table details-table">
+    <thead>
+        <tr>
+            <th>
+                Товар
+            </th>
+            <th>
+                Реализация
+            </th>
+            <th>
+                Состояние
+            </th>
+            <th>
+                Дефект
+            </th>
+            <th>
+                Виновник
+            </th>
+            <th>
+                Решение
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClaimDetails)
+        {
+            <tr>
+                <td>@item.ProductId - @item.Name<br />Кол-во: @item.Count</td>
+                <td>@item.SaleNumber от @item.SaleDate.ToShortDateString()</td>
+                <td>@item.Condition</td>
+                <td>@item.Defect <br />Подробно: @item.DefectComment</td>
+                <td>@item.DefectCome</td>
+                <td>@item.Resolution</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<h2>Дополнительные материалы (фото, видео, текст)</h2>
+<table class="data-table order-table details-table">
+    <thead>
+        <tr>
+            <th style="width: 250px;">
+                Товар
+            </th>
+            <th>
+                Кол-во
+            </th>
+            <th>
+                Фото
+            </th>
+            <th>
+                Видео
+            </th>
+            <th>
+                Другие
+            </th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ClaimDetails)
+        {
+
+            <tr class="files" data-claimguid="@Model.Claim.GuidIn1S" data-productid="@item.ProductId" data-count="@item.Count">
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Count
+                </td>
+                <td class="@("photo"+item.ProductId+"_"+item.Count)"></td>
+                <td class="@("video"+item.ProductId+"_"+item.Count)"></td>
+                <td class="@("other"+item.ProductId+"_"+item.Count)"></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Печать рекламационной карточки", "ClaimPrintForm", "Claims", new { guid = @Model.Claim.GuidIn1S }, new { @class = "btn btn-styled m-t-30", @target = "_blank" })
+
+@section Scripts {
+    <script>
+$(document).ready(function () {
+
+$(".files").each(function () {
+var folderclaim = $(this).data("claimguid");
+var folderproduct = $(this).data("productid") + "_" + $(this).data("count");
+var uri = '/api/ystapi/getfilesinfolder?claim=' + folderclaim + '&productId=' + folderproduct;
+$.getJSON(uri, function (data) {
+$.each(data, function (key, item) {
+var path = folderclaim + "/" + folderproduct + "/" + item;
+    if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
+        $('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a><br />");
+    } else if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mpeg") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0) {
+        $('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a><br />");
+    } else {
+        $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a><br />");
+    }
+});
+});
+});
+
+
+$('.upload').on('change', function () {
+
+var data = new FormData();
+
+var files = $(this).get(0).files;
+var folderclaim = $(this).data("claimguid");
+var folderproduct = $(this).data("productid") + "_" + $(this).data("count");
+if (files.length > 0) {
+    for (var i = 0; i < files.length; i++) {
+        data.append("UploadedFiles_" + i, files[i]);
+    }
+
+    data.append("UploadedFolderClaim", folderclaim);
+    data.append("UploadedFolderProduct", folderproduct);
+}
+
+var ajaxRequest = $.ajax({
+type: "POST",
+url: "/api/ystapi/uploadclaimfile",
+contentType: false,
+processData: false,
+data: data
+}).done(function (result) {
+result ? toastr.success(YstLocale.Get("sucdownloadfile")) : toastr.error(YstLocale.Get("errdownloadfile"));
+if (result) {
+$('.photo' + folderproduct).empty();
+$('.other' + folderproduct).empty();
+$('.video' + folderproduct).empty();
+var uri = '/api/ystapi/getfilesinfolder?claim=' + folderclaim + '&productId=' + folderproduct;
+$.getJSON(uri, function (data) {
+$.each(data, function (key, item) {
+var path = folderclaim + "/" + folderproduct + "/" + item;
+if (item.toLowerCase().indexOf(".jpg") >= 0 || item.toLowerCase().indexOf(".jpeg") >= 0 || item.toLowerCase().indexOf(".png") >= 0) {
+$('.photo' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Фото " + item + "</a><br />");
+}else if (item.toLowerCase().indexOf(".avi") >= 0 || item.toLowerCase().indexOf(".mpeg") >= 0 || item.toLowerCase().indexOf(".mp4") >= 0) {
+$('.video' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Видео " + item + "</a><br />");
+} else {
+    $('.other' + folderproduct).append("<a target=\"_blank\" href=\"/Content/claimsphotos/" + path + "\">Приложение " + item + "</a><br />");
+}
+});
+});
+}
+});
+
+});
+
+});
+    </script>
+}
+
+
+

@@ -144,6 +144,10 @@
                 <div class="input-group-addon">%</div>
             </div>
         </div>
+        <div class="form-group vat-padding">
+            @Html.CheckBoxFor(m => m.ShowOnlySeasonOrder, new { @class = "checkbox-addstock" })
+            <label class="checkbox-addstock-label no-select" for="ShowOnlySeasonOrder">Show only season orders</label>
+        </div>
     </div>
 
     <div class="top10 col-xs-12 col-sm-12 col-md-12 col-lg-12">

@@ -12,6 +12,7 @@ using System.Threading;
 using System.IO;
 using System.Collections.Generic;
 using YstProject.Services;
+using PagedList;
 
 namespace Term.Web.Controllers
 {
@@ -19,6 +20,7 @@ namespace Term.Web.Controllers
     {
         readonly AppDbContext _dbContext;
         private ServiceTerminal _ws;
+        public const string LogisticDep = "Логистика";
         protected ServiceTerminal WS
         {
             get
@@ -55,6 +57,32 @@ namespace Term.Web.Controllers
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
             model.PartnerId = Defaults.FreemanCode;
+            if (model.BeginDate != null)
+            {
+                var start = model.BeginDate ?? DateTime.Now;
+                var stop = model.EndDate ?? DateTime.Now;
+                model.ReturnWheelsTest = await Task.Run(() => WS.WheelsTestReport(model.PartnerId, start, stop));
+            }
+            return View(model);
+        }
+
+        public async Task<ActionResult> Jiangsu(ReportModel model)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            model.PartnerId = "91535";
+            if (model.BeginDate != null)
+            {
+                var start = model.BeginDate ?? DateTime.Now;
+                var stop = model.EndDate ?? DateTime.Now;
+                model.ReturnItems = await Task.Run(() => WS.ReturnOfDefectiveReport(model.PartnerId, start, stop));
+            }
+            return View(model);
+        }
+
+        public async Task<ActionResult> JiangsuWheelsTest(ReportModel model)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            model.PartnerId = "91535";
             if (model.BeginDate != null)
             {
                 var start = model.BeginDate ?? DateTime.Now;
@@ -137,6 +165,35 @@ namespace Term.Web.Controllers
             }
             Response.ContentType = "video/x-ms-wmv";
             Response.BinaryWrite(downloadedData);
+        }
+
+        public ActionResult Logistic(ClaimsViewModel model)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+            model.Claims = _dbContext.Claims.Where(p => (
+            model.EndDate == null || p.ClaimDate <= model.BeginDate)
+            && (model.BeginDate == null || p.ClaimDate >= model.BeginDate)
+            && (model.NumberIn1S == null || p.NumberIn1S == model.NumberIn1S)
+            && (model.ProductId == null || p.ClaimsDetails.Any(o => o.ProductId.ToString().Contains(model.ProductId)))
+            && (model.SaleNumber == null || p.ClaimsDetails.Any(o => o.SaleNumber.Contains(model.SaleNumber)))
+            && (p.ClaimsDetails.Any(o => o.DefectCome.Contains(LogisticDep)))
+            ).
+            OrderByDescending(p => p.ClaimDate).ToPagedList(model.Page, model.ItemsPerPage);
+            return View(model);
+                
+        }
+
+        public ActionResult ClaimDetails(Guid guid)
+        {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+            var model = new ClaimsViewWithDetails
+            {
+                Claim = _dbContext.Claims.Where(p => p.GuidIn1S == guid).FirstOrDefault(),
+                ClaimDetails = _dbContext.ClaimsDetails.Where(p => p.GuidIn1S == guid).ToList()
+            };
+            return View(model);
         }
 
         public ActionResult Details(string claimnumber, int productId)

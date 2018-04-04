@@ -156,7 +156,7 @@
     <tbody>
         @foreach (var order in Model.Orders)
         {
-            <tr class="open_order_tr @colorNewOrder" data-idlink="@order.NumberIn1S">
+            <tr class="js-open-orderInList @colorNewOrder" data-idlink="@order.NumberIn1S">
                 <td>
                     @Html.ActionLink(order.Point.InternalName, "Edit", "Partner", new {PointId = order.PointId}, null)
                     <br/>
@@ -195,9 +195,7 @@
                         @order.TotalOfClient
                     }
 
-
-
-                    @*Html.DisplayFor(modelItem => item.TotalOfClient)*@
+                   
                 </td>
                 <td>
                     @order.OrderDate.ToShortDateString()
@@ -232,7 +230,7 @@
             </tr>
             if (ViewBag.IsPartner)
              {
-                 <tr class="invisible" data-idsource="@order.NumberIn1S">
+                 <tr class="invisible" data-idsource="@order.NumberIn1S" id="collapse-@(order.GuidIn1S)">
                      <td colspan="10">
                          <div class="row head_order_details">
                              <div class="col-xs-1">
@@ -260,12 +258,13 @@
                          @foreach (var detail in order.OrderDetails)
                          {
                          i++;
-                         var bg = "";
+                        /* var bg = "";
                          if (i%2 != 0)
                          {
                          bg = "background_order_details";
                          }
-                         <div class="row @bg">
+                         */
+                         <div class="row">
                              <div class="col-xs-1">@i</div>
                              <div class="col-xs-2">@detail.Product.Article</div>
                              <div class="col-xs-1">@detail.Product.ProductId</div>

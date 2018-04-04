@@ -52,6 +52,7 @@
 }
 
 
+
 @Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Cart })
 
 
@@ -101,18 +102,39 @@ else
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2 col-xs-6 @hiddenDeliveryDate" id="deliverydate_container">
+                        <div class="col-md-3  @hiddenDeliveryDate" id="deliverydate_container">
 
                             <div class="input-group js-datefor-shipment">
                                 @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control cart-date-control", data_val_requiredifnotcheched = CartAndOrders.ErrorShipmentDate, data_val_requiredifnotcheched_id = "isDelivery" })
                                 <span class="input-group-addon date-pick-btn">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
-                                
+
                             </div>
+
+
                             @Html.HiddenFor(m => m.LogistikDepartment)
+                            <span class="b-control-hint">дата отгрузки со склада ЯШТ</span>
                         </div>
-                    </div>
+
+                        <div class="col-md-3" id="dayofweektodeliver_container" style="display: none;">
+                            <div class="cart-unload_block">
+                                <div class="form-group">
+                                    <h5 class="cart-property__caption">выгрузка</h5>
+                                </div>
+                                <div class="form-group inline-block">
+                                    @Html.RadioButtonFor(m => m.DayOfWeekToDeliver, DayOfWeekToDeliver.Saturday, new { @id = "isSaturday" })
+                                    <label class="cart-label m-t-5" for="isSaturday">в субботу</label>
+
+                                </div>
+                                <div class="form-group inline-block">
+                                    @Html.RadioButtonFor(m => m.DayOfWeekToDeliver, DayOfWeekToDeliver.Monday, new { @id = "isMonday" })
+                                    <label class="cart-label m-t-5" for="isMonday">в понедельник</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
                 </div>
             </div>
             <div class="row">
@@ -191,8 +213,8 @@ else
                 </section>
                 <section class="row cart-properties @invisReservOrShipment">
                     <!--   <div class="col-md-12">
-                           <hr class="cart-divider" />
-                       </div>-->
+        <hr class="cart-divider" />
+    </div>-->
                     <!--Тип  цен предоплата или отсрочка-->
                     <div class="col-md-2 cart-property">
                         <div class="row">
@@ -207,33 +229,51 @@ else
                         </div>
                     </div>
 
+                    @if (Model.HasSeasonAdjournment)
+                    {
+                    <!--Сезонная отсрочка -->
+
+
+                    <div class="col-md-4 cart-property">
+                        <div class="row">
+                            <div class="col-md-12 cart-property__header">
+                                <span class="cart-property__caption">  Сезонная отсрочка</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                            @Html.CheckBoxFor(m => m.IsSeasonAdjournment)
+                            </div>
+                        </div>
+                    </div>
+
+                    }
                     <!--Способ оплаты -->
                     
-                  
 
                     @if (Model.HasStar)
-                    {
-                        <div class="col-md-12 hidden-lg hidden-sm hidden-md">
-                            <hr class="cart-divider" />
+    {
+                <div class="col-md-12 hidden-lg hidden-sm hidden-md">
+                    <hr class="cart-divider" />
+                </div>
+                <div class="col-md-offset-1 col-md-4 cart-property">
+                    <div class="row">
+                        <div class="col-md-12 cart-property__header">
+                            <span class="cart-property__caption">  Способ оплаты</span>
                         </div>
-                        <div class="col-md-offset-1 col-md-4 cart-property">
-                            <div class="row">
-                                <div class="col-md-12 cart-property__header">
-                                    <span class="cart-property__caption">  Способ оплаты</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    @Html.RadioButtonFor(m => m.IsStar, "false", new { @id = "isBankTransfer" })
-                                    <label class="cart-label m-t-5" for="isBankTransfer">БН</label>
-                                </div>
-                                <div class="col-md-3">
-                                    @Html.RadioButtonFor(m => m.IsStar, "true", new { @id = "isStar" })
-                                    <label class="cart-label m-t-5" for="isStar"><span class="glyphicon glyphicon-asterisk"></span></label>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.RadioButtonFor(m => m.IsStar, "false", new { @id = "isBankTransfer" })
+                            <label class="cart-label m-t-5" for="isBankTransfer">БН</label>
                         </div>
-                    }
+                        <div class="col-md-3">
+                            @Html.RadioButtonFor(m => m.IsStar, "true", new { @id = "isStar" })
+                            <label class="cart-label m-t-5" for="isStar"><span class="glyphicon glyphicon-asterisk"></span></label>
+                        </div>
+                    </div>
+                </div>
+}
 
 
                 </section>

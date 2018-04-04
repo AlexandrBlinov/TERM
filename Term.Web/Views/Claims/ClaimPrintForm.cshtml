@@ -34,7 +34,7 @@
         @foreach (var item in Model.ClaimDetails)
         {
             <tr>
-                <td>@item.Name</td>
+                <td>@item.Name.Replace("Replica","").Replace("REPLICA", "")</td>
                 <td>@item.ProductId</td>
                 <td>@item.Count</td>
                 <td>@item.SaleNumber</td>

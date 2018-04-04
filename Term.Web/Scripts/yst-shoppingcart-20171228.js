@@ -8,6 +8,28 @@ var passForDelivery = false;
 
 
 
+
+
+function hideOrShowDayofWeekToDeliver() {
+    var Friday = 5;
+    var WordToSearch = 'моск';
+    var container = $('#dayofweektodeliver_container');
+    if ($("#isDelivery").is(':checked') && $('#isDeliveryByOwnTransport').is(':checked')) {
+
+        var addr = $('#AddressId').find('option:selected');
+        if (addr && addr.text() && addr.text().toLowerCase().indexOf(WordToSearch)>=0) {
+            var d1 = $("#DeliveryDate").val();
+            var d2 = dateUtils.dateFromString(d1);
+            if (d2.getDay() === Friday) {
+                container.show(); return;
+            }
+        }
+    }
+
+    container.hide();
+    //return false;
+}
+
 /*
 * Работа с товарами сторонних поставщиков
 * + логика работы с товарами
@@ -111,9 +133,12 @@ var supplierModule = (function () {
         getNumberOfDaysForDepartment: function () {
 
             var daysToDepartment = daysToDepartments[$ld];
-            if (!daysToDepartment) throw "Unknown logistik department " + supplierModule.getLogistikDepartment();
-            debugger;
-            return daysToDepartments;
+
+            
+            if (!daysToDepartment ||!Number.isInteger(daysToDepartment))
+                throw "Unknown logistik department " + supplierModule.getLogistikDepartment();
+            
+            return daysToDepartment;
         },
 
 
@@ -166,7 +191,13 @@ var supplierModule = (function () {
         showClear: false,
         enabledDates: enabledDates
 
-    });
+    }).on('dp.change', function (event) {
+
+        hideOrShowDayofWeekToDeliver();
+    //    $('#newDateSpan').html("New Date: " + event.date.format('lll'));
+      //  $('#oldDateSpan').html("Old Date: " + event.oldDate.format('lll'));
+        });
+    
 
     
 
@@ -217,6 +248,7 @@ var supplierModule = (function () {
 */
 function updateDatepicker()
 {
+    
     var workingDepartmentCodes = ["00005", "00112", "00106"];
     var enabledDates = [];
     var picker = $('.js-datefor-shipment').data("DateTimePicker");
@@ -240,8 +272,10 @@ function updateDatepicker()
                 picker.options({ 'enabledDates': enabledDates });
                 if (Array.isArray(enabledDates) && enabledDates.length > 0) {
                     picker.date(enabledDates[0]);
+                   
                  //   console.log(enabledDates[0]);
                 }
+                hideOrShowDayofWeekToDeliver();
             })
             .fail(function (xhr, status) {
                 console.error(xhr.responseText);
@@ -340,7 +374,7 @@ $("#shopping-cart-form").on("submit", function(e) {
                         } catch (e)
                         {
                             console.error(e);
-                            alert(e);
+                          
                             return false;
                         }
                       //  if (daystoDepartment > 0)

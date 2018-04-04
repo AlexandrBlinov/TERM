@@ -5,10 +5,13 @@
     Layout = "~/Views/Shared/_LayoutReports.cshtml";
     ViewBag.Title = "Freeman";
 }
-
+<div class="text-center search-order-btn">
+    @Html.ActionLink("Bad quality wheels", "Freeman", "Reports", null, new { @class = "list-points-create-btn" })
+    @Html.ActionLink("Wheels test", "FreemanWheelsTest", "Reports", null, new { @class = "list-points-create-btn" })
+</div>
 <div class="container">
     <h2>Freeman Racing Wheels INC</h2>
-    <h3> Bad quality wheels</h3>
+    <h2>Bad quality wheels</h2>
     @using (Html.BeginForm("Freeman", "Reports", FormMethod.Get))
     {
         <fieldset class="border-form-podbor">
@@ -74,12 +77,15 @@
                         Defect
                     </th>
                     <th>
+                        Resolution
+                    </th>
+                    <th>
                         Claim number
                     </th>
                     <th>
                         The last shipping
                     </th>
-            </thead>
+</thead>
             <tbody>
                 @{int i = 0;
                 }
@@ -87,30 +93,33 @@
                 {
                     if (claim.DefectCome == "Производитель")
                     {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(@claim.Code + "-" + @claim.Name, "Details", new { claimnumber = claim.ClaimNumber, productId = claim.Code }, new { @class = "order-table-details" })
-                            </td>
-                            <td>
-                                @claim.Quantity
-                                @{i = i + claim.Quantity;}
-                            </td>
-                            <td>
-                                @claim.PurchasePrice
-                            </td>
-                            <td>
-                                @claim.Sum
-                            </td>
-                            <td>
-                                @claim.DefectForSaleEn
-                            </td>
-                            <td>
-                                @claim.ClaimNumber
-                            </td>
-                            <td>
-                                @claim.LastDeliveryDate.ToShortDateString()
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink(@claim.Code + "-" + @claim.Name, "Details", new { claimnumber = claim.ClaimNumber, productId = claim.Code }, new { @class = "order-table-details" })
+                    </td>
+                    <td>
+                        @claim.Quantity
+                        @{i = i + claim.Quantity;}
+                    </td>
+                    <td>
+                        @claim.PurchasePrice
+                    </td>
+                    <td>
+                        @claim.Sum
+                    </td>
+                    <td>
+                        @claim.DefectForSaleEn
+                    </td>
+                    <td>
+                        @claim.ResolutionEN
+                    </td>
+                    <td>
+                        @claim.ClaimNumber
+                    </td>
+                    <td>
+                        @claim.LastDeliveryDate.ToShortDateString()
+                    </td>
+                </tr>
                                         }
 
                                     }

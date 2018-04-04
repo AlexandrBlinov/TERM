@@ -10,7 +10,7 @@ using Yst.Services;
 using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 using System.Collections;
-//using YstProject.WebReferenceTerm;
+
 using System.Threading.Tasks;
 using YstProject.Services;
 using System.Data.Entity;
@@ -21,10 +21,13 @@ using Term.Soapmodels;
 using Term.Utils;
 using Term.Web.Services;
 using YstProject.Models;
-//using YstProject.WebReferenceServiceYStore;
+
 
 namespace Term.Web.Controllers
 {
+    /// <summary>
+    /// Класс контроллера корзины
+    /// </summary>
     public class ShoppingCartController : BaseController
     {
         
@@ -76,6 +79,12 @@ namespace Term.Web.Controllers
             vm.LogistikDepartment = !isForeign && !String.IsNullOrEmpty(Partner.LogistikDepartment) ? Partner.LogistikDepartment : null;
 
             vm.SelfDeliveryIds = _orderService.SelfDeliveryAddresses;
+
+            // возможность сезонной отсрочки только у головных,  у которых есть признак HasSeasonAdjournment и , если в корзине цены НЕ Prepay 
+
+            vm.HasSeasonAdjournment = Partner.HasSeasonAdjournment && ServicePP.IsPartner &&!vm.IsPrepay;
+
+              
        //     vm.WayOfDelivery = this.Partner.WayOfDelivery;
 
         }
@@ -88,8 +97,6 @@ namespace Term.Web.Controllers
         public ActionResult Index()
         {
             var cart = this.Cart;
-
-                    
             
             // у иностранных клиентов не показываем в резерв и на отгрузку
             
@@ -209,6 +216,7 @@ namespace Term.Web.Controllers
             }
 
 
+
             if (!ModelState.IsValid) return View("Index", viewModel);
 
             
@@ -247,14 +255,15 @@ namespace Term.Web.Controllers
 
                var deliveryDateString = viewModel.DeliveryDate.HasValue ? ((DateTime)viewModel.DeliveryDate).ToString(ServiceTerminal.FormatForDate) : String.Empty;
 
-              
+              var deliveryDate2String = viewModel.DeliveryDate2.HasValue ? ((DateTime)viewModel.DeliveryDate2).ToString(ServiceTerminal.FormatForDate) : String.Empty;
 
-               // Если иностранный клиент, резерв или способ доставки , то адрес передаем пустой
+                int caseForLogistik = viewModel.CaseForLogistik.HasValue ? (int)viewModel.CaseForLogistik : 0;
+                // Если иностранный клиент, резерв или способ доставки , то адрес передаем пустой
                 string addressId = isForeign || viewModel.WayOfDelivery > 0 || !viewModel.IsDelivery ? String.Empty : viewModel.AddressId;
 
                 if (!viewModel.IsDeliveryByTk)
                     result = await Task.Run(
-                    () => WS.CreateOrder2(
+                    () => WS.CreateOrder3(
                     partnerId,
                     pointId,
                     productItems,
@@ -266,7 +275,11 @@ namespace Term.Web.Controllers
                     viewModel.IsStar,
                     viewModel.WayOfDelivery,
                     addressId,
-                    viewModel.TkId ?? String.Empty
+                    viewModel.TkId ?? String.Empty,
+                    deliveryDate2String,
+                   caseForLogistik,
+                   viewModel.IsSeasonAdjournment,
+                  (int) viewModel.DayOfWeekToDeliver
                     ));
 
 

@@ -103,6 +103,23 @@ namespace YstProject.Services
         }
 
         /// <summary>
+        /// Точка может использовать только сезонные заказы (да/нет)
+        /// </summary>
+        public bool CheckOnlySeasonOrder
+        {
+            get
+            {
+                if (CurrentUser != null)
+                {
+                    var point = CurrentPoint;
+                    if (point != null)
+                        return point.ShowOnlySeasonOrder;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Возвращает партнера или точку по ID партнера
         /// </summary>
         /// <param name="id"></param>

@@ -79,6 +79,9 @@ namespace YstProject.Services
       //  public static readonly string ClientsForNotifications = "Client571,Client5691,Client539,Client7357,Client5479,Client5757,Client6503,Client7160,Client6918,Client5476,Client4280,Client7291,Client434,Client2663,Client644,Client540,Client6959,Client395,Client1295,Client5340,Client872,Client1922,Client5343,Client6495,Client7454,Client988,Client181,Client4234,Client4261,Client759,Client7552,Client093,Client4906,Client4860,Client7645,Client393,Client7539,Client7647,Client5274,Client3530,Client5205,Client639,Client5806,Client1315,Client6631,Client605,Client2284,Client2227,Client3911,Client3528,Client510,Client1307,Client4003,Client7553,Client3657,Client079,Client1756,Client6981,Client1903,Client7316,Client3518,Client6697,Client628,Client7493,Client6313,Client7240,Client1846,Client1481,Client2611,Client1920,Client6958,Client002,Client371,Client907,Client1291,Client1941,Client4265,Client1329,Client527,Client7292,Client1375,Client2273,Client3378,Client5330,Client501,Client402,Client372,Client7270,Client6477,Client5439,Client1432,Client5206,Client7515,Client5808,Client1352,Client1330,Client1930,Client6966,Client5275,Client7519,Client6803,Client7339,Client3209,Client396,Client417, Client1656,Client986,Client569,Client4923,Client5901,Client7358,Client2604,Client5590,Client6947";
         public static readonly Dictionary<string, string> SeasonNames = new Dictionary<string, string>{
         {"winter","зима"},{"summer","лето"},{"allseason", "всесезон"}};
+        public static readonly Dictionary<string, string> CargoTyreWidthAnalog = new Dictionary<string, string>{
+        {"240","8.25"},{"260","9.00"},{"280", "10.00"},{"300", "11.00"},{"320", "12.00"},
+        {"8.25","240"},{"9.00","260"},{"10.00", "280"},{"11.00", "300"},{"12.00", "320"}};
 
         //public const int MAINDEPARTMENT_ID = 5;
         public static readonly int Endyear = DateTime.Now.Year;

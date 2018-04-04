@@ -84,7 +84,7 @@
                     @item.Count
                 </td>
                 <td>
-                    <input class="upload btn btn-success top10" type="file" data-toggle="tooltip" data-placement="top" data-original-title="Добавить файлы для @item.ProductId - @item.Name" data-claimguid="@Model.Claim.GuidIn1S" data-productid="@item.ProductId" data-count="@item.Count" />
+                    <input class="upload btn btn-success top10" type="file" multiple data-toggle="tooltip" data-placement="top" data-original-title="Добавить файлы для @item.ProductId - @item.Name" data-claimguid="@Model.Claim.GuidIn1S" data-productid="@item.ProductId" data-count="@item.Count" />
                 </td>
                 <td class="@("photo"+item.ProductId+"_"+item.Count)"></td>
                 <td class="@("video"+item.ProductId+"_"+item.Count)"></td>
@@ -132,6 +132,7 @@ $('body').on('click', '.fileremove', function () {
         });
 });
 
+
 $('.upload').on('change', function () {
 
 var data = new FormData();
@@ -140,9 +141,12 @@ var files = $(this).get(0).files;
 var folderclaim = $(this).data("claimguid");
 var folderproduct = $(this).data("productid") + "_" + $(this).data("count");
 if (files.length > 0) {
-data.append("UploadedFile", files[0]);
-data.append("UploadedFolderClaim", folderclaim);
-data.append("UploadedFolderProduct", folderproduct);
+    for (var i = 0; i < files.length; i++) {
+        data.append("UploadedFiles_" + i, files[i]);
+    }
+
+    data.append("UploadedFolderClaim", folderclaim);
+    data.append("UploadedFolderProduct", folderproduct);
 }
 
 var ajaxRequest = $.ajax({

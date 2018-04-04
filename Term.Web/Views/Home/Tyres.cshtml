@@ -9,7 +9,7 @@
 @{
     ViewBag.Title = @ForSearchResult.SearchByTyreSize;
 }
-
+@{Html.RenderPartial("_AkbBigSale");}
 @*@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Tyres })*@
 
 @using (Html.BeginForm("Tyres", "Home", FormMethod.Get, new { @id = "tyres-podbor", @data_name = "tyre" }))
@@ -21,13 +21,13 @@
     @Html.Hidden("PriceMin", Model.PriceMin)
     @Html.Hidden("PriceMax", Model.PriceMax)
     <div class="row border-form-podbor">
-        <img alt="@ForSearchResult.ChooseTyres" class="podbor-tyres-title-img" src="~/Content/img/img-tyres-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseTyres</span>
-        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img alt="@ForSearchResult.ClearAll" src="~/Content/img/clear-param.png"/></a>
+        <img alt="@ForSearchResult.ChooseTyres" class="podbor-tyres-title-img" src="~/Content/img/img-tyres-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseTyres</span>
+        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img alt="@ForSearchResult.ClearAll" src="~/Content/img/clear-param.png" /></a>
     </div>
     <div class="row m-b-20">
-       @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
+        @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
     </div>
-        
+
     <div class="row">
         <div class="col-xs-12 col-sm-9 ">
             <div class="row">
@@ -36,22 +36,22 @@
                 </div>
                 <div class="col-xs-12 col-md-4 m-b-10">
 
-                    @Html.DropDownListFor(p => p.ProducerId, new SelectList(Model.Producers, "ProducerID", "Name"), @ForSearchResult.ChooseSupplier, new {@class = "form-control"})
-                    
+                    @Html.DropDownListFor(p => p.ProducerId, new SelectList(Model.Producers, "ProducerID", "Name"), @ForSearchResult.ChooseSupplier, new { @class = "form-control" })
+
                 </div>
                 <div class="col-xs-12 col-md-2 m-b-10">
 
-                    @Html.DropDownListFor(p => p.Diametr, new SelectList(Model.Diametrs), @ForSearchResult.Diameter, new {@class = "form-control"})
+                    @Html.DropDownListFor(p => p.Diametr, new SelectList(Model.Diametrs), @ForSearchResult.Diameter, new { @class = "form-control" })
                 </div>
                 <div class="col-xs-12 col-md-2 m-b-10">
 
-                    @Html.DropDownListFor(p => p.Width, new SelectList(Model.Widths), @ForSearchResult.Width, new {@class = "form-control"})
+                    @Html.DropDownListFor(p => p.Width, new SelectList(Model.Widths), @ForSearchResult.Width, new { @class = "form-control" })
                 </div>
                 <div class="col-xs-12 col-md-2 m-b-10">
 
-                    @Html.DropDownListFor(p => p.Height, new SelectList(Model.Heights), @ForSearchResult.Height, new {@class = "form-control"})
+                    @Html.DropDownListFor(p => p.Height, new SelectList(Model.Heights), @ForSearchResult.Height, new { @class = "form-control" })
                 </div>
-                
+
             </div>
             <div class="row">
                 <div class="col-md-2 m-t-15 m-b-20" style="    position: relative;    top: -5px;">
@@ -60,25 +60,25 @@
                 <div class="col-md-7 m-t-15 m-b-20">
                     <div class="form-inline">
                         <div class="form-group yst-ship-group">
-                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipAll, new { @id = "shipall" }) <label class="m-r-15" for="shipall"><span class="radio-label-span">@ForSearchResult.AllShip</span></label>
-                            @Html.RadioButtonFor(model => model.Ship,ShipForTyresPodbor.ShipShip, new { @id = "shipship" }) <label class="m-r-15" for="shipship"><span class="radio-label-span">@ForSearchResult.Ship</span></label>
-                                @if (!ViewBag.HideNoStud)
-                                {
-                            @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.ShipNoShip, new { @id = "shipnoship" }) <label class="m-r-15" for="shipnoship" title="без шипов"><span class="radio-label-span">@ForSearchResult.ShipNoShip</span></label>
-                                }
+                            @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.ShipAll, new { @id = "shipall" }) <label class="m-r-15" for="shipall"><span class="radio-label-span">@ForSearchResult.AllShip</span></label>
+                            @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.ShipShip, new { @id = "shipship" }) <label class="m-r-15" for="shipship"><span class="radio-label-span">@ForSearchResult.Ship</span></label>
+                            @if (!ViewBag.HideNoStud)
+                            {
+                                @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.ShipNoShip, new { @id = "shipnoship" }) <label class="m-r-15" for="shipnoship" title="без шипов"><span class="radio-label-span">@ForSearchResult.ShipNoShip</span></label>
+                            }
 
                             @Html.RadioButtonFor(model => model.Ship, ShipForTyresPodbor.Friction, new { @id = "friction" }) <label for="friction"><span class="radio-label-span" title="липучка">@ForSearchResult.Friction</span></label>
-                            
-                        </div>                    
+
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3 m-t-15 m-b-20">
                     <div class="form-group">
                         @Html.CheckBoxFor(model => model.IsSet4Items, new { @id = "IsSet4Items" }) <label class="m-r-20" for="IsSet4Items"><span class="radio-label-span">@ForSearchResult.IsSet4Items</span></label>
                     </div>
-                    </div>
+                </div>
             </div>
-            </div>
+        </div>
         <div class="col-sm-3 hidden-xs">
             <div class="col-xs-12 m-b-20">
                 <span class="podbor-tyres-param">@ForSearchResult.Price</span>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div>
-                
+
                 <div id="slider-range" class="m-t-15"></div>
                 <p>
                     <span class="slider-price-const-min">0</span>
@@ -108,27 +108,27 @@
 }
 
 <div class="row m-b-20">
-    
+
     <span class="podbor-tyres-title">@Header.Tyres (@Model.SearchResults.TotalItemCount)</span>
     @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("Tyres", new
-        {
-            page,
-            ProducerId = Model.ProducerId,
-            Article = Model.Article,
-            Name = Model.Name,
-            Width = Model.Width,
-            Height = Model.Height,
-            Diametr = Model.Diametr,
-            SeasonId = Model.SeasonId,
-            ItemsPerPage = Model.ItemsPerPage,
-            SortBy = Model.SortBy,
-            Ship = Model.Ship,
-            IsSet4Items = Model.IsSet4Items,
-            PriceMin = Model.PriceMin,
-            PriceMax = Model.PriceMax,
-            DisplayView = Model.DisplayView
-        }),
-        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+    {
+        page,
+        ProducerId = Model.ProducerId,
+        Article = Model.Article,
+        Name = Model.Name,
+        Width = Model.Width,
+        Height = Model.Height,
+        Diametr = Model.Diametr,
+        SeasonId = Model.SeasonId,
+        ItemsPerPage = Model.ItemsPerPage,
+        SortBy = Model.SortBy,
+        Ship = Model.Ship,
+        IsSet4Items = Model.IsSet4Items,
+        PriceMin = Model.PriceMin,
+        PriceMax = Model.PriceMax,
+        DisplayView = Model.DisplayView
+    }),
+            new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 
 
 </div>
@@ -140,21 +140,21 @@
 
         <div class="btn btn-default sort-btn-style" aria-label="Left Align">
             @Html.ActionLink(@ForSearchResult.Name, "Tyres", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    Width = Model.Width,
-                                    Height = Model.Height,
-                                    Diametr = Model.Diametr,
-                                    SeasonId = Model.SeasonId,
-                                    DisplayView = Model.DisplayView,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    Ship = Model.Ship,
-                                    PriceMin = Model.PriceMin,
-                                    PriceMax = Model.PriceMax,
-                                    SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
-                                }, new { @class = "sort-btn-a" })
+            {
+                ProducerId = Model.ProducerId,
+                Article = Model.Article,
+                Name = Model.Name,
+                Width = Model.Width,
+                Height = Model.Height,
+                Diametr = Model.Diametr,
+                SeasonId = Model.SeasonId,
+                DisplayView = Model.DisplayView,
+                ItemsPerPage = Model.ItemsPerPage,
+                Ship = Model.Ship,
+                PriceMin = Model.PriceMin,
+                PriceMax = Model.PriceMax,
+                SortBy = Model.SortBy == SortBy.NameAsc ? "NameDesc" : "NameAsc"
+            }, new { @class = "sort-btn-a" })
             @{
                 if (Model.SortBy == SortBy.NameAsc || Model.SortBy == SortBy.NameDesc)
                 {
@@ -168,22 +168,22 @@
         </div>
         <div class="btn btn-default sort-btn-style" aria-label="Left Align">
             @Html.ActionLink(@ForSearchResult.DeliveryTime, "Tyres", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    Width = Model.Width,
-                                    Height = Model.Height,
-                                    Diametr = Model.Diametr,
-                                    SeasonId = Model.SeasonId,
-                                    DisplayView = Model.DisplayView,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    Ship = Model.Ship,
-                                    IsSet4Items = Model.IsSet4Items,
-                                    PriceMin = Model.PriceMin,
-                                    PriceMax = Model.PriceMax,
-                                    SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
-                                }, new { @class = "sort-btn-a" })
+            {
+                ProducerId = Model.ProducerId,
+                Article = Model.Article,
+                Name = Model.Name,
+                Width = Model.Width,
+                Height = Model.Height,
+                Diametr = Model.Diametr,
+                SeasonId = Model.SeasonId,
+                DisplayView = Model.DisplayView,
+                ItemsPerPage = Model.ItemsPerPage,
+                Ship = Model.Ship,
+                IsSet4Items = Model.IsSet4Items,
+                PriceMin = Model.PriceMin,
+                PriceMax = Model.PriceMax,
+                SortBy = Model.SortBy == SortBy.DeliveryAsc ? "DeliveryDesc" : "DeliveryAsc"
+            }, new { @class = "sort-btn-a" })
             @{
                 if (Model.SortBy == SortBy.DeliveryAsc || Model.SortBy == SortBy.DeliveryDesc)
                 {
@@ -197,22 +197,22 @@
         </div>
         <div class="btn btn-default sort-btn-style" aria-label="Left Align">
             @Html.ActionLink(@ForSearchResult.Amount, "Tyres", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    Width = Model.Width,
-                                    Height = Model.Height,
-                                    Diametr = Model.Diametr,
-                                    SeasonId = Model.SeasonId,
-                                    DisplayView = Model.DisplayView,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    Ship = Model.Ship,
-                                    IsSet4Items = Model.IsSet4Items,
-                                    PriceMin = Model.PriceMin,
-                                    PriceMax = Model.PriceMax,
-                                    SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
-                                }, new { @class = "sort-btn-a" })
+            {
+                ProducerId = Model.ProducerId,
+                Article = Model.Article,
+                Name = Model.Name,
+                Width = Model.Width,
+                Height = Model.Height,
+                Diametr = Model.Diametr,
+                SeasonId = Model.SeasonId,
+                DisplayView = Model.DisplayView,
+                ItemsPerPage = Model.ItemsPerPage,
+                Ship = Model.Ship,
+                IsSet4Items = Model.IsSet4Items,
+                PriceMin = Model.PriceMin,
+                PriceMax = Model.PriceMax,
+                SortBy = Model.SortBy == SortBy.AmountAsc ? "AmountDesc" : "AmountAsc"
+            }, new { @class = "sort-btn-a" })
             @{
                 if (Model.SortBy == SortBy.AmountAsc || Model.SortBy == SortBy.AmountDesc)
                 {
@@ -226,22 +226,22 @@
         </div>
         <div class="btn btn-default sort-btn-style" aria-label="Left Align">
             @Html.ActionLink(@ForSearchResult.Price, "Tyres", new
-                                {
-                                    ProducerId = Model.ProducerId,
-                                    Article = Model.Article,
-                                    Name = Model.Name,
-                                    Width = Model.Width,
-                                    Height = Model.Height,
-                                    Diametr = Model.Diametr,
-                                    SeasonId = Model.SeasonId,
-                                    DisplayView = Model.DisplayView,
-                                    ItemsPerPage = Model.ItemsPerPage,
-                                    Ship = Model.Ship,
-                                    IsSet4Items = Model.IsSet4Items,
-                                    PriceMin = Model.PriceMin,
-                                    PriceMax = Model.PriceMax,
-                                    SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
-                                }, new { @class = "sort-btn-a" })
+            {
+                ProducerId = Model.ProducerId,
+                Article = Model.Article,
+                Name = Model.Name,
+                Width = Model.Width,
+                Height = Model.Height,
+                Diametr = Model.Diametr,
+                SeasonId = Model.SeasonId,
+                DisplayView = Model.DisplayView,
+                ItemsPerPage = Model.ItemsPerPage,
+                Ship = Model.Ship,
+                IsSet4Items = Model.IsSet4Items,
+                PriceMin = Model.PriceMin,
+                PriceMax = Model.PriceMax,
+                SortBy = Model.SortBy == SortBy.PriceAsc ? "PriceDesc" : "PriceAsc"
+            }, new { @class = "sort-btn-a" })
             @{
                 if (Model.SortBy == SortBy.PriceAsc || Model.SortBy == SortBy.PriceDesc)
                 {
@@ -318,26 +318,26 @@
 
 
 <div class="row m-t-30">
-    
+
     @Html.PagedListPager(Model.SearchResults, page => Url.RouteUrl("Tyres", new
-        {
-            page,
-            ProducerId = Model.ProducerId,
-            Article = Model.Article,
-            Name = Model.Name,
-            Width = Model.Width,
-            Height = Model.Height,
-            Diametr = Model.Diametr,
-            SeasonId = Model.SeasonId,
-            ItemsPerPage = Model.ItemsPerPage,
-            Ship = Model.Ship,
-            IsSet4Items = Model.IsSet4Items,
-            SortBy = Model.SortBy,
-            PriceMin = Model.PriceMin,
-            PriceMax = Model.PriceMax,
-            DisplayView = Model.DisplayView
-        }),
-        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+    {
+        page,
+        ProducerId = Model.ProducerId,
+        Article = Model.Article,
+        Name = Model.Name,
+        Width = Model.Width,
+        Height = Model.Height,
+        Diametr = Model.Diametr,
+        SeasonId = Model.SeasonId,
+        ItemsPerPage = Model.ItemsPerPage,
+        Ship = Model.Ship,
+        IsSet4Items = Model.IsSet4Items,
+        SortBy = Model.SortBy,
+        PriceMin = Model.PriceMin,
+        PriceMax = Model.PriceMax,
+        DisplayView = Model.DisplayView
+    }),
+            new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 </div>
 
 @section Scripts {

@@ -1,0 +1,147 @@
+﻿@using Term.Web.Views.Resources;
+@using YstProject.Services;
+@{var sps = new SeasonProductService();}
+
+<ul class="nav navbar-nav">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle second" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.Tyres <span class="caret"></span></a>
+        <ul class="dropdown-menu menu-tyre-dropdown" role="menu">
+            <li>
+                <div class="menu-tyre-dropdown-img">
+                    <span class="pass-tyre"></span><span class="pass-tyre-label">@ForSearchResult.PassengerTyres</span>
+                </div>
+                <div class="menu-tyre-dropdown-img">
+                    <span class="cargo-tyre"></span><span class="pass-tyre-label">@ForSearchResult.TruckTyres</span>
+                </div>
+            </li>
+            <li>
+                <div class="menu-tyre-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByParam, "Tyres", "Home")
+                </div>
+                <div class="menu-tyre-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByParam, "CargoTyres", "Home")
+                </div>
+            </li>
+            <li>
+                <div class="menu-tyre-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByCar, "Index", "PodborAutoTyresDisks")
+                </div>
+                <div class="menu-tyre-dropdown-text">
+
+                </div>
+            </li>
+            <li>
+                <div class="menu-tyre-dropdown-text">
+                    @Html.ActionLink(@Header.OthersCams, "Others", "Home", new { @OthersType = "Cams", @Folder = Defaults.TyreCamsFolder }, null)
+                </div>
+                <div class="menu-tyre-dropdown-text">
+
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle second" data-toggle="dropdown" role="button" aria-expanded="false">
+            @Header.Wheels <span class="caret"></span>@if (sps.AmountOfOffers > 0)
+            {<span class="tasks-top-item-counter">@sps.AmountOfOffers</span>}
+        </a>
+        <ul class="dropdown-menu menu-disk-dropdown" role="menu">
+            <li>
+                <div class="menu-tyre-dropdown-img">
+                    <span class="pass-disk"></span><span class="pass-disk-label">@ForSearchResult.AlloyAndSteel</span>
+                </div>
+            </li>
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByParam, "Disks", "Home")
+                </div>
+            </li>
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByCar, "Index", "PodborAutoTyresDisks")
+                </div>
+            </li>
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@Header.OthersBolts, "Others", "Home", new { @OthersType = "Bolts", @Folder = Defaults.WheelsBoltsFolder }, null)
+                </div>
+            </li>
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@Header.CargoWheels, "CargoDisks", "Home")
+                </div>
+            </li>
+            @if (sps.AmountOfOffers > 0)
+            {
+                <li role="presentation" class="divider"></li>
+            }
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@Header.Wheels_SeasonForged, "Disks", "SeasonProduct", new { @WheelType = "Forged" }, null)
+                </div>
+            </li>
+            @if (sps.HasAlloyOffers)
+            {
+                <li>
+                    <div class="menu-disk-dropdown-text">
+                        @Html.ActionLink(@Header.Wheels_SeasonAlloy, "Disks", "SeasonProduct", new { @WheelType = "Alloy" }, null)
+                    </div>
+                </li>
+            }
+            @if (sps.HasSteelOffers)
+            {
+                <li>
+                    <div class="menu-disk-dropdown-text">
+                        @Html.ActionLink(@Header.Wheels_SeasonSteel, "Disks", "SeasonProduct", new { @WheelType = "Steel" }, null)
+                    </div>
+                </li>
+            }
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle second" data-toggle="dropdown" role="button" aria-expanded="false"> @Header.CarBatteries <span class="caret"></span></a>
+        <ul class="dropdown-menu menu-akb-dropdown" role="menu">
+            <li>
+                <div class="menu-tyre-dropdown-img">
+                    <span class="pass-akb"></span><span class="pass-akb-label">@Header.CarBatteries</span>
+                </div>
+            </li>
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByParam, "Akb", "Home")
+                </div>
+            </li>
+            <li>
+                <div class="menu-disk-dropdown-text">
+                    @Html.ActionLink(@ForSearchResult.ByCar, "Index", "PodborAkb")
+                </div>
+            </li>
+        </ul>
+
+    </li>
+    <li class="dropdown">
+        @Html.ActionLink(@Header.Accessories, "Accs", "Home", null, new { @class = "second" })
+
+    </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <form class="navbar-form navbar-left search invisible" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control search-form-input" placeholder="@ForSearchResult.Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default search-btn" type="submit"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </li>
+
+    <li class="dropdown yst-limit-container js-autoaction" id="yst-limit-container" data-autoaction="@Url.Action("Index","LimitData")">
+        &nbsp;
+
+    </li>
+    <li> @Html.Partial("_LoginMenu")</li>
+</ul>

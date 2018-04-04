@@ -49,7 +49,7 @@ namespace UnitTestProject1
         {
             string origin = "57.6600331,39.83873785";
             string dest = "55.089490,36.6329070|54.558099,36.3500409|54.036373,35.7717197|54.168975,37.6339178";
-            var duration = GoogleDistanceService.GetDurationInSeconds(origin, dest);
+            var duration = new GoogleDistanceService().GetDurationInSeconds(origin, dest);
             Assert.AreEqual(duration, 89037);
 
         }

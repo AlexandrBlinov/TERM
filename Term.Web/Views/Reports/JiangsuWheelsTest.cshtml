@@ -1,0 +1,74 @@
+﻿@model Yst.ViewModels.ReportModel
+@{
+    ViewBag.Title = "JiangsuWheelsTest";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+}
+<div class="text-center search-order-btn">
+    @Html.ActionLink("Bad quality wheels", "Jiangsu", "Reports", null, new { @class = "list-points-create-btn" })
+    @Html.ActionLink("Wheels test", "JiangsuWheelsTest", "Reports", null, new { @class = "list-points-create-btn" })
+</div>
+<div class="container">
+    <h2>JIANGSU SAINTY MACHINERY IE CORP. LTD</h2>
+    <h2>Wheels test</h2>
+    @using (Html.BeginForm("JiangsuWheelsTest", "Reports", FormMethod.Get))
+    {
+        <fieldset class="border-form-podbor">
+            <div class="row">
+                <div class="col-xs-12 col-sm-2">
+                    @Html.LabelFor(p => p.BeginDate, "Begin date", new { @class = "search-order-label" })
+                    <div>
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.BeginDate, new { @class = "form-control" })
+                            <span class="input-group-addon date-pick-btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-2">
+                    @Html.LabelFor(p => p.EndDate, "End date", new { @class = "search-order-label" })
+                    <div>
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control" })
+                            <span class="input-group-addon date-pick-btn">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 text-center search-order-btn">
+                    <button class="form-podbor-btn-submit" type="submit">Report</button>
+                </div>
+            </div>
+        </fieldset>
+    }
+    @if (Model.ReturnWheelsTest != null)
+    {
+        <table class="data-table order-table details-table">
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Party</th>
+                    <th>Max load</th>
+                    <th>Date test</th>
+                    <th>Nomber of coming</th>
+                    <th>Link to files</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.ReturnWheelsTest)
+            {
+                <tr>
+                    <td>@item.Code</td>
+                    <td>@item.Name</td>
+                    <td>@item.Party</td>
+                    <td>@item.Maxload</td>
+                    <td>@item.Data.ToShortDateString()</td>
+                    <td>@item.NomberOfComing</td>
+                    <td>@Html.ActionLink("files", "VideoTests", new { productId = item.Code }, new { @class = "order-table-details" })</td>
+                </tr>
+            }
+        </table>
+    }
+
+</div>

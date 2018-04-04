@@ -24,12 +24,21 @@ namespace Term.Utils
            return String.Empty;
        }
 
-       /// <summary>
-       /// Проверка текущий день выходной
-       /// </summary>
-       /// <param name="startingDate"></param>
-       /// <returns></returns>
-       private static bool IsDayOff(DateTime startingDate)
+        /// <summary>
+        /// В отформатированную строку даты и времени
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        public static string ToDateTime(this DateTime element) => element.ToString("dd.MM.yyyy HH:mm:ss");
+
+        
+
+        /// <summary>
+        /// Проверка текущий день выходной
+        /// </summary>
+        /// <param name="startingDate"></param>
+        /// <returns></returns>
+        private static bool IsDayOff(DateTime startingDate)
        {
            return (startingDate.DayOfWeek == DayOfWeek.Saturday || startingDate.DayOfWeek == DayOfWeek.Sunday);
        }

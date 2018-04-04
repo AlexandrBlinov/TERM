@@ -21,6 +21,7 @@ namespace Term.Web.HtmlHelpers
     public static class PictureUtility
     {
               
+        private static string[] _cargoWheelsProducers = Defaults.CargoWheelsProducers.Split(Defaults.CommaSign);
         static string _fullRemotePathToImage = ConfigurationManager.AppSettings["RemotePathToPictures"];
 
         public static MvcHtmlString Thumbnail(this HtmlHelper htmlHelper, Product product)
@@ -121,11 +122,20 @@ namespace Term.Web.HtmlHelpers
             }
             return String.Empty;
         }
-
+        /// <summary>
+        /// Картинку товара на детальной странице
+        /// </summary>
+        /// <param name="producerId"></param>
+        /// <param name="modelName"></param>
+        /// <param name="name"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         public static string GetPictureOfDisk(int? producerId, string modelName, string name, int productId)
         {
+           
+
             string wheels = "allwheels";
-            if (Defaults.CargoWheelsProducers.Contains(producerId.ToString()) && producerId != null)
+            if (producerId != null && _cargoWheelsProducers.Contains(producerId.ToString()) )
             {
                 var url = UrlGenerator.Generate(_fullRemotePathToImage, wheels, String.Concat(productId.ToString(), ".png"));
 
@@ -159,7 +169,7 @@ namespace Term.Web.HtmlHelpers
         /// <returns></returns>
         public static string GetPictureOfThumbnailForDisk(int? producerId, string modelName, string Name, int productId)
         {
-            if (Defaults.CargoWheelsProducers.Contains(producerId.ToString()) && producerId != null)
+            if (producerId != null && _cargoWheelsProducers.Contains(producerId.ToString()) )
             {
                 return productId.ToString() ?? string.Empty;
             }

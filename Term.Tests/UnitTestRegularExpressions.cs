@@ -91,6 +91,14 @@ namespace UnitTestProject1
             Assert.AreEqual(result.Count, 2);
         }
 
+        [TestMethod]
+        public void TestStringUtils_ReturnsReducedFio()
+        {
+            var str=StringUtils.GetFioInitials(" Иванов Иван Иванович ");
+
+            Assert.AreEqual("Иванов И.И.", str);
+
+        }
 
         [TestMethod]
         public void TestStringGetNumberOfDeliveryDays()

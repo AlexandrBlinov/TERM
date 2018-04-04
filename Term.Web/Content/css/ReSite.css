@@ -75,13 +75,6 @@ textarea.cart-create-personal-input-comment {
     border-bottom: 3px solid #009efe;
 }
 
-.nav_error_line{
-background-color: #d9534f;
-color: white;
-font-weight: bold;
-height: 25px;
-text-align: center;
-}
 
 #cart-status {
     height: 70px;
@@ -2835,6 +2828,14 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
     background-position: center;
 }
 
+.link_production {
+    background: url("/Content/img/wheels_prod.png") no-repeat 18px 0px;
+    height: 300px;
+    display: block;
+    background-size: contain;
+    background-position: center;
+}
+
 .link_akb {
     background: url("/Content/img/akk.jpg") no-repeat 18px 0px;
     height: 300px;
@@ -2849,6 +2850,36 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
     display: block;
     background-size: contain;
     background-position: center;
+}
+
+.link_forged {
+    background: url("/Content/img/forged.png") no-repeat 18px 0px;
+    height: 300px;
+    display: block;
+    background-size: contain;
+    background-position: center;
+}
+
+.link_steel {
+    background: url("/Content/img/steel.png") no-repeat 18px 0px;
+    height: 300px;
+    display: block;
+    background-size: contain;
+    background-position: center;
+}
+
+.nav_error_line {
+    font-weight: bold;
+    height: 25px;
+    text-align: center;
+}
+
+.nav_error_text, .nav_error_text:hover, .nav_error_text:active, .nav_error_text:focus {
+    color: red;
+    font-size: 17px;
+    border: 2px solid;
+    padding: 8px;
+    border-radius: 6px;
 }
 
 .btn-group.inmenu-toggle-group .btn {
@@ -2977,3 +3008,43 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
 .uploadButton:hover {
     background: #2489c5;
 }
+
+.doc-info.sale-info dt {
+    min-width:230px;
+}
+
+.doc-info.sale-info dd {
+    margin-left:240px;
+}
+
+.b-map-container {
+    height:500px;
+    display:none;
+}
+
+    .b-map-container.visible {
+        display:block;
+    }
+
+.b-control-hint {
+    font-style: italic;
+    color: #2489c5;
+    
+}
+.scrollto-link {
+    text-decoration: underline;
+     font-style: italic;
+    font-weight: initial;
+}
+
+@media (min-width: 992px) {
+    .cart-unload_block {
+        position: relative;
+        top: -40px;
+    }
+}
+
+
+        .cart-unload_block .inline-block + .inline-block {
+            margin-left: 17px;
+        }

@@ -1,9 +1,10 @@
 ﻿@model Term.Soapmodels.ResultDebt
-
+@using Term.Services
 
 @{
-    Term.Soapmodels.Debt[] planDebt = Model.PlanDebt??(new Term.Soapmodels.Debt[] { });
+    Term.Soapmodels.Debt[] planDebt = Model.PlanDebt ?? (new Term.Soapmodels.Debt[] { });
     Term.Soapmodels.Debt[] expiredDebt = Model.ExpiredDebt ?? (new Term.Soapmodels.Debt[] { });
+    var ss = new SalesService();
 }
 
 
@@ -13,53 +14,10 @@
 
 </div> <!-- end container -->
 
-@if(expiredDebt.Length>0)
-{ 
-    <h3>1.Просроченная дебиторская задолженность</h3>
-<table class="table table-bordered table-striped" >
- <thead>   
-     <tr>
-         <th> Дата отгрузки
-         </th>
-         <th> Номер заказа
-         </th>
-         <th> Номер ТН
-         </th>
-         <th> Сумма отгрузки
-         </th>
-         <th> Сумма долга
-         </th>
-         <th> В том числе пени
-         </th>
-         <th> Дата оплаты
-         </th>
-         <th>
-             Дней просрочки
-         </th>
-</tr>
-     </thead>
-    <tbody>
-        @foreach (var expiredItem in expiredDebt)
-        {
-            <tr>
-                <td>@expiredItem.Date.ToShortDateString() </td>
-                <td>@expiredItem.NumOrder </td>
-                <td>@expiredItem.NumSale </td>
-                <td>@expiredItem.SumSale </td>
-                <td>@expiredItem.SumDebt </td>
-                <td>@expiredItem.SumPeni </td>
-                <td>@expiredItem.DatePay.ToShortDateString() </td>
-                <td>@expiredItem.ColDayDebt </td>
-            </tr>
-        }
-    <tbody>
-</table>
-}
-
-@if (planDebt.Length > 0)
+@if (expiredDebt.Length > 0)
 {
-    <h3>2.Сроки оплат по отгрузкам</h3>
-    <table class="table table-bordered table-striped">
+    <h3>1.Просроченная дебиторская задолженность</h3>
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>
@@ -77,7 +35,64 @@
                 <th>
                     Сумма долга
                 </th>
-               
+                <th>
+                    В том числе пени
+                </th>
+                <th>
+                    Дата оплаты
+                </th>
+                <th>
+                    Дней просрочки
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expiredItem in expiredDebt)
+            {
+                <tr class="@(expiredItem.DatePay < DateTime.Now ? "bg-danger" : "")">
+                    <td>@expiredItem.Date.ToShortDateString() </td>
+                    <td>@expiredItem.NumOrder </td>
+                    @if (ss.GetSaleGuidByNumber(expiredItem.NumSale) != Guid.Empty)
+                    {
+                        <td> @Html.ActionLink(expiredItem.NumSale, "Details", "Sales", new { GuidSaleIn1S = ss.GetSaleGuidByNumber(expiredItem.NumSale) }, new { @class = "order-table-details" })</td>
+                    }
+                    else
+                    {
+                        <td>@expiredItem.NumSale </td>
+                    }
+                    <td>@expiredItem.SumSale </td>
+                    <td>@expiredItem.SumDebt </td>
+                    <td>@expiredItem.SumPeni </td>
+                    <td>@expiredItem.DatePay.ToShortDateString() </td>
+                    <td>@expiredItem.ColDayDebt </td>
+                </tr>
+            }
+        <tbody>
+    </table>
+}
+
+@if (planDebt.Length > 0)
+{
+    <h3>2.Сроки оплат по отгрузкам</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Дата отгрузки
+                </th>
+                <th>
+                    Номер заказа
+                </th>
+                <th>
+                    Номер ТН
+                </th>
+                <th>
+                    Сумма отгрузки
+                </th>
+                <th>
+                    Сумма долга
+                </th>
+
                 <th>
                     Дата оплаты
                 </th>
@@ -92,7 +107,14 @@
                 <tr>
                     <td>@expiredItem.Date.ToShortDateString() </td>
                     <td>@expiredItem.NumOrder </td>
-                    <td>@expiredItem.NumSale </td>
+                     @if (ss.GetSaleGuidByNumber(expiredItem.NumSale) != Guid.Empty)
+                    {
+                        <td> @Html.ActionLink(expiredItem.NumSale, "Details", "Sales", new { GuidSaleIn1S = ss.GetSaleGuidByNumber(expiredItem.NumSale) }, new { @class = "order-table-details" })</td>
+                    }
+                    else
+                    {
+                        <td>@expiredItem.NumSale </td>
+                    }
                     <td>@expiredItem.SumSale </td>
                     <td>@expiredItem.SumDebt </td>
                     

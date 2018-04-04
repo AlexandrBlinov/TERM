@@ -431,7 +431,7 @@ $(function () {
         dataValue.AddressForDelivery = $("#AddressForDelivery").val();
         dataValue.Country = $('#Country :selected').val();
         dataValue.Language = $('#Language :selected').val();
-        
+        dataValue.ShowOnlySeasonOrder = $("#ShowOnlySeasonOrder").is(":checked");
         //  dataValue.SaleDirection = $("#IsOpt").is(":checked") + $("#IsRetail").is(":checked") * 2 + $("#IsInetShop").is(":checked") * 4;
         var buttons = $("#sale-direction").find("button");
 

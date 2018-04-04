@@ -1,0 +1,50 @@
+﻿@using Term.Web.Views.Resources;
+@using YstProject.Services;
+@{var sps = new SeasonProductService();}
+<ul class="nav navbar-nav">
+    <li class="dropdown">
+        @Html.ActionLink(@Header.Wheels_SeasonForged, "Disks", "SeasonProduct", new { @WheelType = "Forged" }, new { @class = "second" })
+    </li>
+    <li class="dropdown">
+        @Html.ActionLink(@Header.Wheels_SeasonAlloy, "Disks", "SeasonProduct", new { @WheelType = "Alloy" }, new { @class = "second" })
+    </li>
+    <li class="dropdown">
+        @Html.ActionLink(@Header.Wheels_SeasonSteel, "Disks", "SeasonProduct", new { @WheelType = "Steel" }, new { @class = "second" })
+    </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <form class="navbar-form navbar-left search invisible" role="search">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control search-form-input" placeholder="@ForSearchResult.Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default search-btn" type="submit"></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </li>
+
+    <li>
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="cart-container" data-controller="SeasonShoppingCart">@*{ Html.RenderAction("CartSummary", @cartControllerName); } *@</li>
+                </ul>
+            }
+        }
+        else
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink(@Header.Signin, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+            </ul>
+        }
+    </li>
+</ul>
+

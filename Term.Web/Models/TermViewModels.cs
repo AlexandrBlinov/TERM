@@ -263,7 +263,7 @@ namespace YstTerm.Models
 
         // остаток
         public int Rest { get; set; }
-
+        
 
         // остаток на другом складе (если склад не привязан, то 0 )
         public int RestOtherStock { get; set; }
@@ -610,6 +610,9 @@ namespace YstTerm.Models
         [StringLength(10)]
         [DisplayName("Диаметр")]
         public string Diametr { get; set; }
+
+        [StringLength(10)]
+        public string WidthAnalog { get; set; }
     }
 
     /// <summary>
@@ -775,7 +778,9 @@ namespace YstTerm.Models
         public bool HasSteelOffers { get; set; }
         public bool HasAlloyOffers { get; set; }
         public bool IsForeign { get; set; }
-      
+        [DefaultValue(false)]
+        public bool OnProduction { get; set; }
+
     }
     
     /// <summary>
@@ -945,6 +950,7 @@ namespace YstTerm.Models
         public int CustomDutyVal { get; set; }
         public int VatVal { get; set; }
         public string LatLng { get; set; }
+        public bool ShowOnlySeasonOrder { get; set; }
     }
 
 
@@ -1102,7 +1108,6 @@ namespace YstTerm.Models
         public string Language { get; set; }
 
         
-        [Required(ErrorMessage = "Заполните поле сайт вашей компании")]
         public string WebSite { get; set; }
 
         [EmailAddress]
@@ -1143,6 +1148,9 @@ namespace YstTerm.Models
 
         [DefaultValue(false)]
         public bool IsForeignAndMainTerminal { get; set; }
+
+        [DefaultValue(false)]
+        public bool ShowOnlySeasonOrder { get; set; }
     }
 
     #endregion
