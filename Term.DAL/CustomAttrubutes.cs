@@ -28,9 +28,17 @@ namespace Term.CustomAttributes
 
         public override bool IsValid(object value)
         {
-            if (value == null) return true;
+            DateTime val;
+            if (value ==null) return true;
 
-            DateTime val = (DateTime)value;
+            try
+            {
+                val = (DateTime)value;
+            }
+            catch
+            {
+                return true;
+            }
 
             return val >= _begin && val <= _end;
 

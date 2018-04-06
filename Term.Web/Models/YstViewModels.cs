@@ -115,7 +115,7 @@ namespace Yst.ViewModels
 
         [DisplayName(@"Дата отгрузки")]
         [DataType(DataType.Date)]
-        [ValidateDate(0, 7)]
+        [ValidateDate(0, 10)]
         public DateTime? DeliveryDate
         { get; set; }
 
