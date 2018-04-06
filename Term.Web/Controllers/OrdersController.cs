@@ -55,7 +55,7 @@ namespace Term.Web.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult List(OrdersViewModel model)
+        public ActionResult List(OrdersViewModelForList model)
         {
          
             _isPartner = ServicePP.IsPartner;
@@ -64,7 +64,11 @@ namespace Term.Web.Controllers
             ViewBag.IsForeign =Partner.IsForeign;
             ViewBag.CurrentPointId = base.Point.PartnerPointId;
 
-                  if (_isPartner) // PartnerId is set too
+            model.AddressesIds = _orderService.AddressesOfDelivery;
+            model.TkIds = _orderService.TkIds;
+            model.SelfDeliveryIds = _orderService.SelfDeliveryAddresses;
+
+            if (_isPartner) // PartnerId is set too
                    {
                        model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
                       _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);

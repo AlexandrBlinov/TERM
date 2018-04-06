@@ -108,6 +108,43 @@ namespace Term.Web.Models
     }
 
     /// <summary>
+    /// Расширенная модель для списка заказов
+    /// </summary>
+    public class OrdersViewModelForList : OrdersViewModel
+    {
+        // список адресов
+        public SelectList AddressesIds { get; set; }
+
+        // список трансп-х компаний
+        public SelectList TkIds { get; set; }
+
+        // Id самодоставки
+        public SelectList SelfDeliveryIds { get; set; }
+
+        // идентификатор 1С адреса доставки ( не dpd)
+        public string AddressId { get; set; }
+
+        public string TkId { get; set; }
+
+        public string SelfDeliveryId { get; set; }
+
+
+        // способ доставки 1- самовывоз, 0- доставка наша, 2 - доставка dpd
+        public int WayOfDelivery { get; set; }
+
+
+        [DisplayName(@"Дата отгрузки")]
+        [DataType(DataType.Date)]
+          public DateTime? DeliveryDate  { get; set; }
+
+        public DayOfWeekToDeliver DayOfWeekToDeliver { get; set; }
+
+        public string LogistikDepartment { get; } = "00005";
+
+
+    }
+
+    /// <summary>
     /// Модель журнала возврата товаров
     /// </summary>
 

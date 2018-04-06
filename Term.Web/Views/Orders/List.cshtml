@@ -1,12 +1,26 @@
-﻿@model  Term.Web.Models.OrdersViewModel
+﻿@model  Term.Web.Models.OrdersViewModelForList
 @using Term.Web.Views.Resources;
 @using Term.Utils;
+@using Yst.ViewModels;
 
 @{
     ViewBag.Title = CartAndOrders.ListOfOrders;
     string invisAddStock = "";
-    string colorNewOrder="";
+    /*string colorNewOrder = "";*/
     if (!ViewBag.IsForeign) { invisAddStock = "invisibleAddStock"; }
+
+    /*string invisReservOrShipment = (ViewBag.IsForeign || ViewBag.HasitemsOnWay) ? "hidden" : "";*/
+    string invisReservOrShipment = "";
+
+    string notDisplay = "display: none;";
+
+
+    // Переменные для доставки DPD
+
+
+    string hiddensectionTransportContainer = !Model.IsDeliveryByTk ? notDisplay : "";
+    string hiddenAddress = "";
+    string hiddenTk = "";
 }
 
 <h2 class="border-form-podbor search-order-title">@ForSearchResult.ChooseOrders</h2>
@@ -68,19 +82,19 @@
             <div class="col-xs-12 col-sm-3">
                 <label class="search-order-label">@CartAndOrders.ByProduct</label>
                 <div>
-                    @Html.TextBoxFor(p => p.ProductName, new {@class = "form-control",  @placeholder = @ForSearchResult.CodeOrArt})
+                    @Html.TextBoxFor(p => p.ProductName, new { @class = "form-control", @placeholder = @ForSearchResult.CodeOrArt })
                 </div>
             </div>
-          @if (!ViewBag.IsForeign)
-          {
-              <div class="col-xs-12 col-sm-3">
-                  
-                  <label class="search-order-label">Доставка DPD</label>
-                  <div class="p-t-5">
-                      @Html.CheckBoxFor(m => m.IsDeliveryByTk)
-                  </div>
-              </div>
-          }
+            @if (!ViewBag.IsForeign)
+            {
+                <div class="col-xs-12 col-sm-3">
+
+                    <label class="search-order-label">Доставка DPD</label>
+                    <div class="p-t-5">
+                        @Html.CheckBoxFor(m => m.IsDeliveryByTk)
+                    </div>
+                </div>
+            }
             <div class="col-xs-12 text-center search-order-btn">
                 <button class="form-podbor-btn-submit" type="submit">@CartAndOrders.Filter</button>
             </div>
@@ -91,208 +105,6 @@
 
         <span class="order-table-header">@CartAndOrders.ListOfOrders</span>
         @Html.PagedListPager(Model.Orders, page => Url.Action("List", new
-    {
-        page,
-        PointId = Model.PointId,
-        DepartmentId = Model.DepartmentId,
-        BeginDate = Model.BeginDate.ValueForPaginator(),
-        EndDate = Model.EndDate.ValueForPaginator(),
-        StatusId = Model.StatusId,
-        ProductName = Model.ProductName
-    }),
-    new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
-    </div>
-
-    <div>
-        <div class="psevdo-select psevdo-select-dispos">
-            <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
-            @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
-        </div>
-
-
-    </div>
-}
-<table id="table-orders" class="data-table order-table">
-    <thead>
-        <tr>
-            <th>
-                @CartAndOrders.Point
-            </th>
-            <th>
-                @CartAndOrders.NumberInDatabase
-            </th>
-            <th class="@invisAddStock">
-                @CartAndOrders.Department
-            </th>
-            <th>
-                @CartAndOrders.Status
-            </th>
-@if (ViewBag.IsPartner)
-{
-            <th>
-                @CartAndOrders.TotalSum
-            </th>
-}
-            <th>
-                @CartAndOrders.TotalClient
-            </th>
-            <th>
-                @CartAndOrders.DateOrder
-            </th>
-            <th>
-                @CartAndOrders.DateShipment
-            </th>
-            <th>
-                @CartAndOrders.DateOfPayment
-            </th>
-            <th>
-                @CartAndOrders.Comment
-            </th>
-            <th>
-                @ForSearchResult.Action
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model.Orders)
-        {
-            <tr class="js-open-orderInList @colorNewOrder" data-idlink="@order.NumberIn1S">
-                <td>
-                    @Html.ActionLink(order.Point.InternalName, "Edit", "Partner", new {PointId = order.PointId}, null)
-                    <br/>
-
-                    @if (order.IsDeliveryByTk)
-                    {
-                        <i class="icon-dpd"></i>
-                    }
-                </td>
-                <td>
-                    <span class="open_order" data-idlink="@order.NumberIn1S">@Html.DisplayFor(modelItem => order.NumberIn1S)</span>
-                </td>
-                <td class="@invisAddStock">
-
-                    @Html.DisplayFor(modelItem => order.Department.Name)
-                </td>
-
-                <td>
-                    @Html.OrderStatusWithColor(order.OrderStatus)
-
-                    @if (order.IsJoined)
-                    { <span class="label label-success">@CartAndOrders.CombinedOrder</span> }
-                </td>
-                @if (ViewBag.IsPartner)
-                {
-                <td class="price-filds">
-                    @Html.DisplayFor(modelItem => order.Total)
-                </td>
-                }
-                <td class="price-filds">
-                    @if (ViewBag.IsPartner)
-                    {@(order.PointId == ViewBag.CurrentPointId ? order.TotalOfClient : order.TotalOfPoint)
-                    }
-                    else
-                    {
-                        @order.TotalOfClient
-                    }
-
-                   
-                </td>
-                <td>
-                    @order.OrderDate.ToShortDateString()
-                </td>
-                <td>
-                    @{
-                        string deliveryDate;
-                        if (order.isReserve)
-                        {
-                            deliveryDate = @CartAndOrders.ReservedTill + " " + order.OrderDate.AddDays(7).ToShortDateString();
-                        }
-                        else
-                        {
-                            deliveryDate = order.DeliveryDate.HasValue ? ((DateTime) order.DeliveryDate).ToShortDateString() : String.Empty;
-                        }
-                    }
-
-                    @(deliveryDate)
-                </td>
-                <td>
-                    @{var dateOfPayment = order.DateOfPayment.HasValue ? ((DateTime) order.DateOfPayment).ToShortDateString() : String.Empty; }
-                    @(dateOfPayment)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => order.Comments)
-
-
-                </td>
-                <td>
-                    @Html.ActionLink(@CartAndOrders.Details, "Details", new {guid = order.GuidIn1S}, new {@class = "order-table-details"})
-                </td>
-            </tr>
-            if (ViewBag.IsPartner)
-             {
-                 <tr class="invisible" data-idsource="@order.NumberIn1S" id="collapse-@(order.GuidIn1S)">
-                     <td colspan="10">
-                         <div class="row head_order_details">
-                             <div class="col-xs-1">
-                                 №
-                             </div>
-                             <div class="col-xs-2">
-                                 @ForSearchResult.Article
-                             </div>
-                             <div class="col-xs-1">
-                                 @ForSearchResult.StockNumber
-                             </div>
-                             <div class="col-xs-6">
-                                 @ForSearchResult.ProductName
-                             </div>
-
-                             <div class="col-xs-1">
-                                 @ForSearchResult.Available
-                             </div>
-                             <div class="col-xs-1">
-                                 @ForSearchResult.Price
-                             </div>
-                         </div>
-                         @{ var i = 0; }
-
-                         @foreach (var detail in order.OrderDetails)
-                         {
-                         i++;
-                        /* var bg = "";
-                         if (i%2 != 0)
-                         {
-                         bg = "background_order_details";
-                         }
-                         */
-                         <div class="row">
-                             <div class="col-xs-1">@i</div>
-                             <div class="col-xs-2">@detail.Product.Article</div>
-                             <div class="col-xs-1">@detail.Product.ProductId</div>
-                             <div class="col-xs-6 name_order_details">@detail.Product.Name</div>
-
-                             <div class="col-xs-1">@detail.Count</div>
-                             <div class="col-xs-1">@detail.Price</div>
-                         </div>
-                         }
-                         
-                     </td>
-                 </tr>
-             }
-        }
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-    <div class="m-t-15">
-
-        @Html.PagedListPager(Model.Orders, page => Url.Action("List", new
         {
             page,
             PointId = Model.PointId,
@@ -302,22 +114,497 @@
             StatusId = Model.StatusId,
             ProductName = Model.ProductName
         }),
-        new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+                   new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
     </div>
 
-    @section Scripts {
-        <script>
-            
-            // Подключаем iCheck Для radiobutton 
-            $(function () {
-                $('[type=radio],[type=checkbox]').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue'
-                });
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="pull-left expand-collapse__container-for-orderlist">
+                <a href="#" class="dashed-element__link js-expand-orders" data-title-collapse="Свернуть все" data-title-expand="Развернуть все">Развернуть все</a>
+                <a href="#" class="dashed-element__link js-display-todo-items" data-stage-id="1" data-title-stage2="Оформить на отгрузку" data-title-expand="Развернуть все">Поставить к отгрузке</a>
+            </div>
 
-                
-                
-            }())
-           
-        </script>
+
+            <div class="psevdo-select psevdo-select-dispos">
+                <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+            </div>
+
+        </div>
+    </div>
+}
+
+
+
+<!-- Новый вывод addon -->
+<div id="table-orders" class="data-table order-table  addon">
+
+    <div class="thead hidden-xs">
+
+        <div class="col-md-1 col-sm-1">@CartAndOrders.Point</div>
+        <div class="col-md-2 col-sm-2">@CartAndOrders.NumberInDatabase</div>
+        <div class="col-md-1 col-sm-1"> @CartAndOrders.Status</div>
+        @if (ViewBag.IsPartner)
+        {
+            <div class="col-md-1 col-sm-1">
+                @CartAndOrders.TotalSum
+            </div>
+        }
+
+        <div class="col-md-1 col-sm-1">@CartAndOrders.TotalClient</div>
+        <div class="col-md-1 col-sm-1"> @CartAndOrders.DateOrder</div>
+        <div class="col-md-1 col-sm-1">@CartAndOrders.DateShipment</div>
+        <div class="col-md-1 col-sm-1">@CartAndOrders.DateOfPayment</div>
+        <div class="col-md-2 col-sm-2">@CartAndOrders.Comment</div>
+        <div class="col-md-1 col-sm-1">@ForSearchResult.Action</div>
+
+    </div>
+
+    @foreach (var order in Model.Orders)
+    {
+
+        <div class="order-item-container">
+            <div class="order-item">
+                <div class="col-md-1 col-sm-1">
+                    @*Html.ActionLink(order.Point.InternalName, "Edit", "Partner", new { PointId = order.PointId }, null) *@
+                    <input type="checkbox" name="order-item-todo" data-id="@(order.GuidIn1S)" class="order-item-todo">
+                    @order.Point.InternalName
+                    <br />
+                    @if (order.IsDeliveryByTk)
+                    {
+                        <i class="icon-dpd"></i>
+                    }
+                </div>
+                <div class="col-md-2 col-sm-2"> <span class="open_order" data-toggle="collapse" data-target="#collapse-button-@(order.GuidIn1S)"> @order.NumberIn1S </span> </div>
+                <div class="invisibleAddStock">  @Html.DisplayFor(modelItem => order.Department.Name) </div>
+                <div class="col-md-1 col-sm-1 text">
+
+                    @Html.OrderStatusWithColor(order.OrderStatus)
+                    @if (order.IsJoined)
+                    {<span class="label label-success">@CartAndOrders.CombinedOrder</span>}
+
+                </div>
+
+                @if (ViewBag.IsPartner)
+                {
+                    <div class="col-md-1 col-sm-1 price-filds">
+                        @Html.DisplayFor(modelItem => order.Total)
+                    </div>
+                }
+
+
+                <div class="col-md-1 col-sm-1 price-filds">
+                    @if (ViewBag.IsPartner)
+                    {@(order.PointId == ViewBag.CurrentPointId ? order.TotalOfClient : order.TotalOfPoint)
+                }
+                else
+                {
+                    @order.TotalOfClient
+                }
+                </div>
+
+                <div class="col-md-1 col-sm-1">   @order.OrderDate.ToShortDateString() </div>
+                <div class="col-md-1 col-sm-1 reserve">
+                    @{
+                        string deliveryDate;
+                        if (order.isReserve)
+                        {
+                            deliveryDate = @CartAndOrders.ReservedTill + " " + order.OrderDate.AddDays(7).ToShortDateString();
+                        }
+                        else
+                        {
+                            deliveryDate = order.DeliveryDate.HasValue ? ((DateTime)order.DeliveryDate).ToShortDateString() : String.Empty;
+                        }
+                    }
+
+                    @(deliveryDate)
+
+                </div>
+                <div class="col-md-1 col-sm-1">
+                    @{var dateOfPayment = order.DateOfPayment.HasValue ? ((DateTime)order.DateOfPayment).ToShortDateString() : String.Empty; }
+                    @(dateOfPayment)
+                </div>
+                <div class="col-md-2 col-sm-2">  Terminal:  </div>
+                <div class="col-md-1 col-sm-1">
+                    @Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = order.GuidIn1S }, new { @class = "order-table-details" })
+                </div>
+
+            </div>
+
+
+            <div class="order-item-products collapse" id="collapse-button-@(order.GuidIn1S)">
+
+                <div class="row order-item-products__header">
+                    <div class="col-xs-1">  № </div>
+                    <div class="col-xs-2">    @ForSearchResult.Article  </div>
+                    <div class="col-xs-1">   @ForSearchResult.StockNumber  </div>
+                    <div class="col-xs-6">  @ForSearchResult.ProductName </div>
+
+                    <div class="col-xs-1">    @ForSearchResult.Available </div>
+                    <div class="col-xs-1">    @ForSearchResult.Price </div>
+                </div>
+
+
+                @{ var i = 0; }
+
+                @foreach (var detail in order.OrderDetails)
+                {
+                    i++;
+                    <div class="row order-item-products__contents">
+                        <div class="col-xs-1">@i</div>
+                        <div class="col-xs-2">@detail.Product.Article</div>
+                        <div class="col-xs-1">@detail.ProductId</div>
+                        <div class="col-xs-6 name_order_details">@detail.Product.Name</div>
+
+                        <div class="col-xs-1">@detail.Count</div>
+                        <div class="col-xs-1">@detail.Price</div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
     }
+
+</div>
+
+
+
+<div class="m-t-15">
+
+    @Html.PagedListPager(Model.Orders, page => Url.Action("List", new
+    {
+        page,
+        PointId = Model.PointId,
+        DepartmentId = Model.DepartmentId,
+        BeginDate = Model.BeginDate.ValueForPaginator(),
+        EndDate = Model.EndDate.ValueForPaginator(),
+        StatusId = Model.StatusId,
+        ProductName = Model.ProductName
+    }),
+                 new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal_make-to-load">
+    <div class="modal-dialog modal_make-to-load" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Выберите дату отгрузки и способ доставки</h4>
+            </div>
+            <div class="modal-body modal__make-to-load">
+                <div class="row">
+                    <div class="col-xs-12  @invisReservOrShipment">
+                        <div class="row m-b-20">
+                            <div class="col-md-3" id="deliverydate_container">
+
+                                <div class="input-group js-datefor-shipment">
+                                    @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control cart-date-control", data_val_requiredifnotcheched = CartAndOrders.ErrorShipmentDate, data_val_requiredifnotcheched_id = "isDelivery" })
+                                    <span class="input-group-addon date-pick-btn">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+
+                                </div>
+                                @Html.HiddenFor(m => m.LogistikDepartment)
+                                <span class="b-control-hint">дата отгрузки со склада ЯШТ</span>
+                            </div>
+
+                            <div class="col-md-3" id="dayofweektodeliver_container" style="display: none;">
+                                <div class="cart-unload_block">
+                                    <div class="form-group">
+                                        <h5 class="cart-property__caption">выгрузка</h5>
+                                    </div>
+                                    <div class="form-group inline-block">
+                                        @Html.RadioButtonFor(m => m.DayOfWeekToDeliver, DayOfWeekToDeliver.Saturday, new { @id = "isSaturday" })
+                                        <label class="cart-label m-t-5" for="isSaturday">в субботу</label>
+
+                                    </div>
+                                    <div class="form-group inline-block">
+                                        @Html.RadioButtonFor(m => m.DayOfWeekToDeliver, DayOfWeekToDeliver.Monday, new { @id = "isMonday" })
+                                        <label class="cart-label m-t-5" for="isMonday">в понедельник</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <hr class="cart-divider" />
+                    </div>
+                </div>
+
+                <section class="row cart-properties js-cart js-wayofdelivery">
+                    <!-- <div class="col-xs-12">
+                         <hr class="cart-divider" />
+                     </div>-->
+                    <!--Способ доставки  доставка  самовывоз или dpd-->
+
+                    <div class="col-xs-12 border-bottom">
+                        <div class="row m-b-20">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12 cart-property__header">
+                                        <span class="cart-property__caption">  Способ доставки </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 no-border">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(m => m.WayOfDelivery, 0, new { @id = "isDeliveryByOwnTransport" })
+                                        <label class="cart-label m-t-5 m-b-10" for="isDeliveryByOwnTransport">Доставка силами Яршинторг</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="address-container" style="@hiddenAddress">
+                                            @Html.DropDownListFor(p => p.AddressId, Model.AddressesIds, "выберите адрес доставки", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(m => m.WayOfDelivery, 1, new { @id = "isSelfDelivery" })
+                                        <label class="cart-label m-t-5 m-b-10" for="isSelfDelivery">Самовывоз</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (Model.SelfDeliveryIds != null && Model.SelfDeliveryIds.Any())
+                                        {
+                                            <div class="selfDelivery-container" style="display: none;">
+                                                @Html.DropDownListFor(p => p.SelfDeliveryId, Model.SelfDeliveryIds, "выберите адрес доставки", new { @class = "form-control" })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @Html.RadioButtonFor(m => m.WayOfDelivery, 3, new { @id = "isTransportCompany" })
+                                        <label class="cart-label m-t-5 m-b-10" for="isTransportCompany">транспортной компанией</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="tk-container" style="@hiddenTk">
+                                            @Html.DropDownListFor(p => p.TkId, Model.TkIds, "выберите транспортную компанию", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+@section Scripts {
+    <script>
+
+
+
+        function updateDatepicker() {
+
+            var workingDepartmentCodes = ["00005", "00112", "00106"];
+            var enabledDates = [];
+            var picker = $('.js-datefor-shipment').data("DateTimePicker");
+            var $ld = $("#LogistikDepartment").val();
+            if (!$ld || workingDepartmentCodes.indexOf($ld) < 0) return;
+
+            var addressId = $('#AddressId').val();
+            if (addressId && isAdmin) {
+                $.get('/orders/GetDatesOfShipment', { "addressId": addressId })
+                    .done(function (data) {
+
+                        var result = data.result;
+                        for (var i = 0; i < result.length; i++) {
+
+                            var newDate = dateUtils.dateFromString(result[i]);
+                            enabledDates.push(newDate);
+                        }
+
+
+                        picker.options({ 'enabledDates': enabledDates });
+                        if (Array.isArray(enabledDates) && enabledDates.length > 0) {
+                            picker.date(enabledDates[0]);
+
+                            //   console.log(enabledDates[0]);
+                        }
+                        hideOrShowDayofWeekToDeliver();
+                    })
+                    .fail(function (xhr, status) {
+                        console.error(xhr.responseText);
+                    });
+
+            }
+
+
+        }
+
+        function hideOrShowDayofWeekToDeliver() {
+            var Friday = 5;
+            var WordToSearch = 'моск';
+            var container = $('#dayofweektodeliver_container');
+            if ($("#isDelivery").is(':checked') && $('#isDeliveryByOwnTransport').is(':checked')) {
+
+                var addr = $('#AddressId').find('option:selected');
+                if (addr && addr.text() && addr.text().toLowerCase().indexOf(WordToSearch) >= 0) {
+                    var d1 = $("#DeliveryDate").val();
+                    var d2 = dateUtils.dateFromString(d1);
+                    if (d2.getDay() === Friday) {
+                        container.show(); return;
+                    }
+                }
+            }
+
+            container.hide();
+            //return false;
+        }
+
+        // Подключаем iCheck Для radiobutton
+        $(function () {
+
+            var enabledDates = [],
+                today = new Date();
+
+
+            
+
+            $('.js-datefor-shipment').datetimepicker({
+                format: 'DD.MM.YYYY',
+                locale: YstLocale.GetLocale("Culture"),
+                allowInputToggle: true,
+                showTodayButton: true,
+                defaultDate: today,
+                minDate: today,
+                showClear: false,
+                enabledDates: enabledDates
+
+            }).on('dp.change', function (event) {
+
+                hideOrShowDayofWeekToDeliver();
+             
+            });
+
+
+
+            (function init() {
+               /* var $deliveryDate = $("#DeliveryDate"),
+                    $deliverydate_container = $("#deliverydate_container"),
+                    $deliveryByTk_container = $('#deliveryByTk_container');
+
+                var $address_container = $('.address-container');
+
+                $deliverydate_container.removeClass('hidden');
+                // пока убираем
+                updateDatepicker();
+                $address_container.show('slow');
+                $('.js-wayofdelivery').show('slow'); */
+                updateDatepicker();
+                $('.tk-container').hide();
+
+            })();
+
+            ///
+            // выбор способа доставки
+            ///
+
+            $('[name=WayOfDelivery]').on('ifChecked', function (event) {
+                var $address_container = $('.address-container'),
+                    $tk_container = $('.tk-container'),
+                    $sdk = $('.selfDelivery-container'),
+                    $dcc = $('.dpd-calc-container');
+
+
+
+                switch (event.target.id) {
+                    case 'isDpdDelivery': {
+
+                        $address_container.hide('slow');
+                        $tk_container.hide('slow');
+                        $sdk.hide('slow');
+                        $dcc.show();
+                        break;
+                    }
+                    case 'isSelfDelivery': {
+                        $address_container.hide('slow');
+                        $tk_container.hide('slow');
+                        $sdk.show('slow');
+                        //   dpdModule.refuseFromDelivery();
+                        break;
+                    }
+                    case 'isTransportCompany':
+                        {
+
+                            $address_container.hide();
+                            $tk_container.show('slow');
+                            $sdk.hide();
+                            //         dpdModule.refuseFromDelivery();
+                            break;
+
+                        }
+                    default: // isDeliveryByOwnTransport
+                        {
+                            $address_container.show('slow');
+                            $tk_container.hide('slow');
+                            $sdk.hide('slow');
+                            //         dpdModule.refuseFromDelivery();
+                        }
+                }
+            });
+
+            // { Подключаем iCheck --
+            $('[name=IsDeliveryByTk]').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+            });
+
+            $('[name=WayOfDelivery]').iCheck({
+                radioClass: 'iradio_square-blue'
+            });
+            //}
+
+            $('.order-item-todo').on('change', function () {
+                var $el = $('.js-display-todo-items').first();
+                $el.data("stage-id", "3");
+                $el.text($el.data("title-stage2"));
+            });
+
+            $('.js-display-todo-items').on('click', function () {
+                $('.order-item-todo').show();
+                console.log($(this).data("stage-id"));
+                $(this).data("stage-id", "2");
+
+                return false;
+            });
+
+            $('.js-expand-orders').on('click', function () {
+
+                if (!$(this).hasClass('expanded')) {
+                    $('.order-item-products.collapse').addClass('in');
+                    $(this).addClass('expanded');
+                    $(this).text($(this).data('title-collapse'));
+                } else {
+                    $('.order-item-products.collapse').removeClass('in');
+                    $(this).removeClass('expanded');
+                    $(this).text($(this).data('title-expand'));
+                }
+                return false;
+            });
+
+            /*
+            $('.js-expand-orders').on('click', function () {
+
+                return false;
+            }); */
+
+        }())
+
+    </script>
+}

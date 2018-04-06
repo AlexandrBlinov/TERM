@@ -319,7 +319,7 @@ namespace Term.Web.HtmlHelpers
         public static MvcHtmlString OrderStatusWithColor(this HtmlHelper html, Enum enumValue )
         {
             TagBuilder tag = new TagBuilder("span");
-            tag.AddCssClass("mw104");
+         /*   tag.AddCssClass("mw104"); */
             tag.MergeAttribute("style", "color:green;");
             tag.InnerHtml = EnumDescriptionProvider.GetDescription(enumValue);
 
