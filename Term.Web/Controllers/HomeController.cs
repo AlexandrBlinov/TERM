@@ -340,7 +340,7 @@ namespace Term.Web.Controllers
        [ActionName("AppToCars")]
         public ActionResult ApplicationToCars(int Id,int exactsize=1)
         {
-            ViewBag.CarsOfProducts = Products.GetCarsFromProduct(Id,exactsize);
+            ViewBag.CarsOfProducts = Products.GetCarsFromProduct(Id,exactsize,  Products.GetModifications);
             return PartialView("_AppToCars");
         }
       
@@ -407,7 +407,7 @@ namespace Term.Web.Controllers
 
                 ViewBag.ProductProperties = productProperties;
                 ViewBag.CountPhoto = Products.GetCountOfAddPhoto(product.PathToRemotePicture);
-                if (product.ProductType == ProductType.Disk  || (product.ProductType == ProductType.Tyre && product.Tiporazmer!=null && !product.Tiporazmer.Diametr.Contains("C"))) ViewBag.CarsOfProducts = Products.GetCarsFromProduct(Id);
+                if (product.ProductType == ProductType.Disk  || (product.ProductType == ProductType.Tyre && product.Tiporazmer!=null && !product.Tiporazmer.Diametr.Contains("C"))) ViewBag.CarsOfProducts = Products.GetCarsFromProduct(Id,0, Products.GetModifications);
                     
                 if (Defaults.CargoWheelsProducers.Contains(product.ProducerId.ToString())) ViewBag.CarsFromCargoWheels = Products.GetCarsFromCargoWheels(product.Article);
                 

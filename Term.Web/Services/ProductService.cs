@@ -422,7 +422,7 @@ namespace Yst.Services
         /// </summary>
         /// <param name="carRecords"></param>
         /// <returns></returns>
-        private string GetModifications(IEnumerable<CarRecordViewDetail> carRecords)
+        public string GetModifications(IEnumerable<CarRecordViewDetail> carRecords)
         {
             Func<int, string> valToAdd = x => (x > 0) ? ", " : String.Empty;
 
@@ -487,13 +487,39 @@ namespace Yst.Services
 
         }
 
-        public Dictionary<string, string> GetCarsFromProduct(int Id, int exactsize = 0)
+        /// <summary>
+        /// Если число авто больше Defaults.NumberOfApplicationOfCarsToLimit, 
+        /// то возвращается применяемость не более чем 5 лет с текущего года
+        /// 
+        /// </summary>
+        private void GetCarRecordsReduced(CarRecordViewDetail[] carRecordsMain)
         {
-            var product = GetProduct(Id);
-            string vendorForProduct = string.Empty;
-            if (Defaults.ReplicaWheelsProducers.Contains(product.ProducerId.ToString()) && product.ProductType == ProductType.Disk)
+            if (carRecordsMain.Length > Defaults.NumberOfApplicationOfCarsToLimit)
             {
-                var modelName = product.Model == null ? String.Empty : product.Model.Name;
+               var newRecords = carRecordsMain.Where(p => p.EndYear <= DateTime.Now.Year && p.EndYear >= DateTime.Now.Year - Defaults.NumberOfApplicationOfYearsToLimit).ToArray();
+                if (newRecords.Length > 0) carRecordsMain = newRecords;
+            }
+        }
+
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="productId">Код товара</param>
+       /// <param name="exactsize">0 - с допуском, 1 - точное совпадение</param>
+       /// <param name="funcToFormat"> функция для форматирования</param>
+       /// <returns></returns>
+        public Dictionary<string, string> GetCarsFromProduct(int productId, int exactsize , Func<IEnumerable<CarRecordViewDetail>,string> funcToFormat)
+        {
+            var product = GetProduct(productId);
+
+          var producerId= $"{ product?.ProducerId}";
+
+            string vendorForProduct = string.Empty;
+            string[] replicaWheelProducers = Defaults.ReplicaWheelsProducers.Split(Defaults.CommaSign);
+            // если 
+            if (replicaWheelProducers.Contains(producerId) && product.ProductType == ProductType.Disk)
+            {
+                var modelName = product.Model?.Name ;
                 var digitsArray = string.Join("", Enumerable.Range(0, 10).Select(i => i.ToString()).ToArray()).ToCharArray();
                 var modelname = modelName.Replace("_Concept-", "").Replace("-S", "").Trim(digitsArray).Trim();
                 // var modelname = modelName.Trim(new Char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Replace("_Concept-", "").Trim();
@@ -502,48 +528,49 @@ namespace Yst.Services
 
             var vendorsAndModifications = new Dictionary<string, string>();
 
-            string result = String.Empty;
+         //   string result = String.Empty;
             string sqltext = @"EXEC spGetCarsFromProduct {0},{1}";
 
-            var carRecords = DbContext.Database.SqlQuery<CarRecordViewDetail>(sqltext, Id, exactsize).ToArray();
+            var carRecords = DbContext.Database.SqlQuery<CarRecordViewDetail>(sqltext, productId, exactsize).ToArray();
+            // основной 
             var carRecordsMain = carRecords.Where(p => p.Rear == 0).ToArray();
+
+            // задний 
             var carRecordsRear = carRecords.Where(p => p.Rear == 1).ToArray();
 
-            if (exactsize == 1 && Defaults.ReplicaWheelsProducers.Contains(product.ProducerId.ToString()) && product.ProductType == ProductType.Disk)
+            if (exactsize == 1 && replicaWheelProducers.Contains(producerId) && product.ProductType == ProductType.Disk)
             {
                 var newRecords = carRecordsMain.Where(p => p.VendorName == vendorForProduct).ToArray();
                 if (newRecords.Length > 0) carRecordsMain = newRecords;
-                if (carRecordsMain.Length > 15)
-                {
-                    newRecords = carRecordsMain.Where(p => p.EndYear <= DateTime.Now.Year && p.EndYear >= DateTime.Now.Year - 5).ToArray();
-                    if (newRecords.Length > 0) carRecordsMain = newRecords;
-                }
+                GetCarRecordsReduced(carRecordsMain);
             }
-            if (exactsize == 1 && !Defaults.ReplicaWheelsProducers.Contains(product.ProducerId.ToString()) && product.ProductType == ProductType.Disk)
-            {
-                if (carRecordsMain.Length > 15)
-                {
-                    var newRecords = carRecordsMain.Where(p => p.EndYear <= DateTime.Now.Year && p.EndYear >= DateTime.Now.Year - 5).ToArray();
-                    if (newRecords.Length > 0) carRecordsMain = newRecords;
-                }
-            }
-            if (exactsize == 0 && product.ProductType == ProductType.Disk)
-            {
-                if (carRecordsMain.Length > 15)
-                {
-                    var newRecords = carRecordsMain.Where(p => p.EndYear <= DateTime.Now.Year && p.EndYear >= DateTime.Now.Year - 5).ToArray();
-                    if (newRecords.Length > 0) carRecordsMain = newRecords;
-                }
-            }
+            if (exactsize == 1 && !replicaWheelProducers.Contains(producerId) && product.ProductType == ProductType.Disk)   GetCarRecordsReduced(carRecordsMain);
+            
+            if (exactsize == 0 && product.ProductType == ProductType.Disk) GetCarRecordsReduced(carRecordsMain);
+            
+
             var carRecordsFinish = carRecordsMain.Concat(carRecordsRear).OrderBy(p => p.CarName).ToArray();
             var vendors = carRecordsFinish.Select(p => p.VendorName).Distinct().ToArray();
 
+             
+            foreach (var vendor in vendors)
+            {
+                //   func = GetModifications(carRecordsFinish.Where(p => p.VendorName == vendor).ToArray();
+               var data= funcToFormat(carRecordsFinish.Where(p => p.VendorName == vendor).ToArray());
+                vendorsAndModifications.Add(vendor, data); /*GetModifications(carRecordsFinish.Where(p => p.VendorName == vendor).ToArray() )*/
 
-            foreach (var vendor in vendors) vendorsAndModifications.Add(vendor, GetModifications(carRecordsFinish.Where(p => p.VendorName == vendor).ToArray()));
+            }
 
             return vendorsAndModifications;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IsBolts"></param>
+        /// <param name="Bolts"></param>
+        /// <returns></returns>
         public Dictionary<string, string> GetCarsFromOthersProduct(bool IsBolts, string Bolts)
         {
             Dictionary<string, string> vendorsAndModifications = new Dictionary<string, string>();

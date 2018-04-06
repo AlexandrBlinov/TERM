@@ -13,7 +13,10 @@ namespace YstProject.Services
     /// </summary>
     public static class Defaults
     {
-        
+
+        public static readonly int NumberOfApplicationOfCarsToLimit = 15;
+        public static readonly int NumberOfApplicationOfYearsToLimit = 5;
+
         public static readonly int[] ProducersIdToRestrict = new[] {100, 517, 65};
 
         public static readonly Producer[] ProducersForgedWheels = new[]
