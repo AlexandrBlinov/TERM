@@ -87,6 +87,7 @@ namespace Term.Web.Controllers.API
         /// <returns></returns>
         public string GetModifications2(IEnumerable<CarRecordViewDetail> carRecords)
         {
+            Char space = ' ';
             Func<int, string> valToAdd = x => (x > 0) ? "; " : String.Empty;
 
             var result = new StringBuilder();
@@ -96,10 +97,20 @@ namespace Term.Web.Controllers.API
            
             foreach (var carRecord in carRecords)
             {
-                int endYear;
+                string vendorName = String.Empty;
+                string carName = String.Empty;
+
                 result.Append(valToAdd(counter));
-                endYear = carRecord.EndYear == 0 ? endYear = DateTime.Now.Year : endYear = carRecord.EndYear;
-                result.Append($"{carRecord.VendorName} {carRecord.CarName} {carRecord.ModificationName} {carRecord.BeginYear}-{carRecord.EndYear}");
+                
+               string endYear= carRecord.EndYear == 0 || carRecord.EndYear == DateTime.Now.Year ? String.Empty: carRecord.EndYear.ToString();
+
+               if (!String.IsNullOrEmpty(carRecord.VendorName) && !carRecord.ModificationName.Contains(carRecord.VendorName.Trim())) vendorName = carRecord.VendorName +space;
+
+                if (!String.IsNullOrEmpty(carRecord.CarName) && !carRecord.ModificationName.Contains(carRecord.CarName.Trim())) carName = carRecord.CarName+space;
+
+
+                var resultString = $"{vendorName}{carName}{carRecord.ModificationName} {carRecord.BeginYear}-{endYear}";
+                result.Append(resultString);
                 counter++;
             }
             return result.ToString();
