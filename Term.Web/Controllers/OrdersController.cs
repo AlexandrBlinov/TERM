@@ -44,7 +44,26 @@ namespace Term.Web.Controllers
             _deliveryCostService = deliveryCostService;
         }
 
-       
+
+        private  ActionResult ReturnModelErrorsAsJson()
+        {
+            var errorList = ModelState
+           .Where(x => x.Value.Errors.Count > 0)
+           .ToDictionary(
+               kvp => kvp.Key,
+               kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+           );
+            return Json(
+           new
+           { Success = false, Element = errorList.First().Key, Text = errorList.First().Value[0] });
+        }
+
+        private void InitiateViewBag()
+        {
+            _isPartner = ServicePP.IsPartner;
+            ViewBag.IsPartner = _isPartner;
+            ViewBag.IsForeign = Partner.IsForeign;
+        }
 
         //
         // FOR USER TO SEE OWN ORDERS
@@ -55,16 +74,20 @@ namespace Term.Web.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public ActionResult List(OrdersViewModel model)
+        public ActionResult List(OrdersViewModelForList model)
         {
-         
-            _isPartner = ServicePP.IsPartner;
-            ViewBag.IsPartner = _isPartner;
-        
-            ViewBag.IsForeign =Partner.IsForeign;
+            InitiateViewBag();
+           
+          
             ViewBag.CurrentPointId = base.Point.PartnerPointId;
 
-                  if (_isPartner) // PartnerId is set too
+            model.AddressesIds = _orderService.AddressesOfDelivery;
+            model.TkIds = _orderService.TkIds;
+            model.SelfDeliveryIds = _orderService.SelfDeliveryAddresses;
+            model.AddressId = _orderService.GetDefaultAddressId(Partner.PartnerId, Point.PartnerPointId);
+            model.LogistikDepartment = !Partner.IsForeign && !String.IsNullOrEmpty(Partner.LogistikDepartment) ? Partner.LogistikDepartment : null;
+
+            if (_isPartner) // PartnerId is set too
                    {
                        model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
                       _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
@@ -90,14 +113,12 @@ namespace Term.Web.Controllers
 
         public async Task<ActionResult> Details(Guid guid)
         {
-            _isPartner = ServicePP.IsPartner;
+            InitiateViewBag();
+
+            
                 ViewBag.OrderInfo = String.Empty;
                 if (TempData["neworder"] != null) ViewBag.OrderInfo = CartAndOrders.NewOrderCreated;
 
-           
-                ViewBag.IsPartner = ServicePP.IsPartner;
-                ViewBag.IsForeign = Partner.IsForeign;
-             
                
 
                var order =  await  _orderService.GetOrderByGuidAsync(guid);
@@ -150,7 +171,8 @@ namespace Term.Web.Controllers
         /// <returns></returns>
         public async Task<ActionResult> Bill(Guid guid,bool? showPicture)
         {
-            _isPartner = ServicePP.IsPartner;
+            //  _isPartner = ServicePP.IsPartner;
+            InitiateViewBag();
             Order order = await _orderService.GetOrderByGuidAsync(guid);
 
             if (_orderService.CheckIfCanCancelOrder(order, out errorMessage))
@@ -186,8 +208,8 @@ namespace Term.Web.Controllers
         /// <returns></returns>
         public ActionResult DpdErrand(Guid guid)
         {
-
-            _isPartner = ServicePP.IsPartner;
+            InitiateViewBag();
+           // _isPartner = ServicePP.IsPartner;
             Order order = _orderService.GetOrderByGuid(guid);
 
 
@@ -248,7 +270,8 @@ namespace Term.Web.Controllers
         public async  Task <ActionResult> DpdCancelOrder(Guid guid)
         {
 
-            _isPartner = ServicePP.IsPartner;
+            InitiateViewBag();
+         //   _isPartner = ServicePP.IsPartner;
             Order order = await _orderService.GetOrderByGuidAsync(guid);
 
 
@@ -305,6 +328,7 @@ namespace Term.Web.Controllers
             //throw new HttpException(404, "Not found");
 
         }
+        
         /// <summary>
         /// Отмена заказа
         /// </summary>
@@ -313,9 +337,11 @@ namespace Term.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> CancelOrder(Guid guid)
         {
+            InitiateViewBag();
             if (ModelState.IsValid)
             {
-              
+               
+
                 Order order = await _orderService.GetOrderByGuidAsync(guid);
 
                 if (!_orderService.CheckIfCanCancelOrder(order, out errorMessage))
@@ -412,10 +438,11 @@ namespace Term.Web.Controllers
         [HttpGet]
         public ActionResult ChangeOrder(Guid guid)
         {
-            _isPartner = ServicePP.IsPartner;
+            InitiateViewBag();
+          //  _isPartner = ServicePP.IsPartner;
             bool hasStar = this.Partner.HasStar;
             bool isForeign = Partner.IsForeign;
-            ViewBag.IsForeign = isForeign;
+            
 
             OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
             model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
@@ -450,7 +477,9 @@ namespace Term.Web.Controllers
             string deliveryDay = String.Empty;
             var costOfDeliveryByDepartments = new Dictionary<int, int>();
 
-            ViewBag.IsForeign = base.Partner.IsForeign;
+            InitiateViewBag();
+
+         //   ViewBag.IsForeign = base.Partner.IsForeign;
             if (!ModelState.IsValid)
             {
                 if (ModelState["DeliveryDate"].Errors.Count > 0)
@@ -601,6 +630,37 @@ namespace Term.Web.Controllers
                  return Json(new {result= result } , JsonRequestBehavior.AllowGet );
         }
 
+
+        /// <summary>
+        /// Постановка на отгрузку нескольких заказов 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> ProcessOrders(OrdersViewModelToProcess model)
+        {
+            const int DeliveryByTransportCompany = 3;
+            if (model.WayOfDelivery== DeliveryByTransportCompany && String.IsNullOrEmpty(model.TkId)) ModelState.AddModelError("TkId", "необходимо ввести транспортную компанию");
+
+            if (model.OrderGuids==null || !model.OrderGuids.Any()) ModelState.AddModelError("", "не выбраны заказы");
+
+            if (!ModelState.IsValid) return  ReturnModelErrorsAsJson();
+
+            /*
+           var listOfOrders=await DbContext.Orders.Where(order => model.OrderGuids.Contains(order.GuidIn1S)).ToListAsync();
+
+            foreach (var order in listOfOrders)
+            {
+                order.DeliveryDate = model.DeliveryDate;
+                order.AddressId = model.AddressId;
+                order.WayOfDelivery = model.WayOfDelivery;
+                order.TkId = model.TkId;
+            }
+
+          await  DbContext.SaveChangesAsync();
+          */
+                return Json(model);
+        }
         /// <summary>
         /// Объединить заказы (представление)
         /// </summary>

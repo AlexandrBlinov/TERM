@@ -193,9 +193,7 @@ var supplierModule = (function () {
 
     }).on('dp.change', function (event) {
 
-        hideOrShowDayofWeekToDeliver();
-    //    $('#newDateSpan').html("New Date: " + event.date.format('lll'));
-      //  $('#oldDateSpan').html("Old Date: " + event.oldDate.format('lll'));
+        hideOrShowDayofWeekToDeliver();    
         });
     
 

@@ -1983,10 +1983,12 @@ hr.cart-divider {
     font-size: 16px;
     background-color: rgb(0, 158, 254);
     height: 36px;
+    line-height: 36px;
     color: rgb(255, 255, 255);
     border: none;
     text-transform: uppercase;
-    margin-bottom:10px; 
+    margin-bottom: 10px;
+    padding: 0 10px;
 }
 
 .btn.btn-styled, .btn.btn-styled:hover, .btn.btn-styled:visited, .btn.btn-styled:focus {
@@ -3045,6 +3047,156 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
 }
 
 
-        .cart-unload_block .inline-block + .inline-block {
-            margin-left: 17px;
+.cart-unload_block .inline-block + .inline-block, .orders-unload_block .inline-block + .inline-block 
+{
+    margin-left: 17px;
+ }
+
+
+
+.order-item-products__header, .order-item-products__contents {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.order-item-products__header {
+    padding: 5px 0;
+   background: rgb(237, 236, 236);
+   font-weight:bold;
+}
+
+.order-item-products {
+    color: rgb(96,96,96);
+}
+
+.order-item {
+    cursor:pointer;
+    color: rgb(96,96,96);
+}
+
+.dashed-element__link {
+    border-bottom: 1px dashed rgb(66, 139, 202);
+}
+
+.expand-collapse__container-for-orderlist {
+    padding: 0px 22px;
+    position: relative;
+    height: 34px;
+    line-height: 34px;
+}
+
+.order-item .icheckbox_square-blue {
+    top: 20px;
+    left: -70px;
+}
+
+.order-item-todo {
+    position:absolute;
+    left:-50px;
+    top:10px;
+    display:none;
+    z-index:3;
+}
+.dashed-element__link + .dashed-element__link {
+    margin-left:20px;
+}
+
+@media (min-width: 992px) {
+    .modal-dialog.modal_make-to-load {
+        width: 60%;
+    }
+}
+
+@media (max-width: 992px) {
+    .modal-dialog.modal_make-to-load {
+        width: 80%;
+    }
+}
+
+    .btn-styled__icon {
+        height: 30px;
+        display: inline-block;
+        background: url('/Content/img/twitter-social-logotype.svg');
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: left top;
+        width: 50px;
+        vertical-align: middle;
+    }
+
+    .choosetodeliver-orders-notifier {
+        position: fixed;
+        right: 150px;
+        bottom: 100px;
+        height: 160px;
+        width: 400px;
+        opacity: 1;
+        background: rgb(255, 255, 255);
+        border: 1px solid rgb(178, 178, 178);
+        z-index: 100;
+        padding: 10px 20px;
+    }
+
+    .btn-cont-in-footer {
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+    }
+
+    .choosetodeliver-orders-notifier__divider {
+        margin-left: 10px;
+        font-size: 18px;
+    }
+
+        .choosetodeliver-orders-notifier__divider:first-child {
+            padding-top: 30px;
         }
+
+        .choosetodeliver-orders-notifier__divider label {
+            margin-right: 20px;
+            font-weight: normal;
+        }
+
+    .v-a-middle {
+        vertical-align: middle;
+    }
+
+
+
+.order-item-todo-label {
+    display: table;
+    cursor: pointer;
+    position: absolute;
+    font-size: 13px;
+    vertical-align: middle;
+    height: 16px;
+    margin-bottom: 0px;
+    font-weight: normal;
+    left: -50px;
+    top: 10px;
+    /*display: none;*/
+    z-index: 3;
+}
+
+    .order-item-todo-label:before {
+        content: " ";
+        display: table-cell;
+        width: 16px;
+        height: 16px;
+        background: url("/Content/img/check-box.png") no-repeat -16px 0px;
+        box-sizing: border-box;
+        margin-right: 5px;
+        vertical-align: middle;
+        line-height: 13px;
+        margin-bottom: 0px;
+        font-weight: normal;
+    }
+
+.order-item-todo {
+    display: none;
+}
+
+    .order-item-todo:checked + .order-item-todo-label:before {
+        text-align: center;
+        background: url("/Content/img/check-box.png") no-repeat 0px 0px;
+    }

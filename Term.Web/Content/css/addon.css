@@ -68,7 +68,11 @@ padding-bottom: 20px;
 	border: 1px solid #edecec;
 	
 }
-.addon .order-item:hover
+
+.addon .order-item-container {
+    border: 1px solid #fff;
+}
+.addon .order-item-container:hover
 {
 border: 1px solid #36adf9;	
 }
