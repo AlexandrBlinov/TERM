@@ -139,10 +139,27 @@ namespace Term.Web.Models
 
         public DayOfWeekToDeliver DayOfWeekToDeliver { get; set; }
 
-        public string LogistikDepartment { get; } = "00005";
+        public string LogistikDepartment { get; set; } = "00005";
 
 
     }
+
+    /// <summary>
+    /// Модель для обработки заказов
+    /// </summary>
+    public class OrdersViewModelToProcess
+    {
+        public DateTime DeliveryDate { get; set; }
+        // способ доставки 1- самовывоз, 0- доставка наша, 2 - доставка dpd , 3 - транспортной компанией
+        public int WayOfDelivery { get; set; }
+
+        public string AddressId { get; set; }
+        public string TkId { get; set; }
+
+        public IList<Guid> OrderGuids { get; set; }
+        public DayOfWeekToDeliver DayOfWeekToDeliver { get; set; }
+    }
+
 
     /// <summary>
     /// Модель журнала возврата товаров

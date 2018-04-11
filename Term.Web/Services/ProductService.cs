@@ -604,12 +604,7 @@ namespace Yst.Services
           //  Debug.WriteLine("GetCountOfProducts " + productType.ToString());
             return DbContext.Rests.Where(r => idsOfProducts.Contains(r.ProductId)).Select(p => p.ProductId).Distinct().Count();
 
-       //     DbContext.Rests.Where(p=>p.ProductId)
-          /*  string sqltext = @"SELECT COUNT(Products.ProductId) FROM Products
-             INNER JOIN (SELECT DISTINCT ProductId FROM RestOfProducts) RestOfProducts ON
-             Products.ProductId=RestOfProducts.ProductId Where ProductType={0}";
-            int count = DbContext.Database.SqlQuery<int?>(sqltext, productType).FirstOrDefault() ?? 0;
-            return count; */
+      
         }
     }
 }

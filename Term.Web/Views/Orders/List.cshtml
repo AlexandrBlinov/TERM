@@ -5,22 +5,12 @@
 
 @{
     ViewBag.Title = CartAndOrders.ListOfOrders;
+
     string invisAddStock = "";
-    /*string colorNewOrder = "";*/
+
     if (!ViewBag.IsForeign) { invisAddStock = "invisibleAddStock"; }
 
-    /*string invisReservOrShipment = (ViewBag.IsForeign || ViewBag.HasitemsOnWay) ? "hidden" : "";*/
-    string invisReservOrShipment = "";
-
-    string notDisplay = "display: none;";
-
-
-    // Переменные для доставки DPD
-
-
-    string hiddensectionTransportContainer = !Model.IsDeliveryByTk ? notDisplay : "";
-    string hiddenAddress = "";
-    string hiddenTk = "";
+    bool canProcessOrders = true;//!(bool)ViewBag.IsForeign && Model.LogistikDepartment == Defaults.MainDepartmentCode;
 }
 
 <h2 class="border-form-podbor search-order-title">@ForSearchResult.ChooseOrders</h2>
@@ -120,10 +110,12 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="pull-left expand-collapse__container-for-orderlist">
-                <a href="#" class="dashed-element__link js-expand-orders" data-title-collapse="Свернуть все" data-title-expand="Развернуть все">Развернуть все</a>
-                <a href="#" class="dashed-element__link js-display-todo-items" data-stage-id="1" data-title-stage2="Оформить на отгрузку" data-title-expand="Развернуть все">Поставить к отгрузке</a>
+                <a href="#" class="btn btn-styled js-expand-orders" data-title-collapse="@CartAndOrders.CollapseAll" data-title-expand="@CartAndOrders.ExpandAll">@CartAndOrders.ExpandAll</a>              
+                @if (canProcessOrders)
+                {
+                <a href="#" class="btn btn-styled js-display-todo-items"><i class="fa fa-2x fa-truck v-a-middle"></i>   Поставить на отгрузку</a>    
+                }
             </div>
-
 
             <div class="psevdo-select psevdo-select-dispos">
                 <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
@@ -134,78 +126,93 @@
     </div>
 }
 
+@Html.Hidden("canProcessOrders", canProcessOrders ? "1":"0")
 
 
 <!-- Новый вывод addon -->
-<div id="table-orders" class="data-table order-table  addon">
+    <div id="table-orders" class="data-table order-table  addon">
 
-    <div class="thead hidden-xs">
+        <div class="thead hidden-xs">
 
-        <div class="col-md-1 col-sm-1">@CartAndOrders.Point</div>
-        <div class="col-md-2 col-sm-2">@CartAndOrders.NumberInDatabase</div>
-        <div class="col-md-1 col-sm-1"> @CartAndOrders.Status</div>
-        @if (ViewBag.IsPartner)
+            <div class="col-md-1 col-sm-1">@CartAndOrders.Point</div>
+            <div class="col-md-2 col-sm-2">@CartAndOrders.NumberInDatabase</div>
+            <div class="col-md-1 col-sm-1"> @CartAndOrders.Status</div>
+            @if (ViewBag.IsPartner)
         {
             <div class="col-md-1 col-sm-1">
                 @CartAndOrders.TotalSum
             </div>
-        }
+    }
 
-        <div class="col-md-1 col-sm-1">@CartAndOrders.TotalClient</div>
-        <div class="col-md-1 col-sm-1"> @CartAndOrders.DateOrder</div>
-        <div class="col-md-1 col-sm-1">@CartAndOrders.DateShipment</div>
-        <div class="col-md-1 col-sm-1">@CartAndOrders.DateOfPayment</div>
-        <div class="col-md-2 col-sm-2">@CartAndOrders.Comment</div>
-        <div class="col-md-1 col-sm-1">@ForSearchResult.Action</div>
+            <div class="col-md-1 col-sm-1">@CartAndOrders.TotalClient</div>
+            <div class="col-md-1 col-sm-1"> @CartAndOrders.DateOrder</div>
+            <div class="col-md-1 col-sm-1">@CartAndOrders.DateShipment</div>
+            <div class="col-md-1 col-sm-1">@CartAndOrders.DateOfPayment</div>
+            <div class="col-md-2 col-sm-2">@CartAndOrders.Comment</div>
+            <div class="col-md-1 col-sm-1">@ForSearchResult.Action</div>
 
-    </div>
+        </div>
 
-    @foreach (var order in Model.Orders)
+        @foreach (var order in Model.Orders)
+        {
+
+            var totalOfPoint = order.TotalOfClient;
+            if (ViewBag.IsPartner)
+            {
+                totalOfPoint = (order.PointId == ViewBag.CurrentPointId ? order.TotalOfClient : order.TotalOfPoint);
+            }
+
+        
+
+            <div class="order-item-container">
+                <div class="order-item" data-sum-of-client="@totalOfPoint">
+                    <div class="col-md-1 col-sm-1 pos-relative">
+                        @if (order.OrderStatus == Term.DAL.OrderStatuses.Confirmed && order.isReserve)
     {
+                    <!-- <input type="checkbox" name="order-item-todo" data-id="@(order.GuidIn1S)" class="order-item-todo">-->
 
-        <div class="order-item-container">
-            <div class="order-item">
-                <div class="col-md-1 col-sm-1">
-                    @*Html.ActionLink(order.Point.InternalName, "Edit", "Partner", new { PointId = order.PointId }, null) *@
-                    <input type="checkbox" name="order-item-todo" data-id="@(order.GuidIn1S)" class="order-item-todo">
-                    @order.Point.InternalName
-                    <br />
-                    @if (order.IsDeliveryByTk)
-                    {
-                        <i class="icon-dpd"></i>
-                    }
-                </div>
-                <div class="col-md-2 col-sm-2"> <span class="open_order" data-toggle="collapse" data-target="#collapse-button-@(order.GuidIn1S)"> @order.NumberIn1S </span> </div>
-                <div class="invisibleAddStock">  @Html.DisplayFor(modelItem => order.Department.Name) </div>
-                <div class="col-md-1 col-sm-1 text">
+                    <input type="checkbox" class="order-item-todo" id="check-@(order.GuidIn1S)" data-id="@(order.GuidIn1S)">
+                    <label class="order-item-todo-label" for="check-@(order.GuidIn1S)" style="display:none;"> </label>
 
-                    @Html.OrderStatusWithColor(order.OrderStatus)
-                    @if (order.IsJoined)
+}
+                        @order.Point.InternalName
+                        <br />
+                        @if (order.IsDeliveryByTk)
+    {
+                    <i class="icon-dpd"></i>
+}
+                    </div>
+                    <div class="col-md-2 col-sm-2"> <span class="open_order" data-toggle="collapse" data-target="#collapse-button-@(order.GuidIn1S)"> @order.NumberIn1S </span> </div>
+                    <div class="invisibleAddStock">  @Html.DisplayFor(modelItem => order.Department.Name) </div>
+                    <div class="col-md-1 col-sm-1 text">
+
+                        @Html.OrderStatusWithColor(order.OrderStatus)
+                        @if (order.IsJoined)
                     {<span class="label label-success">@CartAndOrders.CombinedOrder</span>}
 
-                </div>
+                    </div>
 
-                @if (ViewBag.IsPartner)
+                    @if (ViewBag.IsPartner)
                 {
                     <div class="col-md-1 col-sm-1 price-filds">
                         @Html.DisplayFor(modelItem => order.Total)
                     </div>
-                }
+            }
 
 
-                <div class="col-md-1 col-sm-1 price-filds">
-                    @if (ViewBag.IsPartner)
+                    <div class="col-md-1 col-sm-1 price-filds">
+                        @if (ViewBag.IsPartner)
                     {@(order.PointId == ViewBag.CurrentPointId ? order.TotalOfClient : order.TotalOfPoint)
-                }
-                else
-                {
-                    @order.TotalOfClient
-                }
-                </div>
+            }
+            else
+            {
+                @order.TotalOfClient
+        }
+                    </div>
 
-                <div class="col-md-1 col-sm-1">   @order.OrderDate.ToShortDateString() </div>
-                <div class="col-md-1 col-sm-1 reserve">
-                    @{
+                    <div class="col-md-1 col-sm-1">   @order.OrderDate.ToShortDateString() </div>
+                    <div class="col-md-1 col-sm-1 reserve">
+                        @{
                         string deliveryDate;
                         if (order.isReserve)
                         {
@@ -215,39 +222,39 @@
                         {
                             deliveryDate = order.DeliveryDate.HasValue ? ((DateTime)order.DeliveryDate).ToShortDateString() : String.Empty;
                         }
-                    }
+                        }
 
-                    @(deliveryDate)
+                        @(deliveryDate)
 
-                </div>
-                <div class="col-md-1 col-sm-1">
-                    @{var dateOfPayment = order.DateOfPayment.HasValue ? ((DateTime)order.DateOfPayment).ToShortDateString() : String.Empty; }
-                    @(dateOfPayment)
-                </div>
-                <div class="col-md-2 col-sm-2">  Terminal:  </div>
-                <div class="col-md-1 col-sm-1">
-                    @Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = order.GuidIn1S }, new { @class = "order-table-details" })
-                </div>
+                    </div>
+                    <div class="col-md-1 col-sm-1">
+                        @{var dateOfPayment = order.DateOfPayment.HasValue ? ((DateTime)order.DateOfPayment).ToShortDateString() : String.Empty; }
+                        @(dateOfPayment)
+                    </div>
+                    <div class="col-md-2 col-sm-2">  Terminal:  </div>
+                    <div class="col-md-1 col-sm-1">
+                        @Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = order.GuidIn1S }, new { @class = "order-table-details" })
+                    </div>
 
-            </div>
-
-
-            <div class="order-item-products collapse" id="collapse-button-@(order.GuidIn1S)">
-
-                <div class="row order-item-products__header">
-                    <div class="col-xs-1">  № </div>
-                    <div class="col-xs-2">    @ForSearchResult.Article  </div>
-                    <div class="col-xs-1">   @ForSearchResult.StockNumber  </div>
-                    <div class="col-xs-6">  @ForSearchResult.ProductName </div>
-
-                    <div class="col-xs-1">    @ForSearchResult.Available </div>
-                    <div class="col-xs-1">    @ForSearchResult.Price </div>
                 </div>
 
 
-                @{ var i = 0; }
+                <div class="order-item-products collapse" id="collapse-button-@(order.GuidIn1S)">
 
-                @foreach (var detail in order.OrderDetails)
+                    <div class="row order-item-products__header">
+                        <div class="col-xs-1">  № </div>
+                        <div class="col-xs-2">    @ForSearchResult.Article  </div>
+                        <div class="col-xs-1">   @ForSearchResult.StockNumber  </div>
+                        <div class="col-xs-6">  @ForSearchResult.ProductName </div>
+
+                        <div class="col-xs-1">    @ForSearchResult.Available </div>
+                        <div class="col-xs-1">    @ForSearchResult.Price </div>
+                    </div>
+
+
+                    @{ var i = 0; }
+
+                    @foreach (var detail in order.OrderDetails)
                 {
                     i++;
                     <div class="row order-item-products__contents">
@@ -259,15 +266,15 @@
                         <div class="col-xs-1">@detail.Count</div>
                         <div class="col-xs-1">@detail.Price</div>
                     </div>
-                }
+            }
+
+                </div>
 
             </div>
 
-        </div>
+        }
 
-    }
-
-</div>
+    </div>
 
 
 
@@ -295,7 +302,7 @@
             </div>
             <div class="modal-body modal__make-to-load">
                 <div class="row">
-                    <div class="col-xs-12  @invisReservOrShipment">
+                    <div class="col-xs-12">
                         <div class="row m-b-20">
                             <div class="col-md-3" id="deliverydate_container">
 
@@ -310,8 +317,8 @@
                                 <span class="b-control-hint">дата отгрузки со склада ЯШТ</span>
                             </div>
 
-                            <div class="col-md-3" id="dayofweektodeliver_container" style="display: none;">
-                                <div class="cart-unload_block">
+                            <div class="col-md-6" id="dayofweektodeliver_container" style="display: none;">
+                                <div class="orders-unload_block">
                                     <div class="form-group">
                                         <h5 class="cart-property__caption">выгрузка</h5>
                                     </div>
@@ -336,10 +343,15 @@
                     </div>
                 </div>
 
+                <div class="row" id="errors-processorders__container" style="display:none;">
+                    <div class="col-xs-12 alert alert-danger">
+                        <span id="errors-processorders__text"> </span>                                             
+                    </div>
+                </div>
                 <section class="row cart-properties js-cart js-wayofdelivery">
                     <!-- <div class="col-xs-12">
-                         <hr class="cart-divider" />
-                     </div>-->
+             <hr class="cart-divider" />
+         </div>-->
                     <!--Способ доставки  доставка  самовывоз или dpd-->
 
                     <div class="col-xs-12 border-bottom">
@@ -358,7 +370,7 @@
                                         <label class="cart-label m-t-5 m-b-10" for="isDeliveryByOwnTransport">Доставка силами Яршинторг</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <div class="address-container" style="@hiddenAddress">
+                                        <div class="address-container">
                                             @Html.DropDownListFor(p => p.AddressId, Model.AddressesIds, "выберите адрес доставки", new { @class = "form-control" })
                                         </div>
                                     </div>
@@ -370,11 +382,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         @if (Model.SelfDeliveryIds != null && Model.SelfDeliveryIds.Any())
-                                        {
-                                            <div class="selfDelivery-container" style="display: none;">
-                                                @Html.DropDownListFor(p => p.SelfDeliveryId, Model.SelfDeliveryIds, "выберите адрес доставки", new { @class = "form-control" })
-                                            </div>
-                                        }
+                            {
+                                <div class="selfDelivery-container" style="display: none;">
+                                    @Html.DropDownListFor(p => p.SelfDeliveryId, Model.SelfDeliveryIds, "выберите адрес доставки", new { @class = "form-control" })
+                                </div>
+                }
                                     </div>
                                 </div>
 
@@ -384,7 +396,7 @@
                                         <label class="cart-label m-t-5 m-b-10" for="isTransportCompany">транспортной компанией</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <div class="tk-container" style="@hiddenTk">
+                                        <div class="tk-container">
                                             @Html.DropDownListFor(p => p.TkId, Model.TkIds, "выберите транспортную компанию", new { @class = "form-control" })
                                         </div>
                                     </div>
@@ -397,21 +409,111 @@
                 </section>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Закрыть</button>
+                <button type="button" class="btn btn-primary" onclick="processOrders();">Оформить</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="choosetodeliver-orders-notifier" id="choosetodeliver-orders-notifier" style="display:none;">
+
+    
+    <div class="choosetodeliver-orders-notifier__divider">
+        <label>Выбрано</label><span class="m-l-10" id="number-of-orders-selected"> </span> <span class="">  заказов </span>
+       
+    </div>
+    <div class="choosetodeliver-orders-notifier__divider">
+
+        <label>на сумму</label><span class="" id="sum-of-orders-selected"> </span> <span class="rouble">P</span>
+    </div>
+    <div class="btn-cont-in-footer">
+        <button class="btn btn-styled" onclick="processOpenMakeToLoad()"> Оформить на отгрузку </button>
+        <button class="btn btn-styled" onclick="closeOrdersNotifier();"> Отменить </button>
+    </div>
+
+
+</div>
 
 @section Scripts {
     <script>
+        //show errors on validatuion in block
+        function showError(errorText) {  // 'this' is the form element
+            var $container = $('#errors-processorders__container');
 
+            $('#errors-processorders__text').text(errorText);
+            if (errorText)  $container.show();                
+            else  $container.hide();
+            
+        }
 
+        function prepareDataToProcess() {
+            var params = {
+                'WayOfDelivery': $('[name=WayOfDelivery]:checked').val(),
+                'AddressId': $('#AddressId').val(),
+                'TkId': $('#TkId').val(),
+                'DeliveryDate': $('#DeliveryDate').val(),
+                'DayOfWeekToDeliver': $('[name=DayOfWeekToDeliver]:checked').val()
+            };
+
+            var orderGuids = [];
+            $('.order-item-todo:checked').each(function () {
+                orderGuids.push($(this).data('id'));
+            });
+            params['OrderGuids'] = orderGuids;
+            return params;
+        }
+
+        function processOrders() {
+
+            var params = prepareDataToProcess();
+            showError('');
+
+            $.post('/orders/ProcessOrders', params)
+                .done(function (data) {
+
+                    if (typeof data === "object" && data.hasOwnProperty('Success') && !data.Success) {
+                
+                        showError(  data.Text);
+                    } else {
+                        try {
+                            console.log(data);
+                            $('.order-item-todo:checked').closest('.order-item').find('.reserve').text($('#DeliveryDate').val());
+                            $('#modal_make-to-load').modal('hide');
+                        } catch(e)
+                        {
+
+                        }
+                        
+
+                    }
+                })
+                .fail(function (xhr, status) {
+                    console.error(xhr.responseText);
+                });
+        }
+
+        function canProcessOrders() {
+            return $('#canProcessOrders').val() === "1";
+        }
+        // закрыть заказы
+        function closeOrdersNotifier()
+        {
+            $('#choosetodeliver-orders-notifier').hide();
+            $('.order-item-todo-label').hide();
+            $('.order-item-todo:checked').prop("checked", false);
+
+        }
+
+        // модальное окно для указания параметров групповой обработки заказов
+        function processOpenMakeToLoad() {
+            $('#modal_make-to-load').modal();
+            updateDatepicker();
+            $('.choosetodeliver-orders-notifier').hide();
+        }
 
         function updateDatepicker() {
-
+            
             var workingDepartmentCodes = ["00005", "00112", "00106"];
             var enabledDates = [];
             var picker = $('.js-datefor-shipment').data("DateTimePicker");
@@ -419,7 +521,7 @@
             if (!$ld || workingDepartmentCodes.indexOf($ld) < 0) return;
 
             var addressId = $('#AddressId').val();
-            if (addressId && isAdmin) {
+            if (addressId && canProcessOrders()) {
                 $.get('/orders/GetDatesOfShipment', { "addressId": addressId })
                     .done(function (data) {
 
@@ -435,7 +537,7 @@
                         if (Array.isArray(enabledDates) && enabledDates.length > 0) {
                             picker.date(enabledDates[0]);
 
-                            //   console.log(enabledDates[0]);
+                               console.log(enabledDates[0]);
                         }
                         hideOrShowDayofWeekToDeliver();
                     })
@@ -452,7 +554,7 @@
             var Friday = 5;
             var WordToSearch = 'моск';
             var container = $('#dayofweektodeliver_container');
-            if ($("#isDelivery").is(':checked') && $('#isDeliveryByOwnTransport').is(':checked')) {
+            if ( $('#isDeliveryByOwnTransport').is(':checked')) {
 
                 var addr = $('#AddressId').find('option:selected');
                 if (addr && addr.text() && addr.text().toLowerCase().indexOf(WordToSearch) >= 0) {
@@ -475,7 +577,10 @@
                 today = new Date();
 
 
-            
+            $('#modal_make-to-load').on('hidden.bs.modal', function () {
+                showError('');
+                closeOrdersNotifier();
+            })
 
             $('.js-datefor-shipment').datetimepicker({
                 format: 'DD.MM.YYYY',
@@ -494,23 +599,12 @@
             });
 
 
-
-            (function init() {
-               /* var $deliveryDate = $("#DeliveryDate"),
-                    $deliverydate_container = $("#deliverydate_container"),
-                    $deliveryByTk_container = $('#deliveryByTk_container');
-
-                var $address_container = $('.address-container');
-
-                $deliverydate_container.removeClass('hidden');
-                // пока убираем
-                updateDatepicker();
-                $address_container.show('slow');
-                $('.js-wayofdelivery').show('slow'); */
-                updateDatepicker();
+            
+          //  (function init() {
+               
                 $('.tk-container').hide();
 
-            })();
+        //    })(); 
 
             ///
             // выбор способа доставки
@@ -555,6 +649,7 @@
                             $address_container.show('slow');
                             $tk_container.hide('slow');
                             $sdk.hide('slow');
+                            updateDatepicker();
                             //         dpdModule.refuseFromDelivery();
                         }
                 }
@@ -565,24 +660,50 @@
                 checkboxClass: 'icheckbox_square-blue',
             });
 
-            $('[name=WayOfDelivery]').iCheck({
+            $('[name=WayOfDelivery],[name=DayOfWeekToDeliver]').iCheck({
                 radioClass: 'iradio_square-blue'
             });
             //}
 
+            $('#AddressId').change(function () { updateDatepicker() });
+
+
             $('.order-item-todo').on('change', function () {
-                var $el = $('.js-display-todo-items').first();
-                $el.data("stage-id", "3");
-                $el.text($el.data("title-stage2"));
+                $('#choosetodeliver-orders-notifier').show();
+                var $checkedItems=$('.order-item-todo:checked');
+
+                $('#number-of-orders-selected').text($checkedItems.length);
+
+                var totalSum = 0;
+                $checkedItems.each(function () {
+                    var total = $(this).closest('.order-item').data('sum-of-client');
+                    totalSum += Number.parseFloat(total);
+                    
+                });
+                $('#sum-of-orders-selected').text(totalSum);
+
+
+             //   var $el = $('.js-display-todo-items').first();
+             //   $el.data("stage-id", "3");
+             //   $el.text($el.data("title-stage2"));
+
             });
 
             $('.js-display-todo-items').on('click', function () {
-                $('.order-item-todo').show();
+                $('.order-item-todo-label').show();
                 console.log($(this).data("stage-id"));
                 $(this).data("stage-id", "2");
 
+                $('.order-item-todo:checked').length
+
                 return false;
             });
+
+
+
+
+
+
 
             $('.js-expand-orders').on('click', function () {
 
@@ -598,11 +719,7 @@
                 return false;
             });
 
-            /*
-            $('.js-expand-orders').on('click', function () {
 
-                return false;
-            }); */
 
         }())
 

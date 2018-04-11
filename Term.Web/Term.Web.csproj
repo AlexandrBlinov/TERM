@@ -779,6 +779,7 @@
     <Content Include="Content\img\03490.jpg" />
     <Content Include="Content\img\1cWebService.png" />
     <Content Include="Content\img\1cWebService_2.png" />
+    <Content Include="Content\img\abro.jpg" />
     <Content Include="Content\img\accs.jpg" />
     <Content Include="Content\img\Activ.png" />
     <Content Include="Content\img\add-scan.png" />
@@ -794,6 +795,7 @@
     <Content Include="Content\img\check-box.png" />
     <Content Include="Content\img\clear-param.png" />
     <Content Include="Content\img\close.png" />
+    <Content Include="Content\img\demarco.jpg" />
     <Content Include="Content\img\disk.jpg" />
     <Content Include="Content\img\download.gif" />
     <Content Include="Content\img\dpd.png" />
@@ -833,6 +835,8 @@
     <Content Include="Content\img\inci.jpg" />
     <Content Include="Content\img\instagram-social-network-logo-of-photo-camera.svg" />
     <Content Include="Content\img\item_382_thumb.jpg" />
+    <Content Include="Content\img\lavr.jpg" />
+    <Content Include="Content\img\lavr_2.jpg" />
     <Content Include="Content\img\logo-yst.png" />
     <Content Include="Content\img\logotip.png" />
     <Content Include="Content\img\menu-akb-icon.png" />
@@ -843,6 +847,7 @@
     <Content Include="Content\img\ng3.jpg" />
     <Content Include="Content\img\ng4.jpg" />
     <Content Include="Content\img\NotActiv.png" />
+    <Content Include="Content\img\plenka.jpg" />
     <Content Include="Content\img\rub.png" />
     <Content Include="Content\img\rub2.png" />
     <Content Include="Content\img\sale-icon.png" />
