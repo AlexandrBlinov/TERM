@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Yst.Context;
 using YstProject.Services;
 using YstTerm.Models;
@@ -37,6 +39,8 @@ namespace Term.Web.Controllers
         [Authorize(Roles = "Newsmaker")]
         public ActionResult GetNewsDetails(long Id)
         {
+           
+
            // var news = new Term.DAL.News();
            var news = _dbContext.News.FirstOrDefault(o => o.Id == Id);
             var model = new NewsViewModel
@@ -53,7 +57,7 @@ namespace Term.Web.Controllers
             return View(model);
         }
 
-
+        [OutputCache(VaryByParam = "Id", Duration = 3600, Location = OutputCacheLocation.Server)]
         public async Task<ActionResult> GetNewsImg(long Id, int ImgType)
         {
             var news = await _dbContext.News.FirstAsync(o => o.Id == Id);
@@ -77,8 +81,7 @@ namespace Term.Web.Controllers
         [Authorize(Roles = "Newsmaker")]
         public async Task<ActionResult> Create(NewsViewModel model)
         {
-            try
-            {
+            
                 var news = new Term.DAL.News
                 {
                     NewsName = model.NewsName,
@@ -87,13 +90,10 @@ namespace Term.Web.Controllers
                     DatePublish = DateTime.Now
                 };
                 _dbContext.News.Add(news);
-               await _dbContext.SaveChangesAsync();
-                return RedirectToAction("NewsList", "News");
-            }
-            catch
-            {
-                return RedirectToAction("NewsList", "News");
-            }
+               await _dbContext.SaveChangesAsync();             
+            
+             return RedirectToAction("NewsList", "News");
+            
         }
 
         [HttpPost]
@@ -136,6 +136,7 @@ namespace Term.Web.Controllers
         //Далее контроллеры для юзеров
         public ActionResult Index(NewsViewModel model)
         {
+            int vipAkbId = 4;
             var partnerId = Partner.PartnerId;
             var vipakb = _dbContext.PartnerPropertyValues.Where(p => p.PartnerId == partnerId && p.Name == "akbvip").FirstOrDefault();
             var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
@@ -151,13 +152,13 @@ namespace Term.Web.Controllers
             }
             else
             {
-                model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture && p.Id != 4).Select(p => new NewsViewModel
+                model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture && p.Id != vipAkbId).Select(p => new NewsViewModel
                 {
                     Id = p.Id,
                     NewsName = p.NewsName,
                     NewsText = p.NewsText,
                     DatePublish = p.DatePublish
-                }).ToList();
+                }).OrderByDescending(p => p.DatePublish).ToList();
             }
             
             return View(model);

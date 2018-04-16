@@ -490,6 +490,10 @@
     <Compile Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.Designer.cs">
       <DependentUpon>201803231133371_IsSeasonAdjournment_AddedToOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804131255295_IsStar_AddedToSale.cs" />
+    <Compile Include="Migrations\201804131255295_IsStar_AddedToSale.Designer.cs">
+      <DependentUpon>201804131255295_IsStar_AddedToSale.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
@@ -1020,7 +1024,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\yst-localize-20170619.js" />
-    <Content Include="Scripts\yst-shoppingcart-20171228.js" />
+    <Content Include="Scripts\yst-shoppingcart-20180413.js" />
     <Content Include="Scripts\yst-notifications.js" />
     <Content Include="Scripts\yst-scripts-20171215.js" />
     <Content Include="Scripts\yst-utility.js" />
@@ -1427,6 +1431,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.resx">
       <DependentUpon>201803231133371_IsSeasonAdjournment_AddedToOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804131255295_IsStar_AddedToSale.resx">
+      <DependentUpon>201804131255295_IsStar_AddedToSale.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

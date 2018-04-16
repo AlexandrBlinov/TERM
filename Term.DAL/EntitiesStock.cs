@@ -1448,6 +1448,9 @@ namespace Term.DAL
         [StringLength(200)]
         public string Comments { get; set; }
 
+
+        public bool IsStar { get; set; }
+
         public virtual ICollection<SaleDetail> SaleDetails { get; set; }
 
     }

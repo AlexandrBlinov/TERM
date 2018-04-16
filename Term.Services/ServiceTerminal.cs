@@ -296,6 +296,26 @@ namespace Term.Services
             return ((ReturnWheelsTest[])(results[0]));
         }
 
+
+
+
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://37.1.84.50:8080/ServiceTerminal#ServiceTerminal:ChangeOrders", RequestNamespace = "http://37.1.84.50:8080/ServiceTerminal", ResponseNamespace = "http://37.1.84.50:8080/ServiceTerminal", Use = System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlArrayAttribute("return")]
+        [return: System.Xml.Serialization.XmlArrayItemAttribute("OrderGuid", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)]
+        public string[] ChangeOrders(string DeliveryDate, int WayOfDelivery, string AddressId, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] string TkId, [System.Xml.Serialization.XmlElementAttribute(IsNullable = true)] System.Nullable<bool> DayOfWeekToDeliver, [System.Xml.Serialization.XmlArrayItemAttribute("OrderGuid", Namespace = "http://37.1.84.50:8080/Terminal", IsNullable = false)] string[] OrderGuids)
+        {
+            object[] results = this.Invoke("ChangeOrders", new object[] {
+                        DeliveryDate,
+                        WayOfDelivery,
+                        AddressId,
+                        TkId,
+                        DayOfWeekToDeliver,
+                        OrderGuids});
+            return ((string[])(results[0]));
+        }
+
+
         private bool IsLocalFileSystemWebService(string url)
         {
             if (((url == null)

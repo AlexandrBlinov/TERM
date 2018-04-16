@@ -179,15 +179,27 @@ var supplierModule = (function () {
 (function() {
 
     var enabledDates = [],
-    today = new Date();
+        today = new Date();
+    var defaultDeliveryDate = new Date(today);
+
+    try {
+        defaultDeliveryDate = dateUtils.dateFromString($('#DeliveryDate').val());
+        if (isNaN(defaultDeliveryDate.getTime())) { defaultDeliveryDate = new Date(today); }
+    } catch (e)
+    {
+        defaultDeliveryDate = new Date(today);
+    }
+
+   
+    
   
     $('.js-datefor-shipment').datetimepicker({
         format: 'DD.MM.YYYY',
         locale: YstLocale.GetLocale("Culture"),
         allowInputToggle: true,
         showTodayButton: true,
-        defaultDate: today,
-        minDate: today,
+        defaultDate: defaultDeliveryDate,
+        minDate: defaultDeliveryDate,
         showClear: false,
         enabledDates: enabledDates
 
@@ -246,7 +258,7 @@ var supplierModule = (function () {
 */
 function updateDatepicker()
 {
-    
+    //debugger;
     var workingDepartmentCodes = ["00005", "00112", "00106"];
     var enabledDates = [];
     var picker = $('.js-datefor-shipment').data("DateTimePicker");
@@ -303,7 +315,7 @@ $("#shopping-cart-form").on("submit", function(e) {
 
     if (!$(this).valid()) return false;
 
-    debugger;
+    //debugger;
     // if (dpdCondition && !@isUserHasDpdContractJs) {
     if (dpdCondition && ! dpdModule.isUserHasDpdContract()) {
         $('#modalNotification').modal();

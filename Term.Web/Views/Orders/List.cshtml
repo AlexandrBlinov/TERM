@@ -11,11 +11,14 @@
     if (!ViewBag.IsForeign) { invisAddStock = "invisibleAddStock"; }
 
     bool canProcessOrders = true;//!(bool)ViewBag.IsForeign && Model.LogistikDepartment == Defaults.MainDepartmentCode;
+
+    
+    //
 }
 
 <h2 class="border-form-podbor search-order-title">@ForSearchResult.ChooseOrders</h2>
 
-@using (Html.BeginForm("List", "Orders", FormMethod.Get))
+@using (Html.BeginForm("List", "Orders", FormMethod.Get, new {@id="form__list-of-orders" }))
 {
     <fieldset class="border-form-podbor">
         <div class="row">
@@ -102,7 +105,8 @@
             BeginDate = Model.BeginDate.ValueForPaginator(),
             EndDate = Model.EndDate.ValueForPaginator(),
             StatusId = Model.StatusId,
-            ProductName = Model.ProductName
+            ProductName = Model.ProductName,
+            ItemsPerPage= Model.ItemsPerPage
         }),
                    new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
     </div>
@@ -119,7 +123,7 @@
 
             <div class="psevdo-select psevdo-select-dispos">
                 <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
-                @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
+                @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(500, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
             </div>
 
         </div>
@@ -165,7 +169,7 @@
         
 
             <div class="order-item-container">
-                <div class="order-item" data-sum-of-client="@totalOfPoint">
+                <div class="order-item" data-sum-of-client="@totalOfPoint" data-sum="@order.Total">
                     <div class="col-md-1 col-sm-1 pos-relative">
                         @if (order.OrderStatus == Term.DAL.OrderStatuses.Confirmed && order.isReserve)
     {
@@ -216,7 +220,7 @@
                         string deliveryDate;
                         if (order.isReserve)
                         {
-                            deliveryDate = @CartAndOrders.ReservedTill + " " + order.OrderDate.AddDays(7).ToShortDateString();
+                            deliveryDate = @CartAndOrders.ReservedTill + " " + order.OrderDate.AddDays(Defaults.MaxDaysToChangeOrder).ToShortDateString();
                         }
                         else
                         {
@@ -231,7 +235,7 @@
                         @{var dateOfPayment = order.DateOfPayment.HasValue ? ((DateTime)order.DateOfPayment).ToShortDateString() : String.Empty; }
                         @(dateOfPayment)
                     </div>
-                    <div class="col-md-2 col-sm-2">  Terminal:  </div>
+                    <div class="col-md-2 col-sm-2">  @order.Comments  </div>
                     <div class="col-md-1 col-sm-1">
                         @Html.ActionLink(@CartAndOrders.Details, "Details", new { guid = order.GuidIn1S }, new { @class = "order-table-details" })
                     </div>
@@ -288,7 +292,8 @@
         BeginDate = Model.BeginDate.ValueForPaginator(),
         EndDate = Model.EndDate.ValueForPaginator(),
         StatusId = Model.StatusId,
-        ProductName = Model.ProductName
+        ProductName = Model.ProductName,
+        ItemsPerPage = Model.ItemsPerPage
     }),
                  new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 </div>
@@ -410,7 +415,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" >Закрыть</button>
-                <button type="button" class="btn btn-primary" onclick="processOrders();">Оформить</button>
+                <button type="button" class="btn btn-primary" onclick="processOrders(this);" data-text="Оформить на отгрузку">Оформить</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -428,7 +433,7 @@
         <label>на сумму</label><span class="" id="sum-of-orders-selected"> </span> <span class="rouble">P</span>
     </div>
     <div class="btn-cont-in-footer">
-        <button class="btn btn-styled" onclick="processOpenMakeToLoad()"> Оформить на отгрузку </button>
+        <button class="btn btn-styled" onclick="processOpenMakeToLoad()">Оформить на отгрузку  </button>
         <button class="btn btn-styled" onclick="closeOrdersNotifier();"> Отменить </button>
     </div>
 
@@ -464,32 +469,66 @@
             return params;
         }
 
-        function processOrders() {
+        // заапдейтить даты отгрузки заказов во фронте
+        function updateOrdersWithGuids(orderGuids) {
+            
+            $('.order-item-todo:checked').each(function () {
+                if (orderGuids.includes($(this).data('id')))
+                
+                    $(this).closest('.order-item').find('.reserve').text($('#DeliveryDate').val());
+                
+            });
+            $('.order-item-container:not(:has(.order-item-todo))').show();
+        }
 
+        function showProcess($el) {
+            $el.html('<i class="fa fa-spinner fa-pulse"></i> ' + $el.data('text'));
+        }
+
+        function hideProcess($el) {
+            $el.html($el.data('text'));
+        }
+
+        
+
+        function processOrders(el) {
+
+            var $el = $(el);
             var params = prepareDataToProcess();
             showError('');
 
+            showProcess($el);            
+
             $.post('/orders/ProcessOrders', params)
                 .done(function (data) {
-
-                    if (typeof data === "object" && data.hasOwnProperty('Success') && !data.Success) {
-                
+                    if (typeof data === "object" && data.hasOwnProperty('Success') && !data.Success) {                
                         showError(  data.Text);
                     } else {
                         try {
-                            console.log(data);
-                            $('.order-item-todo:checked').closest('.order-item').find('.reserve').text($('#DeliveryDate').val());
-                            $('#modal_make-to-load').modal('hide');
+                          
+                            if (data.hasOwnProperty('OrderGuids') && Array.isArray(data['OrderGuids']) && data['OrderGuids'].length > 0) {
+
+                                updateOrdersWithGuids(data['OrderGuids']);
+
+                                //  $('.order-item-todo:checked').closest('.order-item').find('.reserve').text($('#DeliveryDate').val());
+                                $('#modal_make-to-load').modal('hide');
+                                
+                                toastr.success("Обновлено " + data['OrderGuids'].length + " заказов", "Успех");
+                                hideProcess($el);
+                            } else {
+                                toastr.error("При постановке на отгрузку произошла ошибка", "Ошибка", { timeOut: 0, closeButton: true })
+                                hideProcess($el);
+                            }
                         } catch(e)
                         {
-
+                            toastr.error("Произошла ошибка", "Ошибка", { timeOut: 0, closeButton: true })
+                            hideProcess($el);
                         }
-                        
-
                     }
                 })
                 .fail(function (xhr, status) {
-                    console.error(xhr.responseText);
+                    toastr.error("Произошла ошибка запроса", "Ошибка", { timeOut: 0, closeButton: true })
+                    hideProcess($el);
                 });
         }
 
@@ -502,6 +541,7 @@
             $('#choosetodeliver-orders-notifier').hide();
             $('.order-item-todo-label').hide();
             $('.order-item-todo:checked').prop("checked", false);
+            $('.order-item-container:not(:has(.order-item-todo))').show();
 
         }
 
@@ -598,13 +638,19 @@
              
             });
 
+            $('#ItemsPerPage').on('change', function () {
 
+                var currentVal = $(this).val();
+                if (!!currentVal)  localStorage.setItem('orders.ItemsPerPage', currentVal);
+
+                $('#form__list-of-orders').submit();
+            })
             
-          //  (function init() {
+         
                
                 $('.tk-container').hide();
 
-        //    })(); 
+            
 
             ///
             // выбор способа доставки
@@ -676,25 +722,21 @@
 
                 var totalSum = 0;
                 $checkedItems.each(function () {
-                    var total = $(this).closest('.order-item').data('sum-of-client');
+                    var total = $(this).closest('.order-item').data('sum');
                     totalSum += Number.parseFloat(total);
                     
                 });
                 $('#sum-of-orders-selected').text(totalSum);
 
 
-             //   var $el = $('.js-display-todo-items').first();
-             //   $el.data("stage-id", "3");
-             //   $el.text($el.data("title-stage2"));
-
             });
 
             $('.js-display-todo-items').on('click', function () {
                 $('.order-item-todo-label').show();
-                console.log($(this).data("stage-id"));
-                $(this).data("stage-id", "2");
+                $('.order-item-container:not(:has(.order-item-todo))').hide();
+              
 
-                $('.order-item-todo:checked').length
+                
 
                 return false;
             });
@@ -719,7 +761,12 @@
                 return false;
             });
 
+            (function restoreItemsPerPage() {
+                var itemsPerPage = localStorage.getItem('orders.ItemsPerPage');
+                if (!!itemsPerPage)
+                    $('#ItemsPerPage').val(itemsPerPage);
 
+            }());
 
         }())
 

@@ -8,11 +8,12 @@
 @{
     ViewBag.Title = String.Concat(CartAndOrders.Order," ", @CartAndOrders.From," ", Model.Order.NumberIn1S);
     var deliveryDate = Model.Order.DeliveryDate.HasValue ? ((DateTime)Model.Order.DeliveryDate).ToString("yyyy-MM-dd") : "";
-    //var isReserve = Model.OrderData.isReserve;
-    var reservedTill = Model.Order.OrderDate.AddDays(7).ToShortDateString();
+    
+    var reservedTill = Model.Order.OrderDate.AddDays(Defaults.MaxDaysToChangeOrder).ToShortDateString();
     string InvisReservOrShipment = ViewBag.IsForeign ? "hidden" : "";
 
     string notDisplay = "display: none;";
+    
     
 
     string hiddenDeliveryDate = Model.Order.isReserve ? "hidden" : "";
@@ -34,7 +35,7 @@
     bool isAdmin = true;
 
     string hiddenTk = !Model.IsDelivery ||  Model.WayOfDelivery != 3 ? notDisplay : "";
-    string hiddenAddress = !Model.IsDelivery  || Model.WayOfDelivery > 0 ? "display: none;" : "";
+    string hiddenAddress = !Model.IsDelivery  || Model.WayOfDelivery > 0 ? notDisplay : "";
 
 }
 
@@ -66,6 +67,7 @@
         @Html.TextArea("Comments", Model.Order.Comments, 3, 170, new { @class = "form-control", @maxlength = 250 })
     </div>
     @*Model.IsDelivery*@
+    @*Model.Order.DeliveryDate *@
     <div class="row m-t-15 m-b-20 @InvisReservOrShipment">
         
 @using (Html.BeginForm("ChangeOrder", "Orders", FormMethod.Post, new { @id = "changeOrderForm" }))
@@ -83,17 +85,17 @@
         <div class="col-xs-6 col-sm-4 col-md-2 @hiddenDeliveryDate" id="deliverydate_container">
 
             <div class="input-group js-datefor-shipment">
-               
+
                 @*Html.TextBoxFor(model => model.Order.DeliveryDate, new { @class = "form-control cart-date-control", @id = "DeliveryDate" , @name="DeliveryDate" })*@
                 @Html.TextBoxFor(model => model.Order.DeliveryDate, new { @class = "form-control cart-date-control", @id = "DeliveryDate", data_val_requiredifnotcheched = CartAndOrders.ErrorShipmentDate, data_val_requiredifnotcheched_id = "isDelivery" })
-                
+
                 <span class="input-group-addon date-pick-btn">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
             @Html.ValidationMessageFor(m => m.Order.DeliveryDate)
-            
 
+            @Html.HiddenFor(m => m.LogistikDepartment)
         </div>
 }
       <!--  <div id="deliveryByTk_container" class="col-xs-4 @hiddenDeliveryByTk">
@@ -181,7 +183,7 @@
         <!--Способ оплаты -->
         
 
-        @if (Model.HasStar)
+        @if (Model.HasStar || Model.IsStar)
         {
             <div class="col-md-12 hidden-lg hidden-sm hidden-md">
                 <hr class="cart-divider" />
@@ -414,13 +416,10 @@
     <script>
         // Подключаем iCheck Для radiobutton в корзине
 
-        /* 
-        * если уже на отгрузке то не давать в резерв
-        */
         
         $(function () {
             if ($('#isDelivery').is(":checked")) $('#isReserve').prop("disabled", true);
-            
+
         }())
 
         $('[name=IsDelivery][type=radio]').iCheck({

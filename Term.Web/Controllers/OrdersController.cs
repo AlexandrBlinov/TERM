@@ -445,6 +445,7 @@ namespace Term.Web.Controllers
             
 
             OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+
             model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
             model.AddressesIds = _orderService.AddressesOfDelivery;
 
@@ -456,7 +457,7 @@ namespace Term.Web.Controllers
 
             if (String.IsNullOrEmpty(model.AddressId))
             model.AddressId= _orderService.GetDefaultAddressId(Partner.PartnerId, Point.PartnerPointId);
-            
+            model.LogistikDepartment = !isForeign && !String.IsNullOrEmpty(Partner.LogistikDepartment) ? Partner.LogistikDepartment : null;
             return View(model);
 
 
@@ -639,27 +640,56 @@ namespace Term.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> ProcessOrders(OrdersViewModelToProcess model)
         {
+
+            // 1. Валидация модели
             const int DeliveryByTransportCompany = 3;
             if (model.WayOfDelivery== DeliveryByTransportCompany && String.IsNullOrEmpty(model.TkId)) ModelState.AddModelError("TkId", "необходимо ввести транспортную компанию");
 
             if (model.OrderGuids==null || !model.OrderGuids.Any()) ModelState.AddModelError("", "не выбраны заказы");
-
+            
+            
             if (!ModelState.IsValid) return  ReturnModelErrorsAsJson();
 
-            /*
-           var listOfOrders=await DbContext.Orders.Where(order => model.OrderGuids.Contains(order.GuidIn1S)).ToListAsync();
 
-            foreach (var order in listOfOrders)
+            // 2. Вызов веб-сервиса (получаем заказы которые обновлены)
+            var deliveryDateString =  ((DateTime)model.DeliveryDate).ToString(ServiceTerminal.FormatForDate);
+
+            Guid[] guidsOfOrdersChanged= { };
+            try
             {
-                order.DeliveryDate = model.DeliveryDate;
-                order.AddressId = model.AddressId;
-                order.WayOfDelivery = model.WayOfDelivery;
-                order.TkId = model.TkId;
+                var guidsOfOrdersChangedStringArray = model.OrderGuids.Select(item => item.ToString()).ToArray();
+                var result= WS.ChangeOrders(deliveryDateString, model.WayOfDelivery, model.AddressId, model.TkId, model.DayOfWeekToDeliver == DayOfWeekToDeliver.Monday ? true : false, guidsOfOrdersChangedStringArray);
+
+                if (result.Any())   guidsOfOrdersChanged= result.Select(item => Guid.Parse(item)).ToArray();
+            }
+            catch
+           (Exception e)
+            {
+                ErrorLogger.Error(e.Message, e.InnerException);
+                throw;
             }
 
-          await  DbContext.SaveChangesAsync();
-          */
-                return Json(model);
+
+            // 3. Заказы которые обновлены меняем в базе
+            if (guidsOfOrdersChanged.Any())
+            {
+                var listOfOrders = await DbContext.Orders.Where(order => guidsOfOrdersChanged.Contains(order.GuidIn1S)).ToListAsync();
+
+                foreach (var order in listOfOrders)
+                {
+                    order.isReserve = false;
+                    order.DeliveryDate = model.DeliveryDate;
+                    order.AddressId = model.AddressId;
+                    order.WayOfDelivery = model.WayOfDelivery;
+                    order.TkId = model.TkId;
+                    
+                }
+
+                await DbContext.SaveChangesAsync();
+            }
+
+            model.OrderGuids = guidsOfOrdersChanged.ToList();
+            return Json(model);
         }
         /// <summary>
         /// Объединить заказы (представление)

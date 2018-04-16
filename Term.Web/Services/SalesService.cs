@@ -50,7 +50,7 @@ namespace Term.Services
                 o =>
                     o.PartnerId == partnerId && (model.PointId == null || o.PointId == model.PointId) &&
                     (o.SaleDate >= model.BeginDate || model.BeginDate == null) &&
-                    (o.SaleDate <= model.EndDate || model.EndDate == null);
+                    (o.SaleDate <= model.EndDate || model.EndDate == null) && !o.IsStar;
            
              
             if (!String.IsNullOrEmpty(model.ProductName))
@@ -87,7 +87,7 @@ namespace Term.Services
         {
             Expression<Func<Sale, bool>> predicate =
                 o =>o.PointId == pointId && (o.SaleDate >= model.BeginDate || model.BeginDate == null) &&
-                        (o.SaleDate <= model.EndDate || model.EndDate == null);
+                        (o.SaleDate <= model.EndDate || model.EndDate == null) && !o.IsStar;
 
 
             if (!String.IsNullOrEmpty(model.ProductName))

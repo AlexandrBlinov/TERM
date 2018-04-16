@@ -482,6 +482,8 @@ namespace Yst.ViewModels
         // в корзине выбран *
         public bool IsStar { get; set; }
         public bool IsPrepay { get;  set; }
+
+        public string LogistikDepartment { get; set; }
     }
 
     [DataContract(Namespace = "")]
