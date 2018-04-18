@@ -27,14 +27,10 @@ namespace Term.Web.Controllers.API
     public class YstApiController : ApiController, IDisposable
     {
 
-        private PodborTyreDiskService _podborService = null;
+        private readonly PodborTyreDiskService _podborService ;
 
         private readonly AppDbContext _dbContext;
-        /*  private ProductService Products
-          {
-              get { return _productService ?? (_productService = new ProductService()); }
-
-          } */
+       
 
         public YstApiController() : this(new AppDbContext(), new PodborTyreDiskService())
         {
@@ -65,10 +61,10 @@ namespace Term.Web.Controllers.API
                     {
 
                         String pathToPointPhotos = ConfigurationManager.AppSettings["PathToPointPhotos"];
-                        //  String fullPathToDirectory = String.Concat(HttpContext.Server.MapPath(HttpContext.Request.ApplicationPath), ImportDirectory);
+                        
 
                         // Get the complete file path
-                        // var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/pointphotos"), httpPostedFileName + ".jpg");
+                        
                         var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath(pathToPointPhotos), httpPostedFileName + ".jpg");
 
                         // Save the uploaded file to "UploadedFiles" folder

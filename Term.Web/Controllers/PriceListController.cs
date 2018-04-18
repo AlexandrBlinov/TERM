@@ -21,6 +21,7 @@ using Term.Web.Views.Resources;
 namespace Term.Web.Controllers
 {
     [ErrorIfPricesAreBeingUpdatedMvcFilter]
+    [TrackUserAction]
     public class PriceListController : BaseController
     {
         //

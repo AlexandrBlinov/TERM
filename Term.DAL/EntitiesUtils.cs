@@ -41,6 +41,9 @@ namespace Term.DAL
         [MaxLength(Byte.MaxValue)]
         public string UserAction { get; set; }
 
+        [MaxLength(Byte.MaxValue)]
+        public string IpAddress { get; set; }
+
         [DataType(DataType.DateTime)]
         public System.DateTime Date { get; set; }
 

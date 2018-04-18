@@ -20,6 +20,7 @@ using Term.Services;
 using Yst.Services;
 using Yst.DropDowns;
 using Term.Web.Views.Resources;
+using Term.Web.Filters;
 
 namespace Term.Web.Controllers
 {
@@ -30,9 +31,6 @@ namespace Term.Web.Controllers
     {
         private static readonly string _invisible = Defaults.Invisible, _space =Defaults.Space;
 
-       
-        private const int MAX_ITEMS_TO_SHOW = int.MaxValue;
-
         private readonly SeasonProductService _seasonproductservice = null;
         private readonly ProducerForSelectionService _producers = null;
         private readonly OrderService _orderService;
@@ -41,7 +39,13 @@ namespace Term.Web.Controllers
     
 
 
-        public HomeController(ProducerForSelectionService producers, SeasonProductService sps, OrderService orderService, DaysToDepartmentService daysToDepartmentService, NewsService newsService, HttpContextBase context)
+        public HomeController(
+            ProducerForSelectionService producers, 
+            SeasonProductService sps, 
+            OrderService orderService, 
+            DaysToDepartmentService daysToDepartmentService, 
+            NewsService newsService, 
+            HttpContextBase context)
         {
             _producers = producers;
             _seasonproductservice = sps;
@@ -52,8 +56,12 @@ namespace Term.Web.Controllers
 
        public HomeController()
            : this(
-               new ProducerForSelectionService(), new SeasonProductService(), new OrderService(),
-               new DaysToDepartmentService(),new NewsService(), new HttpContextWrapper(System.Web.HttpContext.Current))
+               new ProducerForSelectionService(), 
+               new SeasonProductService(), 
+               new OrderService(),
+               new DaysToDepartmentService(),
+               new NewsService(),
+               new HttpContextWrapper(System.Web.HttpContext.Current))
        {
           
        }
@@ -113,7 +121,7 @@ namespace Term.Web.Controllers
                 ViewBag.NoDsplAutoPodbor = _invisible;
                 ViewBag.YesDsplAutoPodbor = _space;
                
-                podborModel.ItemsPerPage = MAX_ITEMS_TO_SHOW;
+                podborModel.ItemsPerPage = Defaults.MaxItemsPerPage;
                 podborModel.SearchResults = Products.GetDisks(podborModel, Point.PartnerPointId, isSale, exactsize).ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
             }
            else podborModel.SearchResults = CachedCollectionsService.GetAllDisksByPartnerPoint(podborModel, Point);
@@ -184,6 +192,8 @@ namespace Term.Web.Controllers
        }
 
     //   [OutputCache(VaryByParam = "ProducerId;SeasonId;Width;Height;Diametr;Sortby;DisplayView;ItemsPerPage;Ship;PriceMin;PriceMax;page", VaryByCustom = "User;RestsImportDateTime", Duration = 600, Location = OutputCacheLocation.Server)]
+
+            [TrackUserAction]
         public ActionResult Tyres([ModelBinder(typeof(TyresModelBinder))] TyresPodborView podborModel)
         {
 
@@ -194,7 +204,7 @@ namespace Term.Web.Controllers
             ViewBag.HideNoStud = DbContext.PartnerPropertyValues.Any(p => p.PartnerId == partnerId && p.Name==Defaults.PartnerProperties.HideNoStud);
                          
             
-            //    int partnerPointId = ServicePP.getPointID();
+            
             ViewBag.NoDsplAutoPodbor = _space;
             ViewBag.YesDsplAutoPodbor = _invisible;
 
@@ -214,7 +224,7 @@ namespace Term.Web.Controllers
             {
                 ViewBag.NoDsplAutoPodbor = _invisible;
                 ViewBag.YesDsplAutoPodbor = _space;
-                podborModel.ItemsPerPage = MAX_ITEMS_TO_SHOW;
+                podborModel.ItemsPerPage = Defaults.MaxItemsPerPage;
             }
 
           
@@ -240,9 +250,7 @@ namespace Term.Web.Controllers
             podborModel.Polarities = CachedCollectionsService.GetAkbProperties("polarity");
             podborModel.Volumes = CachedCollectionsService.GetAkbProperties("volume");
             podborModel.InrushCurrents = CachedCollectionsService.GetAkbProperties("inrush_current");
-            
-            
-          //  podborModel.Producers = CachedCollectionsService.GetProducers(ProductType.Akb);
+          
 
             podborModel.Producers = CachedCollectionsService.GetAkbProperties("producer");
             podborModel.AkbTypes = CachedCollectionsService.GetAkbProperties("akbtype");
@@ -262,8 +270,6 @@ namespace Term.Web.Controllers
             }
 
             Products.GetAkbs(podborModel, Point.PartnerPointId);
-
-
 
             return View(podborModel);
 
@@ -289,7 +295,7 @@ namespace Term.Web.Controllers
                     var producersPart = parts.FirstOrDefault(p => p.StartsWith("Categories-"));
                     if (producersPart != null)
                     {
-                        var producersIds = producersPart.Substring("Categories-".Length).Split(',').ToArray();
+                        var producersIds = producersPart.Substring("Categories-".Length).Split(Defaults.CommaSign).ToArray();
 
                         foreach (var producersId in producersIds)
                         {
@@ -368,7 +374,7 @@ namespace Term.Web.Controllers
                 //var dep = Products.getDepartmentForProduct(PartnerPointId, Id, ref days);
 
                 ViewBag.DepId = _daysToDepartmentService.GetDepartmentIdForProduct(Point.PartnerPointId, Id, ref days);
-            ViewBag.Invisible = " ";
+            ViewBag.Invisible = Defaults.Space;
             ViewBag.Days = days;
                  //dep.DepartmentId; 
 
@@ -510,7 +516,7 @@ namespace Term.Web.Controllers
                 ET = spar_param.ET,
                 DIA = spar_param.DIA,
                 Page = 1,
-                ItemsPerPage = MAX_ITEMS_TO_SHOW
+                ItemsPerPage = Defaults.MaxItemsPerPage
             };
 
             var podborModelRear = new SeasonDisksPodborView
@@ -522,7 +528,7 @@ namespace Term.Web.Controllers
                 ET = spar_param.RearET,
                 DIA = spar_param.RearDIA,
                 Page = 1,
-                ItemsPerPage = MAX_ITEMS_TO_SHOW
+                ItemsPerPage = Defaults.MaxItemsPerPage
             };
             var podborModelResult = new SeasonDisksPodborView();
             var goods = new List<DiskSearchResult>();
@@ -544,7 +550,7 @@ namespace Term.Web.Controllers
                     }
                 }
             }
-            podborModelResult.SearchResults = goods.ToPagedList(1, MAX_ITEMS_TO_SHOW);
+            podborModelResult.SearchResults = goods.ToPagedList(1, Defaults.MaxItemsPerPage);
             return PartialView("_Disks", podborModelResult);
         }
 
@@ -559,7 +565,7 @@ namespace Term.Web.Controllers
                 Diametr = spar_param.Diametr,
                 Height = spar_param.Height,
                 Page = 1,
-                ItemsPerPage = MAX_ITEMS_TO_SHOW
+                ItemsPerPage = Defaults.MaxItemsPerPage
             };
             var podborModelRear = new TyresPodborView
             {
@@ -567,7 +573,7 @@ namespace Term.Web.Controllers
                 Diametr = spar_param.RearDiametr,
                 Height = spar_param.RearHeight,
                 Page = 1,
-                ItemsPerPage = MAX_ITEMS_TO_SHOW
+                ItemsPerPage = Defaults.MaxItemsPerPage
             };
             var podborModelResult = new TyresPodborView();
             var goods = new List<TyreSearchResult>();
@@ -584,7 +590,7 @@ namespace Term.Web.Controllers
                     goods.Add(good);
                 }
             }
-            podborModelResult.SearchResults = goods.ToPagedList(1, MAX_ITEMS_TO_SHOW);
+            podborModelResult.SearchResults = goods.ToPagedList(1, Defaults.MaxItemsPerPage);
             return PartialView("_Tyres", podborModelResult);
         }
 

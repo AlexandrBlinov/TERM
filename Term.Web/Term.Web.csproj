@@ -236,6 +236,7 @@
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
     <Compile Include="Filters\ErrorIfPricesAreBeingUpdatedFilter.cs" />
+    <Compile Include="Filters\TrackUserActionAttribute.cs" />
     <Compile Include="Filters\LoggedExceptionFilter.cs" />
     <Compile Include="Filters\TrackUserApiActionAttribute.cs" />
     <Compile Include="HtmlHelpers\HtmlElements.cs" />
@@ -493,6 +494,10 @@
     <Compile Include="Migrations\201804131255295_IsStar_AddedToSale.cs" />
     <Compile Include="Migrations\201804131255295_IsStar_AddedToSale.Designer.cs">
       <DependentUpon>201804131255295_IsStar_AddedToSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804171320547_IpAddress_AddedToDbUserActionLog.cs" />
+    <Compile Include="Migrations\201804171320547_IpAddress_AddedToDbUserActionLog.Designer.cs">
+      <DependentUpon>201804171320547_IpAddress_AddedToDbUserActionLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
@@ -950,6 +955,7 @@
     <Content Include="CustomForPartners\expressdetal_wheels.ashx" />
     <Content Include="CustomForPartners\expressdetal_akb.ashx" />
     <Content Include="CustomForPartners\expressdetal_accs.ashx" />
+    <Content Include="CustomForPartners\PricesOfSuppliersDataHandler.ashx" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1434,6 +1440,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804131255295_IsStar_AddedToSale.resx">
       <DependentUpon>201804131255295_IsStar_AddedToSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804171320547_IpAddress_AddedToDbUserActionLog.resx">
+      <DependentUpon>201804171320547_IpAddress_AddedToDbUserActionLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

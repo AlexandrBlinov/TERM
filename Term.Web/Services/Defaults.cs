@@ -13,6 +13,7 @@ namespace YstProject.Services
     /// </summary>
     public static class Defaults
     {
+        public static readonly int MaxItemsPerPage = 100;
 
         public static readonly int NumberOfApplicationOfCarsToLimit = 15;
         public static readonly int NumberOfApplicationOfYearsToLimit = 5;

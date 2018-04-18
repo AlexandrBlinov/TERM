@@ -441,10 +441,11 @@ namespace YstTerm.Models
         /// </summary>
     public class CommonPodborView
     {
+        private int _itemsPerPage = Defaults.MaxItemsPerPage;
+
         public CommonPodborView()
         {
-            Page = 1;
-            ItemsPerPage = 100;
+            Page = 1;           
             PriceMax = 70000;
           
         }
@@ -464,12 +465,14 @@ namespace YstTerm.Models
         public int? ProducerId { get; set; }
 
 
-        [DefaultValue(1)]
+        
         public int Page { get; set; }
 
-        [DisplayName("Выводить по")]
-        [DefaultValue(50)]
-        public int ItemsPerPage { get; set; }
+        [DisplayName("Выводить по")]        
+        public int ItemsPerPage { get => _itemsPerPage;
+            
+                  set => this._itemsPerPage = value > Defaults.MaxItemsPerPage ? Defaults.MaxItemsPerPage : value;
+            } 
 
         public int PriceMin { get; set; }
         public int PriceMax { get; set; }
@@ -483,7 +486,7 @@ namespace YstTerm.Models
 
         public IEnumerable<int> PagerList
         {
-            get { return new int[] { 10, 20, 50, 100, 200 }; }
+            get { return new int[] { 10, 20, 50, 100 }; }
         }
 
         //public string SortBy { get; set; }
@@ -522,19 +525,7 @@ namespace YstTerm.Models
 
         }
     
-    /*
-        public  SelectList Seasons
-        {
-            get  {
-                return (new SelectList(Enum.GetValues(typeof(TyresSeasons)).Cast<TyresSeasons>().Select(p => new
-                {
-                    Id = (int)p,
-                    Name = EnumDescriptionProvider.GetDescription(p)
-
-                }), "Id", "Name"));
-            }
-        }
-*/
+   
           private static readonly SelectList _seasons = GetSeasons();
 
 
@@ -589,10 +580,7 @@ namespace YstTerm.Models
     /// </summary>
     public class CargoTyresPodborView : CommonPodborView
     {
-      /*  private static readonly string[] _cargowidth = DropDownsFactory.GetCargoProperties(ProductType.Tyre, "Width");
-        private static readonly string[] _cargoheight = DropDownsFactory.GetCargoProperties(ProductType.Tyre, "Height");
-        private static readonly string[] _cargodiametr = DropDownsFactory.GetCargoProperties(ProductType.Tyre, "Diametr"); */
-
+      
         public IEnumerable<string> CargoWidth { get; set; }
 
         public IEnumerable<string> CargoHeight { get; set; }
