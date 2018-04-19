@@ -337,8 +337,14 @@ namespace Term.Web.Controllers
                 Guid seasonOrderGuid;
                 var orderGuids = cart.CreateOrdersInLocal(result, viewModel, out seasonOrderGuid, costOfDeliveryByDepartments, deliveryDataString, rangeDeliveryDays);
 
+                var modelOrdersInView = new List<OrderViewWithDetails>();
+                //var modelOrdersInView = orderGuids.Select(orderGuid => _orderService.GetOrderWithDetailsByGuid(Guid.Parse(orderGuid))).ToList();
 
-                var modelOrdersInView = orderGuids.Select(orderGuid => _orderService.GetOrderWithDetailsByGuid(Guid.Parse(orderGuid))).ToList();
+                foreach (var orderGuid in orderGuids)
+                {
+                  var orderfound= await _orderService.GetOrderWithDetailsByGuidAsync(Guid.Parse(orderGuid));
+                    modelOrdersInView.Add(orderfound);
+                }
 
                 // для сторонних поставщиков создаем уведомления
                 foreach (var supplierId in modelOrdersInView.Where(p => p.Order.SupplierId > 0).Select(p=>p.Order.SupplierId).Distinct())
@@ -423,8 +429,7 @@ namespace Term.Web.Controllers
             int pointId = this.Point.PartnerPointId;
             Partner partner = this.Point.Partner;
             string partnerId = partner.PartnerId;
-           // int pointId = ServicePP.getPointID();
-           //  string partnerId = ServicePP.GetPartnerIdByPointId(pointId);
+          
 
 
 
@@ -478,8 +483,8 @@ namespace Term.Web.Controllers
             }
 
             // есть товары в резерве под покупателя - значит берем с головного склада
-            bool existsOnRestsOfPartner = _checkerCount.CheckIfExistsRestOfPartner(partnerId, id);
-            if (existsOnRestsOfPartner) departmentId = Defaults.MainDepartment;
+          //  bool existsOnRestsOfPartner = _checkerCount.CheckIfExistsRestOfPartner(partnerId, id);
+          //  if (existsOnRestsOfPartner) departmentId = Defaults.MainDepartment;
             
 
             // updated by Lapenkov 2016-06-22
@@ -491,7 +496,7 @@ namespace Term.Web.Controllers
             // проверка, если не сезонный ассортимент и нет на текущем складе, то 
             // если 2 склада и запрашивается количество больше чем на текущем складе, и меньше чем на доп. складе, то
             // берем с доп. склада
-            if (departmentId != 0 && supplierId == 0 && !existsOnRestsOfPartner)
+            if (departmentId != 0 && supplierId == 0 /* && !existsOnRestsOfPartner */)
             {
              var departmentsWithRests   =_daysGetterService.GetDepartmentsWithRests(pointId, id);
 
@@ -520,7 +525,7 @@ namespace Term.Web.Controllers
             cart.AddToCart(addedProduct, departmentId, days, ref count, price, priceOfPoint, priceOfClient, supplierId, usePrepay);
 
 
-            //  message = String.Format( ForSearchResult.MsgAddToCart1 + " { 0} " + ForSearchResult.MsgAddToCart2 + " " + ForSearchResult.MsgAddToCart3 + " {1} ", addedProduct.Name, count);
+            
 
             message = $"{ForSearchResult.MsgAddToCart1} {addedProduct.Name} {ForSearchResult.MsgAddToCart2} {count} {ForSearchResult.MsgAddToCart3}";
 

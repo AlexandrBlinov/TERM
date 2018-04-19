@@ -16,7 +16,7 @@ public class PricesOfSuppliersDataHandler : IHttpHandler
 
     class SupplierData
     {
-        public long SupplierId {get; set;}
+        public string Supplier {get; set;}
         public string Article {get; set;}
         public string Productname {get; set;}
         public decimal Price { get; set; }
@@ -46,7 +46,7 @@ public class PricesOfSuppliersDataHandler : IHttpHandler
                 {
                     list.Add(new SupplierData
                     {
-                        SupplierId = (long)rdr["SupplierId"],
+                        Supplier = (string)rdr["Supplier"],
                         Article = (string)rdr["Article"],
                         Productname = (string)rdr["Productname"],
                         Price = (decimal)rdr["Price"],
@@ -62,7 +62,7 @@ public class PricesOfSuppliersDataHandler : IHttpHandler
             var sb = new StringBuilder();
             foreach (var item in list)
 
-                sb.AppendFormat("{0};{1};{2};{3};{4}", item.SupplierId, item.Article, item.Productname, item.Price.ToString(specifier),item.Date).AppendLine();
+                sb.AppendFormat("{0};{1};{2};{3};{4}", item.Supplier, item.Article, item.Productname, item.Price.ToString(specifier),item.Date).AppendLine();
 
             // JavaScriptSerializer serializer = new JavaScriptSerializer();
 

@@ -63,9 +63,7 @@ namespace Term.Web.Controllers
                     if (!ServicePP.CheckIfCanPassTrough(String.Empty))
                         return RedirectToAction("KeyWordEnter", "Partner", new { ReturnUrl = Request.Url.AbsoluteUri });
                     model = _salesService.GetListOfSalesByPointId(model, pointId);
-                    /* model.PartnerPoints = null;
-                     if (pointId > 0)
-                         model = Orders.getListOfOrdersByPointId(model, pointId, page);*/
+                   
                 }
                 return View(model);
             }

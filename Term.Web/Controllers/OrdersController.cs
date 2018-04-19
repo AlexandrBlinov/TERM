@@ -128,7 +128,7 @@ namespace Term.Web.Controllers
                 if (_orderService.CheckIfCanCancelOrder(order, out errorMessage)) ViewBag.DisplayEditButton = true;
 
 
-                OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+                OrderViewWithDetailsExtended model = await _orderService.GetOrderWithDetailsByGuidAsync(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
                model.HistoryOfOrderStatuses= await _orderService.GetHistoryOfOrderStatusesAsync(guid);
                 model.CanUserChangeDpdOrder = true;
                 if (model.Order.IsDeliveryByTk)
@@ -136,7 +136,23 @@ namespace Term.Web.Controllers
                     var date = model.Order.DeliveryDate.Value.AddHours(14);
                     model.CanUserChangeDpdOrder = date > DateTime.Now ? true : false;
                 }
-                ViewBag.SaleIsReady = _orderService.GetSaleNumberByOrderGuid(order.GuidIn1S) != String.Empty ? true : false;
+            // ViewBag.SaleIsReady = _orderService.GetSaleNumberByOrderGuid(order.GuidIn1S) != String.Empty ? true : false;
+
+            Sale sale = await _orderService.GetSaleByOrderGuidAsync(guid);
+
+            if (sale != null)
+            
+                model.DriverInfo = new DriverInfo
+                {
+                    BrandOfAuto = sale.BrandOfAuto,
+                    Driver = sale.Driver,
+                    PhoneNumberOfDriver = sale.PhoneNumberOfDriver,
+                    RegNumOfAuto = sale.RegNumOfAuto
+                };
+
+
+            ViewBag.SaleIsReady = sale != null;
+
 
             // заполняем склад для подтверждения
             if (!Partner.IsForeign) model.DepartmentName = order.Department?.Name;
@@ -185,7 +201,7 @@ namespace Term.Web.Controllers
             ViewBag.PartnerInfo = base.Partner.ToString();
             ViewBag.ShowPicture = showPicture ?? false;
             
-            OrderViewWithDetails model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+            OrderViewWithDetails model = await _orderService.GetOrderWithDetailsByGuidAsync(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
            
 
             if (model != null)
@@ -206,17 +222,17 @@ namespace Term.Web.Controllers
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public ActionResult DpdErrand(Guid guid)
+        public async Task<ActionResult> DpdErrand(Guid guid)
         {
             InitiateViewBag();
            // _isPartner = ServicePP.IsPartner;
-            Order order = _orderService.GetOrderByGuid(guid);
+            Order order = await _orderService.GetOrderByGuidAsync(guid);
 
 
             if (base.Partner == null) throw new NullReferenceException("Partner not found in db");
 
 
-            OrderViewWithDetails model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+            OrderViewWithDetails model = await _orderService.GetOrderWithDetailsByGuidAsync(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
 
             model.FildsForDpdForm = new FieldsForDpdViewModel
             {
@@ -271,25 +287,23 @@ namespace Term.Web.Controllers
         {
 
             InitiateViewBag();
-         //   _isPartner = ServicePP.IsPartner;
+         
             Order order = await _orderService.GetOrderByGuidAsync(guid);
 
 
             if (base.Partner == null) throw new NullReferenceException("Partner not found in db");
 
 
-            OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+            OrderViewWithDetailsExtended model = await _orderService.GetOrderWithDetailsByGuidAsync(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
 
             model.FildsForDpdForm = new FieldsForDpdViewModel
             {
-                PartnerInnKpp = base.Partner.INN ?? String.Empty,
-                //Address = (partner.Address ?? String.Empty),
+                PartnerInnKpp = base.Partner.INN ?? String.Empty,                
                 Address = base.Partner.Address,
-                PartnerName = base.Partner.Name,
-                SaleNumber = _orderService.GetSaleNumberByOrderGuid(order.GuidIn1S),
-                ContractNumber = base.Partner.ContractNumber ?? String.Empty,
-                ContractDate = base.Partner.ContractDate.ToShortDateFormat() ?? String.Empty
-                //DeliveryType = order.
+                PartnerName = base.Partner.Name,                
+                SaleNumber= (await _orderService.GetSaleByOrderGuidAsync(order.GuidIn1S))?.NumberIn1S,
+                ContractNumber = base.Partner.ContractNumber ,
+                ContractDate = base.Partner.ContractDate.ToShortDateFormat() ?? String.Empty                
             };
             int count = 0;
             decimal weight = 0;
@@ -349,7 +363,7 @@ namespace Term.Web.Controllers
 
                     ModelState.AddModelError("OrderError", errorMessage);
 
-                   var model = _orderService.GetOrderWithDetailsByGuid(guid);
+                   var model = await _orderService.GetOrderWithDetailsByGuidAsync(guid);
                     
                         return View("Details", model);
                    
@@ -436,7 +450,7 @@ namespace Term.Web.Controllers
         /// <param name="guid"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult ChangeOrder(Guid guid)
+        public async Task<ActionResult> ChangeOrder(Guid guid)
         {
             InitiateViewBag();
           //  _isPartner = ServicePP.IsPartner;
@@ -444,7 +458,7 @@ namespace Term.Web.Controllers
             bool isForeign = Partner.IsForeign;
             
 
-            OrderViewWithDetailsExtended model = _orderService.GetOrderWithDetailsByGuid(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
+            OrderViewWithDetailsExtended model = await _orderService.GetOrderWithDetailsByGuidAsync(guid, _isPartner, base.Partner.PartnerId, base.Point.PartnerPointId);
 
             model.CanUserUseDpdDelivery = ServicePP.CanUserUseDpdDelivery;
             model.AddressesIds = _orderService.AddressesOfDelivery;

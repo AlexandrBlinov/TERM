@@ -4,11 +4,8 @@
 @using Term.Web.Views.Resources;
 @using Term.Utils;
 
-@{
-  // ViewBag.Title = $"{CartAndOrders.Order}   {Model.Order.NumberIn1S}";
-    var reservedTill = Html.DateFormat(Model.Order.OrderDate.AddDays(7));
-
-    
+@{  
+    var reservedTill = Html.DateFormat(Model.Order.OrderDate.AddDays(Defaults.MaxDaysToChangeOrder));
 }
 
 
@@ -25,104 +22,115 @@
     @Html.ValidationSummary()
 
     
-    <dl class="dl-horizontal doc-info">
-        <dt>@CartAndOrders.NumberInDatabase:</dt>
-        <dd> @Html.DisplayFor(model => model.Order.NumberIn1S)</dd>
-        <dt>@CartAndOrders.Status:</dt>
-        <dd> @Html.DisplayFor(model => model.OrderStatusName)
-        @if (Model.Order.OrderStatus  == OrderStatuses.Confirmed)
+        <dl class="dl-horizontal doc-info">
+            <dt>@CartAndOrders.NumberInDatabase:</dt>
+            <dd> @Html.DisplayFor(model => model.Order.NumberIn1S)</dd>
+            <dt>@CartAndOrders.Status:</dt>
+            <dd>
+                @Html.DisplayFor(model => model.OrderStatusName)
+                @if (Model.Order.OrderStatus == OrderStatuses.Confirmed)
         {
-            @Html.Raw("&nbsp;&nbsp; (") 
-             @Model.DepartmentName 
+            @Html.Raw("&nbsp;&nbsp; (")
+            @Model.DepartmentName
             @Html.Raw(")")
-        }
-        
-    
-        @if (Model.HistoryOfOrderStatuses.Any())
+}
+
+
+                @if (Model.HistoryOfOrderStatuses.Any())
         {
             <a href="#history" class="order-history__link">@CartAndOrders.History</a>
-        }
-        </dd>
-       
+}
+            </dd>
 
-        @if (Model.Order.isReserve)
-        {
+
+            @if (Model.Order.isReserve)
+    {
         <dt>@CartAndOrders.ReservedTill:</dt>
-            <dd>@reservedTill</dd>
+        <dd>@reservedTill</dd>
 
-        }
-        else
-        {
-            <dt>@CartAndOrders.DateShipment:</dt>
-            <dd>@Html.DateFormat(Model.Order.DeliveryDate)</dd>
-
-            
-        }
-
-        
-
-@if (!ViewBag.IsForeign)
+}
+else
 {
+        <dt>@CartAndOrders.DateShipment:</dt>
+        <dd>@Html.DateFormat(Model.Order.DeliveryDate)</dd>
+
+
+}
+
+            @if (Model.DriverInfo != null)
+            {
+        <dt>@CartAndOrders.Driver:</dt>
+            <dd> @Html.DisplayFor(model => model.DriverInfo.Driver)</dd>
+            <dt>@Settings.PhoneNumber:</dt>
+            <dd> @Html.DisplayFor(model => model.DriverInfo.PhoneNumberOfDriver)</dd>
+            <dt>@CartAndOrders.CarBrand:</dt>
+            <dd> @Html.DisplayFor(model => model.DriverInfo.BrandOfAuto)</dd>
+            <dt>@CartAndOrders.CarNumber:</dt>
+            <dd> @Html.DisplayFor(model => model.DriverInfo.RegNumOfAuto)</dd>
+            }
+
+            @if (!ViewBag.IsForeign)
+    {
 
         if (Model.AddressOfDelivery != null)
         {
-        <dt>Адрес доставки:</dt>
-        <dd>@Model.AddressOfDelivery</dd>
-        }
+            <dt>Адрес доставки:</dt>
+            <dd>@Model.AddressOfDelivery</dd>
+}
 
 
-        if (Model.Order.Prepay)
-        {
-            <dt>@CartAndOrders.PriceType:</dt>
-            <dd>@CartAndOrders.Prepay</dd>
+if (Model.Order.Prepay)
+{
+        <dt>@CartAndOrders.PriceType:</dt>
+        <dd>@CartAndOrders.Prepay</dd>
 
-        }
+}
 
-     if (Model.Order.IsStar)
-      {
+if (Model.Order.IsStar)
+{
         <dt>Способ оплаты:</dt>
         <dd><span class="glyphicon glyphicon-asterisk"></span></dd>
-      }
-         
-    <dt>Способ доставки:</dt>
-    <dd>
-        @EnumDescriptionProvider.GetOneCultureDescription((WaysOfDelivery) Model.Order.WayOfDelivery)
+}
 
-    </dd>
+        <dt>Способ доставки:</dt>
+        <dd>
+            @EnumDescriptionProvider.GetOneCultureDescription((WaysOfDelivery)Model.Order.WayOfDelivery)
+
+        </dd>
 
 
 
 }
 
-        <dt>@CartAndOrders.Comment:</dt>
-        <dd> @Html.DisplayFor(model => model.Order.Comments)</dd>
+            <dt>@CartAndOrders.Comment:</dt>
+            <dd> @Html.DisplayFor(model => model.Order.Comments)</dd>
 
-        <dt>@CartAndOrders.Name:</dt>
-        <dd> @Html.DisplayFor(model => model.Order.ContactFIOOfClient)</dd>
-        <dt>@Settings.PhoneNumber:</dt>
-        <dd> @Html.DisplayFor(model => model.Order.PhoneNumberOfClient)</dd>
+            <dt>@CartAndOrders.Name:</dt>
+            <dd> @Html.DisplayFor(model => model.Order.ContactFIOOfClient)</dd>
+            <dt>@Settings.PhoneNumber:</dt>
+            <dd> @Html.DisplayFor(model => model.Order.PhoneNumberOfClient)</dd>
 
-        @if (Model.Order.IsDeliveryByTk && !String.IsNullOrEmpty(Model.Order.DeliveryDataString))
-        {
-            <dt>@CartAndOrders.DeliveryByTransportCompany:</dt>
-            <dd> @Html.DisplayFor(model => model.Order.DeliveryDataString)</dd>
+            @if (Model.Order.IsDeliveryByTk && !String.IsNullOrEmpty(Model.Order.DeliveryDataString))
+    {
+        <dt>@CartAndOrders.DeliveryByTransportCompany:</dt>
+        <dd> @Html.DisplayFor(model => model.Order.DeliveryDataString)</dd>
 
-        }
+}
 
-        @if (Model.Order.IsDeliveryByTk && !String.IsNullOrEmpty(Model.Order.RangeDeliveryDays))
-        {
-            <dt>Число дней доставки:</dt>
-            <dd>@Html.DisplayFor(model => model.Order.RangeDeliveryDays)</dd>
+            @if (Model.Order.IsDeliveryByTk && !String.IsNullOrEmpty(Model.Order.RangeDeliveryDays))
+    {
+        <dt>Число дней доставки:</dt>
+        <dd>@Html.DisplayFor(model => model.Order.RangeDeliveryDays)</dd>
 
-            if (Model.Order.DpdDeliveryStatus.HasValue)
-            {
-                <dt>Статус Dpd:</dt>
-                <dd> @* Html.DisplayFor(model => model.Order.DpdDeliveryStatusName) *@</dd>
+if (Model.Order.DpdDeliveryStatus.HasValue)
+{
+        <dt>Статус Dpd:</dt>
+        <dd> @* Html.DisplayFor(model => model.Order.DpdDeliveryStatusName) *@</dd>
 
-            }
-        }
+}
+}
 
-    </dl>
+        </dl>
 
 </fieldset>
 

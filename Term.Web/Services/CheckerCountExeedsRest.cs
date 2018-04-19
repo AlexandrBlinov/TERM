@@ -77,5 +77,20 @@ namespace YstProject.Services
             return _dbContext.Set<RestOfPartner>().Any(p => p.PartnerId == partnerId && p.ProductId == productId);
         }
 
+
+        /// <summary>
+        /// Получить число товаров под резерв партнера 
+        /// (только для головного подразделения)
+        /// </summary>
+        /// <param name="partnerId"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public int GetCountOfProductOnRestsOfPartner(string partnerId, int productId)
+        {
+            var record= _dbContext.Set<RestOfPartner>().FirstOrDefault(p => p.PartnerId == partnerId && p.ProductId == productId);
+
+            return record == null ? 0 : record.Rest;
+        }
+
     }
 }

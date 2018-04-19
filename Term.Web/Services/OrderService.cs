@@ -145,7 +145,7 @@ namespace Term.Services
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public OrderViewWithDetailsExtended GetOrderWithDetailsByGuid(Guid guid)
+        public async Task<OrderViewWithDetailsExtended> GetOrderWithDetailsByGuidAsync(Guid guid)
         {
 
             var model = new OrderViewWithDetailsExtended
@@ -162,10 +162,9 @@ namespace Term.Services
                                     PriceOfClient = orderdetail.PriceOfClient,
                                     ProductName = product == null ? "" : product.Name
                                 }).ToList(),
-                Order= GetOrderByGuid(guid)
+                Order = await GetOrderByGuidAsync(guid)
                 
             };
-
 
             return model;
         } 
@@ -179,7 +178,7 @@ namespace Term.Services
         /// <param name="pointId"></param>
         /// <returns></returns>
 
-        public OrderViewWithDetailsExtended GetOrderWithDetailsByGuid(Guid guid, bool isPartner, string partnerId, int pointId)
+        public async Task<OrderViewWithDetailsExtended> GetOrderWithDetailsByGuidAsync(Guid guid, bool isPartner, string partnerId, int pointId)
         {
          
             string sqlText = @"SELECT OrderDetails.RowNumber, OrderDetails.ProductId ProductId, ISNULL(Products.Name,'') ProductName , 
@@ -193,7 +192,7 @@ namespace Term.Services
             
             var model = new OrderViewWithDetailsExtended
             {
-                Order = GetOrderByGuid(guid)
+                Order = await GetOrderByGuidAsync(guid)
                
              };
             var order = model.Order;
@@ -270,24 +269,37 @@ namespace Term.Services
             return false;
         }
 
+        /// <summary>
+        /// Получить реализацию по guid заказа
+        /// </summary>
+        /// <param name="guidOrderIn1S"></param>
+        /// <returns></returns>
+        public async Task<Sale> GetSaleByOrderGuidAsync(Guid guidOrderIn1S) => await   DbContext.Sales.FirstOrDefaultAsync(o => o.GuidOfOrderIn1S == guidOrderIn1S);
+
+        
+
+
+        /*
         public string GetSaleNumberByOrderGuid(Guid guidOrderIn1S)
         {
 
             Sale sale = DbContext.Sales.FirstOrDefault(o => o.GuidIn1S == guidOrderIn1S);
             if (sale == null) return String.Empty;
             return sale.NumberIn1S;
-        }
+        } */
 
+/*
         public Order GetOrderByGuid(Guid guid)
         {
 
             return  DbContext.Orders.Include(p=>p.OrderDetails).FirstOrDefault(o => o.GuidIn1S == guid); 
             
         }
+        */
 
         public async Task<Order> GetOrderByGuidAsync(Guid guid)
         {
-
+           
             return await DbContext.Orders.Include(p => p.OrderDetails).FirstOrDefaultAsync(o => o.GuidIn1S == guid);
 
         }
@@ -301,12 +313,12 @@ namespace Term.Services
         /// <returns></returns>
         public string GetPartnerInfoForBill(string partnerId)
         {
-            string result = "";
+            string result = String.Empty;
             Partner partner = DbContext.Partners.FirstOrDefault<Partner>(p => p.PartnerId == partnerId);
 
             if (partner != null)
                 
-                result = String.Concat(partner.INN ?? "", ",", partner.FullName ?? "", ",", partner.Address ?? "", ", тел:", partner.PhoneNumber);
+                result = $"{partner.INN} ,{partner.FullName} , {partner.Address} , тел: {partner.PhoneNumber}";
             return result;
 
         }

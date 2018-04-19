@@ -406,6 +406,16 @@ namespace Yst.ViewModels
         }
     }
 
+    /// <summary>
+    /// Информация о водителе
+    /// </summary>
+    public class DriverInfo
+    {
+        public string Driver { get; set; }
+        public string PhoneNumberOfDriver { get; set; }
+        public string BrandOfAuto { get; set; }
+        public string RegNumOfAuto { get; set; }
+    }
 
 
     //[DataContract(Namespace = "")]
@@ -415,7 +425,7 @@ namespace Yst.ViewModels
         public OrderViewWithDetailsExtended()
         {
             HistoryOfOrderStatuses= new List<HistoryOfOrderstatus>();
-           
+            
         }
 
         /// <summary>
@@ -484,6 +494,8 @@ namespace Yst.ViewModels
         public bool IsPrepay { get;  set; }
 
         public string LogistikDepartment { get; set; }
+
+        public DriverInfo DriverInfo { get; set; }
     }
 
     [DataContract(Namespace = "")]

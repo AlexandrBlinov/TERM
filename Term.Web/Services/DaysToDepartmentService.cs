@@ -246,36 +246,50 @@ namespace YstProject.Services
         /// <returns>Коллекцию подразделений с товарами </returns>
         public IEnumerable<DepartmentWithRests> GetDepartmentsWithRests(int pointId, int productId)
         {
-         //   var mainDepartment = _dbContext.Departments.First(p => p.DepartmentId == Defaults.MainDepartment);
+            //   var mainDepartment = _dbContext.Departments.First(p => p.DepartmentId == Defaults.MainDepartment);
             var point = _dbContext.PartnerPoints.FirstOrDefault(p => p.PartnerPointId == pointId);
             var partnerId = point.PartnerId;
 
-            
+
             var departmentId = point.DepartmentId ?? -1;
 
-            var availableDepIds = new List<int> {Defaults.MainDepartment};
+            var availableDepIds = new List<int> { Defaults.MainDepartment };
 
             if (departmentId > 0) availableDepIds.Add(departmentId);
 
             // сюда надо дабавить резерв покупателя
-            var restsavailable =_dbContext.Rests.Where(p => p.ProductId == productId && availableDepIds.Contains(p.DepartmentId));
-                        
+            var restsavailable = _dbContext.Rests.Where(p => p.ProductId == productId && availableDepIds.Contains(p.DepartmentId));
 
-                var results=from rests in restsavailable
-                join deps in _dbContext.Departments on rests.DepartmentId equals deps.DepartmentId
-                orderby rests.DepartmentId
-                select
-                    new DepartmentWithRests
-                    {
-                        DepartmentId = deps.DepartmentId,
-                        DepartmentName = deps.Name,
-                        Rest = rests.Rest,
-                        Days = deps.DepartmentId == Defaults.MainDepartment ?point.DaysToMainDepartment :point.DaysToDepartment
-                    };
-                
-                return results.AsEnumerable();
+
+            var results = from rests in restsavailable
+                          join deps in _dbContext.Departments on rests.DepartmentId equals deps.DepartmentId
+                          orderby rests.DepartmentId
+                          select
+                              new DepartmentWithRests
+                              {
+                                  DepartmentId = deps.DepartmentId,
+                                  DepartmentName = deps.Name,
+                                  Rest = rests.Rest,
+                                  Days = deps.DepartmentId == Defaults.MainDepartment ? point.DaysToMainDepartment : point.DaysToDepartment
+                              };
+
+            var resultsArray = results.AsNoTracking().ToList();
+
+            // если есть резервы под клиента то добавляем их к остаткам по головному подразделению
+            var recordOnRestOfPartner = _dbContext.Set<RestOfPartner>().FirstOrDefault(p => p.PartnerId == partnerId && p.ProductId == productId);
+            if (recordOnRestOfPartner != null && recordOnRestOfPartner.Rest > 0)
+            {
+                if (resultsArray.Any() && resultsArray.Any(p => p.DepartmentId == Defaults.MainDepartment)) resultsArray.First(p => p.DepartmentId == Defaults.MainDepartment).Rest += recordOnRestOfPartner.Rest;
+                else resultsArray.Add(new DepartmentWithRests
+                {
+                    DepartmentId = Defaults.MainDepartment,               
+                    Rest = recordOnRestOfPartner.Rest,
+                    Days = point.DaysToMainDepartment
+                });
+
             }
-
+            return resultsArray;
+        }
 
         /// <summary>
         /// Возвращает подразделения и сроки доставки 
