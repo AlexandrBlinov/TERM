@@ -187,7 +187,7 @@
     <value>By status</value>
   </data>
   <data name="ToOrder60Days" xml:space="preserve">
-    <value>Under the order 21 days</value>
+    <value>Под заказ 45 дней, Under the order 45 days</value>
   </data>
   <data name="Error_AmountOfCountShouldBeBetween0And1000" xml:space="preserve">
     <value>Amount of products in added to cart should be between 1 and 1000</value>

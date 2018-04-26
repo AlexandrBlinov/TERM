@@ -442,7 +442,9 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
                 }
             });
 
-            var route_path = $(this).attr('action').match(/\w+\/\w+/);
+          //  var route_path = $(this).attr('action').match(/\w+\/\w+/);
+
+            var route_path = "home/disksbyparams";
 
             var newUrl = String.format('/{0}/{1}/{2}x{3}_{4}x{5}_ET{6}_D{7}/', route_path, pathObj['ProducerId'], pathObj['Width'], pathObj['Diametr'], pathObj['Hole'], pathObj['PCD'], pathObj['ET'], pathObj['DIA']);
 
@@ -458,7 +460,10 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
             var addToPath = $('input[name=SortBy],input[name=DisplayView],input[name=Name], input[name=Article], select[name=DiskColor],input[name=SeasonPostId], input[name=ItemsPerPage], input[name=PriceMin], input[name=PriceMax], input[name=Brands], input[name=FromRests], input[name=FromOnWay] ,input[name=OnlySale], input[name=IsSet4Items],input[name=CarName],input[name=AllOrByCarReplica],select[name=ETto]').filter(function () { return $.trim(this.value).length > 0 }).serialize();
 
-            location.assign(newUrl + "?" + addToPath);
+            //  location.assign(newUrl + "?" + addToPath);
+            
+            $('#disk-podbor__results').html('<div class="loader top-50"></div>').load(newUrl + "?" + addToPath)
+            
             return false;
 
         });

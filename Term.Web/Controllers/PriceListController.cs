@@ -295,7 +295,7 @@ namespace Term.Web.Controllers
                     if (brand == "VISSOL")
                     {
                         var restYar = wsDisks.GetValue(i, 14).ToString();
-                        if (restYar == "50" && model.Contains("F"))
+                        if (model.Contains("F"))
                         {
                             wsDisks.Cells[i, 14].Value = "Под заказ";
                         }

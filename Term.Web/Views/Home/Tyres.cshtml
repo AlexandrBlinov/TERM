@@ -9,8 +9,9 @@
 @{
     ViewBag.Title = @ForSearchResult.SearchByTyreSize;
 }
-@{Html.RenderPartial("_AkbBigSale");}
-@*@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Tyres })*@
+
+
+@Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Tyres })
 
 @using (Html.BeginForm("Tyres", "Home", FormMethod.Get, new { @id = "tyres-podbor", @data_name = "tyre" }))
 {
@@ -128,7 +129,7 @@
         PriceMax = Model.PriceMax,
         DisplayView = Model.DisplayView
     }),
-            new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+                new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 
 
 </div>
@@ -337,7 +338,7 @@
         PriceMax = Model.PriceMax,
         DisplayView = Model.DisplayView
     }),
-            new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
+                new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkToPreviousPageFormat = String.Format("<"), LinkToNextPageFormat = String.Format(">"), LinkToLastPageFormat = String.Format(">>"), MaximumPageNumbersToDisplay = 9 })
 </div>
 
 @section Scripts {

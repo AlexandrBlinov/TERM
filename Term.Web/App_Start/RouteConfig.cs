@@ -34,10 +34,12 @@ namespace Term.Web
             routes.MapRoute("Tyres", "Home/Tyres/{ProducerId}/{SeasonId}/{Width}-{Height}-R{Diametr}",
             new { controller = "Home", action = "Tyres", ProducerId = "all", SeasonId = "all", Width = "all", Height = "all", Diametr = "all" });
 
-          /* routes.MapRoute("CargoTyres", "Home/CargoTyres/{ProducerId}/{SeasonId}/{Width}-{Height}-R{Diametr}",
-           new { controller = "Home", action = "CargoTyres", ProducerId = "all", SeasonId = "all", Width = "all", Height = "all", Diametr = "all" }); */
+            
 
-           routes.MapRoute("CargoTyres", "Home/CargoTyres",
+            /* routes.MapRoute("CargoTyres", "Home/CargoTyres/{ProducerId}/{SeasonId}/{Width}-{Height}-R{Diametr}",
+             new { controller = "Home", action = "CargoTyres", ProducerId = "all", SeasonId = "all", Width = "all", Height = "all", Diametr = "all" }); */
+
+            routes.MapRoute("CargoTyres", "Home/CargoTyres",
           new { controller = "Home", action = "CargoTyres"});
 
 
@@ -52,8 +54,11 @@ namespace Term.Web
                routes.MapRoute("Disks", "Home/Disks/{ProducerId}/{Width}x{Diametr}_{Hole}x{PCD}_ET{ET}_D{DIA}",
               new { controller = "Home", action = "Disks", ProducerId = "all", Width = "all", Diametr = "all", Hole = "all", PCD = "all", ET = "all", DIA = "all" });
 
+            routes.MapRoute("DisksByParams", "Home/DisksByParams/{ProducerId}/{Width}x{Diametr}_{Hole}x{PCD}_ET{ET}_D{DIA}",
+            new { controller = "Home", action = "DisksByParams", ProducerId = "all", Width = "all", Diametr = "all", Hole = "all", PCD = "all", ET = "all", DIA = "all" });
 
-               routes.MapRoute("CargoDisks", "Home/CargoDisks/{ProducerId}/{Width}x{Diametr}_{Hole}x{PCD}_ET{ET}_D{DIA}",
+
+            routes.MapRoute("CargoDisks", "Home/CargoDisks/{ProducerId}/{Width}x{Diametr}_{Hole}x{PCD}_ET{ET}_D{DIA}",
               new { controller = "Home", action = "CargoDisks", ProducerId = "all", Width = "all", Diametr = "all", Hole = "all", PCD = "all", ET = "all", DIA = "all" });
 
          /*    routes.MapRoute("SeasonDisks", "SeasonProduct/Disks/{ProducerId}/{Width}x{Diametr}_{Hole}x{PCD}_ET{ET}_D{DIA}",

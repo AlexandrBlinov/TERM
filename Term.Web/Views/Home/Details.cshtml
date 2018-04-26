@@ -17,10 +17,10 @@
 
 <!--        <a class="btn btn-default btn-styled" onclick="javascript:history.back();">@ForSearchResult.Back</a> -->
 
-<div class="row">
+<section class="row product-details__container">
 
     @if (ViewBag.CountPhoto > 0)
-            {
+    {
         <div class="col-xs-1">
             <div>
                 <div class="details-conteiner-small-img">
@@ -29,36 +29,36 @@
 
                 @for (int i = 1; i <= ViewBag.CountPhoto; i++)
                 {
-                <div class="details-conteiner-small-img">
-                    <img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Model.PathToRemotePicture, number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
-                </div>
+                    <div class="details-conteiner-small-img">
+                        <img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Model.PathToRemotePicture, number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
+                    </div>
                 }
             </div>
         </div>
-                }
-       
-        <div class="col-xs-4">
-            <!--picture @Html.RemotePicture(Model.ProductId) -->
-            <div class="details-conteiner-img">
-                <img class="img-responsive main-photo" src="@Html.RemotePicture(Model.ProductId)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
-            </div>
+    }
 
-            <ul class="list-group">
-                @foreach (var item in ViewBag.DepartmentWithRests as IEnumerable<DepartmentWithRests>)
-        {
-            <li class="list-group-item view-pl-text-caption">
-                @ForSearchResult.DeliveryTime: @item.Days @ForSearchResult.Days
-                @ForSearchResult.Amount: @item.Rest @Header.Pc
-            </li>
-}
-            </ul>
+    <div class="col-xs-4">
+        <!--picture @Html.RemotePicture(Model.ProductId) -->
+        <div class="details-conteiner-img">
+            <img class="img-responsive main-photo" src="@Html.RemotePicture(Model.ProductId)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
         </div>
 
-        <section class="col-xs-7 detail-properties">
-            <dl class="dl-horizontal">
-                <dt>@Html.DisplayNameFor(model => model.Name):</dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
+        <ul class="list-group">
+            @foreach (var item in ViewBag.DepartmentWithRests as IEnumerable<DepartmentWithRests>)
+            {
+                <li class="list-group-item view-pl-text-caption">
+                    @ForSearchResult.DeliveryTime: @item.Days @ForSearchResult.Days
+                    @ForSearchResult.Amount: @item.Rest @Header.Pc
+                </li>
+            }
+        </ul>
+    </div>
+
+    <section class="col-xs-7 detail-properties">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.Name):</dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
                 <!-- <dt>@Html.DisplayNameFor(model => model.ProductType):</dt>
                 <dd>@Model.ProductTypeToView</dd> -->
             <dt>@Html.DisplayNameFor(model => model.ProducerId):</dt>
@@ -112,11 +112,11 @@
                     {
                         <dt>@productProperty.ProductPropertyDescription.NameToDisplay:</dt>
                         if (productProperty.Name == "fixing")
-                        {                            
+                        {
                             <dd><a href="@Url.Action("details","Home",new {id= @ViewBag.FixingCode })">@productProperty.Value</a></dd>
                         }
                         else
-                        {                            
+                        {
                             <dd>@productProperty.Value</dd>
                         }
                     }
@@ -134,16 +134,16 @@
                 <div class="col-xs-9">
                     <div class="details-conteiner-price-one">
 
-                        @Html.Price3((decimal) @ViewBag.PriceClient, "details-price-one-label", "details-price-one", "details-one")
+                        @Html.Price3((decimal)@ViewBag.PriceClient, "details-price-one-label", "details-price-one", "details-one")
                         <span class="details-prise-sign">x</span>
                     </div>
 
                     <div class="details-add-to-cart">
-                        @Html.TextBox("DefaultNumberToOrder", 4, new {@id = "order-" + @Model.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200})
+                        @Html.TextBox("DefaultNumberToOrder", 4, new { @id = "order-" + @Model.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
                     </div>
                     <div class="details-conteiner-price-one">
                         <span class="details-prise-sign">=</span>
-                        @Html.Price3((decimal) @ViewBag.PriceClient*4, "details-price-one-label", "details-price-one", "details-sum")
+                        @Html.Price3((decimal)@ViewBag.PriceClient * 4, "details-price-one-label", "details-price-one", "details-sum")
                     </div>
                 </div>
 
@@ -158,7 +158,10 @@
         }
 
     </section>
-</div>
+
+    <aside class="video-of-product-tests__container js-load-video hidden-md hidden-sm hidden-xs">  </aside>
+</section>
+
 
 @*if (ViewBag.Analogs != null )
     {
@@ -245,15 +248,12 @@
     не указанный в таблице применяемости по заводским параметрам.
 </p>
 
+
         @section Scripts {
             <script>
 
                 $(function () {
-                  /*  $(document).ready(function () {
-                        var item_price = $("#details-one").text();
-                        var count = $(".count_add_to_cart").val();
-                        $("#details-sum").text(item_price * count + " ");
-                    }); */
+                  
 
                     $(document).on("change", ".count_add_to_cart", function () {
                         var count = $(".count_add_to_cart").val();
@@ -299,7 +299,8 @@
                         
                     });
 
-                    
+
+                    $('.js-load-video').load('@Url.Action("Index", "VideoOfProduct", new { productId = Model.ProductId })');
                     /*
                     $(document).on("click", "#Analogs", function () {
                         var i = 1;

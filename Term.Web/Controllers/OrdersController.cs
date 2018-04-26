@@ -578,7 +578,7 @@ namespace Term.Web.Controllers
             {
                 //  int WayOfDelivery, string AddressId
                 //"{0:yyyyMMdd}"
-                 ResultDel res = WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, 
+                 ResultDel res = await Task.Run(()=> WS.ChangeOrder(model.OrderGuid.ToString(), products, model.Comments ?? String.Empty, model.IsReserve, 
                       // пустая строка если резерв, иначе дата доставки
                       !model.IsReserve ? String.Format("{0:yyyyMMdd}", model.DeliveryDate) : String.Empty,
                        model.IsDeliveryByTk, 
@@ -588,7 +588,7 @@ namespace Term.Web.Controllers
                        model.IsStar,
                        model.AddressId ?? String.Empty , 
                        model.TkId 
-                      ); 
+                      )); 
               
                success = res.Success;
                 errorMessage = res.Error;
@@ -638,10 +638,10 @@ namespace Term.Web.Controllers
         /// </summary>
         /// <param name="addressId"></param>
         /// <returns></returns>
-        public ActionResult GetDatesOfShipment( string addressId)
+        public async Task<ActionResult> GetDatesOfShipment( string addressId)
         {
             
-                var result = WS.GetDatesOfShipment(base.Partner.PartnerId, addressId);
+                var result = await Task.Run (()=> WS.GetDatesOfShipment(base.Partner.PartnerId, addressId));
                  return Json(new {result= result } , JsonRequestBehavior.AllowGet );
         }
 
@@ -705,219 +705,7 @@ namespace Term.Web.Controllers
             model.OrderGuids = guidsOfOrdersChanged.ToList();
             return Json(model);
         }
-        /// <summary>
-        /// Объединить заказы (представление)
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-    /*    [HttpGet]
-        public ActionResult JoinOrders(ExtendedOrdersViewModel model)
-        {
-
-            _isPartner = ServicePP.IsPartner;
-            ViewBag.IsPartner = _isPartner;
-
-            ViewBag.IsForeign = Partner.IsForeign;
-            ViewBag.CurrentPointId = base.Point.PartnerPointId;
-
-            model.AddressesIds = _orderService.GetAddressesOfDeliveryForCurrentPoint();
-
-
-            if (_isPartner) // PartnerId is set too
-            {
-                model.PartnerPoints = ServicePP.GetPointNamesByPartner(base.Partner.PartnerId, _propertyToDisplay);
-                _orderService.GetListOfOrdersByPartnerId(model, base.Partner.PartnerId, ViewBag.CurrentPointId);
-
-            }
-            else
-            {
-                model.PartnerPoints = null;
-                if (base.Point.PartnerPointId > 0)  _orderService.GetListOfOrdersByPointId(model, ViewBag.CurrentPointId);
-            }
-            return View(model);
-            
-        }
-
-
-        /// <summary>
-        /// Объединить заказы (обработчик)
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-
-        [HttpPost]
-        public ActionResult JoinOrders(DtoJoinOrders model)
-        {
-            int maxDaysToAdd = 7;
-
-            var partnerId = this.Partner.PartnerId;
-            var results = model;
-            string errorMessage = null;
-
-            if (String.IsNullOrEmpty(model.AddressId)) errorMessage = "Не выбран адрес доставки";
-
-            if(model.ShippingDay.Date <DateTime.Now.Date || model.ShippingDay.Date >= DateTime.Now.Date.AddDays(maxDaysToAdd) ) errorMessage = "Нельзя указывать дату ранее текущей даты";
-
-            if(!model.OrdersAndProducts.Any()) errorMessage = "Нет заказов и товаров для объединения";
-
-            if (errorMessage!=null)    return Json(new { Success = false, Message = errorMessage });
-
-
-            // 0. Подготавливаем структуру для отправки в web-сервис
-
-            var joinOrderProducts = model.OrdersAndProducts.Select(
-                p => new JoinOrderProduct
-            {
-                Code = p.ProductId.ToString(),
-                OrderGuid = p.OrderId.ToString(),
-                Quantity = p.Count,
-                OrderNumberIn1S = String.Empty,
-                OldGuid = Guid.Empty.ToString()
-            }).ToArray();
-
-
-            // 1. Вызов  web-сервиса
-           
-                var result = WS.JoinOrders(joinOrderProducts, model.AddressId, model.ShippingDay.ToString(ServiceTerminal.FormatForDate), model.Comments ?? String.Empty);
-
-                if (!result.Success) errorMessage = result.ErrorDescription;
-
-            if (errorMessage != null) return Json(new { Success = false, Message = errorMessage });
-
-
-            // 2. Сборка данных
-            var initialResultSet =  result.Products.Select(p => new
-            {
-                OrderGuid = Guid.Parse(p.OrderGuid),
-                NumberIn1S = p.OrderNumberIn1S,
-                ProductId = Int32.Parse(p.Code),
-                Count = p.Quantity,
-                IsJoined = p.IsJoined.HasValue ? p.IsJoined : false,
-                OldGuid = Guid.Parse(p.OldGuid),
-                
-            }).ToList();
-
-            // выбираем Guid старых заказов
-            var oldGuids = initialResultSet.Select(o=>o.OldGuid).Distinct().ToArray();
-
-            // выбираем табличные данные OrderDetails старых заказов в память
-            var orderdetails =  DbContext.OrderDetails.Include(o => o.Order).Where(p => oldGuids.Contains(p.GuidIn1S)).ToList();
-
-            // добавляем столбцы из старых заказов
-          var fullResultSet=  (from item in initialResultSet
-             from orderDetail in orderdetails.Where(p => p.GuidIn1S == item.OldGuid && p.ProductId == item.ProductId).DefaultIfEmpty()
-             select new
-             {
-                 OrderGuid = item.OrderGuid,
-                 NumberIn1S = item.NumberIn1S,
-                 ProductId = item.ProductId,
-                 Count = item.Count,
-                 IsJoined = item.IsJoined,
-                 OldGuid = item.OldGuid,
-                 Price = orderDetail.Price,
-                 PriceOfClient = orderDetail.PriceOfClient,
-                 PriceOfPoint = orderDetail.PriceOfPoint,
-                 PointId = orderDetail.Order.PointId,
-                 DepartmentId = orderDetail.Order.DepartmentId,
-                 // 
-                 ContactFIOOfClient = orderDetail.Order.ContactFIOOfClient,
-                 PhoneNumberOfClient = orderDetail.Order.PhoneNumberOfClient
-
-             }).ToList();
-
-
-            // 3. СОЗДАНИЕ НОВЫХ ЗАКАЗОВ
-            var newOrderDetails = fullResultSet.Where(p => !oldGuids.Contains(p.OrderGuid)).GroupBy(o => o.OrderGuid);
-            
-            Guid guidOfJoinedOrder = Guid.Empty;
-
-            // обход заказов в памяти (создаем их в базе)
-            // новые заказы - это только объединенные либо
-            // вновь созданные на те товары которые не надо отгружать 
-            // их - в резерв
-            foreach (var groupedItem in newOrderDetails)
-            {                             
-               bool isJoined =groupedItem.First().IsJoined??false;
-
-                if (isJoined) guidOfJoinedOrder = groupedItem.Key;
-
-                var order =  new Order {
-                  GuidIn1S =groupedItem.Key,
-                  NumberIn1S = groupedItem.First().NumberIn1S,
-                  DepartmentId = groupedItem.First().DepartmentId,
-                  PointId= groupedItem.First().PointId,
-                  PartnerId= partnerId,
-                  OrderStatus=OrderStatuses.Confirmed,
-                  OrderDate=DateTime.Now,
-                  //
-                  IsJoined= isJoined,                  
-                  DeliveryDate = isJoined ? model.ShippingDay:(DateTime?)null,
-                  isReserve= !isJoined
-                };
-
-          
-                int count = 0;
-
-                // создаем новые заказы сгруппированные по заказу
-                foreach (var detail in groupedItem)
-                {
-                    order.OrderDetails.Add ( new OrderDetail
-                    {
-                        GuidIn1S = detail.OrderGuid,
-                        RowNumber = ++count,
-                        ProductId = detail.ProductId,
-                        Count = detail.Count,
-                        Price = detail.Price,
-                        PriceOfClient = detail.PriceOfClient,
-                        PriceOfPoint = detail.PriceOfPoint
-                    });
-                   
-
-                }
-                order.CalculateTotals();
-
-                DbContext.Orders.Add(order);
-                DbContext.SaveChanges();
-
-            }
-           // return Json(new { Success = false, Message = errorMessage });
-
-
-            // 4. ПЕРЕЗАПИСТЬ ТАБЛИЧНЫХ ЧАСТЕЙ СТАРЫХ ЗАКАЗОВ
-            var newOrderDetailsForOldOrders = fullResultSet.Where(p => oldGuids.Contains(p.OrderGuid)).GroupBy(o => o.OrderGuid);
-
-            foreach (var groupedItem in newOrderDetailsForOldOrders)
-            {
-                var order = DbContext.Orders.Include(o => o.OrderDetails).First(p => p.GuidIn1S == groupedItem.Key);
-
-                DbContext.OrderDetails.RemoveRange(order.OrderDetails);
-
-                int count = 0;
-
-                foreach (var detail in groupedItem)
-                {
-                    order.OrderDetails.Add(new OrderDetail
-                    {
-                        GuidIn1S = groupedItem.Key,
-                        RowNumber = ++count,
-                        ProductId = detail.ProductId,
-                        Count = detail.Count,
-                        Price = detail.Price,
-                        PriceOfClient = detail.PriceOfClient,
-                        PriceOfPoint = detail.PriceOfPoint
-                    });
-                }
-
-                order.CalculateTotals();
-                DbContext.SaveChanges();
-            }
-
-            return Json(new { Success = true });
-            //   return RedirectToAction("Details","Orders", new { guid= guidOfJoinedOrder });
-
-        }
-
-      */
+      
 
 
 

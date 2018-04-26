@@ -67,17 +67,51 @@ namespace Term.Web.Controllers
        }
 
 
-     
-       /// <summary>
+
+        public ActionResult DisksByParams([ModelBinder(typeof(DisksModelBinder))]SeasonDisksPodborView podborModel)
+        {
+            // Если ничего не выбрано, берем с остатков
+            if (podborModel.RestOrOnWay == 0) podborModel.FromRests = true;
+            
+
+            bool isSale = ServicePP.IsSaleAvailable;
+            ViewBag.SaleMode = isSale;
+
+            ViewBag.NoDsplAutoPodbor = _space;
+            ViewBag.YesDsplAutoPodbor = _invisible;
+
+            if (!base.Partner.IsForeign)
+            {
+                ViewBag.MaxPrice = Defaults.PriceMaxRus;
+                ViewBag.PriceStepSlide = Defaults.PriceStepSlideRus;
+                if (podborModel.PriceMax == 0) podborModel.PriceMax = Defaults.PriceMaxRus;
+            }
+            else
+            {
+                ViewBag.MaxPrice = Defaults.PriceMaxEng;
+                ViewBag.PriceStepSlide = Defaults.PriceStepSlideEng;
+                if (podborModel.PriceMax == 0) podborModel.PriceMax = Defaults.PriceMaxEng;
+            }
+
+            podborModel.SearchResults = CachedCollectionsService.GetAllDisksByPartnerPoint(podborModel, Point);
+            return PartialView("_DisksPagingAndResults", podborModel);
+        }
+
+
+        /// <summary>
         /// Подбор дисков
         /// </summary>
         /// <param name="podborModel"></param>
         /// <param name="exactsize"></param>
         /// <param name="zamena"></param>
         /// <returns></returns>
-       public ActionResult Disks([ModelBinder(typeof(DisksModelBinder))]SeasonDisksPodborView podborModel,  int exactsize = 1, int zamena = 0 /*, bool OnlySale = false*/)
+        public ActionResult Disks([ModelBinder(typeof(DisksModelBinder))]SeasonDisksPodborView podborModel,  int exactsize = 1, int zamena = 0 /*, bool OnlySale = false*/)
         
         {
+
+           
+            // the code that you want to measure comes here
+            
             // Если ничего не выбрано, берем с остатков
             if (podborModel.RestOrOnWay == 0) podborModel.FromRests = true;
 
@@ -124,9 +158,11 @@ namespace Term.Web.Controllers
                 podborModel.ItemsPerPage = Defaults.MaxItemsPerPage;
                 podborModel.SearchResults = Products.GetDisks(podborModel, Point.PartnerPointId, isSale, exactsize).ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
             }
-           else podborModel.SearchResults = CachedCollectionsService.GetAllDisksByPartnerPoint(podborModel, Point);
-             
-            
+           else 
+                //podborModel.SearchResults = CachedCollectionsService.GetAllDisksByPartnerPoint(podborModel, Point);
+                        
+
+           // podborModel.SearchResults= Enumerable.Empty< DiskSearchResult >().ToPagedList(1, 10);
             // no cache
             /*
             ViewBag.NoDsplAutoPodbor = _invisible;
@@ -140,10 +176,11 @@ namespace Term.Web.Controllers
             podborModel.HasAlloyOffers = _seasonproductservice.HasAlloyOffers;
             podborModel.HasSteelOffers = _seasonproductservice.HasSteelOffers;
 
-            podborModel.BackDepartmentWithInfo = _daysToDepartmentService.GetDepartmentInfoWithMaxDaysForPoint(Point.PartnerPointId);
+            //   podborModel.BackDepartmentWithInfo = _daysToDepartmentService.GetDepartmentInfoWithMaxDaysForPoint(Point.PartnerPointId);
 
-            if (Request.IsAjaxRequest())     return PartialView("_Disks", podborModel); 
-
+          
+            if (Request.IsAjaxRequest())     return PartialView("_Disks", podborModel);
+                                
 
             return View( podborModel);
         }
@@ -242,7 +279,7 @@ namespace Term.Web.Controllers
             
         }
 
-        public ActionResult Akb(/* [ModelBinder(typeof(AkbModelBinder))]*/ AkbPodborView podborModel )
+        public ActionResult Akb(AkbPodborView podborModel )
         {
 
             podborModel.Brands = CachedCollectionsService.GetAkbProperties("brand");
@@ -321,7 +358,7 @@ namespace Term.Web.Controllers
         /// Стартовая страница 
         /// </summary>
         /// <returns></returns>
-     //  [OutputCache(CacheProfile = "VariedByUserOnServer")]
+       [OutputCache(CacheProfile = "VariedByUserOnServer")]
          public ActionResult Index()
         {
             

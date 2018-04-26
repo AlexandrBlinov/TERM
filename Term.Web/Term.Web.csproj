@@ -235,6 +235,7 @@
     <Compile Include="Controllers\SaleReturnsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\VideoOfProductController.cs" />
     <Compile Include="Filters\ErrorIfPricesAreBeingUpdatedFilter.cs" />
     <Compile Include="Filters\TrackUserActionAttribute.cs" />
     <Compile Include="Filters\LoggedExceptionFilter.cs" />
@@ -1032,7 +1033,7 @@
     <Content Include="Scripts\yst-localize-20170619.js" />
     <Content Include="Scripts\yst-shoppingcart-20180413.js" />
     <Content Include="Scripts\yst-notifications.js" />
-    <Content Include="Scripts\yst-scripts-20171215.js" />
+    <Content Include="Scripts\yst-scripts-20180419.js" />
     <Content Include="Scripts\yst-utility.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Partner\CreateOwn.cshtml" />
@@ -1226,6 +1227,8 @@
     <Content Include="Views\Home\_AkbBigSale.cshtml" />
     <Content Include="Views\Reports\Jiangsu.cshtml" />
     <Content Include="Views\Reports\JiangsuWheelsTest.cshtml" />
+    <Content Include="Views\Home\_DisksPagingAndResults.cshtml" />
+    <Content Include="Views\VideoOfProduct\Index.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>

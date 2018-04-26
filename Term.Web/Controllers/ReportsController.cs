@@ -18,9 +18,10 @@ namespace Term.Web.Controllers
 {
     public class ReportsController : Controller
     {
+        
         readonly AppDbContext _dbContext;
         private ServiceTerminal _ws;
-        public const string LogisticDep = "Логистика";
+        private readonly  string logisticDep = "Логистика";
         protected ServiceTerminal WS
         {
             get
@@ -42,7 +43,7 @@ namespace Term.Web.Controllers
 
         public async Task<ActionResult> Freeman(ReportModel model)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Defaults.Culture_RU);
             model.PartnerId = Defaults.FreemanCode;
             if (model.BeginDate != null)
             {
@@ -55,7 +56,7 @@ namespace Term.Web.Controllers
 
         public async Task<ActionResult> FreemanWheelsTest(ReportModel model)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Defaults.Culture_RU);
             model.PartnerId = Defaults.FreemanCode;
             if (model.BeginDate != null)
             {
@@ -68,8 +69,8 @@ namespace Term.Web.Controllers
 
         public async Task<ActionResult> Jiangsu(ReportModel model)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-            model.PartnerId = "91535";
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Defaults.Culture_RU);
+            model.PartnerId = Defaults.JuangsuCode;
             if (model.BeginDate != null)
             {
                 var start = model.BeginDate ?? DateTime.Now;
@@ -81,8 +82,8 @@ namespace Term.Web.Controllers
 
         public async Task<ActionResult> JiangsuWheelsTest(ReportModel model)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-            model.PartnerId = "91535";
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Defaults.Culture_RU);
+            model.PartnerId = Defaults.JuangsuCode;
             if (model.BeginDate != null)
             {
                 var start = model.BeginDate ?? DateTime.Now;
@@ -128,9 +129,10 @@ namespace Term.Web.Controllers
                 request.UseBinary = true;
                 request.KeepAlive = false;
                 //Streams
-                FtpWebResponse response = request.GetResponse() as FtpWebResponse;
+                var response =await request.GetResponseAsync() as FtpWebResponse;
                 Stream reader = response.GetResponseStream();
 
+                
                 //Download to memory
                 //Note: adjust the streams here to download directly to the hard drive
                 MemoryStream memStream = new MemoryStream();
@@ -169,15 +171,15 @@ namespace Term.Web.Controllers
 
         public ActionResult Logistic(ClaimsViewModel model)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Defaults.Culture_RU);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Defaults.Culture_RU);
             model.Claims = _dbContext.Claims.Where(p => (
             model.EndDate == null || p.ClaimDate <= model.BeginDate)
             && (model.BeginDate == null || p.ClaimDate >= model.BeginDate)
             && (model.NumberIn1S == null || p.NumberIn1S == model.NumberIn1S)
             && (model.ProductId == null || p.ClaimsDetails.Any(o => o.ProductId.ToString().Contains(model.ProductId)))
             && (model.SaleNumber == null || p.ClaimsDetails.Any(o => o.SaleNumber.Contains(model.SaleNumber)))
-            && (p.ClaimsDetails.Any(o => o.DefectCome.Contains(LogisticDep)))
+            && (p.ClaimsDetails.Any(o => o.DefectCome.Contains(logisticDep)))
             ).
             OrderByDescending(p => p.ClaimDate).ToPagedList(model.Page, model.ItemsPerPage);
             return View(model);
@@ -186,8 +188,8 @@ namespace Term.Web.Controllers
 
         public ActionResult ClaimDetails(Guid guid)
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Defaults.Culture_RU);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Defaults.Culture_RU);
             var model = new ClaimsViewWithDetails
             {
                 Claim = _dbContext.Claims.Where(p => p.GuidIn1S == guid).FirstOrDefault(),

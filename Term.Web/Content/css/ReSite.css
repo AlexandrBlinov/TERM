@@ -1812,6 +1812,10 @@ tr.text_bold td {
     z-index: 4;
 }
 
+    .loader.top-50 {
+        top: 50px;
+    }
+
 .white-sheet {
     position:fixed;
      width: 400px;
@@ -3200,3 +3204,20 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
         text-align: center;
         background: url("/Content/img/check-box.png") no-repeat 0px 0px;
     }
+
+.podbor-results-ajax__container {
+    min-height:1000px;
+    position:relative;
+}
+
+.product-details__container {
+    position:relative;
+
+}
+
+.video-of-product-tests__container {
+    position: absolute;
+    right: 7%;
+    width: 400px;
+    margin-right: -400px;
+}

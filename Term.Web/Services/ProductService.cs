@@ -521,9 +521,12 @@ namespace Yst.Services
             {
                 var modelName = product.Model?.Name ;
                 var digitsArray = string.Join("", Enumerable.Range(0, 10).Select(i => i.ToString()).ToArray()).ToCharArray();
-                var modelname = modelName.Replace("_Concept-", "").Replace("-S", "").Trim(digitsArray).Trim();
-                // var modelname = modelName.Trim(new Char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Replace("_Concept-", "").Trim();
-                vendorForProduct = CachedCollectionsService.GetCarsList.FirstOrDefault(p => p.Id == modelname)?.Name;
+                if (modelName != null)
+                {
+                    var modelname = modelName.Replace("_Concept-", "").Replace("-S", "").Trim(digitsArray).Trim();
+                    // var modelname = modelName.Trim(new Char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }).Replace("_Concept-", "").Trim();
+                    vendorForProduct = CachedCollectionsService.GetCarsList.FirstOrDefault(p => p.Id == modelname)?.Name;
+                }
             }
 
             var vendorsAndModifications = new Dictionary<string, string>();

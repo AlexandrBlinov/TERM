@@ -28,47 +28,57 @@
 <body>
     @{var sps = new SeasonProductService(); var bs = new BaseService();
         }
-<header>
-<nav class="navbar navbar-default first-horizontal-menu">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand logotip-yst" href="#"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-            @if (bs.CheckOnlySeasonOrder) { @Html.Partial("_OnlySeasonMenuLvl1"); } else { @Html.Partial("_MainMenuLvl1"); }
-        </div>
+    <header>
+        <nav class="navbar navbar-default first-horizontal-menu">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logotip-yst" href="#"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+                    @if (bs.CheckOnlySeasonOrder)
+                {@Html.Partial("_OnlySeasonMenuLvl1");
+        }
+        else
+        { @Html.Partial("_MainMenuLvl1");
+}
+                </div>
 
 
-    </div>
-</nav>
-<nav class="navbar navbar-default top-menu-second">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-2">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand logotip-terminal" href="@Url.Action("index", "home")"></a>
+            </div>
+        </nav>
+        <nav class="navbar navbar-default top-menu-second">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand logotip-terminal" href="@Url.Action("index", "home")"></a>
 
-        </div>
-        <div class="collapse navbar-collapse" id="bs-navbar-collapse-2">
-            @if (bs.CheckOnlySeasonOrder) { @Html.Partial("_OnlySeasonMenuLvl2");} else { @Html.Partial("_MainMenuLvl2"); }
-        </div>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-navbar-collapse-2">
+                    @if (bs.CheckOnlySeasonOrder)
+                {@Html.Partial("_OnlySeasonMenuLvl2");
+        }
+        else
+        { @Html.Partial("_MainMenuLvl2");
+}
+                </div>
 
 
 
-    </div>
-</nav>
-<!--<nav class="nav_error_line">@Header.Price_Error</nav>-->
-</header>
+            </div>
+        </nav>
+        <!--<nav class="nav_error_line">@Header.Price_Error</nav>-->
+    </header>
    
     <!--end-->
     <div class="container container-main">

@@ -112,10 +112,13 @@ namespace YstProject.Services
         public string PathToRemotePicture
         { get; set; }
 
+        
         [Display(Order = 14)]
         [LocalizedDisplayNameAttribute("RestYar")]
         [DataMember(Order = 18, Name = "restyar")]
         public int RestMain { get; set; }
+
+       // public string RestMain { get { return _restMain; } set { _restMain = value.ToString(); } }
 
         [Display(Order = 15)]
         [LocalizedDisplayNameAttribute("RestSpb")]
@@ -141,11 +144,11 @@ namespace YstProject.Services
         [LocalizedDisplayNameAttribute("Comment")]
         [DataMember(Order = 23, Name = "comments")]
         public string Сomments { get {
-
+               
 
             return ((ProducerName != null) && _arrayOfForgedProducers.Any(p => p == ProducerName.ToLower()) && 
                 (RestMain + RestSpb + RestEkb + RestRnd + RestMsk)==0) ? _toOrder60days : String.Empty;
-            
+           
         
         } private set { } }
 

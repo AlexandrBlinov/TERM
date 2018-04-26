@@ -45,6 +45,9 @@ namespace YstProject.Services
             public static readonly string HideNoStud = "hidenostud";
         }
 
+
+        public static readonly string JuangsuCode = "91535";
+
         public static readonly int MaxDaysToChangeOrder = 7;
         public static readonly string DateFormat = "dd.MM.yyyy";
         public static readonly string ResourceNotFound = "Resource not found";

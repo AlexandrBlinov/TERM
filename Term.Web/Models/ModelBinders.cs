@@ -22,12 +22,11 @@ namespace YstProject.Models
         {
             var value = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
 
-            DateTime dateValue;
 
             if (String.IsNullOrEmpty(value.AttemptedValue)) return null;
 
             if (DateTime.TryParseExact(value.AttemptedValue, _customDateFormats, CultureInfo.InvariantCulture,
-                           DateTimeStyles.None, out dateValue))
+                           DateTimeStyles.None, out DateTime dateValue))
                 return dateValue;
             else
             {
