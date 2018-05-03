@@ -17,55 +17,9 @@ namespace Term.Web.HtmlHelpers
     
     {
 
-      
+        static string specifierToFormatPrice = "G29";
 
-        /*
-        public static string ValidationSummary(this HtmlHelper htmlHelper, string message, IDictionary<string, object> htmlAttributes)
-        {
-            // Nothing to do if there aren't any errors
-            if (htmlHelper.ViewData.ModelState.IsValid)
-            {
-                return null;
-            }
-
-            string messageSpan;
-            if (!String.IsNullOrEmpty(message))
-            {
-                TagBuilder spanTag = new TagBuilder("span");
-                spanTag.MergeAttributes(htmlAttributes);
-                spanTag.MergeAttribute("class", HtmlHelper.ValidationSummaryCssClassName);
-                spanTag.SetInnerText(message);
-                messageSpan = spanTag.ToString(TagRenderMode.Normal) + Environment.NewLine;
-            }
-            else
-            {
-                messageSpan = null;
-            }
-
-            StringBuilder htmlSummary = new StringBuilder();
-            TagBuilder unorderedList = new TagBuilder("ul");
-            unorderedList.MergeAttributes(htmlAttributes);
-            unorderedList.MergeAttribute("class", HtmlHelper.ValidationSummaryCssClassName);
-
-            foreach (ModelState modelState in htmlHelper.ViewData.ModelState.Values)
-            {
-                foreach (ModelError modelError in modelState.Errors)
-                {
-                    string errorText = HtmlHelper.GetUserErrorMessageOrDefault(htmlHelper.ViewContext.HttpContext, modelError, null );
-                    if (!String.IsNullOrEmpty(errorText))
-                    {
-                        TagBuilder listItem = new TagBuilder("li");
-                        listItem.SetInnerText(errorText);
-                        htmlSummary.AppendLine(listItem.ToString(TagRenderMode.Normal));
-                    }
-                }
-            }
-
-            unorderedList.InnerHtml = htmlSummary.ToString();
-
-            return messageSpan + unorderedList.ToString(TagRenderMode.Normal);
-        }
-         */
+       
         /// <summary>
         /// Checkbox - удаляем вспомогательные элементы hidden , которые мешают кастомизации
         /// </summary>
@@ -179,6 +133,9 @@ namespace Term.Web.HtmlHelpers
 
         public static MvcHtmlString Price3(this HtmlHelper html, decimal price, string classImg = "data-table-price-label", string classSpan = "data-table-price", string spanId = null)
         {
+
+            
+
             var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
             var signdollar = @"&#36;";
@@ -194,7 +151,7 @@ namespace Term.Web.HtmlHelpers
             spanRouble.AddCssClass("rouble");
             spanRouble.InnerHtml = "P";
 
-            span.InnerHtml=  price.ToString(CultureInfo.InvariantCulture) + spanRouble.ToString();
+            span.InnerHtml=  price.ToString(specifierToFormatPrice) + spanRouble.ToString();
 
             }
             else
@@ -202,8 +159,7 @@ namespace Term.Web.HtmlHelpers
                 var spanDollar = new TagBuilder("span");
                 spanDollar.AddCssClass("dollar");
                 spanDollar.InnerHtml = signdollar;
-
-             //   span.InnerHtml = String.Format("{0}  {1}", dollar, price.ToString(CultureInfo.InvariantCulture));
+                             
                 span.InnerHtml = spanDollar.ToString()+" "+price.ToString(CultureInfo.InvariantCulture) ;
             }  
 

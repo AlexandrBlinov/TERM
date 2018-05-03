@@ -3222,3 +3222,24 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
     width: 400px;
     margin-right: -400px;
 }
+
+.bootstrap-touchspin {
+    display:inline-table;
+    max-width:130px;
+}
+
+.products-list-item__cell {
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+
+.btn.active {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+    .btn.active .link_item-dashed {
+        font-weight:bold;
+        font-size:1.2em;
+    }

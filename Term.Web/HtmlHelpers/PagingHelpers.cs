@@ -126,29 +126,7 @@ namespace Term.Web.HtmlHelpers
             return  MvcHtmlString.Create(   Math.Round(price??0, 0, MidpointRounding.AwayFromZero).ToString() );
         }
 
-      /*  public static MvcHtmlString TrPriceRule(this HtmlHelper html, string PriceType, decimal Discount)
-        {
-
-            string result = String.Empty;
-            
-                result = @"<td><input class=""discount"" max="" 100"" min=""-100"" type=""number"" value=""{0}"" name=""base"" {1}>
-                 <input class=""checkbox_del"" type=""checkbox"" name=""base"" {2} /> </td>
-                <td class=""zakup""><input class=""discount"" max=""100"" min=""0"" type=""number"" value=""{3}"" name=""zakup"" {4} />
-                <input class=""checkbox_del"" type=""checkbox"" name=""zakup"" {5} /> </td>
-                <td><input class=""checkbox_del"" type=""checkbox"" name=""recommend"" {6} /> </td>
-                <td><input class=""checkbox_del"" type=""checkbox"" name=""dont_show_price"" {7} /> </td>
-                <td><input class=""checkbox_del"" type=""checkbox"" name=""dont_show_producer"" {8} /> </td>";
-
-                switch (PriceType)
-                {
-                    case "base": return MvcHtmlString.Create(String.Format(result, Discount.ToString("0.##"), "", "checked", "5", "disabled", "", "", "", ""));
-                case "zakup": return MvcHtmlString.Create(String.Format(result, "5", "disabled", "", Discount.ToString("0.##"), "", "checked", "", "", ""));
-                case "recommend": return MvcHtmlString.Create(String.Format(result, "5", "disabled", "", "5", "disabled", "", "checked", "", ""));
-               // case "dont_show_price": return MvcHtmlString.Create(String.Format(result, "5", "disabled", "", "5", "disabled", "", "", "checked", ""));
-                case "dont_show_producer": return MvcHtmlString.Create(String.Format(result, "5", "disabled", "", "5", "disabled", "", "", "", "checked"));
-                default: return MvcHtmlString.Create(String.Format(result, "5", "disabled", "", "5", "disabled", "", "", "checked", ""));
-                }
-        }*/
+      
 
         public static MvcHtmlString TrPriceRuleEnum(this HtmlHelper html, PriceTypeEnum PriceType, decimal Discount, bool RusUser, int ProducerId)
         {
@@ -239,43 +217,6 @@ namespace Term.Web.HtmlHelpers
             return MvcHtmlString.Create(result);
         }
 
-      /*  public static MvcHtmlString SeasonOrderCondition(this HtmlHelper html, SeasonOrderStatus Status)
-        {
-
-            string result = String.Empty;
-
-            if (Status == SeasonOrderStatus.New)
-            {
-                result = @"<td style=""color:green"">Создан</td>";
-            }
-            if (Status == SeasonOrderStatus.Chancelled)
-            {
-                result = @"<td style=""color:red"">Отменён</td>";
-            }
-
-            return MvcHtmlString.Create(result);
-        } */
-
-       
-           //return MvcHtmlString.Create( String.Format(result,"5","disabled",""));
-            
-            
-
-           /*<td>
-                    <input class="discount" max="100" min="-100" type="number" value="5" name="base" disabled>
-                    <input class="checkbox_del" type="checkbox" name="base" />
-                </td>
-                <td>
-                    <input class="discount" max="100" min="0" type="number" value="5" name="zakup" disabled>
-                    <input class="checkbox_del" type="checkbox" name="zakup" />
-                </td>
-                <td><input class="checkbox_del" type="checkbox" name="recommend" checked /></td>
-                <td>
-                    <input class="checkbox_del" type="checkbox" name="dont_show_price" />
-                </td>
-                <td>
-                    <input class="checkbox_del" type="checkbox" name="dont_show_producer" />
-                </td> */
         
         
         
@@ -325,16 +266,10 @@ namespace Term.Web.HtmlHelpers
 
             return MvcHtmlString.Create(tag.ToString());
 
-           /* switch (Status)
-            {
-                case 3: return MvcHtmlString.Create("<td class=\"mw104\" style=\"color:red;\">Отменен</td>");
-                case 2: return MvcHtmlString.Create("<td class=\"mw104\" style=\"color:green;\">Подтвержден</td>");
-                case 4: return MvcHtmlString.Create("<td class=\"mw104\" style=\"color:blue;\">Отгружен</td>");
-                default: return MvcHtmlString.Create("<td class=\"mw104\">" + Status + "</td>");
-            }
-            */
+          
         }
 
+        /*
          private static string getstrAddToUrl(string strAddToUrl,int page=1)
         {
             if (String.IsNullOrEmpty(strAddToUrl))
@@ -348,6 +283,7 @@ namespace Term.Web.HtmlHelpers
             
         
         }
+        */
 
          public static MvcHtmlString DateFormat(this HtmlHelper html,
            DateTime? sourceDate)
@@ -358,228 +294,6 @@ namespace Term.Web.HtmlHelpers
              { return MvcHtmlString.Create(String.Format("{0:d}", sourceDate)); }
          }
 
-        /*
-        public static MvcHtmlString PageLinks(this HtmlHelper html,
-          PagingInfo pagingInfo,
-          Func<int, string> pageUrl
-            //delegate string pageUrl(int inputNumber)
-          )
-
-        {
-            if (pagingInfo.TotalPages <= 1)
-                return (MvcHtmlString.Empty);
-
-
-            var RequestQueryString = html.ViewContext.HttpContext.Request.QueryString;
-
-            List<string> items = new List<string>();
-
-            foreach (String name in RequestQueryString)
-                if (name != "page")
-                    items.Add(String.Concat(name, "=", System.Web.HttpUtility.UrlEncode(RequestQueryString[name])));
-
-            String strAddToUrl = String.Join("&", items.ToArray());
-
-    
-
-            StringBuilder result = new StringBuilder();
-            if (pagingInfo.CurrentPage > 1)
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(pagingInfo.CurrentPage - 1) + getstrAddToUrl(strAddToUrl,pagingInfo.CurrentPage - 1));
-                tag.InnerHtml = "<<";
-                result.Append(tag.ToString());
-            }
-           
-
-            if (pagingInfo.TotalPages < 10)
-            {
-                for (int i = 1; i <= pagingInfo.TotalPages; i++)
-                {
-                    TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                    tag.MergeAttribute("href", pageUrl(i) + getstrAddToUrl(strAddToUrl, i));
-                    tag.InnerHtml = i.ToString();
-                    if (i == pagingInfo.CurrentPage)
-                        tag.AddCssClass("selected");
-                    result.Append(tag.ToString());
-                }
-            }
-            else // выводим  первую текущую и последнюю
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(1) + getstrAddToUrl(strAddToUrl, 1));
-                tag.InnerHtml = "1";
-                if ( pagingInfo.CurrentPage==1)
-                    tag.AddCssClass("selected");
-                result.Append(tag.ToString());
-
-                if (Math.Max(pagingInfo.CurrentPage - 2, 1) > 1)
-                    result.Append("<a>...</a>");
-
-                for (int j = Math.Max(pagingInfo.CurrentPage -2, 1); j <= Math.Min(pagingInfo.CurrentPage + 2, pagingInfo.TotalPages); j++)
-                    
-                    if (j!= 1 && j!= pagingInfo.TotalPages)
-                    {
-                        tag = new TagBuilder("a"); // Construct an <a> tag
-                        tag.MergeAttribute("href", pageUrl(j) + getstrAddToUrl(strAddToUrl, j));
-                        tag.InnerHtml = j.ToString();
-                        if (j==pagingInfo.CurrentPage)
-                        tag.AddCssClass("selected");
-                        result.Append(tag.ToString());
-
-                    }
-
-                if (Math.Max(pagingInfo.CurrentPage + 2, 1) < pagingInfo.TotalPages)
-                    result.Append("<a>...</a>");
-
-                tag = new TagBuilder("a");
-                tag.MergeAttribute("href", pageUrl(pagingInfo.TotalPages) + getstrAddToUrl(strAddToUrl, pagingInfo.TotalPages));
-                tag.InnerHtml = pagingInfo.TotalPages.ToString();
-                if (pagingInfo.CurrentPage == pagingInfo.TotalPages)
-                    tag.AddCssClass("selected");
-                result.Append(tag.ToString());
-
-            }
-
-            if (pagingInfo.CurrentPage < pagingInfo.TotalPages)
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(pagingInfo.CurrentPage + 1) + getstrAddToUrl(strAddToUrl, pagingInfo.CurrentPage + 1));
-                tag.InnerHtml = ">>";
-                result.Append(tag.ToString());
-            }
-            return MvcHtmlString.Create(result.ToString());
-        }
-        */
-
-        /*
-        public static MvcHtmlString PageButtons(this HtmlHelper html,
-         PagingInfo pagingInfo,
-         Func<int, string> pageUrl
-            //delegate string pageUrl(int inputNumber)
-         )
-        {
-
-            var RequestQueryString = html.ViewContext.HttpContext.Request.QueryString;
-
-            List<string> items = new List<string>();
-
-            foreach (String name in RequestQueryString)
-                if (name != "page")
-                    items.Add(String.Concat(name, "=", System.Web.HttpUtility.UrlEncode(RequestQueryString[name])));
-
-            String strAddToUrl = String.Join("&", items.ToArray());
-
-
-
-            StringBuilder result = new StringBuilder();
-            if (pagingInfo.CurrentPage > 1)
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(pagingInfo.CurrentPage - 1) + getstrAddToUrl(strAddToUrl, pagingInfo.CurrentPage - 1));
-                tag.InnerHtml = "<<";
-                result.Append(tag.ToString());
-            }
-
-
-            if (pagingInfo.TotalPages < 10)
-            {
-                for (int i = 1; i <= pagingInfo.TotalPages; i++)
-                {
-                    TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                    tag.MergeAttribute("href", pageUrl(i) + getstrAddToUrl(strAddToUrl, i));
-                    tag.InnerHtml = i.ToString();
-                    if (i == pagingInfo.CurrentPage)
-                        tag.AddCssClass("selected");
-                    result.Append(tag.ToString());
-                }
-            }
-            else // выводим  первую текущую и последнюю
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(1) + getstrAddToUrl(strAddToUrl, 1));
-                tag.InnerHtml = "1";
-                if (pagingInfo.CurrentPage == 1)
-                    tag.AddCssClass("selected");
-                result.Append(tag.ToString());
-
-                if (Math.Max(pagingInfo.CurrentPage - 2, 1) > 1)
-                    result.Append("<a>...</a>");
-
-                for (int j = Math.Max(pagingInfo.CurrentPage - 2, 1); j <= Math.Min(pagingInfo.CurrentPage + 2, pagingInfo.TotalPages); j++)
-
-                    if (j != 1 && j != pagingInfo.TotalPages)
-                    {
-                        tag = new TagBuilder("a"); // Construct an <a> tag
-                        tag.MergeAttribute("href", pageUrl(j) + getstrAddToUrl(strAddToUrl, j));
-                        tag.InnerHtml = j.ToString();
-                        if (j == pagingInfo.CurrentPage)
-                            tag.AddCssClass("selected");
-                        result.Append(tag.ToString());
-
-                    }
-
-                if (Math.Max(pagingInfo.CurrentPage + 2, 1) < pagingInfo.TotalPages)
-                    result.Append("<a>...</a>");
-
-                tag = new TagBuilder("a");
-                tag.MergeAttribute("href", pageUrl(pagingInfo.TotalPages) + getstrAddToUrl(strAddToUrl, pagingInfo.TotalPages));
-                tag.InnerHtml = pagingInfo.TotalPages.ToString();
-                if (pagingInfo.CurrentPage == pagingInfo.TotalPages)
-                    tag.AddCssClass("selected");
-                result.Append(tag.ToString());
-
-            }
-
-            if (pagingInfo.CurrentPage < pagingInfo.TotalPages)
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                tag.MergeAttribute("href", pageUrl(pagingInfo.CurrentPage + 1) + getstrAddToUrl(strAddToUrl, pagingInfo.CurrentPage + 1));
-                tag.InnerHtml = ">>";
-                result.Append(tag.ToString());
-            }
-            return MvcHtmlString.Create(result.ToString());
-        }
-
-
-        public static MvcHtmlString PageMyLinks(this HtmlHelper html,
-            PagingInfo pagingInfo, Func<string,string> pageUrl            
-            )
-        {
-
-           
-
-            var RequestQueryString = html.ViewContext.HttpContext.Request.QueryString;
-
-            List<string> items = new List<string>();
-
-            foreach (String name in RequestQueryString)
-                if (name != "page")
-                    items.Add(String.Concat(name, "=", System.Web.HttpUtility.UrlEncode(RequestQueryString[name])));
-
-            String  str = String.Join("&", items.ToArray());
-
-
-            StringBuilder result = new StringBuilder();
-            for (int i = 1; i <= pagingInfo.TotalPages; i++)
-            {
-                TagBuilder tag = new TagBuilder("a"); // Construct an <a> tag
-                //tag.MergeAttribute("href", pageUrl(i.ToString())+"?"+str+"&page=" + i.ToString());
-
-                if (str!="")
-                { tag.MergeAttribute("href", pageUrl(i.ToString()) + "?" + str + "&page=" + i.ToString()); }
-                else
-                { tag.MergeAttribute("href", pageUrl(i.ToString()) + "?page=" + i.ToString()); }
-
-                    tag.InnerHtml = i.ToString();
-                if (i == pagingInfo.CurrentPage)
-                    tag.AddCssClass("selected");
-                result.Append(tag.ToString());
-            }
-            return MvcHtmlString.Create(result.ToString());
-        }
-
-         
-            */
+       
     }
 }

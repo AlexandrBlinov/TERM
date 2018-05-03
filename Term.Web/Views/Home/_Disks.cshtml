@@ -5,116 +5,197 @@
 
 @{
     string dataContent = String.Format("со сроком доставки {0} дня", Model.BackDepartmentWithInfo.Days);
-   }
-
+}
 
 
 @if (Model.DisplayView == Display.Table)
 {
-    <div>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th class="hidden-xs">@ForSearchResult.Photo</th>
-                    <th class="p-l-25">@ForSearchResult.StockNumber</th>
-                    <th class="product-name-disk">
-                        @ForSearchResult.Name
-                    </th>
-                    <th class="hidden-xs">
-                        @ForSearchResult.Amount
-                    </th>
-                    <th class="hidden-xs">
-                        @ForSearchResult.DeliveryTime
-                    </th>
-                    <th>
-                        @ForSearchResult.Price
-                    </th>
-                    <th class="product-count">@ForSearchResult.Available</th>
-                    <th>@ForSearchResult.Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.SearchResults as IPagedList<DiskSearchResult>)
-                {
-                    <tr>
-                        <td class="hidden-xs" data-img="@item.PathToImage">
-                            @{
-                                string sale_img_class = item.IsSaleProduct && ViewBag.SaleMode ? "sale-img" : "";
-                            }
-                            <span class="@sale_img_class"></span>
-                            <a class="fancybox-btn-disks" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk",item.PathToImage)" alt="@item.Name" class="min_img" ></a>
-                             @{
-                                 if (item.CountPhoto > 0)
-                                 {
-                                     for (int i = 1; i <= item.CountPhoto; i++)
-                                     {
-                                        <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></a>
+    <section class="data-table products-list addon">
+        <div class="thead hidden-xs row">
 
-                                     }
-                                 }
-                            }
-                        </td>
-                        <td class="p-l-25">
-                            @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
-                        </td>
-                        <td>
-                            @Html.ActionLink(item.Name, "Details", new {id = item.ProductId}, new {@id = "ProductName-" + @item.ProductId, @class = "data-table-a-text"})
-                        </td>
-                        <td class="hidden-xs">
-                            @{
-                            
-                            if (item.RestOtherStock>0)
+            <div class="col-sm-1">@ForSearchResult.Photo</div>
+            <div class="col-sm-1">@ForSearchResult.StockNumber</div>
+            <div class="col-sm-3 product-name">  @ForSearchResult.Name</div>
+            <div class="col-sm-1">@ForSearchResult.Amount</div>
+
+            <div class="col-sm-1">@ForSearchResult.DeliveryTime</div>
+            <div class="col-sm-1">@ForSearchResult.Price</div>
+            <div class="col-sm-2">@ForSearchResult.Available</div>
+            <div class="col-sm-1">@ForSearchResult.Action</div>
+
+        </div>
+        @foreach (var item in Model.SearchResults as IPagedList<DiskSearchResult>)
+        {
+            <div class="products-list-item row">
+                <div class="col-sm-1 products-list-item__cell">
+                    @{
+                        string sale_img_class = item.IsSaleProduct && ViewBag.SaleMode ? "sale-img" : "";
+                    }
+                    <span class="@sale_img_class"></span>
+                    <a class="fancybox-btn-disks" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk",item.PathToImage)" alt="@item.Name" class="min_img"></a>
+                    @{
+                        if (item.CountPhoto > 0)
+                        {
+                            for (int i = 1; i <= item.CountPhoto; i++)
                             {
+                                <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></a>
 
-                                var restOtherStock = String.Format(" + {0}", item.RestOtherStock==50?">50":item.RestOtherStock.ToString());
-                                string dataContentItem = String.Format("{0} шт. {1}", restOtherStock, dataContent);
-                                var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
-                              @restMainStock <span class="has-popover" data-content="@dataContentItem">@restOtherStock</span>
                             }
-                            else
-                            {
-                                var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
-                           @restMainStock
-                                
-                            }
-                        }</td>
-                        <td class="hidden-xs">
-                            
-                            @if (item.DepartmentId == 0) { 
-                            <span class="productonway-hint" data-id="@item.ProductId">
-                                @Html.DisplayFor(modelItem => item.DaysToDepartment)
-                                @ForSearchResult.Days
-                                </span>
-                            }else
-                            {@Html.DisplayFor(modelItem => item.DaysToDepartment)
-                                @ForSearchResult.Days}
-                            
-                        </td>
-                        <td>
-                          @Html.Price3((decimal)@item.PriceOfClient)
-                        </td>
+                        }
+                    }
+                </div>
+                <div class="col-sm-1 products-list-item__cell"> @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)</div>
+                <div class="col-sm-3 product-name products-list-item__cell">  @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })</div>
+                <div class="col-sm-1 products-list-item__cell">
 
-                        <td>
-                            @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number",  @min = 1, @max = 200 })
+                    @{
 
-                        </td>
+                        if (item.RestOtherStock > 0)
+                        {
 
-                        <td>
+                            var restOtherStock = String.Format(" + {0}", item.RestOtherStock == 50 ? ">50" : item.RestOtherStock.ToString());
+                            string dataContentItem = String.Format(" {0} шт. {1}", restOtherStock, dataContent);
+                            var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+                            @restMainStock <span class="has-popover" data-content="@dataContentItem">@restOtherStock</span>
+                        }
+                        else
+                        {
+                            var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+                            @restMainStock
 
-                            <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                            <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                        </td>
+                        }
+                    }
 
+                </div>
 
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-    </div>
+                <div class="col-sm-1 products-list-item__cell">
+                    @if (item.DepartmentId == 0)
+                    {
+                        <span class="productonway-hint" data-id="@item.ProductId">
+                            @Html.DisplayFor(modelItem => item.DaysToDepartment)
+                            @ForSearchResult.Days
+                        </span>
+                    }
+                    else
+                    {@Html.DisplayFor(modelItem => item.DaysToDepartment)
+                    @ForSearchResult.Days}
+                </div>
+                <div class="col-sm-1 products-list-item__cell"> @Html.Price3((decimal)@item.PriceOfClient)</div>
+                <div class="col-sm-2 products-list-item__cell"> @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })</div>
+                <div class="col-sm-1 products-list-item__cell">
+                    <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                    <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                </div>
+            </div>
+        }
+    </section>
 }
+@* if (Model.DisplayView == Display.Table)
+    {
+        <div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th class="hidden-xs">@ForSearchResult.Photo</th>
+                        <th class="p-l-25">@ForSearchResult.StockNumber</th>
+                        <th class="product-name-disk">
+                            @ForSearchResult.Name
+                        </th>
+                        <th class="hidden-xs">
+                            @ForSearchResult.Amount
+                        </th>
+                        <th class="hidden-xs">
+                            @ForSearchResult.DeliveryTime
+                        </th>
+                        <th>
+                            @ForSearchResult.Price
+                        </th>
+                        <th class="product-count">@ForSearchResult.Available</th>
+                        <th>@ForSearchResult.Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SearchResults as IPagedList<DiskSearchResult>)
+                    {
+                        <tr>
+                            <td class="hidden-xs" data-img="@item.PathToImage">
+                                @{
+                                    string sale_img_class = item.IsSaleProduct && ViewBag.SaleMode ? "sale-img" : "";
+                                }
+                                <span class="@sale_img_class"></span>
+                                <a class="fancybox-btn-disks" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk",item.PathToImage)" alt="@item.Name" class="min_img" ></a>
+                                 @{
+                                     if (item.CountPhoto > 0)
+                                     {
+                                         for (int i = 1; i <= item.CountPhoto; i++)
+                                         {
+                                            <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></a>
+
+                                         }
+                                     }
+                                }
+                            </td>
+                            <td class="p-l-25">
+                                @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
+                            </td>
+                            <td>
+                                @Html.ActionLink(item.Name, "Details", new {id = item.ProductId}, new {@id = "ProductName-" + @item.ProductId, @class = "data-table-a-text"})
+                            </td>
+                            <td class="hidden-xs">
+                                @{
+
+                                if (item.RestOtherStock>0)
+                                {
+
+                                    var restOtherStock = String.Format(" + {0}", item.RestOtherStock==50?">50":item.RestOtherStock.ToString());
+                                    string dataContentItem = String.Format("{0} шт. {1}", restOtherStock, dataContent);
+                                    var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+                                  @restMainStock <span class="has-popover" data-content="@dataContentItem">@restOtherStock</span>
+                                }
+                                else
+                                {
+                                    var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+                               @restMainStock
+
+                                }
+                            }</td>
+                            <td class="hidden-xs">
+
+                                @if (item.DepartmentId == 0) {
+                                <span class="productonway-hint" data-id="@item.ProductId">
+                                    @Html.DisplayFor(modelItem => item.DaysToDepartment)
+                                    @ForSearchResult.Days
+                                    </span>
+                                }else
+                                {@Html.DisplayFor(modelItem => item.DaysToDepartment)
+                                    @ForSearchResult.Days}
+
+                            </td>
+                            <td>
+                              @Html.Price3((decimal)@item.PriceOfClient)
+                            </td>
+
+                            <td>
+                                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number",  @min = 1, @max = 200 })
+
+                            </td>
+
+                            <td>
+
+                                <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                                <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                            </td>
 
 
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+
+*@
 
 @if (Model.DisplayView == Display.Plitka)
 {
@@ -127,14 +208,14 @@
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail view-pl-thumbnail">
                         @{string url = Html.FullPathToImage("disk", item.PathToImage);
-                        url = url.Replace('~', '/');
+                            url = url.Replace('~', '/');
                         }
                         @{
-                        string sale_img_class = "";
-                        if (item.IsSaleProduct && ViewBag.SaleMode)
-                        {
-                            sale_img_class = "sale-img";
-                        }
+                            string sale_img_class = "";
+                            if (item.IsSaleProduct && ViewBag.SaleMode)
+                            {
+                                sale_img_class = "sale-img";
+                            }
                         }
                         <span class="@sale_img_class"></span>
                         <img class="img-thumbnail-disk img-responsive data-part-min-img" src=@url onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;">

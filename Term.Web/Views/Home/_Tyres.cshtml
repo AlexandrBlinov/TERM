@@ -9,7 +9,63 @@
 
 @if (Model.DisplayView == Display.Table)
 {
-    <div>
+<section class="data-table products-list addon">
+    <div class="thead hidden-xs row">
+
+        <div class="col-sm-1">@ForSearchResult.Photo</div>
+        <div class="col-sm-1">@ForSearchResult.StockNumber</div>
+        <div class="col-sm-3 product-name">  @ForSearchResult.Name</div>
+        <div class="col-sm-1">@ForSearchResult.Amount</div>
+
+        <div class="col-sm-1">@ForSearchResult.DeliveryTime</div>
+        <div class="col-sm-1"> @ForSearchResult.Season</div>
+        <div class="col-sm-1">@ForSearchResult.Price</div>
+        <div class="col-sm-2">@ForSearchResult.Available</div>
+        <div class="col-sm-1">@ForSearchResult.Action</div>
+
+    </div>
+    @foreach (var item in Model.SearchResults as IPagedList<TyreSearchResult>)
+    {
+    <div class="products-list-item row">
+        <div class="col-sm-1 products-list-item__cell"> <a class="fancybox-btn" href="@Html.FullPathToImage("tyre", item.PathToImage)" data-title="@item.Name"><img src="@Html.Thumbnail(item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage"></a></div>
+        <div class="col-sm-1 products-list-item__cell"> @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)</div>
+        <div class="col-sm-3 product-name products-list-item__cell">  @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })</div>
+        <div class="col-sm-1 products-list-item__cell">
+
+            @{
+
+        if (item.RestOtherStock > 0)
+        {
+
+            var restOtherStock = String.Format(" + {0}", item.RestOtherStock == 50 ? ">50" : item.RestOtherStock.ToString());
+            string dataContentItem = String.Format(" {0} шт. {1}", restOtherStock, dataContent);
+            var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+            @restMainStock <span class="has-popover" data-content="@dataContentItem">@restOtherStock</span>
+}
+else
+{
+    var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());
+        @restMainStock
+
+}
+            }
+
+        </div>
+
+        <div class="col-sm-1 products-list-item__cell">
+            @Html.DisplayFor(modelItem => item.DaysToDepartment) @ForSearchResult.Days
+        </div>
+        <div class="col-sm-1 products-list-item__cell">  @Html.SeasonImage(item.Season)</div>
+        <div class="col-sm-1 products-list-item__cell"> @Html.Price3((decimal)@item.PriceOfClient)</div>
+        <div class="col-sm-2 products-list-item__cell"> @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })</div>
+        <div class="col-sm-1 products-list-item__cell">
+            <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+            <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+        </div>
+    </div>
+    }
+    </section>
+ @*   <div>
         <table class="data-table">
             <thead>
                 <tr>
@@ -90,7 +146,7 @@
             </tbody>
         </table>
     </div>
-
+*@
 }
 
 

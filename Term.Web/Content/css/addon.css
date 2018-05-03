@@ -16,14 +16,14 @@ border-bottom: 1px solid #a7a7a7;
 padding-bottom: 20px;
 }
 
-.cart-item-cell {
-    text-align:center;
+.cart-item-cell, .products-list-item__cell {
+    text-align: center;
 }
 .addon .thead > div {
     padding-left: 0 !important;
     text-align: center;
 }
-.addon .cart-item
+.addon .cart-item, .addon .products-list-item
 {
     border-bottom: 1px solid #a7a7a7;
     display: flex;
@@ -196,10 +196,15 @@ line-height: 1;
 {
     display: grid;
 }
+
 #table-orders .thead
 {
 	display: none;
 }
+
+    .addon .products-list-item {
+        display: grid;
+    }
  }
 
  

@@ -681,6 +681,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
         $('#AllWheels').on('click', function () {
             $('#SortCheckBoxes').removeClass("invisible");
             $('#podborautoresult td.activePodbor a').trigger('click');
+            return false;
         });
         function aPodborHandler(event) {
             event.preventDefault();
@@ -805,7 +806,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
                     });
                 });
             }
-
+            return false;
         }
 
         function aPodborHandlerSeaeonSelect(event) {
@@ -1035,6 +1036,19 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
         }
 
 
+
+        /*
+        $(document).on('click', 'a[name=sortBtn]', function () {
+
+       
+           // $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
+            var dataSort = $(this).attr('data-sort');
+            switch (dataSort) {
+                case "NameAsc": {  }
+            }
+
+        });
+        */
 
 
         $(document).on('click', 'a[name=sortBtn]', function () {
