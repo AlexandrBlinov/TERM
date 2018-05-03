@@ -24,24 +24,23 @@ namespace Term.Web.Controllers
         }
 
         [Authorize(Roles = "Newsmaker")]
-        public ActionResult NewsList(NewsViewModel model)
+        public async Task<ActionResult> NewsList(NewsViewModel model)
         {
-            model.News = _dbContext.News.Where(p => p.Id != 0).Select(p => new NewsViewModel
-            {
-                Id = p.Id,
-                NewsName = p.NewsName,
-                NewsText = p.NewsText,
-                DatePublish = p.DatePublish
-            }).ToList();
+              model.News = await _dbContext.News.Where(p => p.Id != 0).Select(p => new NewsViewModel
+               {
+                   Id = p.Id,
+                   NewsName = p.NewsName,
+                   NewsText = p.NewsText,
+                   DatePublish = p.DatePublish
+               }).ToListAsync(); 
+
+            
             return View(model);
         }
 
         [Authorize(Roles = "Newsmaker")]
         public ActionResult GetNewsDetails(long Id)
-        {
-           
-
-           // var news = new Term.DAL.News();
+        {  
            var news = _dbContext.News.FirstOrDefault(o => o.Id == Id);
             var model = new NewsViewModel
             {
@@ -61,7 +60,7 @@ namespace Term.Web.Controllers
         public async Task<ActionResult> GetNewsImg(long Id, int ImgType)
         {
             var news = await _dbContext.News.FirstAsync(o => o.Id == Id);
-            var stream = new MemoryStream();
+            MemoryStream stream = new MemoryStream();
             var contentType = "img/jpeg";
             if (ImgType == Defaults.NewsPreviewPhoto && news.PreviewImg != null && news.PreviewImg.Length > 0)
             {
@@ -117,13 +116,12 @@ namespace Term.Web.Controllers
         {
             try
             {
+               var data = new BinaryReader(upload.InputStream).ReadBytes(upload.ContentLength);
                 var news = new Term.DAL.News();
                 news = _dbContext.News.FirstOrDefault(o => o.Id == Id);
                 news.ContentType = upload.ContentType;
-                if (ImgType == Defaults.NewsPreviewPhoto)
-                    news.PreviewImg = new System.IO.BinaryReader(upload.InputStream).ReadBytes(upload.ContentLength);
-                if (ImgType == Defaults.NewsMainPhoto)
-                    news.MainImg = new System.IO.BinaryReader(upload.InputStream).ReadBytes(upload.ContentLength);
+                if (ImgType == Defaults.NewsPreviewPhoto) news.PreviewImg = data;
+                if (ImgType == Defaults.NewsMainPhoto) news.MainImg = data;
 
                 _dbContext.SaveChanges();
                 return RedirectToAction("GetNewsDetails", "News", new { Id = Id });
@@ -136,11 +134,11 @@ namespace Term.Web.Controllers
         //Далее контроллеры для юзеров
         public ActionResult Index(NewsViewModel model)
         {
-            int vipAkbId = 4;
+         //   int vipAkbId = 4;
             var partnerId = Partner.PartnerId;
-            var vipakb = _dbContext.PartnerPropertyValues.Where(p => p.PartnerId == partnerId && p.Name == "akbvip").FirstOrDefault();
+           // var vipakb = _dbContext.PartnerPropertyValues.Where(p => p.PartnerId == partnerId && p.Name == "akbvip").FirstOrDefault();
             var currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
-            if (vipakb != null)
+           /* if (vipakb != null)
             {
                 model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture).Select(p => new NewsViewModel
                 {
@@ -151,15 +149,15 @@ namespace Term.Web.Controllers
                 }).ToList();
             }
             else
-            {
-                model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture && p.Id != vipAkbId).Select(p => new NewsViewModel
+            { */
+                model.News = _dbContext.News.Where(p => p.Active && p.Culture == currentCulture /*&& p.Id != vipAkbId */).Select(p => new NewsViewModel
                 {
                     Id = p.Id,
                     NewsName = p.NewsName,
                     NewsText = p.NewsText,
                     DatePublish = p.DatePublish
                 }).OrderByDescending(p => p.DatePublish).ToList();
-            }
+            //}
             
             return View(model);
         }

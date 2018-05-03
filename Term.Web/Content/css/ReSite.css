@@ -57,7 +57,7 @@ textarea.cart-create-personal-input-comment {
     border-bottom: 3px solid #009efe;
 }
 
-.navbar-nav>li>a.second {
+.navbar-nav > li > a.second {
     padding-top: 25px;
     padding-bottom: 22px;
     font-size: 17px;
@@ -65,7 +65,8 @@ textarea.cart-create-personal-input-comment {
     text-transform: uppercase;
     background-color: #18355d;
     font-weight: bold;
-    transition: all 0.1s ease; 
+    transition: all 0.1s ease;
+    border-bottom: 3px solid #18355d;
 }
 
 .nav>li>a.second:hover, .nav>li>a.second:focus, .nav>li>a.second:active, .nav>li>a.second:active:focus {

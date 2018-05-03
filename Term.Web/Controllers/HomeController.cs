@@ -368,7 +368,7 @@ namespace Term.Web.Controllers
             {
                 ViewData[Enum.GetName(typeof(ProductType),p)] = Products.GetCountOfProducts(p);
             }
-            ViewBag.NewsId = _newsService.getNewsId();
+         //   ViewBag.NewsId = _newsService.getNewsId();
        
             return View();
         }

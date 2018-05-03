@@ -246,4 +246,7 @@
   <data name="YourManagers" xml:space="preserve">
     <value>Ваши менеджеры</value>
   </data>
+  <data name="News" xml:space="preserve">
+    <value>Новости</value>
+  </data>
 </root>

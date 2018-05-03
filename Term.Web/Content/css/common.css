@@ -1303,3 +1303,8 @@ table.clickable-rows tbody {
 .head-above-contents {
     margin-bottom:80px;
 }
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    /*margin-top: 0;    */
+}

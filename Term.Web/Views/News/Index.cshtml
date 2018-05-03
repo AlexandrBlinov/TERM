@@ -1,11 +1,12 @@
-﻿@{
+﻿@using Term.Web.Views.Resources;
+@{
     ViewBag.Title = "Список новостей";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model NewsViewModel
 
 
-<h2 class="a_news_list">News list</h2>
+<h2 class="a_news_list">@Header.News</h2>
 <table class="data-table order-table">
     <thead>
         <tr>
@@ -28,7 +29,7 @@
         {
 
             <tr>
-                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = item.Id, ImgType = 1 })' class="img-responsive" style="max-width: 200px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = item.Id, ImgType = 1 })' class="img-responsive" style="max-width: 200px;" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></td>
                 <td>@item.DatePublish.ToShortDateString()</td>
                 <td>@item.NewsName</td>
                 <td>@Html.ActionLink("Просмотр", "Details", new { Id = item.Id }, new { @class = "order-table-details" })</td>

@@ -15,40 +15,36 @@
 <input type="hidden" id="getPost">
 
 @{var bs = new BaseService();}
-@if (bs.CheckOnlySeasonOrder){ @Html.Partial("_OnlySeasonOrderMainPage");}else{ @Html.Partial("_MainPage");}
-
-@if (ViewBag.NewsId != 0)
-{
-    <div id="news" class="hidden-xs" style="z-index: 1;
-    width: 400px;
-    position: fixed;
-    top: 66%;
-    right: 50px;
-    ">
-        <img style="width: 16px;
-        float: right;
-        padding-bottom: 2px;
-        cursor: pointer;" id="close_news" data-newsid="@ViewBag.NewsId" src="~/Content/img/close.png" />
-        <a href="@Url.Action("Details", "News",new { Id = ViewBag.NewsId})" class="icon-user">
-            <img id="news_details" src='@Url.Action("GetNewsImg", "News", new { Id = ViewBag.NewsId, ImgType = 1 })' data-newsid="@ViewBag.NewsId" class="img-responsive" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" />
-        </a>
-    </div>
+@if (bs.CheckOnlySeasonOrder)
+{@Html.Partial("_OnlySeasonOrderMainPage");
+}
+else
+{ @Html.Partial("_MainPage");
 }
 
+@*
+    if (ViewBag.NewsId != 0)
+       {
+           <div id="news" class="hidden-xs" style="z-index: 1;
+           width: 400px;
+           position: fixed;
+           top: 66%;
+           right: 50px;
+           ">
+               <img style="width: 16px;
+               float: right;
+               padding-bottom: 2px;
+               cursor: pointer;" id="close_news" data-newsid="@ViewBag.NewsId" src="~/Content/img/close.png" />
+               <a href="@Url.Action("Details", "News",new { Id = ViewBag.NewsId})" class="icon-user">
+                   <img id="news_details" src='@Url.Action("GetNewsImg", "News", new { Id = ViewBag.NewsId, ImgType = 1 })' data-newsid="@ViewBag.NewsId" class="img-responsive" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" />
+               </a>
+           </div>
+       }
+*@
 
 @section Scripts {
 
     <script>
-      
-        function AddNotifications(newsId) {
-
-            $.post("/News/AddNotifications",
-                    {
-                        "Id": newsId
-                    }
-                );
-
-        }
 
         $(document).on("click", "#close_news", function () {
             var newsId = $(this).attr("data-newsId");
@@ -58,7 +54,12 @@
 
         $(document).on("click", "#news_details", function () {
             var newsId = $(this).attr("data-newsId");
-            AddNotifications(newsId);
-        }); 
+            $.post("/news/addnotifications", { "Id": newsId })
+                .fail(function (xhr, status) {
+                    toastr.error("Произошла ошибка запроса", "Ошибка", { timeOut: 0, closeButton: true })
+
+                });
+
+        });
     </script>
 }

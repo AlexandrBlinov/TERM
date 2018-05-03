@@ -48,7 +48,7 @@
                                  {
                                      for (int i = 1; i <= item.CountPhoto; i++)
                                      {
-                                        <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></a>
+                                        <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></a>
 
                                      }
                                  }
@@ -137,7 +137,7 @@
                         }
                         }
                         <span class="@sale_img_class"></span>
-                        <img class="img-thumbnail-disk img-responsive data-part-min-img" src=@url onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+                        <img class="img-thumbnail-disk img-responsive data-part-min-img" src=@url onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;">
                         <div class="img_thumbnail_season">
                             @Html.SeasonImage(item.Season)
                         </div>

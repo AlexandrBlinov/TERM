@@ -45,6 +45,11 @@ namespace YstProject.Services
             public static readonly string HideNoStud = "hidenostud";
         }
 
+        public struct UrlsInViews
+        {
+            public static readonly string NoImage = "'/Content/img/catalog-no-image-small-box.png'";
+        }
+
 
         public static readonly string JuangsuCode = "91535";
 

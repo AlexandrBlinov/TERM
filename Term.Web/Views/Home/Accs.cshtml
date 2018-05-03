@@ -6,7 +6,6 @@
 @{
     ViewBag.Title = Header.Accessories;
 }
-@{Html.RenderPartial("_AkbBigSale");}
 @Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.Accessories })
 
 
@@ -229,7 +228,7 @@
                     <td>
                         @{string saleImgClass = item.IsSaleProduct ? "sale-img" : "";}
                         <span class="@saleImgClass"></span>
-                        <a class="fancybox-btn" href="@Html.FullPathToImage("acc", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("acc", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+                        <a class="fancybox-btn" href="@Html.FullPathToImage("acc", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("acc", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;"></a>
 
                     </td>
                     <td>
@@ -254,12 +253,14 @@
                             (@item.DaysToDepartment @ForSearchResult.Days)
                         </td>
                     }
-                    <td>
-                        <span class="data-table-price">@item.PriceOfClient </span>
-                    </td>
+                        <td>
+                            
+                            
+                            @Html.Price3((decimal)@item.PriceOfClient)
+                        </td>
 
                     <td>
-                        @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200 })
+                        @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
 
                     </td>
                     <td>

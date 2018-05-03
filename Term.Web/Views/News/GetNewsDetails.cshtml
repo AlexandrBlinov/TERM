@@ -69,11 +69,11 @@
         <table class="data-table">
             <tr>
                 <td><a href="javascript:void(0)" id="upload-file__link" class="attachdoc__link">Прикрепить превью</a></td>
-                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 1 })' class="img-responsive" style="max-width: 200px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 1 })' class="img-responsive" style="max-width: 200px;" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></td>
             </tr>
             <tr>
                 <td><a href="javascript:void(0)" id="upload-file__link_main" class="attachdoc__link">Прикрепить основное фото</a></td>
-                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 2 })' class="img-responsive" style="width: 200px;" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';" /></td>
+                <td><img src='@Url.Action("GetNewsImg", "News", new { Id = Model.Id, ImgType = 2 })' class="img-responsive" style="width: 200px;" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></td>
             </tr>
         </table>
     </div>

@@ -34,7 +34,7 @@
                 {
                     <tr>
                         <td class="hidden-xs">
-                            <a class="fancybox-btn" href="@Html.FullPathToImage("tyre", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("tyre", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+                            <a class="fancybox-btn" href="@Html.FullPathToImage("tyre", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("tyre", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;"></a>
                         </td>
                         <td>
                             @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
@@ -56,7 +56,7 @@
                         </td>
                         <td>
 
-                            @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200 })
+                            @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
 
                         </td>
                         <td>
@@ -82,7 +82,7 @@
             {
                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                     <div class="thumbnail view-pl-thumbnail">
-                        <img class="img-thumbnail img-responsive data-part-min-img" src="@Html.FullPathToImage("tyre", item.PathToImage)" onerror="this.onerror = null; this.src = '/Content/img/catalog-no-image-small-box.png';">
+                        <img class="img-thumbnail img-responsive data-part-min-img" src="@Html.FullPathToImage("tyre", item.PathToImage)" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;">
 
                         <div class="caption">
                             @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @class = "data-table-a-text view-pl-a-text" })
