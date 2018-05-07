@@ -45,39 +45,37 @@ namespace Term.Web.Controllers
             var isPartner = ServicePP.IsPartner;
             var SaleMode = ServicePP.IsSaleAvailable;
 
-            ViewBag.SaleMode = SaleMode && isPartner ? _space : _invisible;
+            //   ViewBag.SaleMode = SaleMode && isPartner ? _space : _invisible;
 
+            podborModel.SaleMode= ServicePP.IsSaleAvailable && isPartner ? _space : _invisible;
 
+            podborModel.IsForeign = Partner.IsForeign;
 
-            bool AddStock = ServicePP.CanPartnerUseAdditionalStock();
-            ViewBag.AddStock = AddStock;
+            // bool AddStock = ServicePP.CanPartnerUseAdditionalStock();
+            // ViewBag.AddStock = AddStock;
             if (!ModelState.IsValid) throw new HttpException(404, "Not found");
             String[] pavParams = { podborModel.model, podborModel.brand, podborModel.engine };
-            ViewBag.Length = 0;
+           // ViewBag.Length = 0;
             if (!pavParams.Any(p => String.IsNullOrEmpty(p)))
             {
-
-
 
                 // var arr = pav.getJsonArray();
                 var engine = podborModel.engine.Replace("~", "/");
                 var arr = _podborTyreDiskService.GetResults(podborModel.brand, podborModel.model, podborModel.year, engine).ToArray();
+
                 ViewBag.Bolts = arr[0].BoltsSize.Replace(',', '.');
                 if (arr[0].IsBolts)
                     ViewBag.BoltsUrl = Url.Action("Others", "Home", new { @OthersType = "Bolts", @Folder = Defaults.WheelsBoltsFolder, @Width = arr[0].Size1, @Diametr = arr[0].Size2 });
                 else
                     ViewBag.BoltsUrl = Url.Action("Others", "Home", new { @OthersType = "Bolts", @Folder = Defaults.WheelsNutsFolder, @Width = arr[0].Size1, @Diametr = arr[0].Size2 });
 
-                ViewBag.tyres = arr.Where(p => p.ProductType == ProductType.Tyre).ToArray();
-                ViewBag.disks = arr.Where(p => p.ProductType == ProductType.Disk).ToArray();
 
-                /* ViewBag.tyresZavod = arr.Where(p => p.ProductType == ProductType.Tyre && p.Mode == 0).ToArray();
+                podborModel.TyreTiporazmersResults = arr.Where(p => p.ProductType == ProductType.Tyre).ToArray();
 
-                ViewBag.disksZavod = arr.Where(p => p.ProductType == ProductType.Disk && p.Mode == 0).ToArray();
-                ViewBag.tyresZamena = arr.Where(p => p.ProductType == ProductType.Tyre && (p.Mode == 1 || p.Mode == 2)).ToArray();
-                ViewBag.disksZamena = arr.Where(p => p.ProductType == ProductType.Disk && (p.Mode == 1 || p.Mode == 2)).ToArray();*/
-                ViewBag.Length = Math.Max(ViewBag.tyres.Length, ViewBag.disks.Length);
+                podborModel.DiskTiporazmersResults = arr.Where(p => p.ProductType == ProductType.Disk).ToArray();
 
+
+                podborModel.MaxLength = Math.Max(podborModel.TyreTiporazmersResults.Count, podborModel.DiskTiporazmersResults.Count);
             }
             return View(podborModel);
 

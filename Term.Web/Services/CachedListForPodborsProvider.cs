@@ -79,7 +79,7 @@ namespace YstProject.Services
         {
             
             {
-              return _dbContext.Set<DiskColour>().Select(dc => dc.ColourName).OrderBy(p=>p).AsEnumerable<string>();
+              return _dbContext.Set<DiskColour>().Select(dc => dc.ColourName).OrderBy(p=>p).ToList();
                
             }
         }
@@ -127,38 +127,16 @@ namespace YstProject.Services
 
 
 
-            //
-            // Сортировка в зависимости от модели
-            //
-        private static IQueryable<SearchResult> GetOrderedResults(this IQueryable<SearchResult> queryNotOrdered, CommonPodborView model)
-        {
-
-            IQueryable<SearchResult> query;
-            switch (model.SortBy)
-            {
-                case SortBy.NameAsc: query = queryNotOrdered.OrderBy(p => p.Name); break;
-                case SortBy.NameDesc: query = queryNotOrdered.OrderByDescending(p => p.Name); break;
-                case SortBy.AmountAsc: query = queryNotOrdered.OrderBy(p => p.Rest); break;
-                case SortBy.AmountDesc: query = queryNotOrdered.OrderByDescending(p => p.Rest); break;
-                case SortBy.DeliveryAsc: query = queryNotOrdered.OrderBy(p => p.DaysToDepartment); break;
-                case SortBy.DeliveryDesc: query = queryNotOrdered.OrderByDescending(p => p.DaysToDepartment); break;
-                case SortBy.PriceAsc: query = queryNotOrdered.OrderBy(p => p.PriceOfClient); break;
-                case SortBy.PriceDesc: query = queryNotOrdered.OrderByDescending(p => p.PriceOfClient); break;
-                default: query = queryNotOrdered.OrderBy(p => p.Name); break;
-
-            }
-            return query;
-        }
-
 
 
         /// <summary>
-        /// Сделать выборку из кэша для дисков
+        /// Получить ВСЕ диски на остатках и в пути (для отбора по типоразмеру не подходит, т.к. там есть допуски)
         /// </summary>
         /// <param name="podborModel"></param>
         /// <param name="point"></param>
         /// <returns></returns>
-        /// 
+       
+
 
         public static IPagedList<DiskSearchResult> GetAllDisksByPartnerPoint( DisksPodborView podborModel,PartnerPoint point)
         {
@@ -168,7 +146,7 @@ namespace YstProject.Services
                 () => GetAllDisksByPartnerPointFromDb(pointId, podborModel), DateTimeOffset.UtcNow.AddMinutes(TimeoutMin));
 
             var query = result.AsQueryable();
-            //IList<DiskSearchResult> query = result.ToList();
+           
 
 
             if (podborModel.FromOnWay && !podborModel.FromRests) query = query.Where(p => p.DepartmentId==0);
@@ -236,11 +214,11 @@ namespace YstProject.Services
 
 
 
-            // return   GetOrderedResults(podborModel, query).Cast<DiskSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+            
 
-            return query.GetOrderedResults(podborModel).Cast<DiskSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+            return query.GetOrderedResults(podborModel.SortBy).Cast<DiskSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
 
-            //   return query.ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+            
 
         }
 
@@ -287,7 +265,7 @@ namespace YstProject.Services
 
             
 
-          return  query.GetOrderedResults(podborModel).Cast<TyreSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+          return  query.GetOrderedResults(podborModel.SortBy).Cast<TyreSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
 
         }
 
@@ -306,7 +284,7 @@ namespace YstProject.Services
             if (podborModel.SelectedCategories.Count != 0) query = query.Where(p => podborModel.SelectedCategories.Contains(p.ParentId.ToString()));
 
           
-            return query.GetOrderedResults(podborModel).Cast<AccSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+            return query.GetOrderedResults(podborModel.SortBy).Cast<AccSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
         }
         
 

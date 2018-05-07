@@ -856,14 +856,12 @@ namespace YstTerm.Models
 
     }
 
-
+    /// <summary>
+    /// Модель подбора дисков по авто
+    /// </summary>
     public class PodborAutoView
     {
-
-        public PodborAutoView()
-        {
-                
-        }
+               
        
          public string brand { get; set; }
 
@@ -881,7 +879,17 @@ namespace YstTerm.Models
 
         public IEnumerable<string> Engines { get; set; }
 
+        public bool IsForeign { get; set; }
 
+        public string SaleMode { get; set; }
+
+        /// <summary>
+        /// Максимальное число типоразмеров м-у шинами и дисками для отображения в таблице
+        /// </summary>
+        public int MaxLength { get; set; }
+
+        public IList<TiporazmerByCarModelView> TyreTiporazmersResults { get; set; }
+        public IList<TiporazmerByCarModelView> DiskTiporazmersResults { get; set; }
 
     }
 

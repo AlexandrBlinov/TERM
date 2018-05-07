@@ -17,6 +17,7 @@ using Term.Web.Services;
 using Term.Soapmodels;
 using Term.Web.Models;
 using System.Web.Mvc;
+using Term.Utils;
 
 namespace Term.Services
 {
@@ -503,11 +504,20 @@ namespace Term.Services
             DbContext.SaveChanges();
          
         }
-         
 
-       
 
-   
+
+        public static SelectList GetOrderStatuses()
+        {
+            return (new SelectList(Enum.GetValues(typeof(OrderStatuses)).Cast<OrderStatuses>().Where(p => ((int)p < 10 || (int)p > 15) && p != OrderStatuses.ShippedForSale).Select(p => new
+            {
+                Id = (int)p,
+                Name = EnumDescriptionProvider.GetDescription(p)
+
+            }), "Id", "Name"));
+        }
+
+
     }
        
 }

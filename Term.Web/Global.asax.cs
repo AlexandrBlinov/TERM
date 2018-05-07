@@ -33,15 +33,15 @@ namespace Term.Web
 
             ModelBinders.Binders.Add(typeof(TyresPodborView), new TyresModelBinder());
             ModelBinders.Binders.Add(typeof(DisksPodborView), new DisksModelBinder());
-     //       ModelBinders.Binders.Add(typeof(AkbPodborView), new AkbModelBinder());
+     
             ModelBinders.Binders.Add(typeof(DateTime?), new DateTimeModelBinder());
             ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
-        //    ModelBinders.Binders.Add(typeof(CaseLogistik), new EnumModelBinder<CaseLogistik>(CaseLogistik.NoCase));
+        
 
 
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
-           // WebApiConfig.Register(GlobalConfiguration.Configuration);
+     
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

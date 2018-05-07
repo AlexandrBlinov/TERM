@@ -40,7 +40,7 @@ namespace Term.Web
             bundles.Add(new ScriptBundle("~/bundles/term_service").Include(
                        "~/Scripts/yst-localize-20170619.js",
                        "~/Scripts/yst-utility.js",
-                       "~/Scripts/yst-scripts-20180419.js",
+                       "~/Scripts/yst-scripts-20180507.js",
                        "~/Scripts/term-scripts-20170906.js",
                        "~/Scripts/common-v6.js"));
             

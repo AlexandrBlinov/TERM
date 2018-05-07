@@ -26,17 +26,15 @@ namespace Term.Web.Services
         public IEnumerable<TiporazmerByCarModelView> GetResults(string brand, string car, int year, string engine)
         {
 
-            var jmt = new List<TiporazmerByCarModelView>();
+            var resultList = new List<TiporazmerByCarModelView>();
 
-            if (String.IsNullOrEmpty(brand) || String.IsNullOrEmpty(car) || String.IsNullOrEmpty(engine))
-                return jmt;
+            if (String.IsNullOrEmpty(brand) || String.IsNullOrEmpty(car) || String.IsNullOrEmpty(engine)) return resultList;
 
-            ICollection<CarRecord> carrecords = _dbcontext.Set<CarRecord>().Where(p => p.VendorName == brand && p.CarName == car && (p.BeginYear <= year && (p.EndYear >= year || p.EndYear == 0)) && p.ModificationName == engine).OrderBy(p => p.Diameter).ToList();
+            var carrecords = _dbcontext.Set<CarRecord>().Where(p => p.VendorName == brand && p.CarName == car && (p.BeginYear <= year && (p.EndYear >= year || p.EndYear == 0)) && p.ModificationName == engine).OrderBy(p => p.Diameter).ToList();
 
-            foreach (var cr in carrecords)
-                jmt.Add(new TiporazmerByCarModelView(cr));
+            foreach (var record in carrecords) resultList.Add(new TiporazmerByCarModelView(record));
 
-            return jmt;
+            return resultList;
 
         }
        

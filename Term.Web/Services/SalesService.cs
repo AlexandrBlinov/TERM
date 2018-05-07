@@ -9,6 +9,8 @@ using Term.Web.Models;
 using Yst.ViewModels;
 using YstProject.Services;
 using Term.Web.Services;
+using System.Web.Mvc;
+using Term.Utils;
 
 namespace Term.Services
 {
@@ -166,6 +168,16 @@ namespace Term.Services
             Sale sale = DbContext.Sales.FirstOrDefault(o => o.NumberIn1S == numberIn1s && o.PartnerId == Partner.PartnerId);
             if (sale == null) return Guid.Empty;
             return sale.GuidIn1S;
+        }
+
+        public static SelectList GetSaleStatuses()
+        {
+            return (new SelectList(Enum.GetValues(typeof(OrderStatuses)).Cast<OrderStatuses>().Where(p => p == OrderStatuses.ShippedForSale || p == OrderStatuses.DeliveredToClient).Select(p => new
+            {
+                Id = (int)p,
+                Name = EnumDescriptionProvider.GetDescription(p)
+
+            }), "Id", "Name"));
         }
     }
 }

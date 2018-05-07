@@ -5,7 +5,7 @@
 
 
     
-    if (!Array.isArray(data) || data.length==0) return;
+    if (!Array.isArray(data) || data.length===0) return;
     var title = data[0].Title || '';
     var endDate = data[0].EndDate || '';
     var contents = data[0].Contents || '';

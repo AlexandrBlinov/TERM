@@ -53,29 +53,29 @@
 
                 <div class="row">
                     <br />
-                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-xs-6 col-sm-3">
                         @Html.DropDownListFor(p => p.brand, new SelectList(Model.Brands), @SearchByAuto.Brand, new { @class = "form-control" })
                     </div>
-                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-xs-6 col-sm-3">
                         @Html.DropDownListFor(p => p.model, new SelectList(Model.Models), @SearchByAuto.Model, displayModeModel)
                     </div>
-                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-xs-6 col-sm-3">
                         @Html.DropDownListFor(p => p.year, new SelectList(Model.Years), @SearchByAuto.YearOfIssue, displayYearModel)
                     </div>
-                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-xs-6 col-sm-3">
                         @Html.DropDownListFor(p => p.engine, new SelectList(Model.Engines), @SearchByAuto.Modification, displayEngineModel)
                     </div>
                 </div>
                 <br />
             }
         </div>
-        
+
     </div>
-    @if (ViewBag.Length == 0)
+    @if (Model.MaxLength == 0)
     {
         <div id="view_tab" class="container">
             <div class="row text-center">
-                @if (ViewBag.AddStock)
+                @if (!Model.IsForeign)
                 {
                     <img src="~/Content/img/car_text.png" class="img-responsive">
                 }
@@ -90,16 +90,17 @@
 </div>
 
 @{
-    if (@ViewBag.Bolts != null)
-    {
-        <span class="bolts_size"><a href="@ViewBag.BoltsUrl">@ViewBag.Bolts</a></span>
+        if (@ViewBag.Bolts != null)
+        {
+            <span class="bolts_size"><a href="@ViewBag.BoltsUrl">@ViewBag.Bolts</a></span>
+        }
     }
-}
 
-<div id="podborautoresult" class="m-t-15">
+<!-- типоразмеры -->
+<div id="podborautoresult" class="m-t-15 b-podborauto-tiporazmers">
 
 
-    @if (ViewBag.Length > 0)
+    @if (Model.MaxLength > 0)
     {
         <span class="podbor-tyres-title">@ForSearchResult.SearchResult</span>
         <table id="podborauto" class="data-table data-table-auto">
@@ -123,20 +124,38 @@
                     <th> @SearchByAuto.Rear_Axle </th>
                 </tr>
             </thead>
-            @for (int i = 0; i < ViewBag.Length; i++)
+            @for (int counter = 0; counter < Model.MaxLength; counter++)
             {
+                var tyreRecord = Model.TyreTiporazmersResults.Count > counter ? Model.TyreTiporazmersResults[counter] : null;
+                var diskRecord = Model.DiskTiporazmersResults.Count > counter ? Model.DiskTiporazmersResults[counter] : null;
 
-                <tr>
-                    <td> @(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].Prop1) : "")</td>
-                    <td> @(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].HRef) : "") </td>
-                    <td>@(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].Spark) : "")</td>
-                    <td> @(ViewBag.tyres.Length > i ? @Html.Raw(ViewBag.tyres[i].HRefRear) : "") </td>
+            <tr>
+                @if (tyreRecord == null)
+    {
+            <td colspan="4"></td>
+}
+else
+{
+            <td> @tyreRecord.Prop1</td>
+            <td> @Html.Raw(tyreRecord.HRef)</td>
+            <td> @Html.Raw(tyreRecord.Spark)</td>
+            <td> @Html.Raw(tyreRecord.HRefRear)</td>
+}
+                @if (diskRecord == null)
+    {
+            <td colspan="4"></td>
+}
+else
+{
+            <td> @diskRecord.Prop1</td>
+            <td> @Html.Raw(diskRecord.HRef)</td>
+            <td> @Html.Raw(diskRecord.Spark)</td>
+            <td> @Html.Raw(diskRecord.HRefRear)</td>
+}
 
-                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].Prop1) : "") </td>
-                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].HRef) : "") </td>
-                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].Spark) : "")</td>
-                    <td> @(ViewBag.disks.Length > i ? @Html.Raw(ViewBag.disks[i].HRefRear) : "") </td>
-                </tr>
+
+              
+            </tr>
 
             }
 
@@ -170,7 +189,7 @@
                 <span id="sortPrice" name="sortIcon" class="sort-icon-default"> </span>
 
             </div>
-            <div class="btn btn-default sort-btn-style ForSortSale @ViewBag.SaleMode" aria-label="Left Align">
+            <div class="btn btn-default sort-btn-style ForSortSale @Model.SaleMode" aria-label="Left Align">
                 <a id="sort-sale" class="sort-btn-a" href="#">@ForSearchResult.Sale</a>
             </div>
         </div>
@@ -186,16 +205,16 @@
             </button>
             <button type="button" class="btn btn-default season_change" name="all">Все</button>
         </div>
-        <div class="row" style="padding-top: 10px; text-align: center;">
+       <!-- <div class="row" style="padding-top: 10px; text-align: center;">
             <a id="ForgedWheels" href="#" class="btn"><span class="link_item-dashed">@SearchByAuto.Forged_wheels</span></a>
             <a id="AllWheels" href="#" class="btn"><span class="link_item-dashed">@SearchByAuto.All_wheels</span></a>
             <!--  <button id="ForgedWheels" type="button" class="btn btn-primary btn-lg">@SearchByAuto.Forged_wheels</button>
-    <button id="AllWheels" type="button" class="btn btn-default btn-lg">@SearchByAuto.All_wheels</button> -->
+            <button id="AllWheels" type="button" class="btn btn-default btn-lg">@SearchByAuto.All_wheels</button> 
 
-        </div>
+        </div> -->
     </div>
-    <div id="SortCheckBoxes" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 m-t-15">
-        
+    <div id="SortCheckBoxes" class="col-xs-5  m-t-15">
+
         <div class="row">
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ForSortSale">
                 <input id="exact-size" type="checkbox" name="exact-size" value="false" class="checkbox-auto originals_param">
@@ -211,37 +230,40 @@
                 <label class="checkbox-auto-label" for="complect"><span class="original-param">@ForSearchResult.IsSet4Items</span></label>
             </div>
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float: right;">
-                <div class="btn-group form-podbor-change-view" role="group">
-                    <div id="table" class="btn btn-default active">
-                        <a class="glyphicon glyphicon-th-list change-view-custom" href="#" title="Вид подбора списком"> </a>
-                    </div>
+                <!--
+    <div class="btn-group form-podbor-change-view" role="group">
+        <div id="table" class="btn btn-default active">
+            <a class="glyphicon glyphicon-th-list change-view-custom" href="#" title="Вид подбора списком"> </a>
+        </div>
 
-                    <div id="plitka" class="btn btn-default ">
-                        <a class="glyphicon glyphicon-th change-view-custom" href="#" title="Вид подбора плиткой"> </a>
-                    </div>
+        <div id="plitka" class="btn btn-default ">
+            <a class="glyphicon glyphicon-th change-view-custom" href="#" title="Вид подбора плиткой"> </a>
+        </div>
 
-                </div>
+    </div>-->
             </div>
         </div>
     </div>
 </div>
 
-<div id="podbortiporazmerresult"></div>
+<div id="podbortiporazmerresult" class="podborbyauto-results-container"></div>
 
 @section Scripts {
 
     <script src="~/Scripts/term-season-scripts.js"></script>
-<script>
+    <script>
 
-        $(function () {
-            $(document).ready(function () {
-                console.log(localStorage['selectedlink']);
-                if (localStorage.getItem("selectedlink") != null) {
-                    $("a[href^='" + localStorage['selectedlink'] + "']").trigger('click');
-                }
+            /*
+                $(function () {
+                    $(document).ready(function () {
+                        console.log(localStorage['selectedlink']);
+                        if (localStorage.getItem("selectedlink") != null) {
+                            $("a[href^='" + localStorage['selectedlink'] + "']").trigger('click');
+                        }
 
-            });
-        });
-</script>
+                    });
+                });
+                */
+    </script>
 
 }

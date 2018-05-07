@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Term.DAL;
+using Term.Services;
 using Term.Web.Views.Resources;
 using Yst.DropDowns;
 using Yst.ViewModels;
+using YstProject.Services;
 
 namespace Term.Web.Models
 {
@@ -49,7 +51,7 @@ namespace Term.Web.Models
             ItemsPerPage = 50;
         }
 
-        private static SelectList _orderStatuses = DropDownsFactory.GetOrderStatuses();
+        private static SelectList _orderStatuses = OrderService.GetOrderStatuses();
         private static readonly Department[] _departments = DropDownsFactory.Departments;
 
 
@@ -96,7 +98,7 @@ namespace Term.Web.Models
     {
         public ExtendedOrdersViewModel()
         {
-            ItemsPerPage = 100;
+            ItemsPerPage = Defaults.MaxItemsPerPage;
             AddressesIds = new SelectList(Enumerable.Empty<SelectListItem>());
         }
 
@@ -138,8 +140,9 @@ namespace Term.Web.Models
           public DateTime? DeliveryDate  { get; set; }
 
         public DayOfWeekToDeliver DayOfWeekToDeliver { get; set; }
-
-        public string LogistikDepartment { get; set; } = "00005";
+        
+        
+        public string LogistikDepartment { get; set; } = Defaults.MainDepartmentCode;
 
 
     }
@@ -198,7 +201,7 @@ namespace Term.Web.Models
     public class SalesViewModel : BaseViewPodborModel
     {
 
-        private static readonly SelectList _saleStatuses = DropDownsFactory.GetSaleStatuses();
+        private static readonly SelectList _saleStatuses = SalesService.GetSaleStatuses();
 
         public SelectList PartnerPoints { get; set; }
 

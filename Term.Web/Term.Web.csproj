@@ -214,6 +214,7 @@
     <Compile Include="Controllers\API\DbActionLogsApiController.cs" />
     <Compile Include="Controllers\API\DpdApiController.cs" />
     <Compile Include="Controllers\API\GlonasApiController.cs" />
+    <Compile Include="Controllers\API\OkApiController.cs" />
     <Compile Include="Controllers\API\OnWayItemsController.cs" />
     <Compile Include="Controllers\API\PartnerServiceApiController.cs" />
     <Compile Include="Controllers\API\AppToCarsApiController.cs" />
@@ -538,6 +539,7 @@
     <Compile Include="Services\JsonContent.cs" />
     <Compile Include="Services\NewsService.cs" />
     <Compile Include="Services\NotificationForUserService.cs" />
+    <Compile Include="Services\OrderedCollectionService.cs" />
     <Compile Include="Services\PersistedStorage.cs" />
     <Compile Include="Services\CustomExceptions.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -1033,7 +1035,7 @@
     <Content Include="Scripts\yst-localize-20170619.js" />
     <Content Include="Scripts\yst-shoppingcart-20180413.js" />
     <Content Include="Scripts\yst-notifications.js" />
-    <Content Include="Scripts\yst-scripts-20180419.js" />
+    <Content Include="Scripts\yst-scripts-20180507.js" />
     <Content Include="Scripts\yst-utility.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Partner\CreateOwn.cshtml" />

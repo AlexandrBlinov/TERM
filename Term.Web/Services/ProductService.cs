@@ -19,13 +19,32 @@ using System.Text;
 using System.Linq.Expressions;
 using Term.Web.Views.Resources;
 using System.Data.Entity;
+using Term.Web.Services;
 
 namespace Yst.Services
 {
+    /// <summary>
+    /// Класс для сортировки по ковыным дискам
+    /// </summary>
+    class DiskComparerByProducer : IComparer<int>
+    {
+        private static readonly IEnumerable<int> producersForgedWheels = Defaults.ProducersForgedWheels.Select(p => p.ProducerId);
+
+        public int Compare(int x, int y)
+        {
+          if ( producersForgedWheels.Any(p=> p==x) && !producersForgedWheels.Any(p=>p==y)) return -1;
+            if (!producersForgedWheels.Any(p => p == x) && producersForgedWheels.Any(p => p == y)) return 1;
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// Основной сервис для подборов
+    /// </summary>
     public class ProductService : BaseService, IDisposable
     {
         private bool _allocDBContext = false;
-        public const string PartnerIdSessionKey = "PartnerId";
+     //   public const string PartnerIdSessionKey = "PartnerId";
 
         public ProductService() : this(new AppDbContext()) { 
         _allocDBContext = true;
@@ -43,15 +62,14 @@ namespace Yst.Services
         /// <returns></returns>
         public IList<DiskSearchResult> GetDisks(DisksPodborView podborModel, int pointId, bool SaleMode, int exactsize = 1)
         {
-            if (podborModel.PriceMax == 0)  podborModel.PriceMax = 70000; 
+            string productname=null, article=null;
+
+            if (podborModel.PriceMax == 0) podborModel.PriceMax = Defaults.PriceMaxRus;
             string partnerId = GetPartnerIdByPointId(pointId);
             string parametersToString = "@PartnerId, @PartnerPointId, @ProducerId,@Diametr, @Width, @Hole, @Dia,@PCD, @ET, @Article, @ProductName, @DiskColor,@ExactSize, @SortBy,@ForPriceExcel,@OnlySale,@Brands, @PriceMin, @PriceMax,@TypeOfRests,@IsSet4Items";
 
 
             string sqltext = (IsPartner ? @"exec spGetDisksPartnerToClient " : "exec spGetDisksPointToClient ") + parametersToString;
-
-            string productname=null,article=null;
-
 
 
             if (!String.IsNullOrEmpty(podborModel.Article))
@@ -64,12 +82,21 @@ namespace Yst.Services
             
             parameters.GetParametersFromObject(podborModel, "ProducerId", "Diametr", "Width", "Hole", "DIA", "PCD", "ET", "DiskColor");
 
-            return DbContext.Database.SqlQuery<DiskSearchResult>(sqltext, parameters.ToArray()).ToList(); 
+            var results= DbContext.Database.SqlQuery<DiskSearchResult>(sqltext, parameters.ToArray()).ToList();
+
+            // сортируем сперва по кованым, потом по наименованию
+
+            //  var selector = ReflectionExtensions.GetSelector<DiskSearchResult, string>(podborModel.SortBy.ToString().ToLower());
+
+             results = results.OrderBy(p => p.ProducerId != null ? (int)p.ProducerId : 0, new DiskComparerByProducer()).GetOrderedResultsThenBy(podborModel.SortBy).ToList();
 
 
-
+            return results;
         }
 
+
+
+        
 
         /// <summary>
         /// Подбор шин по параметрам (вызов хранимой процедуры)
@@ -146,7 +173,8 @@ namespace Yst.Services
             parameters.Add("Brand", model.Brand == null ? null : String.Join("|", model.Brand));
 
             parameters.GetParametersFromObject(model, 
-                "ProducerId", "Inrush_Current", "Volume", "Polarity", /*"Brand", */ "Size", "Article",
+                "ProducerId", "Inrush_Current", "Volume", "Polarity", /*"Brand", */
+            "Size", "Article",
                 "ProductName", "Producer","AkbType","SortBy","PriceMin","PriceMax");
             
 

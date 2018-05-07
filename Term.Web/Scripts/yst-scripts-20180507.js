@@ -114,7 +114,7 @@ function init()
         $('input#Address').val($('#address').text());
     });
 
-
+/*
     $('.js-open-orderInList').on('click', function (e) {
 
         if (event.target.nodeName == "A") return;
@@ -127,8 +127,9 @@ function init()
         }
 
     });
+    */
 
-    setInterval(function () { $.get("/Home/Index", "", function () { }) }, 3600000);
+    setInterval(function () { $.get("/api/okapi/index", "", function () { }) }, 3600000);
 }
 
 var dateUtils= (function () {
@@ -686,11 +687,13 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
         function aPodborHandler(event) {
             event.preventDefault();
             var ptr = $("#podbortiporazmerresult");
+
+            /*
             if ($('#table').hasClass("active")) {
                 var dspl = "Table";
             } else {
                 var dspl = "Plitka";
-            }
+            } */
 
             $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
 
@@ -737,7 +740,7 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
             }
             localStorage['selectedlink'] = this.pathname;
             ptr.empty().addClass('loading');
-            ptr.load(this.href, { "exactsize": exact_size, "DisplayView": dspl, "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
+            ptr.load(this.href, { "exactsize": exact_size, /*"DisplayView": dspl,*/ "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
                 ptr.removeClass('loading');
                 $(".count_add_to_cart").TouchSpin({
                     min: 1,
@@ -1094,6 +1097,8 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
                 $("#sortPrice").addClass("sort-icon-active-desc");
             }
             aPodborHandlerSort(id);
+
+            return false;
         });
 
         function aPodborHandlerSort(id) {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,19 @@ namespace Term.Utils
 {
     public static class ReflectionExtensions
     {
-         /// <summary> 
+
+        public static Expression<Func<T, TReturn>> GetSelector<T, TReturn>(string fieldName)
+            where T : class
+            where TReturn : class
+        {
+            var t = typeof(TReturn);
+            ParameterExpression p = Expression.Parameter(typeof(T), "t");
+            var body = Expression.Property(p, fieldName);
+            return Expression.Lambda<Func<T, TReturn>>(body, new ParameterExpression[] { p });
+        }
+
+
+        /// <summary> 
         /// Gets properties of T 
         /// </summary> 
         public static IEnumerable<PropertyInfo> GetProperties<T>(BindingFlags binding, PropertyReflectionOptions options = PropertyReflectionOptions.All) 

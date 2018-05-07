@@ -757,12 +757,17 @@ li.ui-state-focus {
 }
 
 .data-table-price {
-    color: #0066cc;
+    color: #0066cc; 
+  /* color: rgb(96,96,96); */
     font-weight: bold;
     font-size: 18px;
 }
 
-.data-table-price-label{
+.orderslist__price {
+
+}
+
+.data-table-price-label {
     width: 10px;
     vertical-align: baseline;
 }
@@ -3243,3 +3248,8 @@ a.opener-sign, a.opener-sign:hover, a.opener-sign:visited, a.opener-sign:active 
         font-weight:bold;
         font-size:1.2em;
     }
+
+.podborbyauto-results-container {
+    min-width:500px;
+    content:'';
+}

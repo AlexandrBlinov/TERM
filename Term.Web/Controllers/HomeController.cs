@@ -156,7 +156,8 @@ namespace Term.Web.Controllers
                 ViewBag.YesDsplAutoPodbor = _space;
                
                 podborModel.ItemsPerPage = Defaults.MaxItemsPerPage;
-                podborModel.SearchResults = Products.GetDisks(podborModel, Point.PartnerPointId, isSale, exactsize).ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+            
+                   podborModel.SearchResults = Products.GetDisks(podborModel, Point.PartnerPointId, isSale, exactsize).ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
             }
            else 
                 //podborModel.SearchResults = CachedCollectionsService.GetAllDisksByPartnerPoint(podborModel, Point);

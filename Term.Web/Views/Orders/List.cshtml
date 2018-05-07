@@ -199,19 +199,20 @@
                     @if (ViewBag.IsPartner)
                 {
                     <div class="col-md-1 col-sm-1 price-filds">
-                        @Html.DisplayFor(modelItem => order.Total)
+                        @* Html.DisplayFor(modelItem => order.Total)*@
+                        @Html.Price3(order.Total,"","orderslist__price")
                     </div>
             }
 
 
                     <div class="col-md-1 col-sm-1 price-filds">
                         @if (ViewBag.IsPartner)
-                    {@(order.PointId == ViewBag.CurrentPointId ? order.TotalOfClient : order.TotalOfPoint)
-            }
-            else
-            {
-                @order.TotalOfClient
-        }
+    {@(order.PointId == ViewBag.CurrentPointId ? @Html.Price3(order.TotalOfClient, "", "orderslist__price") : @Html.Price3(order.TotalOfPoint, "", "orderslist__price"))
+}
+else
+{
+                    @Html.Price3(order.TotalOfClient,"", "orderslist__price")
+}
                     </div>
 
                     <div class="col-md-1 col-sm-1">   @order.OrderDate.ToShortDateString() </div>
