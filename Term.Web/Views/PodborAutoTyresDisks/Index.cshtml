@@ -34,7 +34,7 @@
 @Html.Partial("_BreadCrumbs", new BreadcrumbModel { CurrentActionName = @Header.ByAuto })
 
 <div class="row border-form-podbor">
-    <img class="podbor-tyres-title-img" src="~/Content/img/img-auto-podbor.png" /> <span class="podbor-tyres-title">@SearchByAuto.SearchByVehicle</span>
+    <img class="podbor-tyres-title-img" src="~/Content/img/img-auto-podbor.png" /> <h1 class="podbor-tyres-title">@SearchByAuto.SearchByVehicle </h1>
 </div>
 
 <div>
@@ -90,11 +90,11 @@
 </div>
 
 @{
-        if (@ViewBag.Bolts != null)
-        {
-            <span class="bolts_size"><a href="@ViewBag.BoltsUrl">@ViewBag.Bolts</a></span>
-        }
+    if (@ViewBag.Bolts != null)
+    {
+        <span class="bolts_size"><a href="@ViewBag.BoltsUrl">@ViewBag.Bolts</a></span>
     }
+}
 
 <!-- типоразмеры -->
 <div id="podborautoresult" class="m-t-15 b-podborauto-tiporazmers">
@@ -102,7 +102,7 @@
 
     @if (Model.MaxLength > 0)
     {
-        <span class="podbor-tyres-title">@ForSearchResult.SearchResult</span>
+        <h3 class="podbor-tyres-title">@ForSearchResult.SearchResult @Model.brand @Model.model @Model.year @Model.engine</h3>
         <table id="podborauto" class="data-table data-table-auto">
             <thead>
                 <tr>
@@ -129,33 +129,33 @@
                 var tyreRecord = Model.TyreTiporazmersResults.Count > counter ? Model.TyreTiporazmersResults[counter] : null;
                 var diskRecord = Model.DiskTiporazmersResults.Count > counter ? Model.DiskTiporazmersResults[counter] : null;
 
-            <tr>
-                @if (tyreRecord == null)
-    {
-            <td colspan="4"></td>
-}
-else
-{
-            <td> @tyreRecord.Prop1</td>
-            <td> @Html.Raw(tyreRecord.HRef)</td>
-            <td> @Html.Raw(tyreRecord.Spark)</td>
-            <td> @Html.Raw(tyreRecord.HRefRear)</td>
-}
-                @if (diskRecord == null)
-    {
-            <td colspan="4"></td>
-}
-else
-{
-            <td> @diskRecord.Prop1</td>
-            <td> @Html.Raw(diskRecord.HRef)</td>
-            <td> @Html.Raw(diskRecord.Spark)</td>
-            <td> @Html.Raw(diskRecord.HRefRear)</td>
-}
+                <tr>
+                    @if (tyreRecord == null)
+                    {
+                        <td colspan="4"></td>
+                    }
+                    else
+                    {
+                        <td> @tyreRecord.Prop1</td>
+                        <td> @Html.Raw(tyreRecord.HRef)</td>
+                        <td> @Html.Raw(tyreRecord.Spark)</td>
+                        <td> @Html.Raw(tyreRecord.HRefRear)</td>
+                    }
+                    @if (diskRecord == null)
+                    {
+                        <td colspan="4"></td>
+                    }
+                    else
+                    {
+                        <td> @diskRecord.Prop1</td>
+                        <td> @Html.Raw(diskRecord.HRef)</td>
+                        <td> @Html.Raw(diskRecord.Spark)</td>
+                        <td> @Html.Raw(diskRecord.HRefRear)</td>
+                    }
 
 
-              
-            </tr>
+
+                </tr>
 
             }
 
@@ -190,7 +190,7 @@ else
             <div class="btn btn-default sort-btn-style ForSortSale @Model.SaleMode" aria-label="Left Align">
                 <a id="sort-sale" class="sort-btn-a" href="#">@ForSearchResult.Sale</a>
             </div>
-            <div class="hidden-xs"> <input type="hidden" id="sortBy" value="nameasc"/></div>
+            <div class="hidden-xs"> <input type="hidden" id="sortBy" value="nameasc" /></div>
         </div>
         <div id="Seasons" class="btn-group" style="padding-top: 10px;padding-left: 119px;">
             <button type="button" class="btn btn-default js-seasonchange" name="winter">
@@ -208,7 +208,7 @@ else
     <div id="podborbyauto-filterBlock" class="col-xs-12 col-sm-5  m-t-15">
 
         <!--  <div class="row">
-    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ForSortSale"> -->
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ForSortSale"> -->
         <div class="form-group">
             <input id="exact-size" type="checkbox" name="exact-size" value="false" class="checkbox-auto originals_param js-podborbyauto-reload">
             <label class="checkbox-auto-label" for="exact-size"><span class="original-param">@SearchByAuto.OriginalParams</span></label>
@@ -224,30 +224,24 @@ else
         <div class="form-group">
             <input id="complect" type="checkbox" name="complect" value="false" class="checkbox-auto js-podborbyauto-reload originals_param">
             <label class="checkbox-auto-label" for="complect"><span class="original-param">@ForSearchResult.IsSet4Items</span></label>
-            </div>
         </div>
-       
     </div>
+
+</div>
 
 
 <div id="podborbytiporazmer-results" class="podborbyauto-results-container"></div>
 
 @section Scripts {
 
-    <script src="~/Scripts/term-season-scripts.js"></script>
+    <!-- <script src="~/Scripts/term-season-scripts.js"></script>-->
     <script>
 
-            /*
-                $(function () {
-                    $(document).ready(function () {
-                        console.log(localStorage['selectedlink']);
-                        if (localStorage.getItem("selectedlink") != null) {
-                            $("a[href^='" + localStorage['selectedlink'] + "']").trigger('click');
-                        }
+        
+        $(function () {
+            if ($('#engine').val() != "") ajaxUtils.scrollToTarget("#podborautoresult");
+ }); 
 
-                    });
-                });
-                */
     </script>
 
 }

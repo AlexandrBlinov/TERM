@@ -160,6 +160,7 @@ var dateUtils= (function () {
 }());
 
 
+
 var ajaxUtils = (function () {
 
     return {
@@ -171,6 +172,8 @@ var ajaxUtils = (function () {
 
     }
 }());
+
+
 
 function AddToCart(productId, departmentId,supplierId) {
 
@@ -370,6 +373,272 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
    
 
+
+var modulePodborTyresDisksByAuto = (function () {
+
+    function resetModels() {
+
+        $('#model option').remove();
+
+        $('#model').append($('<option />', { value: '-1', text: YstLocale.Get("model") }));
+
+        $('#model').attr('disabled', 'disabled');
+    }
+
+    function resetYears() {
+        $('#year option').remove();
+
+        $('#year').append($('<option />', { value: '-1', text: YstLocale.Get("issueyear") }));
+
+        $('#year').attr('disabled', 'disabled');
+    }
+
+    function resetEngines() {
+        $('#engine option').remove();
+
+        $('#engine').append($('<option />', { value: '-1', text: YstLocale.Get("modification") }));
+
+
+        $('#engine').attr('disabled', 'disabled');
+    }
+
+    $("form#podborauto").find("select[name='brand']").change(function () {
+
+        var value = $("#podborauto select[name='brand'] :selected").val();
+        if (value.length == 0) { return; }
+        var uri = '/api/productsapi/getmodels?' + $('#podborauto select').serialize();
+        $("#div-exact-size").addClass('invisible');
+
+        $.getJSON(uri, function (data) {
+            resetModels();
+            resetYears();
+            resetEngines();
+
+            $.each(data, function (key, item) {
+                $("#podborauto select[name='model']").append($('<option>', {
+                    value: item, text: item
+                }));
+            });
+            $('#model').attr('disabled', false);
+        });
+
+    });
+
+    $("form#podborauto").find("select[name='model']").change(function () {
+
+
+        var value = $("#podborauto select[name='model'] :selected").val();
+        if (value.length == 0) { return; }
+        var uri = '/api/productsapi/getyears?' + $('#podborauto select').serialize();
+        $("#div-exact-size").addClass('invisible');
+        $.getJSON(uri, function (data) {
+            resetYears();
+            resetEngines();
+
+            $.each(data, function (key, item) {
+                $("#podborauto select[name='year']").append($('<option>', {
+                    value: item, text: item
+                }));
+            });
+            $('#year').attr('disabled', false);
+        });
+
+    });
+
+    $("form#podborauto").find("select[name='year']").change(function () {
+
+        var value = $("#podborauto select[name='year'] :selected").val();
+        if (value.length == 0) { return; }
+        var uri = '/api/productsapi/getengines?' + $('#podborauto select').serialize();
+        $("#div-exact-size").addClass('invisible');
+        $.getJSON(uri, function (data) {
+            resetEngines();
+
+            $.each(data, function (key, item) {
+                $("#podborauto select[name='engine']").append($('<option>', {
+                    value: item, text: item
+                }));
+            });
+            $('#engine').attr('disabled', false);
+        });
+
+    });
+
+
+    $("form#podborauto").find("select[name='engine']").change(function () {
+
+        var arrObj = [];
+        $("form#podborauto").find('select').each(function () { arrObj.push($(this).val()); });
+        $("#div-exact-size").addClass('invisible');
+        arrObj[3] = arrObj[3].replace(/\//gi, "~");
+        var newUrl = String.format('/PodborAutoTyresDisks/Index/{0}/{1}/{2}/{3}', arrObj[0], arrObj[1], arrObj[2], arrObj[3]);
+
+        location.assign(newUrl);
+    });
+
+
+
+
+
+    function isElementChecked(selector) {
+        return $('input[type=checkbox]' + selector).is(':checked');
+    }
+
+    function getFilterObjectFromPodborByAuto() {
+
+        var sale = false;
+        var exactSize = isElementChecked('[name=exact-size]') ? 1 : 0;
+        var fromRests = isElementChecked('[name=FromRests]');
+        var fromOnWay = isElementChecked('[name=FromOnWay]');
+        var complect = isElementChecked('[name=complect]');
+        return {
+            "exactsize": exactSize,
+            "OnlySale": sale,
+            "FromRests": fromRests,
+            "FromOnWay": fromOnWay,
+            "IsSet4Items": complect
+        }
+    }
+
+
+    function setTouchSpin() {
+        $(".count_add_to_cart").TouchSpin({
+            min: 1,
+            max: 200,
+            initval: 1,
+            buttondown_class: "btn btn-link touchspih-podbor-settings",
+            buttonup_class: "btn btn-link touchspih-podbor-settings"
+        }); 
+    }
+
+    $('#podborautoresult').on('click', 'a', podborByTiporazmerHandler);
+
+    function podborByTiporazmerHandler(event) {
+        event.preventDefault();
+        var $ptr = $("#podborbytiporazmer-results");
+
+        $("#podborbyauto-sortAndFilterBlock").removeClass("invisible");
+        $('#podborbyauto-filterBlock').removeClass("invisible");
+        $("#podborbyauto-sortBlock").removeClass("invisible");
+
+        $('#cart-status').attr("href", "/ShoppingCart");
+
+        var filterObject = getFilterObjectFromPodborByAuto();
+
+        var isdisks = this.href.indexOf("Disks") >= 0;
+
+        if (isdisks) $('#Seasons').addClass("invisible");
+        else $('#Seasons').removeClass("invisible");
+
+
+        var isSpar = this.href.indexOf("Spar") >= 0;
+        if (isSpar) {
+            $('#podborbyauto-filterBlock').addClass("invisible");
+            $("#podborbyauto-sortBlock").addClass("invisible");
+        }
+      //  localStorage['selectedlink'] = this.pathname;
+
+
+        // $ptr.empty().addClass('loading');
+        ajaxUtils.showLoading('.products-list', "#podborbytiporazmer-results");
+        $ptr.load(this.href, filterObject, function () {
+            setTouchSpin();
+        });
+
+          
+        $("#div-exact-size").removeClass('invisible');
+        $('table#podborauto').find('.activePodbor').toggleClass('activePodbor');
+        $(this).parent().addClass('activePodbor');
+    }
+
+    $('.js-podborbyauto-reload').on('change', reloadProductsByAuto);
+    $('.js-seasonchange').on('click', reloadProductsByAuto);
+
+
+
+    function reloadProductsByAuto(event) {
+        var $ptr = $("#podborbytiporazmer-results");
+        var filterObject = getFilterObjectFromPodborByAuto();
+
+        // если вызов из сортировки 
+        //    if (event instanceof Object && event.hasOwnProperty('sortBy')) $.extend(filterObject, event);
+        var sortBy = $('#sortBy').val();
+        if (!!sortBy) $.extend(filterObject, { "sortBy": sortBy });
+
+        var activeHref = $('td.activePodbor').find('a').attr('href');
+
+
+        if ($(this).hasClass('js-seasonchange')) {
+            var season = $(this).attr('name');
+            activeHref = activeHref.replace("/all/all/", "/all/" + season + "/");
+        }
+
+
+        if (activeHref !== undefined) {
+           ajaxUtils.showLoading('.products-list', "#podborbytiporazmer-results");
+
+            $ptr.load(activeHref, filterObject, function () {
+                setTouchSpin();
+            });
+        }
+    }
+
+    
+
+
+
+    $(document).on('click', '.js-sortPodborResults-link', function () {
+        // debugger;
+        var sortBy = $(this).data('sort');
+        $('#sortBy').val(sortBy);
+
+        $('.js-sortIcon').removeClass("sort-icon-active-asc").removeClass("sort-icon-active-desc");
+
+        switch (sortBy) {
+            case 'nameasc': {
+                $(this).data('sort', "namedesc");
+                $("#sortName").addClass("sort-icon-active-asc");
+                break;
+            }
+            case 'namedesc': {
+                $(this).data('sort', "nameasc");
+                $("#sortName").addClass("sort-icon-active-desc");
+                break;
+            }
+            case 'deliveryasc': {
+                $(this).data('sort', "deliverydesc");
+                $("#sortDelivery").addClass("sort-icon-active-asc");
+                break;
+            }
+
+            case 'deliverydesc': {
+                $(this).data('sort', "deliveryasc");
+                $("#sortDelivery").addClass("sort-icon-active-desc");
+                break;
+            }
+
+            case 'amountasc': {
+                $(this).data('sort', "amountdesc");
+                $("#sortAmount").addClass("sort-icon-active-asc");
+                break;
+            }
+
+            case 'amountdesc': {
+                $(this).data('sort', "amountasc");
+                $("#sortAmount").addClass("sort-icon-active-desc");
+                break;
+            }
+        }
+
+
+        reloadProductsByAuto();
+
+        return false;
+    });
+
+
+
+}());
 
 
     // { start подборы по видам товаров (формируем ЧПУ) Lapenkov  
@@ -586,276 +855,6 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
 
 
-    var modulePodborTyresDisksByAuto = (function () {
-
-        function resetModels() {
-
-            $('#model option').remove();
-
-            $('#model').append($('<option />', { value: '-1', text: YstLocale.Get("model") }));
-
-            $('#model').attr('disabled', 'disabled');
-        }
-
-        function resetYears() {
-            $('#year option').remove();
-
-            $('#year').append($('<option />', { value: '-1', text: YstLocale.Get("issueyear") }));
-
-            $('#year').attr('disabled', 'disabled');
-        }
-
-        function resetEngines() {
-            $('#engine option').remove();
-
-            $('#engine').append($('<option />', { value: '-1', text: YstLocale.Get("modification") }));
-
-
-            $('#engine').attr('disabled', 'disabled');
-        }
-
-        $("form#podborauto").find("select[name='brand']").change(function () {
-
-            var value = $("#podborauto select[name='brand'] :selected").val();
-            if (value.length == 0) { return; }
-            var uri = '/api/productsapi/getmodels?' + $('#podborauto select').serialize();
-            $("#div-exact-size").addClass('invisible');
-
-            $.getJSON(uri, function (data) {
-                resetModels();
-                resetYears();
-                resetEngines();
-
-                $.each(data, function (key, item) {
-                    $("#podborauto select[name='model']").append($('<option>', {
-                        value: item, text: item
-                    }));
-                });
-                $('#model').attr('disabled', false);
-            });
-
-        });
-
-        $("form#podborauto").find("select[name='model']").change(function () {
-
-
-            var value = $("#podborauto select[name='model'] :selected").val();
-            if (value.length == 0) { return; }
-            var uri = '/api/productsapi/getyears?' + $('#podborauto select').serialize();
-            $("#div-exact-size").addClass('invisible');
-            $.getJSON(uri, function (data) {
-                resetYears();
-                resetEngines();
-
-                $.each(data, function (key, item) {
-                    $("#podborauto select[name='year']").append($('<option>', {
-                        value: item, text: item
-                    }));
-                });
-                $('#year').attr('disabled', false);
-            });
-
-        });
-
-        $("form#podborauto").find("select[name='year']").change(function () {
-
-            var value = $("#podborauto select[name='year'] :selected").val();
-            if (value.length == 0) { return; }
-            var uri = '/api/productsapi/getengines?' + $('#podborauto select').serialize();
-            $("#div-exact-size").addClass('invisible');
-            $.getJSON(uri, function (data) {
-                resetEngines();
-
-                $.each(data, function (key, item) {
-                    $("#podborauto select[name='engine']").append($('<option>', {
-                        value: item, text: item
-                    }));
-                });
-                $('#engine').attr('disabled', false);
-            });
-
-        });
-
-
-        $("form#podborauto").find("select[name='engine']").change(function () {
-
-            var arrObj = [];
-            $("form#podborauto").find('select').each(function () { arrObj.push($(this).val()); });
-            $("#div-exact-size").addClass('invisible');
-            arrObj[3] = arrObj[3].replace(/\//gi, "~");
-            var newUrl = String.format('/PodborAutoTyresDisks/Index/{0}/{1}/{2}/{3}', arrObj[0], arrObj[1], arrObj[2], arrObj[3]);
-
-            location.assign(newUrl);
-        });
-
-
-
-        /*
-        * обработка клика по результатам подбора по авто
-        */
-
-
-        function isElementChecked(selector) {
-            return $('input[type=checkbox]' + selector).is(':checked');
-        }
-
-        function getFilterObjectFromPodborByAuto() {
-
-            var sale = false;
-            var exactSize = isElementChecked('[name=exact-size]') ? 1 : 0;
-            var fromRests = isElementChecked('[name=FromRests]');
-            var fromOnWay = isElementChecked('[name=FromOnWay]');
-            var complect = isElementChecked('[name=complect]');
-            return {
-                "exactsize": exactSize,
-                "OnlySale": sale,
-                "FromRests": fromRests,
-                "FromOnWay": fromOnWay,
-                "IsSet4Items": complect
-            }
-        }
-       
-
-        $('#podborautoresult').on('click', 'a', podborByTiporazmerHandler);
-     
-        function podborByTiporazmerHandler(event) {
-            event.preventDefault();
-            var $ptr = $("#podborbytiporazmer-results");
-                       
-
-          //  $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-
-              
-            $("#podborbyauto-sortAndFilterBlock").removeClass("invisible");
-            $('#podborbyauto-filterBlock').removeClass("invisible");
-            $("#podborbyauto-sortBlock").removeClass("invisible");
-
-            $('#cart-status').attr("href", "/ShoppingCart");
-
-            var filterObject = getFilterObjectFromPodborByAuto();
-
-            var isdisks = this.href.indexOf("Disks")>=0;
-
-            if (isdisks) $('#Seasons').addClass("invisible");
-            else  $('#Seasons').removeClass("invisible");
-
-
-            var isSpar = this.href.indexOf("Spar") >= 0;
-            if (isSpar) {
-                $('#podborbyauto-filterBlock').addClass("invisible");             
-                $("#podborbyauto-sortBlock").addClass("invisible");
-            }
-            localStorage['selectedlink'] = this.pathname;
-           
-
-            // $ptr.empty().addClass('loading');
-            ajaxUtils.showLoading('.products-list', "#podborbytiporazmer-results");
-            $ptr.load(this.href, filterObject, function () {  });
-
-            /*  $(".count_add_to_cart").TouchSpin({
-                    min: 1,
-                    max: 200,
-                    initval: 1,
-                    buttondown_class: "btn btn-link touchspih-podbor-settings",
-                    buttonup_class: "btn btn-link touchspih-podbor-settings"
-                }); */
-            $("#div-exact-size").removeClass('invisible');
-            $('table#podborauto').find('.activePodbor').toggleClass('activePodbor');
-            $(this).parent().addClass('activePodbor'); 
-        }
-
-        $('.js-podborbyauto-reload').on('change', reloadProductsByAuto);
-        $('.js-seasonchange').on('click', reloadProductsByAuto);
-       
-        
-
-        function reloadProductsByAuto(event) {
-            var $ptr = $("#podborbytiporazmer-results");
-            var filterObject = getFilterObjectFromPodborByAuto();
-
-            // если вызов из сортировки 
-        //    if (event instanceof Object && event.hasOwnProperty('sortBy')) $.extend(filterObject, event);
-            var sortBy = $('#sortBy').val();
-            if (!!sortBy) $.extend(filterObject, { "sortBy":sortBy });
-                      
-            var activeHref = $('td.activePodbor').find('a').attr('href');
-            
-
-            if ($(this).hasClass('js-seasonchange'))
-            {
-                var season = $(this).attr('name');
-                activeHref = activeHref.replace("/all/all/", "/all/" + season + "/");
-            }
-
-
-            if (activeHref !== undefined) {
-                ajaxUtils.showLoading('.products-list', "#podborbytiporazmer-results");
-           
-               $ptr.load(activeHref, filterObject, function () {
-           
-                }); 
-            }
-        }
-
-       
-           
-
-               
-
-
-        $(document).on('click', '.js-sortPodborResults-link', function () {
-           // debugger;
-            var sortBy = $(this).data('sort');
-            $('#sortBy').val(sortBy);
-
-            $('.js-sortIcon').removeClass("sort-icon-active-asc").removeClass("sort-icon-active-desc");
-
-            switch (sortBy) {
-                case 'nameasc': {                   
-                    $(this).data('sort', "namedesc");            
-                    $("#sortName").addClass("sort-icon-active-asc");
-                    break;
-                }
-                case 'namedesc': {
-                    $(this).data('sort', "nameasc");                    
-                    $("#sortName").addClass("sort-icon-active-desc");
-                    break;
-                }
-                case 'deliveryasc': {
-                    $(this).data('sort', "deliverydesc");                    
-                    $("#sortDelivery").addClass("sort-icon-active-asc");
-                    break;
-                }
-
-                case 'deliverydesc': {
-                    $(this).data('sort', "deliveryasc");                    
-                    $("#sortDelivery").addClass("sort-icon-active-desc");
-                    break;
-                }
-
-                case 'amountasc': {
-                    $(this).data('sort', "amountdesc");
-                    $("#sortAmount").addClass("sort-icon-active-asc");
-                    break;
-                }
-
-                case 'amountdesc': {
-                    $(this).data('sort', "amountasc");
-                    $("#sortAmount").addClass("sort-icon-active-desc");
-                    break;
-                }
-            }           
-                    
-
-            reloadProductsByAuto();
-
-            return false;
-        });
-
-     
-
-    }());
-       
 
     var moduleAccPodbor = (function () {
         $('#resetAccsButton').click(function () {

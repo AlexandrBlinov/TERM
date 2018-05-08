@@ -1035,7 +1035,7 @@
     <Content Include="Scripts\yst-localize-20170619.js" />
     <Content Include="Scripts\yst-shoppingcart-20180413.js" />
     <Content Include="Scripts\yst-notifications.js" />
-    <Content Include="Scripts\yst-scripts-20180507.js" />
+    <Content Include="Scripts\yst-scripts-20180508.js" />
     <Content Include="Scripts\yst-utility.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Partner\CreateOwn.cshtml" />
