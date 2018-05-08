@@ -172,7 +172,7 @@
 }
 
     <section id="disk-podbor__results" class="podbor-results-ajax__container">
-        <div class="loader top-50"></div>
+       <!-- <div class="loader top-50"></div> -->
     </section>
         @* Html.Partial("_DisksPagingAndResults", Model)*@
 
@@ -182,8 +182,9 @@
         $(function () {
 
             $(document).on("click", ".js-linktoloadajax a", function () {
-                //$('#disk-podbor__results').html('<div class="loader top-50"></div>').load($(this).prop("href"));
-                $('#disk-podbor__results').css({ 'opacity': '0.5' }).load($(this).prop("href"), function () {$(this).css({ 'opacity': '1' }) });               
+                ajaxUtils.showLoading('#disk-podbor__results', '.products-list');
+                $('#disk-podbor__results').load($(this).prop("href"), function () {  $(this).css({ 'opacity': '1' })  });               
+                           
                 return false;
             });
 

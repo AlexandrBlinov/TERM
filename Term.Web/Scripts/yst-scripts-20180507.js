@@ -159,6 +159,19 @@ var dateUtils= (function () {
     }
 }());
 
+
+var ajaxUtils = (function () {
+
+    return {
+        showLoading: function (selector,destination) {
+            $(selector).css({ 'opacity': '0.5' });
+            $(destination).prepend('<div class="loader top-50"></div>');
+        },
+        scrollToTarget: function (target) { $('html,body').animate({ scrollTop: $(target).offset().top }, 500); }
+
+    }
+}());
+
 function AddToCart(productId, departmentId,supplierId) {
 
     var count = $('#order-' + productId).val();
@@ -570,6 +583,9 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
     }());
 
+
+
+
     var modulePodborTyresDisksByAuto = (function () {
 
         function resetModels() {
@@ -675,476 +691,168 @@ function checkIfCanOrderDpdDeliveryDependingOnTime() {
 
 
         /*
-        * обработка клика по резульатам подбора по авто
+        * обработка клика по результатам подбора по авто
         */
 
-        $('#podborautoresult').on('click', 'a', aPodborHandler);
-        $('#AllWheels').on('click', function () {
-            $('#SortCheckBoxes').removeClass("invisible");
-            $('#podborautoresult td.activePodbor a').trigger('click');
-            return false;
-        });
-        function aPodborHandler(event) {
-            event.preventDefault();
-            var ptr = $("#podbortiporazmerresult");
 
-            /*
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
-            } */
+        function isElementChecked(selector) {
+            return $('input[type=checkbox]' + selector).is(':checked');
+        }
 
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
+        function getFilterObjectFromPodborByAuto() {
 
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
+            var sale = false;
+            var exactSize = isElementChecked('[name=exact-size]') ? 1 : 0;
+            var fromRests = isElementChecked('[name=FromRests]');
+            var fromOnWay = isElementChecked('[name=FromOnWay]');
+            var complect = isElementChecked('[name=complect]');
+            return {
+                "exactsize": exactSize,
+                "OnlySale": sale,
+                "FromRests": fromRests,
+                "FromOnWay": fromOnWay,
+                "IsSet4Items": complect
             }
+        }
+       
 
-            $("#AllWheels").addClass("active");
-            $("#ForgedWheels").removeClass("active");
-            $("#ForSortSale").removeClass("invisible");
-            $('#SortCheckBoxes').removeClass("invisible");
-            $("#sortBtnRow").removeClass("invisible");
+        $('#podborautoresult').on('click', 'a', podborByTiporazmerHandler);
+     
+        function podborByTiporazmerHandler(event) {
+            event.preventDefault();
+            var $ptr = $("#podborbytiporazmer-results");
+                       
+
+          //  $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
+
+              
+            $("#podborbyauto-sortAndFilterBlock").removeClass("invisible");
+            $('#podborbyauto-filterBlock').removeClass("invisible");
+            $("#podborbyauto-sortBlock").removeClass("invisible");
 
             $('#cart-status').attr("href", "/ShoppingCart");
-            // $("#ForgedWheels").attr("href", "/SeasonProduct/Disks/Forged");
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            var disks = this.href.indexOf("Disks");
-            if (disks != -1) {
-                $('#AllWheels').removeClass("invisible");
-                $('#ForgedWheels').removeClass("invisible");
-                $('#Seasons').addClass("invisible");
-            } else {
-                $('#AllWheels').addClass("invisible");
-                $('#ForgedWheels').addClass("invisible");
-                $('#Seasons').removeClass("invisible");
-            }
-            if (!$('.ForSortSale').hasClass("invisible")) {
-                if (disks != -1) {
-                    $('.ForSortSale').removeClass("invisible");
-                } else {
-                    $('.ForSortSale').addClass("invisible");
-                }
-            }
-            var spar = this.href.indexOf("Spar");
-            if (spar != -1) {
-                $('#SortCheckBoxes').addClass("invisible");
-                $('#AllWheels').addClass("invisible");
-                $('#ForgedWheels').addClass("invisible");
-                $("#sortBtnRow").addClass("invisible");
+
+            var filterObject = getFilterObjectFromPodborByAuto();
+
+            var isdisks = this.href.indexOf("Disks")>=0;
+
+            if (isdisks) $('#Seasons').addClass("invisible");
+            else  $('#Seasons').removeClass("invisible");
+
+
+            var isSpar = this.href.indexOf("Spar") >= 0;
+            if (isSpar) {
+                $('#podborbyauto-filterBlock').addClass("invisible");             
+                $("#podborbyauto-sortBlock").addClass("invisible");
             }
             localStorage['selectedlink'] = this.pathname;
-            ptr.empty().addClass('loading');
-            ptr.load(this.href, { "exactsize": exact_size, /*"DisplayView": dspl,*/ "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
-                ptr.removeClass('loading');
-                $(".count_add_to_cart").TouchSpin({
+           
+
+            // $ptr.empty().addClass('loading');
+            ajaxUtils.showLoading('.products-list', "#podborbytiporazmer-results");
+            $ptr.load(this.href, filterObject, function () {  });
+
+            /*  $(".count_add_to_cart").TouchSpin({
                     min: 1,
                     max: 200,
                     initval: 1,
                     buttondown_class: "btn btn-link touchspih-podbor-settings",
                     buttonup_class: "btn btn-link touchspih-podbor-settings"
-                });
-            });
+                }); */
             $("#div-exact-size").removeClass('invisible');
-            $('table#podborauto').find('td.activePodbor').toggleClass('activePodbor');
-            $(this).parent().addClass('activePodbor');
-
-
+            $('table#podborauto').find('.activePodbor').toggleClass('activePodbor');
+            $(this).parent().addClass('activePodbor'); 
         }
 
-        $('#exact-size').on('change', aPodborHandlerCheckBox);
-        $('#FromRests').on('change', aPodborHandlerCheckBoxRestOnWay);
-        $('#FromOnWay').on('change', aPodborHandlerCheckBoxRestOnWay);
-        $('#ForgedWheels').on('click', aPodborHandlerForgedWheels);
-        $('.season_change').on('click', aPodborHandlerSeaeonSelect);
-        $('#complect').on('change', aPodborHandlerCheckBox);
+        $('.js-podborbyauto-reload').on('change', reloadProductsByAuto);
+        $('.js-seasonchange').on('click', reloadProductsByAuto);
+       
+        
 
-        function aPodborHandlerForgedWheels(event) {
-            var $ptr = $("#podbortiporazmerresult");
-            $('#cart-status').attr("href", "/SeasonShoppingCart");
-            var exact_size = $(this).prop('checked') || false === true ? 1 : 0;
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
+        function reloadProductsByAuto(event) {
+            var $ptr = $("#podborbytiporazmer-results");
+            var filterObject = getFilterObjectFromPodborByAuto();
+
+            // если вызов из сортировки 
+        //    if (event instanceof Object && event.hasOwnProperty('sortBy')) $.extend(filterObject, event);
+            var sortBy = $('#sortBy').val();
+            if (!!sortBy) $.extend(filterObject, { "sortBy":sortBy });
+                      
+            var activeHref = $('td.activePodbor').find('a').attr('href');
+            
+
+            if ($(this).hasClass('js-seasonchange'))
+            {
+                var season = $(this).attr('name');
+                activeHref = activeHref.replace("/all/all/", "/all/" + season + "/");
             }
 
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-            $("#AllWheels").removeClass("active");
-            $("#ForgedWheels").addClass("active");
-            $('#SortCheckBoxes').addClass("invisible");
-            $("#sortBtnRow").addClass("invisible");
-            // /Home/Disks/all/7x17_5x105_ET38_D56.6
-            var arrUrlParam = $('td.activePodbor').find('a').attr('href').split('/');
-            var arrParam = arrUrlParam[4].split('_');
-            var width_diam = arrParam[0].split('x');
-            var hole_pcd = arrParam[1].split('x');
-            var et = arrParam[2].split('T')[1];
-            var dia = arrParam[3].split('D')[1];
 
-            var href = "/SeasonProduct/Disks/Forged?Width=" + width_diam[0] + "&Diametr=" + width_diam[1] + "&Hole=" + hole_pcd[0] + "&PCD=" + hole_pcd[1] + "&ET=" + et + "&DIA=" + dia;
-            console.log(href);
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": dspl }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                    $(".count_add_to_seasoncart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
+            if (activeHref !== undefined) {
+                ajaxUtils.showLoading('.products-list', "#podborbytiporazmer-results");
+           
+               $ptr.load(activeHref, filterObject, function () {
+           
+                }); 
             }
-            return false;
         }
-
-        function aPodborHandlerSeaeonSelect(event) {
-            var $ptr = $("#podbortiporazmerresult");
-            var complect = $('input[type=checkbox][name=complect]').prop('checked');
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
-            }
-            var season = $(this).attr('name');
-            console.log(season);
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
-            }
-            var href = $('td.activePodbor').find('a').attr('href');
-            href = href.replace("/all/all/", "/all/" + season + "/");
-            console.log(href);
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": dspl, "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay, "IsSet4Items": complect }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
-        function aPodborHandlerCheckBox(event) {
-            var $ptr = $("#podbortiporazmerresult");
-            var complect = $('input[type=checkbox][name=complect]').prop('checked');
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
-            }
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
-            }
-            var href = $('td.activePodbor').find('a').attr('href');
-
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": dspl, "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay, "IsSet4Items": complect }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
-        function aPodborHandlerCheckBoxRestOnWay(event) {
-            var $ptr = $("#podbortiporazmerresult");
-            var exact_size_bool = $('input[type=checkbox][name=exact-size]').prop('checked');
-            if (exact_size_bool) {
-                var exact_size = 1;
-            } else {
-                exact_size = 0;
-            }
-
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
-            }
-
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
-            }
-            var href = $('td.activePodbor').find('a').attr('href');
-
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": dspl, "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
-        $('#plitka').on('click', aPodborHandlerViewPl);
-
-        function aPodborHandlerViewPl(event) {
-            $('#plitka').addClass("active");
-            $('#table').removeClass("active");
-            var $ptr = $("#podbortiporazmerresult");
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
-            }
-
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-
-            var href = $('td.activePodbor').find('a').attr('href');
-
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": "Plitka", "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
-        $('#table').on('click', aPodborHandlerViewTb);
-
-        function aPodborHandlerViewTb(event) {
-            $('#table').addClass("active");
-            $('#plitka').removeClass("active");
-            var $ptr = $("#podbortiporazmerresult");
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
-            }
-
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-
-            var href = $('td.activePodbor').find('a').attr('href');
-
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": "Table", "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
-        $('#sort-sale').on('click', aPodborHandlerOnlySale);
-
-        function aPodborHandlerOnlySale(event) {
-
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = false;
-                $('#sort-sale').removeClass("only-sale");
-            } else {
-                var sale = true;
-                $('#sort-sale').addClass("only-sale");
-            }
-
-            $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-default");
-
-            var $ptr = $("#podbortiporazmerresult");
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
-            }
-
-            var href = $('td.activePodbor').find('a').attr('href');
-
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": dspl, "OnlySale": sale, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
-
-
-        /*
-        $(document).on('click', 'a[name=sortBtn]', function () {
 
        
-           // $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-            var dataSort = $(this).attr('data-sort');
-            switch (dataSort) {
-                case "NameAsc": {  }
-            }
+           
 
-        });
-        */
+               
 
 
-        $(document).on('click', 'a[name=sortBtn]', function () {
-            var id = $(this).attr('data-sort');
-            if (id == "NameAsc") {
-                $(this).attr('data-sort', "NameDesc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortName").addClass("sort-icon-active-asc");
-            }
-            if (id == "NameDesc") {
-                $(this).attr('data-sort', "NameAsc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortName").addClass("sort-icon-active-desc");
-            }
-            if (id == "DeliveryAsc") {
-                $(this).attr('data-sort', "DeliveryDesc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortDelivery").addClass("sort-icon-active-asc");
-            }
-            if (id == "DeliveryDesc") {
-                $(this).attr('data-sort', "DeliveryAsc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortDelivery").addClass("sort-icon-active-desc");
-            }
-            if (id == "AmountAsc") {
-                $(this).attr('data-sort', "AmountDesc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortAmount").addClass("sort-icon-active-asc");
-            }
-            if (id == "AmountDesc") {
-                $(this).attr('data-sort', "AmountAsc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortAmount").addClass("sort-icon-active-desc");
-            }
-            if (id == "PriceAsc") {
-                $(this).attr('data-sort', "PriceDesc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortPrice").addClass("sort-icon-active-asc");
-            }
-            if (id == "PriceDesc") {
-                $(this).attr('data-sort', "PriceAsc");
-                $("span[name=sortIcon]").removeAttr("class").addClass("sort-icon-active-default");
-                $("#sortPrice").addClass("sort-icon-active-desc");
-            }
-            aPodborHandlerSort(id);
+        $(document).on('click', '.js-sortPodborResults-link', function () {
+           // debugger;
+            var sortBy = $(this).data('sort');
+            $('#sortBy').val(sortBy);
+
+            $('.js-sortIcon').removeClass("sort-icon-active-asc").removeClass("sort-icon-active-desc");
+
+            switch (sortBy) {
+                case 'nameasc': {                   
+                    $(this).data('sort', "namedesc");            
+                    $("#sortName").addClass("sort-icon-active-asc");
+                    break;
+                }
+                case 'namedesc': {
+                    $(this).data('sort', "nameasc");                    
+                    $("#sortName").addClass("sort-icon-active-desc");
+                    break;
+                }
+                case 'deliveryasc': {
+                    $(this).data('sort', "deliverydesc");                    
+                    $("#sortDelivery").addClass("sort-icon-active-asc");
+                    break;
+                }
+
+                case 'deliverydesc': {
+                    $(this).data('sort', "deliveryasc");                    
+                    $("#sortDelivery").addClass("sort-icon-active-desc");
+                    break;
+                }
+
+                case 'amountasc': {
+                    $(this).data('sort', "amountdesc");
+                    $("#sortAmount").addClass("sort-icon-active-asc");
+                    break;
+                }
+
+                case 'amountdesc': {
+                    $(this).data('sort', "amountasc");
+                    $("#sortAmount").addClass("sort-icon-active-desc");
+                    break;
+                }
+            }           
+                    
+
+            reloadProductsByAuto();
 
             return false;
         });
 
-        function aPodborHandlerSort(id) {
-
-
-            $('#table').addClass("active");
-            $('#plitka').removeClass("active");
-
-            $('a[name=sortBtn]').removeClass("active");
-            var acive = '#' + id;
-            $(acive).addClass("active");
-
-            var $ptr = $("#podbortiporazmerresult");
-            var exact_size = $('input[type=checkbox][name=exact-size]').prop('checked') || false === true ? 1 : 0;
-            var FromRests = $('input[type=checkbox][name=FromRests]').prop('checked');
-            var FromOnWay = $('input[type=checkbox][name=FromOnWay]').prop('checked');
-            if ($('#sort-sale').hasClass("only-sale")) {
-                var sale = true;
-            } else {
-                var sale = false;
-            }
-
-            if ($('#table').hasClass("active")) {
-                var dspl = "Table";
-            } else {
-                var dspl = "Plitka";
-            }
-
-            var href = $('td.activePodbor').find('a').attr('href');
-
-            if (href !== undefined) {
-                $ptr.empty().addClass('loading');
-                $ptr.load(href, { "exactsize": exact_size, "DisplayView": dspl, "OnlySale": sale, "SortBy": id, "FromRests": FromRests, "FromOnWay": FromOnWay }, function () {
-                    $ptr.removeClass('loading');
-                    $(".count_add_to_cart").TouchSpin({
-                        min: 1,
-                        max: 200,
-                        initval: 1,
-                        buttondown_class: "btn btn-link touchspih-podbor-settings",
-                        buttonup_class: "btn btn-link touchspih-podbor-settings"
-                    });
-                });
-            }
-
-        }
-
+     
 
     }());
        

@@ -163,90 +163,74 @@ else
     }
 </div>
 
-
-<div id="ForSortSale" class="row invisible">
-    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 m-t-15">
-        <div id="sortBtnRow" class="row">
+@* podborbyauto-sortBlock*@
+<div id="podborbyauto-sortAndFilterBlock" class="row invisible">
+    <div class="col-xs-12 col-sm-7 m-t-15">
+        <div id="podborbyauto-sortBlock" class="row">
             <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
 
             <div class="btn btn-default sort-btn-style" aria-label="Left Align">
-                <a name="sortBtn" data-sort="NameAsc" class="sort-btn-a sort-active" href="#">@ForSearchResult.Name</a>
-                <span id="sortName" name="sortIcon" class="sort-icon-default"> </span>
+                <a name="sortBtn" data-sort="nameasc" data-destination="#sortName" class="sort-btn-a sort-active js-sortPodborResults-link" href="#">@ForSearchResult.Name</a>
+                <span id="sortName" name="sortIcon" class="js-sortIcon sort-icon-default"> </span>
+            </div>
+            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
+                <a name="sortBtn" data-sort="deliveryasc" data-destination="#sortDelivery" class="sort-btn-a js-sortPodborResults-link" href="#">@ForSearchResult.DeliveryTime</a>
+                <span id="sortDelivery" name="sortIcon" class="js-sortIcon sort-icon-default"> </span>
 
             </div>
             <div class="btn btn-default sort-btn-style" aria-label="Left Align">
-                <a name="sortBtn" data-sort="DeliveryAsc" class="sort-btn-a" href="#">@ForSearchResult.DeliveryTime</a>
-                <span id="sortDelivery" name="sortIcon" class="sort-icon-default"> </span>
+                <a name="sortBtn" data-sort="amountasc" data-destination="#sortAmount" class="sort-btn-a js-sortPodborResults-link" href="#">@ForSearchResult.Amount</a>
+                <span id="sortAmount" name="sortIcon" class="js-sortIcon sort-icon-default"> </span>
 
             </div>
             <div class="btn btn-default sort-btn-style" aria-label="Left Align">
-                <a name="sortBtn" data-sort="AmountAsc" class="sort-btn-a" href="#">@ForSearchResult.Amount</a>
-                <span id="sortAmount" name="sortIcon" class="sort-icon-default"> </span>
-
-            </div>
-            <div class="btn btn-default sort-btn-style" aria-label="Left Align">
-                <a name="sortBtn" data-sort="PriceAsc" class="sort-btn-a" href="#">@ForSearchResult.Price</a>
-                <span id="sortPrice" name="sortIcon" class="sort-icon-default"> </span>
-
+                <a name="sortBtn" data-sort="priceasc" data-destination="#sortPrice" class="sort-btn-a js-sortPodborResults-link" href="#">@ForSearchResult.Price</a>
+                <span id="sortPrice" name="sortIcon" class="js-sortIcon sort-icon-default"> </span>
             </div>
             <div class="btn btn-default sort-btn-style ForSortSale @Model.SaleMode" aria-label="Left Align">
                 <a id="sort-sale" class="sort-btn-a" href="#">@ForSearchResult.Sale</a>
             </div>
+            <div class="hidden-xs"> <input type="hidden" id="sortBy" value="nameasc"/></div>
         </div>
         <div id="Seasons" class="btn-group" style="padding-top: 10px;padding-left: 119px;">
-            <button type="button" class="btn btn-default season_change" name="winter">
+            <button type="button" class="btn btn-default js-seasonchange" name="winter">
                 <img src="/Content/img/season_winter.png" style="width: 16px;">
             </button>
-            <button type="button" class="btn btn-default season_change" name="summer">
+            <button type="button" class="btn btn-default js-seasonchange" name="summer">
                 <img src="/Content/img/season_summer.png" style="width: 18px;">
             </button>
-            <button type="button" class="btn btn-default season_change" name="allseason">
+            <button type="button" class="btn btn-default js-seasonchange" name="allseason">
                 <img src="/Content/img/season_all.png" style="width: 19px;">
             </button>
-            <button type="button" class="btn btn-default season_change" name="all">Все</button>
-        </div>
-       <!-- <div class="row" style="padding-top: 10px; text-align: center;">
-            <a id="ForgedWheels" href="#" class="btn"><span class="link_item-dashed">@SearchByAuto.Forged_wheels</span></a>
-            <a id="AllWheels" href="#" class="btn"><span class="link_item-dashed">@SearchByAuto.All_wheels</span></a>
-            <!--  <button id="ForgedWheels" type="button" class="btn btn-primary btn-lg">@SearchByAuto.Forged_wheels</button>
-            <button id="AllWheels" type="button" class="btn btn-default btn-lg">@SearchByAuto.All_wheels</button> 
-
-        </div> -->
-    </div>
-    <div id="SortCheckBoxes" class="col-xs-5  m-t-15">
-
-        <div class="row">
-            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ForSortSale">
-                <input id="exact-size" type="checkbox" name="exact-size" value="false" class="checkbox-auto originals_param">
-                <label class="checkbox-auto-label" for="exact-size"><span class="original-param">@SearchByAuto.OriginalParams</span></label>
-
-                <input id="FromRests" type="checkbox" name="FromRests" value="false" class="checkbox-auto" checked>
-                <label class="checkbox-auto-label" for="FromRests"><span class="original-param">@ForSearchResult.FromStock</span></label>
-
-                <input id="FromOnWay" type="checkbox" name="FromOnWay" value="false" class="checkbox-auto">
-                <label class="checkbox-auto-label" for="FromOnWay"><span class="original-param">@ForSearchResult.FromOnWay</span></label>
-
-                <input id="complect" type="checkbox" name="complect" value="false" class="checkbox-auto originals_param">
-                <label class="checkbox-auto-label" for="complect"><span class="original-param">@ForSearchResult.IsSet4Items</span></label>
-            </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="float: right;">
-                <!--
-    <div class="btn-group form-podbor-change-view" role="group">
-        <div id="table" class="btn btn-default active">
-            <a class="glyphicon glyphicon-th-list change-view-custom" href="#" title="Вид подбора списком"> </a>
-        </div>
-
-        <div id="plitka" class="btn btn-default ">
-            <a class="glyphicon glyphicon-th change-view-custom" href="#" title="Вид подбора плиткой"> </a>
-        </div>
-
-    </div>-->
-            </div>
+            <button type="button" class="btn btn-default js-seasonchange" name="all">Все</button>
         </div>
     </div>
-</div>
+    <div id="podborbyauto-filterBlock" class="col-xs-12 col-sm-5  m-t-15">
 
-<div id="podbortiporazmerresult" class="podborbyauto-results-container"></div>
+        <!--  <div class="row">
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ForSortSale"> -->
+        <div class="form-group">
+            <input id="exact-size" type="checkbox" name="exact-size" value="false" class="checkbox-auto originals_param js-podborbyauto-reload">
+            <label class="checkbox-auto-label" for="exact-size"><span class="original-param">@SearchByAuto.OriginalParams</span></label>
+        </div>
+        <div class="form-group">
+            <input id="FromRests" type="checkbox" name="FromRests" value="false" class="checkbox-auto js-podborbyauto-reload" checked>
+            <label class="checkbox-auto-label" for="FromRests"><span class="original-param">@ForSearchResult.FromStock</span></label>
+        </div>
+        <div class="form-group">
+            <input id="FromOnWay" type="checkbox" name="FromOnWay" value="false" class="checkbox-auto js-podborbyauto-reload">
+            <label class="checkbox-auto-label" for="FromOnWay"><span class="original-param">@ForSearchResult.FromOnWay</span></label>
+        </div>
+        <div class="form-group">
+            <input id="complect" type="checkbox" name="complect" value="false" class="checkbox-auto js-podborbyauto-reload originals_param">
+            <label class="checkbox-auto-label" for="complect"><span class="original-param">@ForSearchResult.IsSet4Items</span></label>
+            </div>
+        </div>
+       
+    </div>
+
+
+<div id="podborbytiporazmer-results" class="podborbyauto-results-container"></div>
 
 @section Scripts {
 
