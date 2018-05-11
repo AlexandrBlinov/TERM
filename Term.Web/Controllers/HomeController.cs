@@ -108,7 +108,7 @@ namespace Term.Web.Controllers
         public ActionResult Disks([ModelBinder(typeof(DisksModelBinder))]SeasonDisksPodborView podborModel,  int exactsize = 1, int zamena = 0 /*, bool OnlySale = false*/)
         
         {
-
+            
            
             // the code that you want to measure comes here
             
@@ -155,9 +155,9 @@ namespace Term.Web.Controllers
                 ViewBag.NoDsplAutoPodbor = _invisible;
                 ViewBag.YesDsplAutoPodbor = _space;
                
-                podborModel.ItemsPerPage = Defaults.MaxItemsPerPage;
+                podborModel.ItemsPerPage = Int32.MaxValue;
             
-                   podborModel.SearchResults = Products.GetDisks(podborModel, Point.PartnerPointId, isSale, exactsize).ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+                   podborModel.SearchResults = Products.GetDisks(podborModel, Point.PartnerPointId, isSale, exactsize).ToPagedList(podborModel.Page, Byte.MaxValue);
             }
            else 
                 //podborModel.SearchResults = CachedCollectionsService.GetAllDisksByPartnerPoint(podborModel, Point);

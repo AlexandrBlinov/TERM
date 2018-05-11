@@ -477,4 +477,7 @@
   <data name="PriceRecIm" xml:space="preserve">
     <value>PriceRecIm</value>
   </data>
+  <data name="Forged" xml:space="preserve">
+    <value>Forged</value>
+  </data>
 </root>

@@ -457,6 +457,15 @@ namespace Term.Web.Views.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Forged.
+        /// </summary>
+        public static string Forged {
+            get {
+                return ResourceManager.GetString("Forged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на friction.
         /// </summary>
         public static string Friction {

@@ -60,68 +60,76 @@
             <dd>
                 @Html.DisplayFor(model => model.Name)
                 <!-- <dt>@Html.DisplayNameFor(model => model.ProductType):</dt>
-                <dd>@Model.ProductTypeToView</dd> -->
+        <dd>@Model.ProductTypeToView</dd> -->
             <dt>@Html.DisplayNameFor(model => model.ProducerId):</dt>
             <dd>@Html.DisplayFor(model => model.Producer.Name)</dd>
 
+            @if (Model.ProductType == ProductType.Disk)
+    {
+        <dt>Тип диска</dt>
+        <dd> @( Model.WheelType == WheelType.Forged ? "кованный" : Model.WheelType == WheelType.Steel ? "штампованный":  "литой")</dd>
+}
+
             @if (ViewBag.DepId > 0)
-            {
-                <dt>@ForSearchResult.DeliveryTime:</dt>
-                <dd> @ViewBag.Days @ForSearchResult.Days</dd>
-            }
+    {
+        <dt>@ForSearchResult.DeliveryTime:</dt>
+        <dd> @ViewBag.Days @ForSearchResult.Days</dd>
+}
 
             @if (Model.ModelId.HasValue)
-            {
-                <dt>@Html.DisplayNameFor(model => model.ModelId):</dt>
-                <dd>@Html.DisplayFor(model => model.Model.Name)</dd>
-            }
+    {
+        <dt>@Html.DisplayNameFor(model => model.ModelId):</dt>
+        <dd>@Html.DisplayFor(model => model.Model.Name)</dd>
+}
             @if (!String.IsNullOrEmpty(Model.Article))
-            {
-                <dt>@Html.DisplayNameFor(model => model.Article):</dt>
-                <dd> @Html.DisplayFor(model => model.Article)</dd>
-            }
+    {
+        <dt>@Html.DisplayNameFor(model => model.Article):</dt>
+        <dd> @Html.DisplayFor(model => model.Article)</dd>
+}
 
             @if (Model.TiporazmerId.HasValue)
-            {
-                <dt>@Html.DisplayNameFor(model => model.TiporazmerId):</dt>
-                <dd> @Html.DisplayFor(model => model.Tiporazmer.Name)</dd>
-            }
+    {
+        <dt>@Html.DisplayNameFor(model => model.TiporazmerId):</dt>
+        <dd> @Html.DisplayFor(model => model.Tiporazmer.Name)</dd>
+}
             <dt>@ForSearchResult.Volume:</dt>
             <dd> @Html.DisplayFor(model => model.Volume)</dd>
             <dt>@ForSearchResult.Weight:</dt>
             <dd> @Html.DisplayFor(model => model.Weight)</dd>
             @if (!String.IsNullOrEmpty(Model.BarCode))
-            {
-                <dt>@ForSearchResult.Barcode:</dt>
-                <dd> @Html.DisplayFor(model => model.BarCode)</dd>
-            }
+    {
+        <dt>@ForSearchResult.Barcode:</dt>
+        <dd> @Html.DisplayFor(model => model.BarCode)</dd>
+}
 
             @if (Model.ProductType == ProductType.Tyre && Model.CountryProducer != null)
-            {
-                <dt>@ForSearchResult.ManufacturerCountry:</dt>
-                <dd> @Html.DisplayFor(model => model.CountryProducer)</dd>
-            }
+    {
+        <dt>@ForSearchResult.ManufacturerCountry:</dt>
+        <dd> @Html.DisplayFor(model => model.CountryProducer)</dd>
+}
+
+
 
 
 
             @if (ViewBag.ProductProperties != null)
+    {
+        foreach (var productProperty in (IEnumerable<ProductPropertyValue>)ViewBag.ProductProperties)
+        {
+            if (productProperty.Name != "fixingcode")
             {
-                foreach (var productProperty in (IEnumerable<ProductPropertyValue>)ViewBag.ProductProperties)
-                {
-                    if (productProperty.Name != "fixingcode")
-                    {
-                        <dt>@productProperty.ProductPropertyDescription.NameToDisplay:</dt>
-                        if (productProperty.Name == "fixing")
-                        {
-                            <dd><a href="@Url.Action("details","Home",new {id= @ViewBag.FixingCode })">@productProperty.Value</a></dd>
-                        }
-                        else
-                        {
-                            <dd>@productProperty.Value</dd>
-                        }
-                    }
-                }
-            }
+                <dt>@productProperty.ProductPropertyDescription.NameToDisplay:</dt>
+        if (productProperty.Name == "fixing")
+        {
+            <dd><a href="@Url.Action("details","Home",new {id= @ViewBag.FixingCode })">@productProperty.Value</a></dd>
+}
+else
+{
+        <dd>@productProperty.Value</dd>
+}
+}
+}
+}
 
             <dt>@ForSearchResult.StockNumber:</dt>
             <dd>@Model.ToString()</dd>

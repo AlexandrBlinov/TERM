@@ -477,4 +477,7 @@
   <data name="PriceRecIm" xml:space="preserve">
     <value>Рек. цена инт-маг.</value>
   </data>
+  <data name="Forged" xml:space="preserve">
+    <value>Кованый</value>
+  </data>
 </root>

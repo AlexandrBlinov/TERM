@@ -36,7 +36,7 @@ namespace Term.Web.Services
 
 
         //
-        // Подборы по авто (есть вложенная сортировка)
+        // Подборы по авто (сначала сортировка по кованным дискам)
         //
 
         public static IOrderedEnumerable<DiskSearchResult> GetOrderedResultsThenBy(this IOrderedEnumerable<DiskSearchResult> queryOrdered, SortBy sortBy)
@@ -46,13 +46,13 @@ namespace Term.Web.Services
             {
                 case SortBy.NameAsc: return queryOrdered.ThenBy(p => p.Name); 
                 case SortBy.NameDesc: return queryOrdered.ThenByDescending(p => p.Name); 
-                case SortBy.AmountAsc: return queryOrdered.OrderBy(p => p.Rest); 
-                case SortBy.AmountDesc: return queryOrdered.OrderByDescending(p => p.Rest); 
-                case SortBy.DeliveryAsc: return queryOrdered.OrderBy(p => p.DaysToDepartment); 
-                case SortBy.DeliveryDesc: return  queryOrdered.OrderByDescending(p => p.DaysToDepartment); 
-                case SortBy.PriceAsc: return queryOrdered.OrderBy(p => p.PriceOfClient); 
-                case SortBy.PriceDesc: return queryOrdered.OrderByDescending(p => p.PriceOfClient); 
-                default: return queryOrdered.OrderBy(p => p.Name); 
+                case SortBy.AmountAsc: return queryOrdered.ThenBy(p => p.Rest); 
+                case SortBy.AmountDesc: return queryOrdered.ThenByDescending(p => p.Rest); 
+                case SortBy.DeliveryAsc: return queryOrdered.ThenBy(p => p.DaysToDepartment); 
+                case SortBy.DeliveryDesc: return  queryOrdered.ThenByDescending(p => p.DaysToDepartment); 
+                case SortBy.PriceAsc: return queryOrdered.ThenBy(p => p.PriceOfClient); 
+                case SortBy.PriceDesc: return queryOrdered.ThenByDescending(p => p.PriceOfClient); 
+                default: return queryOrdered.ThenBy(p => p.Name); 
 
             }
            

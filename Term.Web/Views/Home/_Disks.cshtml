@@ -27,24 +27,36 @@
         {
             <div class="products-list-item row">
                 <div class="col-sm-1 products-list-item__cell">
+                   @{ 
+                       if(item.WheelType == Term.DAL.WheelType.Forged)
+                       {
+                           <span class="icon-wheeltype">@ForSearchResult.Forged</span> 
+                           }
+                       }
                     @{
-                        string sale_img_class = item.IsSaleProduct && ViewBag.SaleMode ? "sale-img" : "";
+        string sale_img_class = item.IsSaleProduct && ViewBag.SaleMode ? "sale-img" : "";
                     }
-                    <span class="@sale_img_class"></span>
+                   <span class="@sale_img_class"></span> 
+                    
                     <a class="fancybox-btn-disks" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk",item.PathToImage)" alt="@item.Name" class="min_img"></a>
                     @{
-                        if (item.CountPhoto > 0)
-                        {
-                            for (int i = 1; i <= item.CountPhoto; i++)
-                            {
-                                <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></a>
+        if (item.CountPhoto > 0)
+        {
+            for (int i = 1; i <= item.CountPhoto; i++)
+            {
+                <a class="fancybox-btn-disks" hidden href="@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})"><img src='@Url.Action("GetProductPhoto", "Photo", new {namePhoto = Html.FullPathToImage("disk", item.PathToImage), number = i})' class="img-responsive small-photo" onerror="this.onerror = null; this.src = @Defaults.UrlsInViews.NoImage;" /></a>
 
-                            }
-                        }
+}
+}
                     }
                 </div>
-                <div class="col-sm-1 products-list-item__cell"> @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)</div>
-                <div class="col-sm-3 product-name products-list-item__cell">  @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })</div>
+                <div class="col-sm-1 products-list-item__cell">  @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)</div>
+                <div class="col-sm-3 product-name products-list-item__cell">
+                    
+                       
+                   
+                
+                @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })</div>
                 <div class="col-sm-1 products-list-item__cell">
 
                     @{

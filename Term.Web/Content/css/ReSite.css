@@ -3270,9 +3270,13 @@ width:30em;*/
         content: '';
         position: relative;
     }
-
-    /*
-.activePodbor {
-    background: rgb(42, 100, 150);
+.icon-wheeltype {
+    position:absolute;
+    top:-5px;
+    left:65%;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 10px;
+    color: rgb(0, 139, 82);
+    text-transform:lowercase;
 }
-    */

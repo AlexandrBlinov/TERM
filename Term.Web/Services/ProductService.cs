@@ -78,7 +78,7 @@ namespace Yst.Services
             var parameters = new SqlObjectParameterCollection();
             parameters.Add("PartnerID", partnerId).Add("PartnerPointID", pointId).Add("SortBy", podborModel.SortBy.ToString()).Add("Article", (object)article??DBNull.Value)
             .Add("ProductName", (object)productname ?? DBNull.Value).Add("ExactSize", exactsize).Add("ForPriceExcel",0).Add("OnlySale", podborModel.OnlySale && IsPartner && SaleMode ? 1 : 0)
-            .Add("Brands", (object)podborModel.Brands ?? DBNull.Value).Add("PriceMin", (object)podborModel.PriceMin ?? 0).Add("PriceMax", (object)podborModel.PriceMax ?? 30000).Add("TypeOfRests", (object)podborModel.RestOrOnWay).Add("IsSet4Items", podborModel.IsSet4Items ? 1 : 0);
+            .Add("Brands", (object)podborModel.Brands ?? DBNull.Value).Add("PriceMin", (object)podborModel.PriceMin ?? 0).Add("PriceMax", (object)podborModel.PriceMax ?? Defaults.PriceMaxRus).Add("TypeOfRests", (object)podborModel.RestOrOnWay).Add("IsSet4Items", podborModel.IsSet4Items ? 1 : 0);
             
             parameters.GetParametersFromObject(podborModel, "ProducerId", "Diametr", "Width", "Hole", "DIA", "PCD", "ET", "DiskColor");
 

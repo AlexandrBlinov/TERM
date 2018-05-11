@@ -403,6 +403,8 @@ namespace YstTerm.Models
                 
             }
         }
+
+        public WheelType WheelType { get; set; }
     }
 
       
