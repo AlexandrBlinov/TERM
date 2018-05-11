@@ -105,25 +105,27 @@ namespace Yst.Services
         /// <param name="pointId"></param>
         public IList<TyreSearchResult> GetTyres(TyresPodborView pb, int pointId)
         {
-
             string partnerId = GetPartnerIdByPointId(pointId);
 
             string parametersStr = "@PartnerId, @PartnerPointId, @ProducerId,@Diametr, @Width, @Height, @SeasonId, @Article, @ProductName, @SortBy, @Ship, @PriceMin, @PriceMax";
             string sqltext = String.Format("exec {0} {1}", IsPartner ? "spGetTyresPartnerToClient" : "spGetTyresPointToClient", parametersStr);
-
-
+            
             var parameters = new SqlObjectParameterCollection();
             parameters.Add("PartnerID", partnerId);
             parameters.Add("PartnerPointID", pointId);
             parameters.Add("ProductName", pb.Name);
             parameters.Add("SortBy", pb.SortBy.ToString());
             parameters.GetParametersFromObject(pb, "ProducerId", "Diametr", "Width", "Height", "SeasonId", "Article", "Ship", "PriceMin", "PriceMax");
-
-         //   return DbContext.Database.SqlQuery<TyreSearchResult>(sqltext, parameters.ToArray()).ToArray().ToPagedList(pb.Page, pb.ItemsPerPage).ToList();
+                     
             return DbContext.Database.SqlQuery<TyreSearchResult>(sqltext, parameters.ToArray()).ToList();
 
         }
 
+        /// <summary>
+        /// Подбор по грузовым шинам
+        /// </summary>
+        /// <param name="pb"></param>
+        /// <param name="pointId"></param>
         public void GetCargoTyres(CargoTyresPodborView pb, int pointId)
         {
 
