@@ -628,6 +628,18 @@ var modulePodborTyresDisksByAuto = (function () {
                 $("#sortAmount").addClass("sort-icon-active-desc");
                 break;
             }
+
+            case 'priceasc': {
+                $(this).data('sort', "pricedesc");
+                $("#sortPrice").addClass("sort-icon-active-asc");
+                break;
+            }
+
+            case 'pricedesc': {
+                $(this).data('sort', "priceasc");
+                $("#sortPrice").addClass("sort-icon-active-desc");
+                break;
+            }
         }
 
 

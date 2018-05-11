@@ -22,7 +22,7 @@
 {
     <fieldset class="border-form-podbor">
         <div class="row">
-            <div class="col-xs-12 col-sm-2">
+            <div class="col-md-2">
                 @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
                 <div>
                     <div class="input-group date">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-2">
+            <div class="col-md-2">
                 @Html.LabelFor(p => p.EndDate, new { @class = "search-order-label" })
                 <div>
                     <div class="input-group date">
@@ -44,19 +44,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-2">
+            <div class="col-md-2">
                 <label class="search-order-label">@CartAndOrders.OrderNumber</label>
                 <div>
                     @Html.TextBoxFor(p => p.OrderNumber, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-2">
+            <div class="col-md-2">
                 <label class="search-order-label">@CartAndOrders.Status</label>
                 <div>
                     @Html.DropDownListFor(p => p.StatusId, Model.Statuses, @CartAndOrders.AllOrders, new { @class = "form-control" })
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 @invisAddStock">
+            <div class="col-md-2 @invisAddStock">
                 <label class="search-order-label">@CartAndOrders.Department</label>
                 <div>
                     @Html.DropDownListFor(p => p.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name"), "Все", new { @class = "form-control" })
@@ -64,7 +64,7 @@
             </div>
             @if (ViewBag.IsPartner)
             {
-                <div class="col-xs-12 col-sm-2">
+                <div class="col-md-2">
                     <label class="search-order-label">@CartAndOrders.Point</label>
                     <div>
                         @Html.DropDownListFor(p => p.PointId, Model.PartnerPoints, @CartAndOrders.All, new { @class = "form-control" })
@@ -72,7 +72,7 @@
                 </div>
             }
 
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-md-3">
                 <label class="search-order-label">@CartAndOrders.ByProduct</label>
                 <div>
                     @Html.TextBoxFor(p => p.ProductName, new { @class = "form-control", @placeholder = @ForSearchResult.CodeOrArt })
@@ -80,7 +80,7 @@
             </div>
             @if (!ViewBag.IsForeign)
             {
-                <div class="col-xs-12 col-sm-3">
+                <div class="col-md-3">
 
                     <label class="search-order-label">Доставка DPD</label>
                     <div class="p-t-5">
@@ -112,22 +112,23 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12">
-            <div class="pull-left expand-collapse__container-for-orderlist">
+        <div class="col-xs-12 col-md-8">
+            <div class="expand-collapse__container-for-orderlist">
                 <a href="#" class="btn btn-styled js-expand-orders" data-title-collapse="@CartAndOrders.CollapseAll" data-title-expand="@CartAndOrders.ExpandAll">@CartAndOrders.ExpandAll</a>              
                 @if (canProcessOrders)
                 {
                 <a href="#" class="btn btn-styled js-display-todo-items"><i class="fa fa-2x fa-truck v-a-middle"></i>   Поставить на отгрузку</a>    
                 }
-            </div>
-
-            <div class="psevdo-select psevdo-select-dispos">
+            </div> 
+         </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="psevdo-select psevdo-select-dispos psevdo-select-orders">
                 <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
                 @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(500, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
             </div>
-
         </div>
     </div>
+    
 }
 
 @Html.Hidden("canProcessOrders", canProcessOrders ? "1":"0")

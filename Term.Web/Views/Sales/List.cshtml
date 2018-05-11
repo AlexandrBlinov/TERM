@@ -14,7 +14,7 @@
 {
     <fieldset class="border-form-podbor">
         <div class="row">
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-sm-6 col-md-2 ">
                 @Html.LabelFor(p => p.BeginDate, new { @class = "search-order-label" })
                 <div>
                     <div class="input-group date">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-sm-6 col-md-2">
                 @Html.LabelFor(p => p.EndDate, new {@class = "search-order-label"})
                 <div>
                     <div class="input-group date">
@@ -37,14 +37,14 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-2">
+            <div class="col-sm-6 col-md-2">
                 <label class="search-order-label">@CartAndOrders.Status</label>
                 <div>
                     @Html.DropDownListFor(p => p.StatusId, Model.Statuses, @CartAndOrders.All, new {@class = "form-control"})
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-3">
+            <div class="col-sm-6 col-md-3">
                 <label class="search-order-label">@CartAndOrders.ByProduct</label>
                 <div>
                     @Html.TextBoxFor(p => p.ProductName, new { @class = "form-control",  @placeholder = @ForSearchResult.CodeOrArt})
@@ -52,20 +52,20 @@
             </div>
             @if (ViewBag.IsPartner)
             {
-                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-sm-6 col-md-2">
                     <label class="search-order-label">@CartAndOrders.Point</label>
                     <div>
                         @Html.DropDownListFor(p => p.PointId, Model.PartnerPoints, @CartAndOrders.All, new { @class = "form-control" })
                     </div>
                 </div>
             }
-            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-sm-6 col-md-2">
                 <label class="search-order-label">@ForSearchResult.PerPage</label>
                 <div>
                     @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), new { id = "ItemsPerPage", name = "ItemsPerPage", @class = "form-control" })
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 search-order-btn text-center">
+            <div class="col-xs-12 search-order-btn text-center">
                 <button class="form-podbor-btn-submit" type="submit">@CartAndOrders.Filter</button>
             </div>
         </div>
