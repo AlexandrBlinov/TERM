@@ -118,7 +118,7 @@ namespace Term.Web.Services
             if (notification != null)
 
             {
-                notification.Status = StatusOfNotification.Unread;
+                notification.Status = StatusOfNotification.Read;
 
                 _dbContext.SaveChanges();
             }
