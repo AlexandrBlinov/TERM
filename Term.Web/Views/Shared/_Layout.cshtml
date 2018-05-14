@@ -81,14 +81,11 @@
 
         @RenderBody()
 
-        <asp:substitution id="DontCache">
-            @if (ntf.CheckIfExists(User.Identity.Name) && User.Identity.IsAuthenticated && System.Threading.Thread.CurrentThread.CurrentUICulture.Name == Defaults.Culture_RU)
-            {
-                @Html.Partial("_ModalMessageForUser");
-            }
-        </asp:substitution>
+        @if (ntf.CheckIfExists(User.Identity.Name) && User.Identity.IsAuthenticated)
+        {
+            @Html.Partial("_ModalMessageForUser");
+        }
     </div>
-
     <footer class="footer-bg">
         @Html.Partial("_Footer")
     </footer>
