@@ -212,13 +212,12 @@ namespace YstProject.Services
             if (podborModel.AllOrByCarReplica && podborModel.CarName != null) query = query.Where(p => p.ModelName.ToString().ToLowerInvariant().Contains(podborModel.CarName.ToLowerInvariant()));
             if (podborModel.IsSet4Items) query = query.Where(p => p.Rest + p.RestOtherStock >= 4);
 
-
-
+            
             
 
-            return query.GetOrderedResults(podborModel.SortBy).Cast<DiskSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
+            //return query.GetOrderedResults(podborModel.SortBy).Cast<DiskSearchResult>().ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
 
-            
+            return  query.ToList().OrderBy(p => p.WheelType, new DiskComparerByForged()).GetOrderedResultsThenBy(podborModel.SortBy).ToPagedList(podborModel.Page, podborModel.ItemsPerPage);
 
         }
 

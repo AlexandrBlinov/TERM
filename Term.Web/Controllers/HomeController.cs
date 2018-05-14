@@ -35,7 +35,7 @@ namespace Term.Web.Controllers
         private readonly ProducerForSelectionService _producers = null;
         private readonly OrderService _orderService;
         private readonly DaysToDepartmentService _daysToDepartmentService;
-        private readonly NewsService _newsService;
+     //   private readonly NewsService _newsService;
     
 
 
@@ -44,14 +44,14 @@ namespace Term.Web.Controllers
             SeasonProductService sps, 
             OrderService orderService, 
             DaysToDepartmentService daysToDepartmentService, 
-            NewsService newsService, 
+        
             HttpContextBase context)
         {
             _producers = producers;
             _seasonproductservice = sps;
             _orderService = orderService;
             _daysToDepartmentService = daysToDepartmentService;
-            _newsService = newsService;
+         
         }
 
        public HomeController()
@@ -60,7 +60,7 @@ namespace Term.Web.Controllers
                new SeasonProductService(), 
                new OrderService(),
                new DaysToDepartmentService(),
-               new NewsService(),
+        
                new HttpContextWrapper(System.Web.HttpContext.Current))
        {
           

@@ -23,22 +23,10 @@ using Term.Web.Services;
 
 namespace Yst.Services
 {
-    /// <summary>
-    /// Класс для сортировки по ковыным дискам
-    /// </summary>
-    class DiskComparerByProducer : IComparer<int>
-    {
-        private static readonly IEnumerable<int> producersForgedWheels = Defaults.ProducersForgedWheels.Select(p => p.ProducerId);
-
-        public int Compare(int x, int y)
-        {
-          if ( producersForgedWheels.Any(p=> p==x) && !producersForgedWheels.Any(p=>p==y)) return -1;
-            if (!producersForgedWheels.Any(p => p == x) && producersForgedWheels.Any(p => p == y)) return 1;
-            return 0;
-        }
-    }
+    
 
     /// <summary>
+    /// 1
     /// Основной сервис для подборов
     /// </summary>
     public class ProductService : BaseService, IDisposable
@@ -85,10 +73,9 @@ namespace Yst.Services
             var results= DbContext.Database.SqlQuery<DiskSearchResult>(sqltext, parameters.ToArray()).ToList();
 
             // сортируем сперва по кованым, потом по наименованию
+                        
 
-            //  var selector = ReflectionExtensions.GetSelector<DiskSearchResult, string>(podborModel.SortBy.ToString().ToLower());
-
-             results = results.OrderBy(p => p.ProducerId != null ? (int)p.ProducerId : 0, new DiskComparerByProducer()).GetOrderedResultsThenBy(podborModel.SortBy).ToList();
+             results = results.OrderBy(p => p.WheelType, new DiskComparerByForged()).GetOrderedResultsThenBy(podborModel.SortBy).ToList();
 
 
             return results;
