@@ -23,7 +23,9 @@ namespace Term.Web.Services
         private readonly HttpContextBase _httpContext;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        
+         private readonly Expression<Func<NotificationForUser,string,bool>> predicate =(p, username) => p.UserName.Equals(username) && p.Status == StatusOfNotification.Unread;
+
+        private readonly Expression<Func<NotificationForUser, bool>> predicate2 = (p) =>  p.Status == StatusOfNotification.Unread;
 
         public NotificationForUserService(AppDbContext dbContext, HttpContextBase httpContext)
         {
@@ -37,6 +39,8 @@ namespace Term.Web.Services
 
         }
 
+        
+        
         /// <summary>
         /// Проверить есть ли активные уведомления для пользователя
         /// </summary>
@@ -44,7 +48,7 @@ namespace Term.Web.Services
         /// <returns></returns>
         public bool CheckIfExists(string username)
         {
-            return _dbContext.NotificationsForUsers.Any(p => p.UserName.Equals(username) &&  p.Status==0);
+            return _dbContext.NotificationsForUsers.Any( p => p.UserName.Equals(username) && p.Status == StatusOfNotification.Unread);
         }
 
 
@@ -55,15 +59,13 @@ namespace Term.Web.Services
         /// <returns></returns>
         public NotificationForUser GetFirst(string username)
         {
-            return _dbContext.NotificationsForUsers.FirstOrDefault(p => p.UserName.Equals(username) && p.Status == 0);
+            return _dbContext.NotificationsForUsers.FirstOrDefault(p => p.UserName.Equals(username) && p.Status == StatusOfNotification.Unread);
         }
 
 
         public void AddIfNotExists(string username, string message)
         {
-            if (!CheckIfExists(username))
-                Add(username,message);
-
+            if (!CheckIfExists(username))    Add(username,message);
         }
 
         /// <summary>
@@ -77,7 +79,7 @@ namespace Term.Web.Services
             {
                 Date = DateTime.Now,
                 Message = message,
-                Status = 0,
+                Status = StatusOfNotification.Unread,
                 UserName = username
             });
 
@@ -91,11 +93,11 @@ namespace Term.Web.Services
         
         public void DisableAll(string username)
         {
-         var notifications=   _dbContext.NotificationsForUsers.Where(p=>p.UserName.Equals(username)&&p.Status==0);
+         var notifications=   _dbContext.NotificationsForUsers.Where(p=>p.UserName.Equals(username) && p.Status==StatusOfNotification.Unread);
 
          foreach (var notification in notifications)
          {
-             notification.Status = 1;
+             notification.Status = StatusOfNotification.Read;
          }
             //notifications.ForEach(n=>n.Status=1);
 
@@ -111,12 +113,12 @@ namespace Term.Web.Services
         public void DisableFirst(string username)
         {
             var notification =
-                _dbContext.NotificationsForUsers.FirstOrDefault(p => p.UserName.Equals(username) && p.Status == 0);
+                _dbContext.NotificationsForUsers.FirstOrDefault(p => p.UserName.Equals(username) && p.Status == StatusOfNotification.Unread);
 
             if (notification != null)
 
             {
-                notification.Status = 1;
+                notification.Status = StatusOfNotification.Unread;
 
                 _dbContext.SaveChanges();
             }
@@ -129,10 +131,8 @@ namespace Term.Web.Services
         /// <returns></returns>
         public string GetUserFromPointId(int pointId)
         {
-
            var user = _userManager.Users.FirstOrDefault(p => p.PartnerPointId == pointId);
-               
-            return user!=null ? user.UserName : null;
+            return user?.UserName;
                
         }
 
@@ -144,7 +144,7 @@ namespace Term.Web.Services
         public string GetUserFromSupplierId(int supplierId)
         {
             var user = _userManager.Users.FirstOrDefault(p => p.SupplierId == supplierId);
-               return user!=null ? user.UserName : null;  
+               return  user?.UserName;  
         }
 
 

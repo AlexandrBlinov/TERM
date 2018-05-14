@@ -113,6 +113,13 @@ namespace Term.DAL
 
     }
 
+
+    public enum StatusOfNotification
+    {
+        Unread = 0,
+        Read
+    }
+
     /// <summary>
     /// Класс для уведомления
     /// </summary>
@@ -135,7 +142,7 @@ namespace Term.DAL
         /// <summary>
         /// 0 - not processed ,1 - processed
         /// </summary>
-        public int Status { get; set; }
+        public StatusOfNotification Status { get; set; }
 
     }
 
