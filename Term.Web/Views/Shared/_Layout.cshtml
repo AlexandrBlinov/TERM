@@ -18,15 +18,10 @@
     @Styles.Render("~/content/sitestyles")
     <link href="~/Content/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    @{
-        /*  string lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-          string srcgooglemapslibrary = "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places" + "&language=" + lang + "&key=AIzaSyDN7YSVCGitkbM-gZ4h7dT5eVw1bo6CgnU"; */
-
-    }
-
+   
 </head>
 <body>
-    @{var sps = new SeasonProductService();
+    @{var sps = new SeasonProductService(); var ntf = new NotificationForUserService();
     }
     <header>
         <nav class="navbar navbar-default first-horizontal-menu">
@@ -86,6 +81,12 @@
 
         @RenderBody()
 
+        <asp:substitution id="DontCache">
+            @if (ntf.CheckIfExists(User.Identity.Name) && User.Identity.IsAuthenticated && System.Threading.Thread.CurrentThread.CurrentUICulture.Name == Defaults.Culture_RU)
+            {
+                @Html.Partial("_ModalMessageForUser");
+            }
+        </asp:substitution>
     </div>
 
     <footer class="footer-bg">

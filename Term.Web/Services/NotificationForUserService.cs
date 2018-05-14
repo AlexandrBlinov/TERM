@@ -116,7 +116,7 @@ namespace Term.Web.Services
             if (notification != null)
 
             {
-                notification.Status = 0;
+                notification.Status = 1;
 
                 _dbContext.SaveChanges();
             }

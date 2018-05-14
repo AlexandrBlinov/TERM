@@ -58,7 +58,7 @@ namespace Term.Web.Controllers
         public ActionResult UrgentNews()
         {
             var user = User.Identity.Name;
-            if (!_ntf.CheckIfExists(user)) _ntf.Add(user, "CartRulesChange");
+            _ntf.DisableFirst(user);
             return View();
         }
 

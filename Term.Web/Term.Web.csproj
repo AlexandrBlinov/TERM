@@ -401,106 +401,6 @@
     <Compile Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.Designer.cs">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710061305423_newProps_AddedToOrder.cs" />
-    <Compile Include="Migrations\201710061305423_newProps_AddedToOrder.Designer.cs">
-      <DependentUpon>201710061305423_newProps_AddedToOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710161127226_IsStarAddedToPartner.cs" />
-    <Compile Include="Migrations\201710161127226_IsStarAddedToPartner.Designer.cs">
-      <DependentUpon>201710161127226_IsStarAddedToPartner.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710171259545_PriceMin_AddedToPriceOfProduct.cs" />
-    <Compile Include="Migrations\201710171259545_PriceMin_AddedToPriceOfProduct.Designer.cs">
-      <DependentUpon>201710171259545_PriceMin_AddedToPriceOfProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710300853432_Id_AsKey_AddedTo_AddressOfPartner.cs" />
-    <Compile Include="Migrations\201710300853432_Id_AsKey_AddedTo_AddressOfPartner.Designer.cs">
-      <DependentUpon>201710300853432_Id_AsKey_AddedTo_AddressOfPartner.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711080531078_CreateClaimsTable.cs" />
-    <Compile Include="Migrations\201711080531078_CreateClaimsTable.Designer.cs">
-      <DependentUpon>201711080531078_CreateClaimsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711101322075_TransportCompanies_Added.cs" />
-    <Compile Include="Migrations\201711101322075_TransportCompanies_Added.Designer.cs">
-      <DependentUpon>201711101322075_TransportCompanies_Added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711120946176_UpdateClaims.cs" />
-    <Compile Include="Migrations\201711120946176_UpdateClaims.Designer.cs">
-      <DependentUpon>201711120946176_UpdateClaims.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711130821055_TkId_AddedToOrder.cs" />
-    <Compile Include="Migrations\201711130821055_TkId_AddedToOrder.Designer.cs">
-      <DependentUpon>201711130821055_TkId_AddedToOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711140837103_DepId_AddedToManager.cs" />
-    <Compile Include="Migrations\201711140837103_DepId_AddedToManager.Designer.cs">
-      <DependentUpon>201711140837103_DepId_AddedToManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711150440550_Claims_proddatetostring.cs" />
-    <Compile Include="Migrations\201711150440550_Claims_proddatetostring.Designer.cs">
-      <DependentUpon>201711150440550_Claims_proddatetostring.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711150551593_CnangeIndexes_OnProducts.cs" />
-    <Compile Include="Migrations\201711150551593_CnangeIndexes_OnProducts.Designer.cs">
-      <DependentUpon>201711150551593_CnangeIndexes_OnProducts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711210603303_LogistikDepartment_AddedToPartner.cs" />
-    <Compile Include="Migrations\201711210603303_LogistikDepartment_AddedToPartner.Designer.cs">
-      <DependentUpon>201711210603303_LogistikDepartment_AddedToPartner.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241236429_AddTable_AssistantsOfManagers.cs" />
-    <Compile Include="Migrations\201711241236429_AddTable_AssistantsOfManagers.Designer.cs">
-      <DependentUpon>201711241236429_AddTable_AssistantsOfManagers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.cs" />
-    <Compile Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.Designer.cs">
-      <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712130951172_claimsFK.cs" />
-    <Compile Include="Migrations\201712130951172_claimsFK.Designer.cs">
-      <DependentUpon>201712130951172_claimsFK.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801100834196_JobForShipment_Added.cs" />
-    <Compile Include="Migrations\201801100834196_JobForShipment_Added.Designer.cs">
-      <DependentUpon>201801100834196_JobForShipment_Added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802011237320_JobForShipmentDetail_Changed.cs" />
-    <Compile Include="Migrations\201802011237320_JobForShipmentDetail_Changed.Designer.cs">
-      <DependentUpon>201802011237320_JobForShipmentDetail_Changed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802011318340_JobForShipmentDetail_Changed2.cs" />
-    <Compile Include="Migrations\201802011318340_JobForShipmentDetail_Changed2.Designer.cs">
-      <DependentUpon>201802011318340_JobForShipmentDetail_Changed2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802020626282_JobForShipment_Changed.cs" />
-    <Compile Include="Migrations\201802020626282_JobForShipment_Changed.Designer.cs">
-      <DependentUpon>201802020626282_JobForShipment_Changed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802070744485_JobForShipment_DriverAddedTo.cs" />
-    <Compile Include="Migrations\201802070744485_JobForShipment_DriverAddedTo.Designer.cs">
-      <DependentUpon>201802070744485_JobForShipment_DriverAddedTo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201802100741045_AddInPPShowOnlySeasonOrder.cs" />
-    <Compile Include="Migrations\201802100741045_AddInPPShowOnlySeasonOrder.Designer.cs">
-      <DependentUpon>201802100741045_AddInPPShowOnlySeasonOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803230559004_HasSeasonAdjournment_ChangedToPartner.cs" />
-    <Compile Include="Migrations\201803230559004_HasSeasonAdjournment_ChangedToPartner.Designer.cs">
-      <DependentUpon>201803230559004_HasSeasonAdjournment_ChangedToPartner.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.cs" />
-    <Compile Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.Designer.cs">
-      <DependentUpon>201803231133371_IsSeasonAdjournment_AddedToOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804131255295_IsStar_AddedToSale.cs" />
-    <Compile Include="Migrations\201804131255295_IsStar_AddedToSale.Designer.cs">
-      <DependentUpon>201804131255295_IsStar_AddedToSale.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804171320547_IpAddress_AddedToDbUserActionLog.cs" />
-    <Compile Include="Migrations\201804171320547_IpAddress_AddedToDbUserActionLog.Designer.cs">
-      <DependentUpon>201804171320547_IpAddress_AddedToDbUserActionLog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
@@ -1231,6 +1131,7 @@
     <Content Include="Views\Reports\JiangsuWheelsTest.cshtml" />
     <Content Include="Views\Home\_DisksPagingAndResults.cshtml" />
     <Content Include="Views\VideoOfProduct\Index.cshtml" />
+    <Content Include="Views\Shared\_ModalMessageForUser.cshtml" />
     <None Include="Web References\ResultDel.datasource\ServiceTerminal.wsdl" />
     <None Include="Web.dev1.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1373,81 +1274,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.resx">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710061305423_newProps_AddedToOrder.resx">
-      <DependentUpon>201710061305423_newProps_AddedToOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710161127226_IsStarAddedToPartner.resx">
-      <DependentUpon>201710161127226_IsStarAddedToPartner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710171259545_PriceMin_AddedToPriceOfProduct.resx">
-      <DependentUpon>201710171259545_PriceMin_AddedToPriceOfProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710300853432_Id_AsKey_AddedTo_AddressOfPartner.resx">
-      <DependentUpon>201710300853432_Id_AsKey_AddedTo_AddressOfPartner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711080531078_CreateClaimsTable.resx">
-      <DependentUpon>201711080531078_CreateClaimsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711101322075_TransportCompanies_Added.resx">
-      <DependentUpon>201711101322075_TransportCompanies_Added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711120946176_UpdateClaims.resx">
-      <DependentUpon>201711120946176_UpdateClaims.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711130821055_TkId_AddedToOrder.resx">
-      <DependentUpon>201711130821055_TkId_AddedToOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711140837103_DepId_AddedToManager.resx">
-      <DependentUpon>201711140837103_DepId_AddedToManager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711150440550_Claims_proddatetostring.resx">
-      <DependentUpon>201711150440550_Claims_proddatetostring.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711150551593_CnangeIndexes_OnProducts.resx">
-      <DependentUpon>201711150551593_CnangeIndexes_OnProducts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711210603303_LogistikDepartment_AddedToPartner.resx">
-      <DependentUpon>201711210603303_LogistikDepartment_AddedToPartner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241236429_AddTable_AssistantsOfManagers.resx">
-      <DependentUpon>201711241236429_AddTable_AssistantsOfManagers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711241356150_AddTable_SelfDeliveryAddresses.resx">
-      <DependentUpon>201711241356150_AddTable_SelfDeliveryAddresses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712130951172_claimsFK.resx">
-      <DependentUpon>201712130951172_claimsFK.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801100834196_JobForShipment_Added.resx">
-      <DependentUpon>201801100834196_JobForShipment_Added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802011237320_JobForShipmentDetail_Changed.resx">
-      <DependentUpon>201802011237320_JobForShipmentDetail_Changed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802011318340_JobForShipmentDetail_Changed2.resx">
-      <DependentUpon>201802011318340_JobForShipmentDetail_Changed2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802020626282_JobForShipment_Changed.resx">
-      <DependentUpon>201802020626282_JobForShipment_Changed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802070744485_JobForShipment_DriverAddedTo.resx">
-      <DependentUpon>201802070744485_JobForShipment_DriverAddedTo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201802100741045_AddInPPShowOnlySeasonOrder.resx">
-      <DependentUpon>201802100741045_AddInPPShowOnlySeasonOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803230559004_HasSeasonAdjournment_ChangedToPartner.resx">
-      <DependentUpon>201803230559004_HasSeasonAdjournment_ChangedToPartner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201803231133371_IsSeasonAdjournment_AddedToOrder.resx">
-      <DependentUpon>201803231133371_IsSeasonAdjournment_AddedToOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804131255295_IsStar_AddedToSale.resx">
-      <DependentUpon>201804131255295_IsStar_AddedToSale.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804171320547_IpAddress_AddedToDbUserActionLog.resx">
-      <DependentUpon>201804171320547_IpAddress_AddedToDbUserActionLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
