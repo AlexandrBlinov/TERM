@@ -21,7 +21,7 @@
    
 </head>
 <body>
-    @{var sps = new SeasonProductService(); var ntf = new NotificationForUserService();
+    @{var sps = new SeasonProductService();
     }
     <header>
         <nav class="navbar navbar-default first-horizontal-menu">
@@ -81,10 +81,10 @@
 
         @RenderBody()
 
-        @if (ntf.CheckIfExists(User.Identity.Name) && User.Identity.IsAuthenticated)
-        {
-            @Html.Partial("_ModalMessageForUser");
-        }
+        @Html.Partial("_ModalNotification", new ViewDataDictionary { { "ModalBodyText", ModalWindows.WorkChange }
+                                                                   , { "id", "modalShowNotification" }
+                                                                   , { "ModalTitle", ModalWindows.Attention } })
+
     </div>
     <footer class="footer-bg">
         @Html.Partial("_Footer")
@@ -116,6 +116,31 @@
                 if (action) $(this).load(action);
             });
 
+        }());
+
+        var notificationsLibrary = (function () {
+            var urlToCheck = '/api/notificationsapi/GetFirst',
+                urlToDisable = '/api/notificationsapi/DisableAll',
+                urlToMsgPage = '/Help/UrgentNews';
+
+
+            var timeout = 1 * 60 * 1000; // раз в минуту
+
+            setInterval(function () {
+                if (!$('#modalShowNotification').is(':visible'))
+                    $.getJSON(urlToCheck, function (data) {
+                        if (data && Object.keys(data).length > 0) $('#modalShowNotification').modal();
+                        console.log(data);
+                    });
+
+            }, timeout);
+            
+            $('#modalShowNotification .modal-footer button').on('click', function () {
+                $.post(urlToDisable).then(function (data) {
+                    location.assign(urlToMsgPage);
+                });
+
+            });
         }());
 
     </script>

@@ -138,6 +138,9 @@
   <data name="SeasonOrderWillBeCancelled" xml:space="preserve">
     <value>This production order will be cancelled. Are you agree?</value>
   </data>
+  <data name="WorkChange" xml:space="preserve">
+    <value>We inform you that since May 15, 2018, Changes in the system of working with clients</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
