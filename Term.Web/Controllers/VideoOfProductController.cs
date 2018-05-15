@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 namespace Term.Web.Controllers
 {
     /// <summary>
-    /// Рендеринг блока для возврата тестов
+    /// Рендеринг блока для возврата тестов 1
     /// </summary>
     [Authorize]
     public class VideoOfProductController : Controller
