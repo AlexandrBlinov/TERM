@@ -135,6 +135,9 @@
   <data name="SeasonOrderWillBeCancelled" xml:space="preserve">
     <value>Этот сезонный заказ будет отменен. Вы уверены?</value>
   </data>
+  <data name="WorkChange" xml:space="preserve">
+    <value>Уведомляем ВАС о том, что с 15 мая 2018г. в системе работы ЯШТ произойдут изменения в системе работы с клиентыми</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>
   </data>

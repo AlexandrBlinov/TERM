@@ -19,7 +19,7 @@ namespace Term.Web.Views.Resources {
     // с помощью такого средства, как ResGen или Visual Studio.
     // Чтобы добавить или удалить член, измените файл .ResX и снова запустите ResGen
     // с параметром /str или перестройте свой проект VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ModalWindows {
@@ -120,6 +120,15 @@ namespace Term.Web.Views.Resources {
         public static string SeasonOrderWillBeCancelled {
             get {
                 return ResourceManager.GetString("SeasonOrderWillBeCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на We inform you that since May 15, 2018, Changes in the system of working with clients.
+        /// </summary>
+        public static string WorkChange {
+            get {
+                return ResourceManager.GetString("WorkChange", resourceCulture);
             }
         }
         

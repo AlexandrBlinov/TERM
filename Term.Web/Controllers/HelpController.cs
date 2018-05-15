@@ -57,10 +57,6 @@ namespace Term.Web.Controllers
 
         public ActionResult UrgentNews()
         {
-            var user = User.Identity.Name;
-            _ntf.DisableFirst(user);
-            var CacheProfileNameToRemove = "VariedByUserOnServer";
-            ControllerContext.HttpContext.Cache.Remove(CacheProfileNameToRemove);
             return View();
         }
 
