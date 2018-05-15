@@ -16,6 +16,9 @@ using System.Data.Entity;
 
 namespace Term.Web.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class HelpController : BaseController
     {
         
