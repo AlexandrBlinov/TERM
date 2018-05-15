@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -16,8 +17,9 @@ namespace Term.Web.Controllers
     [Authorize]
     public class VideoOfProductController : Controller
     {
-        private static string urlToGetJson = "http://api.kolesatyt.ru/video-for-product";
-        private static string urlprefixToGetVideo = "http://content.yst.ru/";
+        
+        private static string urlToGetJson = ConfigurationManager.AppSettings["UrlJsonForDisksTests"];
+        private static string urlprefixToGetVideo = ConfigurationManager.AppSettings["UrlprefixToGetVideo"];
 
         string result = String.Empty;
         // GET: VideoOfProduct
