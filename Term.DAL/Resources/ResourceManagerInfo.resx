@@ -123,6 +123,12 @@
   <data name="FIO" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="ForDocs" xml:space="preserve">
+    <value>Documents, returns, quality of goods, logistics</value>
+  </data>
+  <data name="ForSale" xml:space="preserve">
+    <value>FOR SALE</value>
+  </data>
   <data name="ICQ" xml:space="preserve">
     <value>ICQ</value>
   </data>

@@ -79,6 +79,24 @@ namespace Term.DAL.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Documents, returns, quality of goods, logistics.
+        /// </summary>
+        public static string ForDocs {
+            get {
+                return ResourceManager.GetString("ForDocs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на FOR SALE.
+        /// </summary>
+        public static string ForSale {
+            get {
+                return ResourceManager.GetString("ForSale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ICQ.
         /// </summary>
         public static string ICQ {

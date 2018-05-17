@@ -123,6 +123,12 @@
   <data name="FIO" xml:space="preserve">
     <value>ФИО</value>
   </data>
+  <data name="ForDocs" xml:space="preserve">
+    <value>Документы, возвраты, качество товара, логистика</value>
+  </data>
+  <data name="ForSale" xml:space="preserve">
+    <value>ПРОДАЖИ</value>
+  </data>
   <data name="ICQ" xml:space="preserve">
     <value>ICQ</value>
   </data>
