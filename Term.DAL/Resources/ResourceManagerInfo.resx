@@ -123,6 +123,12 @@
   <data name="FIO" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="ForDocs" xml:space="preserve">
+    <value>Documents, returns, quality of goods, logistics</value>
+  </data>
+  <data name="ForSale" xml:space="preserve">
+    <value>For sale</value>
+  </data>
   <data name="ICQ" xml:space="preserve">
     <value>ICQ</value>
   </data>
@@ -130,15 +136,18 @@
     <value>Internal phone number</value>
   </data>
   <data name="ManagerAssistants" xml:space="preserve">
-    <value>Assistants</value>
+    <value>Assistant</value>
   </data>
   <data name="MobilePhoneNumber" xml:space="preserve">
     <value>Mobile phone number</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Operator</value>
   </data>
   <data name="Skype" xml:space="preserve">
     <value>Skype</value>
   </data>
   <data name="YourManager" xml:space="preserve">
-    <value>Your manager</value>
+    <value>Manager</value>
   </data>
 </root>

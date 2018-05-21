@@ -546,7 +546,10 @@ namespace Term.DAL
 
         [ForeignKey("MainManager")]
         public Guid? ManagerId { get; set; }
-        
+
+        [ForeignKey("Operator")]
+        public Guid? OperatorId { get; set; }
+
         /// <summary>
         ///  Основной менеджер контрагента
         /// </summary>
@@ -561,6 +564,11 @@ namespace Term.DAL
         /// </summary>
         public virtual Manager Operator { get; set; }
 
+
+        /// <summary>
+        ///  Оператор контрагента
+        /// </summary>
+        public virtual Manager Operator { get; set; }
 
         /// <summary>
         /// Признак, есть ли транспортный договор с DPD
