@@ -401,6 +401,10 @@
     <Compile Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.Designer.cs">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805170910089_Operator_AddedToPartner.cs" />
+    <Compile Include="Migrations\201805170910089_Operator_AddedToPartner.Designer.cs">
+      <DependentUpon>201805170910089_Operator_AddedToPartner.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
@@ -760,6 +764,7 @@
     <Content Include="Content\img\ng4.jpg" />
     <Content Include="Content\img\NotActiv.png" />
     <Content Include="Content\img\plenka.jpg" />
+    <Content Include="Content\img\psv.jpg" />
     <Content Include="Content\img\rub.png" />
     <Content Include="Content\img\rub2.png" />
     <Content Include="Content\img\sale-icon.png" />
@@ -1274,6 +1279,9 @@
     <EmbeddedResource Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.resx">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805170910089_Operator_AddedToPartner.resx">
+      <DependentUpon>201805170910089_Operator_AddedToPartner.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1473,7 +1481,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-         <UseIIS>True</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

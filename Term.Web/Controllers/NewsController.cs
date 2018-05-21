@@ -56,7 +56,7 @@ namespace Term.Web.Controllers
             return View(model);
         }
 
-        [OutputCache(VaryByParam = "Id", Duration = 3600, Location = OutputCacheLocation.Server)]
+        [OutputCache(VaryByParam = "Id;ImgType", Duration = 3600, Location = OutputCacheLocation.Server)]
         public async Task<ActionResult> GetNewsImg(long Id, int ImgType)
         {
             var news = await _dbContext.News.FirstAsync(o => o.Id == Id);
