@@ -688,6 +688,8 @@
     <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
     <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\email.svg" />
+    <Content Include="Content\img\icq.svg" />
     <Content Include="Content\img\03490.jpg" />
     <Content Include="Content\img\1cWebService.png" />
     <Content Include="Content\img\1cWebService_2.png" />
@@ -759,6 +761,7 @@
     <Content Include="Content\img\ng3.jpg" />
     <Content Include="Content\img\ng4.jpg" />
     <Content Include="Content\img\NotActiv.png" />
+    <Content Include="Content\img\phone.svg" />
     <Content Include="Content\img\plenka.jpg" />
     <Content Include="Content\img\rub.png" />
     <Content Include="Content\img\rub2.png" />
@@ -799,6 +802,7 @@
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\img\skype.svg" />
     <Content Include="Scripts\common-v6.js" />
     <Content Include="Scripts\jquery.bootstrap-touchspin.js" />
     <Content Include="Scripts\jquery.fancybox-buttons.js" />
@@ -1473,7 +1477,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-         <UseIIS>True</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

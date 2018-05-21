@@ -79,6 +79,24 @@ namespace Term.DAL.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Documents, returns, quality of goods, logistics.
+        /// </summary>
+        public static string ForDocs {
+            get {
+                return ResourceManager.GetString("ForDocs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на For sale.
+        /// </summary>
+        public static string ForSale {
+            get {
+                return ResourceManager.GetString("ForSale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на ICQ.
         /// </summary>
         public static string ICQ {
@@ -97,7 +115,7 @@ namespace Term.DAL.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Assistants.
+        ///   Ищет локализованную строку, похожую на Assistant.
         /// </summary>
         public static string ManagerAssistants {
             get {
@@ -115,6 +133,15 @@ namespace Term.DAL.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Operator.
+        /// </summary>
+        public static string Operator {
+            get {
+                return ResourceManager.GetString("Operator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Skype.
         /// </summary>
         public static string Skype {
@@ -124,7 +151,7 @@ namespace Term.DAL.Resources {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Your manager.
+        ///   Ищет локализованную строку, похожую на Manager.
         /// </summary>
         public static string YourManager {
             get {

@@ -141,7 +141,10 @@ namespace Term.Web.Controllers
 
             var partner = base.Partner;
 
-            var model = new ManagerViewModel {Manager= partner?.MainManager };
+            var model = new ManagerViewModel {
+                Manager = partner?.MainManager,
+                Operator = partner?.Operator
+            };
 
 
             if (model.Manager != null)

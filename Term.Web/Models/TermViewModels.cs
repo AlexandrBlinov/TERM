@@ -1380,6 +1380,8 @@ namespace YstTerm.Models
         }
         public Manager Manager { get; set; }
 
+        public Manager Operator { get; set; }
+
         public IList<Manager> Assistants { get; set; }
     }
 }
