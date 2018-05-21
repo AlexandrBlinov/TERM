@@ -127,7 +127,7 @@
     <value>Документы, возвраты, качество товара, логистика</value>
   </data>
   <data name="ForSale" xml:space="preserve">
-    <value>ПРОДАЖИ</value>
+    <value>Продажи</value>
   </data>
   <data name="ICQ" xml:space="preserve">
     <value>ICQ</value>
@@ -136,15 +136,18 @@
     <value>Внутренний номер</value>
   </data>
   <data name="ManagerAssistants" xml:space="preserve">
-    <value>Помощники менеджера</value>
+    <value>Помощник менеджера</value>
   </data>
   <data name="MobilePhoneNumber" xml:space="preserve">
     <value>Мобильный номер</value>
+  </data>
+  <data name="Operator" xml:space="preserve">
+    <value>Оператор</value>
   </data>
   <data name="Skype" xml:space="preserve">
     <value>Skype</value>
   </data>
   <data name="YourManager" xml:space="preserve">
-    <value>Ваш менеджер</value>
+    <value>Менеджер</value>
   </data>
 </root>

@@ -2410,8 +2410,8 @@ dt{
 
     .user-avatar {
         background: #fff no-repeat center;
-        width: 300px;
-        height: 300px;
+        width: 275px;
+        height: 275px;
         background-size: cover;
         background-position: center;
         border-radius: 50%;
@@ -2420,8 +2420,8 @@ dt{
     }
 
         .user-avatar.h-250 {
-            width: 250px;
-            height: 250px;
+            width: 275px;
+            height: 275px;
         }
 
     .user-default-avatar {
@@ -3279,4 +3279,51 @@ width:30em;*/
     font-size: 10px;
     color: rgb(0, 139, 82);
     text-transform:lowercase;
+}
+
+.skype {
+    width: 16px;
+    height: 16px;
+    background: url(/Content/img/skype.svg) no-repeat;
+}
+
+.icq {
+    width: 16px;
+    height: 16px;
+    background: url(/Content/img/icq.svg) no-repeat;
+}
+
+.email {
+    width: 16px;
+    height: 16px;
+    background: url(/Content/img/email.svg) no-repeat;
+}
+
+.phone {
+    width: 16px;
+    height: 16px;
+    background: url(/Content/img/phone.svg) no-repeat;
+}
+
+.manager-data-table tr td {
+    padding: 5px;
+    font-size: 1.2em;
+    text-align:left;
+}
+
+.manager-data-table{
+    width: 240px;
+}
+
+.wkcenter {
+    text-align: -webkit-center;
+}
+
+.h1_mb_mnginfo {
+    margin-bottom: 47px;
+}
+
+.border_h1 {
+    border-top: 2px solid #ded8d8;
+    padding-top: 15px;
 }

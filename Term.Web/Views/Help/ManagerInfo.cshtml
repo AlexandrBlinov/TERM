@@ -9,11 +9,15 @@
 }
 <!-- @Model.Manager.GuidIn1S -->
 
+
+
+
+
 <div class="row">
     <div class="col-md-6">
         <section class="manager-container">
-            <h1 class="text-center">@ResourceManagerInfo.ForSale</h1>
-            <div class="contact-container text-center">
+            <h1 class="text-center h1_mb_mnginfo">@ResourceManagerInfo.ForSale</h1>
+            <div class="contact-container text-center border_h1">
 
                 <div class="row m-b-20">
                     <div class="col-md-4">
@@ -26,60 +30,36 @@
                     <div class="user-avatar user-default-avatar m-b-20"></div>
             }
                     </div>
-                    <div class="col-md-4">
-
-                        <div class="inline-block">
-                            <dl class="dl-horizontal manager-data">
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Manager.Fio)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Manager.Fio)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Manager.EMail)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Manager.EMail)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Manager.MobilePhoneNumber)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Manager.MobilePhoneNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Manager.InternalPhoneNumber)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Manager.InternalPhoneNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Manager.Skype)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Manager.Skype)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Manager.ICQ)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Manager.ICQ)
-                                </dd>
-
-                            </dl>
-                        </div>
+                    <div class="col-md-4 col-md-offset-2 text-center wkcenter">
+                        <table class="manager-data-table">
+                            <tr>
+                                <td></td>
+                                <td><strong class="text-uppercase">@ResourceManagerInfo.YourManager</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><strong>@Html.DisplayFor(model => model.Manager.Fio)</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>@Html.DisplayFor(model => model.Manager.EMail)</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"></td>
+                                <td>@Html.DisplayFor(model => model.Manager.MobilePhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td>(4852) 200-200 доб. @Html.DisplayFor(model => model.Manager.InternalPhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td><div class="skype"></div></td>
+                                <td>@Html.DisplayFor(model => model.Manager.Skype)</td>
+                            </tr>
+                            <tr>
+                                <td><div class="icq"></div></td>
+                                <td>@Html.DisplayFor(model => model.Manager.ICQ)</td>
+                            </tr>
+                        </table>
                     </div>
 
 
@@ -91,9 +71,7 @@
         </section>
         @if (Model.Assistants.Any())
     {
-        <hr class="cart-divider" />
         <section class="assistants-container">
-            <h3 class="text-center m-b-20"> @ResourceManagerInfo.ManagerAssistants</h3>
             <div class="contact-container text-center">
 
                 @foreach (var a in Model.Assistants)
@@ -109,60 +87,36 @@
                     <div class="user-avatar h-250 user-default-avatar"></div>
             }
                     </div>
-                    <div class="col-md-4">
-
-                        <div class="inline-block">
-                            <dl class="dl-horizontal assistant-data">
-                                <dt>
-                                    @Html.DisplayNameFor(model => a.Fio)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => a.Fio)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => a.EMail)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => a.EMail)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => a.MobilePhoneNumber)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => a.MobilePhoneNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => a.InternalPhoneNumber)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => a.InternalPhoneNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => a.Skype)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => a.Skype)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => a.ICQ)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => a.ICQ)
-                                </dd>
-
-                            </dl>
-                        </div>
+                    <div class="col-md-4 col-md-offset-2 text-center wkcenter">
+                        <table class="manager-data-table">
+                            <tr>
+                                <td></td>
+                                <td><strong class="text-uppercase">@ResourceManagerInfo.ManagerAssistants</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><strong>@Html.DisplayFor(model => a.Fio)</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>@Html.DisplayFor(model => a.EMail)</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"></td>
+                                <td>@Html.DisplayFor(model => a.MobilePhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td>(4852) 200-200 доб. @Html.DisplayFor(model => a.InternalPhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td><div class="skype"></div></td>
+                                <td>@Html.DisplayFor(model => a.Skype)</td>
+                            </tr>
+                            <tr>
+                                <td><div class="icq"></div></td>
+                                <td>@Html.DisplayFor(model => a.ICQ)</td>
+                            </tr>
+                        </table>
                     </div>
 
 
@@ -177,7 +131,7 @@
     <div class="col-md-6">
         <section class="manager-container">
             <h1 class="text-center">@ResourceManagerInfo.ForDocs</h1>
-            <div class="contact-container text-center">
+            <div class="contact-container text-center border_h1">
 
                 <div class="row m-b-20">
                     <div class="col-md-4">
@@ -190,60 +144,36 @@
                     <div class="user-avatar user-default-avatar m-b-20"></div>
             }
                     </div>
-                    <div class="col-md-4">
-
-                        <div class="inline-block">
-                            <dl class="dl-horizontal manager-data">
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Operator.Fio)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Operator.Fio)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Operator.EMail)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Operator.EMail)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Operator.MobilePhoneNumber)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Operator.MobilePhoneNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Operator.InternalPhoneNumber)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Operator.InternalPhoneNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Operator.Skype)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Operator.Skype)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.Operator.ICQ)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.Operator.ICQ)
-                                </dd>
-
-                            </dl>
-                        </div>
+                    <div class="col-md-4 col-md-offset-2 text-center wkcenter">
+                        <table class="manager-data-table">
+                            <tr>
+                                <td></td>
+                                <td><strong class="text-uppercase">@ResourceManagerInfo.Operator</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><strong>@Html.DisplayFor(model => model.Operator.Fio)</strong></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>@Html.DisplayFor(model => model.Operator.EMail)</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"></td>
+                                <td>@Html.DisplayFor(model => model.Operator.MobilePhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td>(4852) 200-200 доб. @Html.DisplayFor(model => model.Operator.InternalPhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td><div class="skype"></div></td>
+                                <td>@Html.DisplayFor(model => model.Operator.Skype)</td>
+                            </tr>
+                            <tr>
+                                <td><div class="icq"></div></td>
+                                <td>@Html.DisplayFor(model => model.Operator.ICQ)</td>
+                            </tr>
+                        </table>
                     </div>
 
 
