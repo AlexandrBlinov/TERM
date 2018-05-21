@@ -556,20 +556,13 @@ namespace Term.DAL
         public virtual Manager MainManager { get; set; }
 
 
-        [ForeignKey("Operator")]
-        public Guid? OperatorId { get; set; }
-
+       
         /// <summary>
         ///  Оператор контрагента
         /// </summary>
         public virtual Manager Operator { get; set; }
 
-
-        /// <summary>
-        ///  Оператор контрагента
-        /// </summary>
-        public virtual Manager Operator { get; set; }
-
+              
         /// <summary>
         /// Признак, есть ли транспортный договор с DPD
         /// </summary>
