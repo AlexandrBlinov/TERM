@@ -220,6 +220,7 @@
     <Compile Include="Controllers\API\AppToCarsApiController.cs" />
     <Compile Include="Controllers\API\PricesApiController.cs" />
     <Compile Include="Controllers\API\ProductsApiController.cs" />
+    <Compile Include="Controllers\API\ProductsForAutocompleteController.cs" />
     <Compile Include="Controllers\API\SalesApiController.cs" />
     <Compile Include="Controllers\API\SeasonOrdersApiController.cs" />
     <Compile Include="Controllers\API\RestsOfSuppliersApiController.cs" />
