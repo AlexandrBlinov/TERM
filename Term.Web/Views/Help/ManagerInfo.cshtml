@@ -4,9 +4,11 @@
 @{
     var personalPhoto = Model.Manager.PersonalPhoto;
     var operatorPhoto = String.Empty;
+    var classCol = "col-md-6 col-md-offset-3";
     if (Model.Operator != null)
     {
         operatorPhoto = Model.Operator.PersonalPhoto;
+        classCol = "col-md-6";
     }
     ViewBag.Title = ResourceManagerInfo.YourManager;
 
@@ -18,7 +20,7 @@
 
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="@classCol">
         <section class="manager-container">
             <h1 class="text-center h1_mb_mnginfo">@ResourceManagerInfo.ForSale</h1>
             <div class="contact-container text-center border_h1">
@@ -26,13 +28,13 @@
                 <div class="row m-b-20">
                     <div class="col-md-4">
                         @if (personalPhoto != null)
-                    {
-                        <div class="user-avatar  m-b-20" style="background-image: url(@personalPhoto)"></div>
-                }
-                else
-                {
-                    <div class="user-avatar user-default-avatar m-b-20"></div>
-            }
+                        {
+                            <div class="user-avatar  m-b-20" style="background-image: url(@personalPhoto)"></div>
+                        }
+                        else
+                        {
+                            <div class="user-avatar user-default-avatar m-b-20"></div>
+                        }
                     </div>
                     <div class="col-md-4 col-md-offset-2 text-center wkcenter">
                         <table class="manager-data-table">
@@ -74,67 +76,68 @@
 
         </section>
         @if (Model.Assistants.Any())
-    {
-        <section class="assistants-container m-t-30">
-            <div class="contact-container text-center">
+        {
+            <section class="assistants-container m-t-30">
+                <div class="contact-container text-center">
 
-                @foreach (var a in Model.Assistants)
-            {
-                <div class="row m-b-20">
-                    <div class="col-md-4">
-                        @if (!String.IsNullOrEmpty(a.PersonalPhoto))
+                    @foreach (var a in Model.Assistants)
                     {
-                        <div class="user-avatar h-250 m-b-20" style="background-image: url(@a.PersonalPhoto)"></div>
-                }
-                else
-                {
-                    <div class="user-avatar h-250 user-default-avatar"></div>
-            }
-                    </div>
-                    <div class="col-md-4 col-md-offset-2 text-center wkcenter">
-                        <table class="manager-data-table">
-                            <tr>
-                                <td></td>
-                                <td><strong class="text-uppercase">@ResourceManagerInfo.ManagerAssistants</strong></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><strong>@Html.DisplayFor(model => a.Fio)</strong></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>@Html.DisplayFor(model => a.EMail)</td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2"></td>
-                                <td>@Html.DisplayFor(model => a.MobilePhoneNumber)</td>
-                            </tr>
-                            <tr>
-                                <td>(4852) 200-200 доб. @Html.DisplayFor(model => a.InternalPhoneNumber)</td>
-                            </tr>
-                            <tr>
-                                <td><div class="skype"></div></td>
-                                <td>@Html.DisplayFor(model => a.Skype)</td>
-                            </tr>
-                            <tr>
-                                <td><div class="icq"></div></td>
-                                <td>@Html.DisplayFor(model => a.ICQ)</td>
-                            </tr>
-                        </table>
-                    </div>
+                        <div class="row m-b-20">
+                            <div class="col-md-4">
+                                @if (!String.IsNullOrEmpty(a.PersonalPhoto))
+                                {
+                                    <div class="user-avatar h-250 m-b-20" style="background-image: url(@a.PersonalPhoto)"></div>
+                                }
+                                else
+                                {
+                                    <div class="user-avatar h-250 user-default-avatar"></div>
+                                }
+                            </div>
+                            <div class="col-md-4 col-md-offset-2 text-center wkcenter">
+                                <table class="manager-data-table">
+                                    <tr>
+                                        <td></td>
+                                        <td><strong class="text-uppercase">@ResourceManagerInfo.ManagerAssistants</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><strong>@Html.DisplayFor(model => a.Fio)</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>@Html.DisplayFor(model => a.EMail)</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2"></td>
+                                        <td>@Html.DisplayFor(model => a.MobilePhoneNumber)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>(4852) 200-200 доб. @Html.DisplayFor(model => a.InternalPhoneNumber)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="skype"></div></td>
+                                        <td>@Html.DisplayFor(model => a.Skype)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="icq"></div></td>
+                                        <td>@Html.DisplayFor(model => a.ICQ)</td>
+                                    </tr>
+                                </table>
+                            </div>
 
 
+                        </div>
+                    }
                 </div>
-        }
-            </div>
 
-        </section>
-}
+            </section>
+        }
 
     </div>
-    <div class="col-md-6">
-        @if (Model.Operator != null)
-        {
+
+    @if (Model.Operator != null)
+    {
+    <div class="@classCol">
         <section class="manager-container">
             <h1 class="text-center">@ResourceManagerInfo.ForDocs</h1>
             <div class="contact-container text-center border_h1">
@@ -142,13 +145,13 @@
                 <div class="row m-b-20">
                     <div class="col-md-4">
                         @if (operatorPhoto != null)
-                        {
+                    {
                         <div class="user-avatar  m-b-20" style="background-image: url(@operatorPhoto)"></div>
-                        }
-                        else
-                        {
+                }
+                else
+                {
                     <div class="user-avatar user-default-avatar m-b-20"></div>
-                        }
+            }
                     </div>
                     <div class="col-md-4 col-md-offset-2 text-center wkcenter">
                         <table class="manager-data-table">
@@ -189,9 +192,10 @@
             </div>
 
         </section>
-        }
     </div>
-</div>
+            }
+        
+    </div>
 
 
 
