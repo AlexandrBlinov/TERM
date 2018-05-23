@@ -22,8 +22,8 @@
 <div class="row">
     <div class="@classCol">
         <section class="manager-container">
-            <h1 class="text-center h1_mb_mnginfo">@ResourceManagerInfo.ForSale</h1>
-            <div class="contact-container text-center border_h1">
+            <h1 class="text-center vertical-text-center">@ResourceManagerInfo.ForSale</h1>
+            <div class="contact-container text-center text-border-bottom">
 
                 <div class="row m-b-20">
                     <div class="col-md-4">
@@ -36,8 +36,8 @@
                             <div class="user-avatar user-default-avatar m-b-20"></div>
                         }
                     </div>
-                    <div class="col-md-4 col-md-offset-2 text-center wkcenter">
-                        <table class="manager-data-table">
+                    <div class="col-md-4 col-md-offset-2 text-center">
+                        <table class="manager-info-data">
                             <tr>
                                 <td></td>
                                 <td><strong class="text-uppercase">@ResourceManagerInfo.YourManager</strong></td>
@@ -58,11 +58,11 @@
                                 <td>(4852) 200-200 доб. @Html.DisplayFor(model => model.Manager.InternalPhoneNumber)</td>
                             </tr>
                             <tr>
-                                <td><div class="skype"></div></td>
+                                <td><div class="skype-icon"></div></td>
                                 <td>@Html.DisplayFor(model => model.Manager.Skype)</td>
                             </tr>
                             <tr>
-                                <td><div class="icq"></div></td>
+                                <td><div class="icq-icon"></div></td>
                                 <td>@Html.DisplayFor(model => model.Manager.ICQ)</td>
                             </tr>
                         </table>
@@ -93,8 +93,8 @@
                                     <div class="user-avatar h-250 user-default-avatar"></div>
                                 }
                             </div>
-                            <div class="col-md-4 col-md-offset-2 text-center wkcenter">
-                                <table class="manager-data-table">
+                            <div class="col-md-4 col-md-offset-2 text-center">
+                                <table class="manager-info-data">
                                     <tr>
                                         <td></td>
                                         <td><strong class="text-uppercase">@ResourceManagerInfo.ManagerAssistants</strong></td>
@@ -115,11 +115,11 @@
                                         <td>(4852) 200-200 доб. @Html.DisplayFor(model => a.InternalPhoneNumber)</td>
                                     </tr>
                                     <tr>
-                                        <td><div class="skype"></div></td>
+                                        <td><div class="skype-icon"></div></td>
                                         <td>@Html.DisplayFor(model => a.Skype)</td>
                                     </tr>
                                     <tr>
-                                        <td><div class="icq"></div></td>
+                                        <td><div class="icq-icon"></div></td>
                                         <td>@Html.DisplayFor(model => a.ICQ)</td>
                                     </tr>
                                 </table>
@@ -140,7 +140,7 @@
     <div class="@classCol">
         <section class="manager-container">
             <h1 class="text-center">@ResourceManagerInfo.ForDocs</h1>
-            <div class="contact-container text-center border_h1">
+            <div class="contact-container text-center text-border-bottom">
 
                 <div class="row m-b-20">
                     <div class="col-md-4">
@@ -153,8 +153,8 @@
                     <div class="user-avatar user-default-avatar m-b-20"></div>
             }
                     </div>
-                    <div class="col-md-4 col-md-offset-2 text-center wkcenter">
-                        <table class="manager-data-table">
+                    <div class="col-md-4 col-md-offset-2 text-center">
+                        <table class="manager-info-data">
                             <tr>
                                 <td></td>
                                 <td><strong class="text-uppercase">@ResourceManagerInfo.Operator</strong></td>
@@ -175,11 +175,11 @@
                                 <td>(4852) 200-200 доб. @Html.DisplayFor(model => model.Operator.InternalPhoneNumber)</td>
                             </tr>
                             <tr>
-                                <td><div class="skype"></div></td>
+                                <td><div class="skype-icon"></div></td>
                                 <td>@Html.DisplayFor(model => model.Operator.Skype)</td>
                             </tr>
                             <tr>
-                                <td><div class="icq"></div></td>
+                                <td><div class="icq-icon"></div></td>
                                 <td>@Html.DisplayFor(model => model.Operator.ICQ)</td>
                             </tr>
                         </table>

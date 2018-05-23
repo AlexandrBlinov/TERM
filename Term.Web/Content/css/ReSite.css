@@ -3281,49 +3281,46 @@ width:30em;*/
     text-transform:lowercase;
 }
 
-.skype {
+.skype-icon {
     width: 16px;
     height: 16px;
     background: url(/Content/img/skype.svg) no-repeat;
 }
 
-.icq {
+.icq-icon {
     width: 16px;
     height: 16px;
     background: url(/Content/img/icq.svg) no-repeat;
 }
 
-.email {
+.email-icon {
     width: 16px;
     height: 16px;
     background: url(/Content/img/email.svg) no-repeat;
 }
 
-.phone {
+.phone-icon {
     width: 16px;
     height: 16px;
     background: url(/Content/img/phone.svg) no-repeat;
 }
 
-.manager-data-table tr td {
+.manager-info-data tr td {
     padding: 5px;
     font-size: 1.2em;
-    text-align:left;
+    text-align: left;
 }
 
-.manager-data-table{
+.manager-info-data {
     width: 240px;
+    margin: auto;
 }
 
-.wkcenter {
-    text-align: -webkit-center;
+.vertical-text-center {
+    line-height: 54px;
 }
 
-.h1_mb_mnginfo {
-    margin-bottom: 47px;
-}
-
-.border_h1 {
+.text-border-bottom {
     border-top: 2px solid #ded8d8;
     padding-top: 15px;
 }
