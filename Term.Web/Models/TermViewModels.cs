@@ -33,6 +33,7 @@ namespace YstTerm.Models
     /// <summary>
     /// Select all tiporazmers by car
     /// </summary>
+     [DataContract(Namespace = "", Name = "tiporazmer")]
     public class TiporazmerByCarModelView
     {
         private int _beginYear, _endYear, _mode, _profile;
@@ -49,6 +50,7 @@ namespace YstTerm.Models
             _dia = carRecord.Dia; _rearwidth = carRecord.RearWidth; _rearet = carRecord.RearET; _reardiameter = carRecord.RearDiameter; _rearprofile = carRecord.RearProfile; _bolts = carRecord.Bolts; _isbolts = carRecord.IsBolts;
         }
 
+        [DataMember]
         public string Tiporazmer
         {
             get
@@ -57,6 +59,8 @@ namespace YstTerm.Models
                 ProductType == ProductType.Tyre ? String.Format("{0}/{1}R{2}", _width, _profile, _diameter) : String.Format(CultureInfo.InvariantCulture, "{0}x{1}/{2}x{3} ET{4} D{5}", _width, _diameter, _pcdc, _pcdd, _et, _dia);
 
             }
+            private set
+            { }
         }
 
         public string TiporazmerRear
@@ -693,6 +697,12 @@ namespace YstTerm.Models
 
         public IEnumerable<ReplicaDisksForCars> CarsList
         { get; set; }
+
+       /* public static DisksPodborView ParseFromTiporazmer(string tiporazmer)
+        {
+            //6x15 / 5x112 ET43 D57.1
+        }
+        */
 
     }
 

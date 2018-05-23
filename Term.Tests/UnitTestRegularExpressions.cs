@@ -124,6 +124,37 @@ namespace UnitTestProject1
             Assert.AreEqual(x, y);
         }
 
-       
+        [TestMethod]
+        public void TestIfDiskPodborView__Parses6Parameters()
+        {
+            string tiporazmer = " 6.5x15/5x112  ET43  D57.1 ";
+
+           string[] result= RegexExtractStringProvider.GetParametersFromTyporazmer(tiporazmer, ProductType.Disk);
+
+            Assert.AreEqual(result.Length, 6);
+            Assert.AreEqual(result[0], "6.5");
+            Assert.AreEqual(result[1], "15");
+            Assert.AreEqual(result[2], "5");
+            Assert.AreEqual(result[3], "112");
+            Assert.AreEqual(result[4], "43");
+            Assert.AreEqual(result[5], "57.1");
+
+        }
+
+        [TestMethod]
+        public void TestIfTyrePodborView__Parses3Parameters()
+        {
+            string tiporazmer = " 195/65 R15 ";
+
+            string[] result = RegexExtractStringProvider.GetParametersFromTyporazmer(tiporazmer, ProductType.Tyre);
+
+            Assert.AreEqual(result.Length, 3);
+            Assert.AreEqual(result[0], "195");
+            Assert.AreEqual(result[1], "65");
+            Assert.AreEqual(result[2], "15");
+            
+
+        }
+
     }
 }

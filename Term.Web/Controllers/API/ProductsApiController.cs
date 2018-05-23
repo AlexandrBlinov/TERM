@@ -81,10 +81,11 @@ namespace Term.Web.Controllers.API
         }
 
         [HttpGet]
-        public IEnumerable<SearchResult> GetDisksByTiporazmer(string partnerId, int pointId, string  typorazmer)
+        public IEnumerable<SearchResult> GetDisksByTiporazmer(string pointId, string tiporazmer)
         {
             DisksPodborView podborModel = new DisksPodborView();
-            return _productService.GetDisks(podborModel, pointId, false);
+
+            return _productService.GetDisks(podborModel, Int32.Parse(pointId), false,0);
              
         }
 

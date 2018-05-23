@@ -412,15 +412,8 @@ namespace YstProject.Services
             }
         }
 
-        private static IEnumerable<ReplicaDisksForCars> GetCarsListFromDb()
-        {
-            {
-                IEnumerable<ReplicaDisksForCars> cars;
-                cars = _dbContext.ReplicaDisksForCars.Where(p => p.Name != string.Empty).Distinct().OrderBy(p => p.Name);
-                return cars.ToList();
-            }
-        }
-
+        private static IEnumerable<ReplicaDisksForCars> GetCarsListFromDb() => _dbContext.ReplicaDisksForCars.Where(p => p.Name != string.Empty).Distinct().OrderBy(p => p.Name).ToList();
+        
         /// <summary>
         /// Возвращает производителей вида товара , только по товарам которые есть на остатках из кэша = 10 мин
         /// </summary>
