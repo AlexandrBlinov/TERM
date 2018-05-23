@@ -50,6 +50,11 @@ namespace YstProject.Services
             public static readonly string NoImage = "'/Content/img/catalog-no-image-small-box.png'";
         }
 
+        public struct CompanyInfo
+        {
+            public static readonly string PhoneNumber = "(4852) 200-200";
+        }
+
 
         public static readonly string JuangsuCode = "91535";
 
