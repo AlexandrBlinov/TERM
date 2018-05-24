@@ -47,28 +47,18 @@ namespace Term.Utils
         }
 
 
+        
+        
         /// <summary>
-        /// Возврат параметров для любого типоразмера в зависимости от вида товара
+        /// Возвращает массив строк из строки + регулярное выражение split
         /// </summary>
         /// <param name="tiporazmer"></param>
-        /// <param name="productType"></param>
+        /// <param name="pattern"></param>
         /// <returns></returns>
-        public static string[] GetParametersFromTyporazmer(string tiporazmer, ProductType productType)
+        public static string[] GetParametersFromTiporazmer(string tiporazmer, string pattern)
         {
-            string pattern = @"^(.*)\/(.*)\s*R(.*)$";
-            if (productType==ProductType.Disk)  pattern = @"^(.*)x(.*)\/(.*)x(.*)\s+ET(.*)\s+D(.*)$";
-
-            return GetParametersFromTiporazmer(tiporazmer,pattern);
-                
-        }
-
-
-
-        private static string[] GetParametersFromTiporazmer(string tiporazmer, string pattern)
-        {
-            tiporazmer = Regex.Replace(tiporazmer, @"\s+", " ");
-         //   string pattern = @"^(.*)x(.*)\/(.*)x(.*)\s+ET(.*)\s+D(.*)$";
-            RegexOptions regexOptions = RegexOptions.None;
+            tiporazmer = Regex.Replace(tiporazmer, @"\s+", " ");         
+            RegexOptions regexOptions = RegexOptions.IgnoreCase;
             Regex regex = new Regex(pattern,  regexOptions);
             string inputData = tiporazmer.Trim();
             string[] result = regex.Split(inputData).Where(res=>!String.IsNullOrEmpty(res)).ToArray();

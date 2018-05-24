@@ -18,11 +18,10 @@ namespace UnitTestProject1
         [TestMethod]
         public void TestIfEnumerableReturnsChars()
         {
-           var arr= string.Join("", Enumerable.Range(0, 10).Select(i => i.ToString()).ToArray()).ToCharArray();
-            //var arr = Enumerable.Range(0, 9).ToString().ToCharArray();
+           var arr= string.Join("", Enumerable.Range(0, 10).Select(i => i.ToString()).ToArray()).ToCharArray();          
             Assert.AreEqual(arr[0],'0');
             Assert.AreEqual(arr[arr.Length-1], '9');
-            //Enumerable.Range(1,9).f
+          
 
         }
 
@@ -31,10 +30,7 @@ namespace UnitTestProject1
         {
             string source = "<a href=\"ghfgh\" sdfsdfdf sdf sdf sf sdf >";
             string pattern = "href=\"(.*)\"";
-
-
-        //    string result = RegexExtractStringProvider.GetMatchedStringByOrder(source, pattern, 1);
-
+            
             var output = Regex.Replace(source, pattern, "test1");
 
             Assert.AreEqual(output, "<a href=\"test1\" sdfsdfdf sdf sdf sf sdf >");

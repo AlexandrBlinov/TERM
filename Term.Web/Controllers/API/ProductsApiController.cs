@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,6 +19,8 @@ using YstTerm.Models;
 
 namespace Term.Web.Controllers.API
 {
+  /*  [KnownType(typeof(SearchResult))]
+    [KnownType(typeof(DiskSearchResult))] */
     public class ProductsApiController : ApiController
     {
        
@@ -80,13 +83,39 @@ namespace Term.Web.Controllers.API
 
         }
 
+
+        /// <summary>
+        ///  API подбора по авто по типоразмеру дисков
+        /// </summary>
+        /// <param name="pointId"></param>
+        /// <param name="tiporazmer"></param>
+        /// <returns></returns>
         [HttpGet]
-        public IEnumerable<SearchResult> GetDisksByTiporazmer(string pointId, string tiporazmer)
+        public IEnumerable<DiskSearchResult> GetDisksByTiporazmer(string pointId, string tiporazmer)
         {
-            DisksPodborView podborModel = new DisksPodborView();
+            var podborModel = new DisksPodborView {FromRests=true,FromOnWay=false };
+
+            podborModel.FillFromTiporazmer(tiporazmer);
 
             return _productService.GetDisks(podborModel, Int32.Parse(pointId), false,0);
              
+        }
+
+        /// <summary>
+        ///  API подбора по авто по типоразмеру шин
+        /// </summary>
+        /// <param name="pointId"></param>
+        /// <param name="tiporazmer"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<TyreSearchResult> GetTyresByTiporazmer(string pointId, string tiporazmer)
+        {
+            var podborModel = new TyresPodborView();
+
+            podborModel.FillFromTiporazmer(tiporazmer);
+
+            return _productService.GetTyres(podborModel, Int32.Parse(pointId));
+
         }
 
 

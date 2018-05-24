@@ -28,6 +28,13 @@ namespace YstProject.Services
         };
 
 
+        public struct PodborsSettings
+        {
+            public static int DefaultnumberToOrder = 1;
+            public static string TyrePattern = @"^(.*)\/(.*)\s*R(.*)$";
+            public static string DiskPattern = @"^(.*)x(.*)\/(.*)x(.*)\s+ET(.*)\s+D(.*)$";
+        }
+
         public struct CacheSettings {
             public static string KeyDisks = "podbor.disks";
             public static string KeyTyres = "podbor.tyres";

@@ -7,20 +7,21 @@ using System.Threading.Tasks;
 namespace Term.Utils
 {
 
-   
-    
-    
+
+
+
 
     /// <summary>
     /// helper class for wrking with strings
     /// </summary>
-    public static  class StringUtils
-        
+    public static class StringUtils
+
     {
         private static readonly double EtMinValue = -30;
+        private static Char space = ' ';
         public static double ToDouble(this string str)
         {
-            if (string.IsNullOrEmpty(str))  return EtMinValue;
+            if (string.IsNullOrEmpty(str)) return EtMinValue;
 
             double d;
 
@@ -30,7 +31,9 @@ namespace Term.Utils
         }
 
 
-        private static Char space = ' ';
+        public static string ProductIdTo7Symbols(this int productId) { return productId.ToString().PadLeft(7, '0'); }
+
+
         public static int GetProductId(string code)
         {
             return Int32.Parse(code.TrimStart('0'));
