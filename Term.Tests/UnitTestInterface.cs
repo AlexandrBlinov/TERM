@@ -16,7 +16,7 @@ namespace UnitTestProject1
     public class UnitTestInterface
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestMethodLoggerDependency__ReturnsTemp()
         {
             ILoggerDependency loggerDependency =
     Mock.Of<ILoggerDependency>(d => d.GetCurrentDirectory() == "D:\\Temp");

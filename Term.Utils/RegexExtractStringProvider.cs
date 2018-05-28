@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using Term.DAL;
 
 namespace Term.Utils
 {
@@ -44,6 +45,29 @@ namespace Term.Utils
                 
             return result.ToArray();
         }
+
+
+        
+        
+        /// <summary>
+        /// Возвращает массив строк из строки + регулярное выражение split
+        /// </summary>
+        /// <param name="tiporazmer"></param>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        public static string[] GetParametersFromTiporazmer(string tiporazmer, string pattern)
+        {
+            tiporazmer = Regex.Replace(tiporazmer, @"\s+", " ");         
+            RegexOptions regexOptions = RegexOptions.IgnoreCase;
+            Regex regex = new Regex(pattern,  regexOptions);
+            string inputData = tiporazmer.Trim();
+            string[] result = regex.Split(inputData).Where(res=>!String.IsNullOrEmpty(res)).ToArray();
+            return result;
+                       
+            
+        }
+
+        
 
     }
 }

@@ -176,7 +176,7 @@ namespace Term.Web.Controllers
         public ActionResult DoError()
         {
             throw new NotImplementedException("Something goes wrong");
-            return View();
+           
         }
         
      /*   public ActionResult PassToForm() {

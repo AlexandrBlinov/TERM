@@ -33,6 +33,7 @@ namespace YstTerm.Models
     /// <summary>
     /// Select all tiporazmers by car
     /// </summary>
+     [DataContract(Namespace = "", Name = "tiporazmer")]
     public class TiporazmerByCarModelView
     {
         private int _beginYear, _endYear, _mode, _profile;
@@ -49,6 +50,7 @@ namespace YstTerm.Models
             _dia = carRecord.Dia; _rearwidth = carRecord.RearWidth; _rearet = carRecord.RearET; _reardiameter = carRecord.RearDiameter; _rearprofile = carRecord.RearProfile; _bolts = carRecord.Bolts; _isbolts = carRecord.IsBolts;
         }
 
+        [DataMember]
         public string Tiporazmer
         {
             get
@@ -57,21 +59,18 @@ namespace YstTerm.Models
                 ProductType == ProductType.Tyre ? String.Format("{0}/{1}R{2}", _width, _profile, _diameter) : String.Format(CultureInfo.InvariantCulture, "{0}x{1}/{2}x{3} ET{4} D{5}", _width, _diameter, _pcdc, _pcdd, _et, _dia);
 
             }
+            private set
+            { }
         }
 
         public string TiporazmerRear
         {
             get
             {
-                if (_rearprofile == null && _rearet == null)
-                {
-                    return String.Empty;
-                }
-                else
-                {
-                    return
-                    ProductType == ProductType.Tyre ? String.Format("{0}/{1}R{2}", _rearwidth, _rearprofile, _reardiameter) : String.Format(CultureInfo.InvariantCulture, "{0}x{1}/{2}x{3} ET{4} D{5}", _rearwidth, _reardiameter, _pcdc, _pcdd, _rearet, _dia);
-                }
+                if (_rearprofile == null && _rearet == null) return String.Empty;
+                
+                else return ProductType == ProductType.Tyre ? String.Format("{0}/{1}R{2}", _rearwidth, _rearprofile, _reardiameter) : String.Format(CultureInfo.InvariantCulture, "{0}x{1}/{2}x{3} ET{4} D{5}", _rearwidth, _reardiameter, _pcdc, _pcdd, _rearet, _dia);
+                
             }
         }
         //public string ProdType { get { return _productType; } }
@@ -168,14 +167,8 @@ namespace YstTerm.Models
         public int ProductId { get; set; }
         public int Count { get; set; }
 
-        public string ProductIdTo7Simbols
-        {
-            get
-            {
-                return (ProductId.ToString().PadLeft(7, '0'));
-
-            }
-        }
+        public string ProductIdTo7Simbols => ProductId.ProductIdTo7Symbols();
+        
     }
 
     /// <summary>
@@ -232,62 +225,63 @@ namespace YstTerm.Models
     }
 
 
+    
+    /// для сериализации в api
+    [DataContract(Namespace ="")]
+
     /// <summary>
     /// Base class for search results of all types
     /// </summary>
     public class SearchResult
     {
-     
+
+        [DataMember]
         public string ProducerName { get; set; }
 
+        [DataMember]
         public string Article { get; set; }
-     
+
+        [DataMember]
         public int ProductId { get; set; }
 
+       [DataMember]
         public int DepartmentId { get; set; }
 
+        [DataMember]
         public int DaysToDepartment { get; set; }
 
+       [DataMember]
         public string ProductType { get; set; }
 
-        public string ProductIdTo7Simbols
-        {
-            get
-            {
-                return (ProductId.ToString().PadLeft(7, '0'));
-            }
-        }
+        public string ProductIdTo7Simbols => ProductId.ProductIdTo7Symbols();
+
 
         // наименование товара
+        [DataMember]
         public string Name { get; set; }
 
         // остаток
+        [DataMember]
         public int Rest { get; set; }
-        
+
 
         // остаток на другом складе (если склад не привязан, то 0 )
+      //  [DataMember]
         public int RestOtherStock { get; set; }
 
         [Range(0, 99)]
         [StringLength(4)]
         
-        public virtual int DefaultNumberToOrder
-        {
-            get
-            {            
-
-                return 1;
-
-            }
-        }
-
+        public virtual int DefaultNumberToOrder => Defaults.PodborsSettings.DefaultnumberToOrder;
+        
         
         public int OrderCount { get; set; }
 
+        [DataMember]
         [DisplayName("Цена входная")]
         public decimal? Price { get; set; }
 
-        
+        [DataMember]
         [DisplayName("Цена клиента")]
         public decimal? PriceOfClient
         { get; set; }
@@ -313,14 +307,8 @@ namespace YstTerm.Models
 
         public int CountPhoto { get; set; }
 
-        public virtual string PathToImage
-        {
-            get
-            {
-                return ProductId.ToString().PadLeft(7, '0');
-       
-            }
-        }
+        public virtual string PathToImage => ProductId.ProductIdTo7Symbols();
+        
     }
 
 
@@ -355,10 +343,13 @@ namespace YstTerm.Models
     /// <summary>
     /// Search result for disks
     /// </summary>
+    [DataContract(Namespace = "", Name = "DiskSearchResult")]
     public class DiskSearchResult :SearchResult
     {
+        [DataMember]
         public int? ProducerId { get; set; }
 
+       
         public string Width { get; set; }
 
         public string PCD { get; set; }
@@ -377,33 +368,22 @@ namespace YstTerm.Models
         {
             Factory = String.Empty;
         }
-
+        [DataMember]
         public bool IsSaleProduct
         {
             get;
             set;
         }
 
-        public override int DefaultNumberToOrder
-        {
-            get
-            {
-                return 4;
-            }
-        }
+        public override int DefaultNumberToOrder => 4;
+        
         public string Factory { get; set; }
 
-        public override string PathToImage
-        {
-            get
-            {
-                
-                    return PictureUtility.GetPictureOfThumbnailForDisk(this.ProducerId, this.ModelName, this.Name,this.ProductId);
-               
-                
-            }
-        }
+        [DataMember]
+        public override string PathToImage =>    PictureUtility.GetPictureOfThumbnailForDisk(this.ProducerId, this.ModelName, this.Name, this.ProductId);
 
+
+        [DataMember]
         public WheelType WheelType { get; set; }
     }
 
@@ -498,6 +478,8 @@ namespace YstTerm.Models
         public Display DisplayView { get; set; }
 
         public bool OnlySale { get; set; }
+
+        public virtual void FillFromTiporazmer(string tiporazmer) { }
     }
 
 
@@ -515,8 +497,6 @@ namespace YstTerm.Models
     public class TyresPodborView : CommonPodborView
     {
 
-
-        
         private static  SelectList GetSeasons()
         {
             var nvc = new NameValueCollection { { "winter", ForSearchResult.Winter }, 
@@ -524,11 +504,10 @@ namespace YstTerm.Models
             { "allseason", ForSearchResult.Allseason } };
             return new SelectList(nvc.AllKeys.SelectMany(nvc.GetValues, (x, y) => new { SeasonId = x, SeasonName = y }).ToList(), "SeasonId", "SeasonName");
 
-
         }
     
    
-          private static readonly SelectList _seasons = GetSeasons();
+        private static readonly SelectList _seasons = GetSeasons();
 
 
 
@@ -549,8 +528,7 @@ namespace YstTerm.Models
         {
             get
             {
-                for (int i = 135; i <= 325; i = i + 10)
-                    yield return i.ToString();
+                for (int i = 135; i <= 325; i = i + 10) yield return i.ToString();
             }
 
         }
@@ -575,6 +553,20 @@ namespace YstTerm.Models
 
         public SelectList Seasons { get { return _seasons; } }
         public bool IsSet4Items { get; set; }
+
+        /// <summary>
+        /// Заполнить параметры из типоразмера
+        /// </summary>
+        /// <param name="tiporazmer"></param>
+        public override void FillFromTiporazmer(string tiporazmer)
+        {
+            var pattern =Defaults.PodborsSettings.TyrePattern;
+            var parameters = RegexExtractStringProvider.GetParametersFromTiporazmer(tiporazmer, pattern);
+            this.Width = parameters[0];
+            this.Height = parameters[1];
+            this.Diametr = parameters[2];
+            
+        }
     }
 
     /// <summary>
@@ -694,9 +686,24 @@ namespace YstTerm.Models
         public IEnumerable<ReplicaDisksForCars> CarsList
         { get; set; }
 
+       public override  void FillFromTiporazmer(string tiporazmer )
+        {
+            var parameters = RegexExtractStringProvider.GetParametersFromTiporazmer(tiporazmer,Defaults.PodborsSettings.DiskPattern);
+            this.Width = parameters[0];
+            this.Diametr = parameters[1];
+            this.Hole =Int32.Parse(parameters[2]);
+            this.PCD = parameters[3];
+            this.ET = parameters[4];
+            this.DIA = parameters[5];
+
+        }
+        
+
     }
 
-
+    /// <summary>
+    /// Модель подбора для других товаров
+    /// </summary>
     public class OthersPodborView : CommonPodborView
     {
 
@@ -1208,10 +1215,11 @@ namespace YstTerm.Models
         private string _size;
         private static string _directconnection = "п.п.";
         private static string _reverseconnection = "о.п.";
-        public override string PathToImage
+        public override string PathToImage  
         {
             get
             {
+                //return ProductId.ProductIdTo7Symbols;
                 return ProductId.ToString().PadLeft(7, '0');
             }
         }
