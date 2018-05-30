@@ -104,10 +104,8 @@ namespace YstTerm.Models
         {
             get
             {
-                if (_rearprofile == null && _rearet == null)
-                {
-                    return String.Empty;
-                }
+                if (_rearprofile == null && _rearet == null) return String.Empty;
+
                 else
                 {
                     var tag = new TagBuilder("a");
@@ -129,26 +127,19 @@ namespace YstTerm.Models
         {
             get
             {
-                if (_rearprofile == null && _rearet == null)
-                {
-                    return String.Empty;
-                }
+                if (_rearprofile == null && _rearet == null) return String.Empty;
+
+
                 else
                 {
                     var tag = new TagBuilder("a");
                     tag.AddCssClass("a_text a_spark glyphicon glyphicon-refresh");
                     tag.InnerHtml = " ";
                     tag.MergeAttribute("title", "спарка");
-                    if (ProductType == ProductType.Tyre)
-                    {
-                        tag.MergeAttribute("href", String.Format(CultureInfo.InvariantCulture, "/Home/SparTyres/{0}/{1}/{2}/{3}/{4}/{5}", _width, _rearwidth, _profile, _rearprofile, _diameter, _reardiameter));
-
-                    }
-                    else
-                    {
-                        tag.MergeAttribute("href", String.Format(CultureInfo.InvariantCulture, "/Home/SparDisks/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/", _width, _rearwidth, _diameter, _reardiameter, _pcdc, _pcdc, _pcdd, _pcdd, _et, _rearet, _dia, _dia));
-                    }
-
+                    if (ProductType == ProductType.Tyre) tag.MergeAttribute("href", String.Format(CultureInfo.InvariantCulture, "/Home/SparTyres/{0}/{1}/{2}/{3}/{4}/{5}", _width, _rearwidth, _profile, _rearprofile, _diameter, _reardiameter));
+                    
+                    else tag.MergeAttribute("href", String.Format(CultureInfo.InvariantCulture, "/Home/SparDisks/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}/{8}/{9}/{10}/{11}/", _width, _rearwidth, _diameter, _reardiameter, _pcdc, _pcdc, _pcdd, _pcdd, _et, _rearet, _dia, _dia));
+                    
                     return tag.ToString();
                 }
 
@@ -225,15 +216,16 @@ namespace YstTerm.Models
     }
 
 
-    
+
     /// для сериализации в api
-    [DataContract(Namespace ="")]
+    [DataContract(Namespace = "")]
 
     /// <summary>
     /// Base class for search results of all types
     /// </summary>
     public class SearchResult
     {
+        protected string _pathToImage;
 
         [DataMember]
         public string ProducerName { get; set; }
@@ -244,13 +236,13 @@ namespace YstTerm.Models
         [DataMember]
         public int ProductId { get; set; }
 
-       [DataMember]
+        [DataMember]
         public int DepartmentId { get; set; }
 
         [DataMember]
         public int DaysToDepartment { get; set; }
 
-       [DataMember]
+        [DataMember]
         public string ProductType { get; set; }
 
         public string ProductIdTo7Simbols => ProductId.ProductIdTo7Symbols();
@@ -266,15 +258,15 @@ namespace YstTerm.Models
 
 
         // остаток на другом складе (если склад не привязан, то 0 )
-      //  [DataMember]
+        //  [DataMember]
         public int RestOtherStock { get; set; }
 
         [Range(0, 99)]
         [StringLength(4)]
-        
+
         public virtual int DefaultNumberToOrder => Defaults.PodborsSettings.DefaultnumberToOrder;
-        
-        
+
+
         public int OrderCount { get; set; }
 
         [DataMember]
@@ -307,7 +299,11 @@ namespace YstTerm.Models
 
         public int CountPhoto { get; set; }
 
-        public virtual string PathToImage => ProductId.ProductIdTo7Symbols();
+        [DataMember]
+        public virtual string PathToImage {
+           get { return ProductId.ProductIdTo7Symbols(); }
+            set { }
+          }
         
     }
 
@@ -325,17 +321,13 @@ namespace YstTerm.Models
 
         public override int DefaultNumberToOrder
         {
-            get
-            {
-                return 4;
-            }
+            get => Defaults.PodborsSettings.DefaultnumberToOrderTyres;
+            
         }
         public override string PathToImage
-        {
-            get
-            {
-                 return (ModelId.HasValue ? ModelId.ToString().PadLeft(5, '0') : String.Empty);
-            }
+        {           
+            get => ModelId?.ToString().PadLeft(5, '0');
+            set { }
         }
     
     }
@@ -369,22 +361,24 @@ namespace YstTerm.Models
             Factory = String.Empty;
         }
         [DataMember]
-        public bool IsSaleProduct
-        {
-            get;
-            set;
-        }
+        public bool IsSaleProduct     {get; set;}
 
-        public override int DefaultNumberToOrder => 4;
+        public override int DefaultNumberToOrder => Defaults.PodborsSettings.DefaultnumberToOrderTyres;
         
-        public string Factory { get; set; }
+        public string Factory {get; set; }
 
         [DataMember]
-        public override string PathToImage =>    PictureUtility.GetPictureOfThumbnailForDisk(this.ProducerId, this.ModelName, this.Name, this.ProductId);
+        public override string PathToImage
+        {
+            get=>  PictureUtility.GetPictureOfThumbnailForDisk(this.ProducerId, this.ModelName, this.Name, this.ProductId);  
+            set { }
+        }
 
 
         [DataMember]
         public WheelType WheelType { get; set; }
+
+       
     }
 
       

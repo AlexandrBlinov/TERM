@@ -33,6 +33,7 @@ namespace YstProject.Services
             public static int DefaultnumberToOrder = 1;
             public static string TyrePattern = @"^(.*)\/(.*)\s*R(.*)$";
             public static string DiskPattern = @"^(.*)x(.*)\/(.*)x(.*)\s+ET(.*)\s+D(.*)$";
+            public static int DefaultnumberToOrderTyres=4;
         }
 
         public struct CacheSettings {
@@ -56,6 +57,8 @@ namespace YstProject.Services
         {
             public static readonly string NoImage = "'/Content/img/catalog-no-image-small-box.png'";
         }
+
+        
 
 
         public static readonly string JuangsuCode = "91535";
