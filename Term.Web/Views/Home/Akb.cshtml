@@ -21,7 +21,7 @@
     @Html.Hidden("SortBy", Model.SortBy)
     @Html.Hidden("DisplayView", Model.DisplayView)
     <div class="row border-form-podbor akb-banners">
-        <a class="warranty-sheet__link" href="~/Content/img/instruction-akb.jpg">Гарантийный талон</a>
+        <a class="warranty-sheet__link hidden-xs hidden-sm hidden-md" href="~/Content/img/instruction-akb.jpg">Гарантийный талон</a>
         <img class="podbor-tyres-title-img" alt="@ForSearchResult.ChooseBattery" src="~/Content/img/img-akb-podbor.png"/> <span class="podbor-tyres-title">@ForSearchResult.ChooseBattery</span>
         @{Html.RenderPartial("_AkbSpecialOffer");}
     </div>
@@ -31,17 +31,17 @@
         @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
     </div>
     <div class="row m-t-15">
-        <div class="col-xs-9 ">
+        <div class="col-xs-12 col-sm-9">
             <span class="podbor-tyres-param">@ForSearchResult.Param</span>
         </div>
-        <div class="col-xs-3">
+        <div class="col-sm-3 hidden-xs">
             <span class="podbor-tyres-param">@ForSearchResult.Price</span>
         </div>
     </div>
 
     <!------------------------------>
     <div class="row">
-        <div class="col-xs-9">
+        <div class="col-xs-12 col-sm-9">
             <div class="row m-t-15">
                 <div class="col-xs-12 col-md-4 m-b-10">
                     @*Html.DropDownListFor(p => p.Brand, new SelectList(Model.Brands), @ForSearchResult.Brand, new {@class = "form-control", @multiple = "multiple"}) *@
@@ -75,7 +75,7 @@
                     </div>
                 </div>
             </div>
-        <div class="col-xs-3">
+        <div class="col-sm-3 hidden-xs">
             <div class="form-inline m-t-15">
                 <div class="form-group">
                     @ForSearchResult.From <input type="text" class="form-control input-price-range m-b-10" id="price-slider-min" /> &mdash;
@@ -134,7 +134,7 @@
 </div>
 
 <div class="row m-t-15">
-    <div class="col-xs-8">
+    <div class="col-xs-12 col-sm-8  m-b-10">
 
         <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
 
@@ -260,16 +260,14 @@
         </div>
 
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-sm-4  m-b-10">
         <div class="row">
-            <div class="col-xs-4">
-
-            </div>
-            <div class="col-xs-8">
+            <div class="col-xs-12">
                 <div class="psevdo-select">
-                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
-                    @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @class = "form-control" })
+                    <label for="ItemsPerPageForm">@ForSearchResult.PerPage:</label>
+                    @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @id = "ItemsPerPageForm", @class = "form-control" })
                 </div>
+
             </div>
         </div>
     </div>
@@ -277,84 +275,57 @@
 
 
 
+<section class="data-table products-list addon">
+    <div class="thead hidden-xs row">
 
+        <div class="col-sm-1">@ForSearchResult.Photo</div>
+        <div class="col-sm-1">@ForSearchResult.StockNumber</div>
+        <div class="col-sm-3 product-name">  @ForSearchResult.Name</div>
+        <div class="col-sm-1">@ForSearchResult.Amount</div>
 
-<table class="data-table">
-    <thead>
-    <tr>
-        <th>@ForSearchResult.Photo</th>
-        <!--<th>№</th>-->
-        <th>@ForSearchResult.StockNumber</th>
-        <th class="product-name">
-            @ForSearchResult.Name
-        </th>
-        <th>
-            @ForSearchResult.Amount
-        </th>
-        <th>
-            @ForSearchResult.DeliveryTime
-        </th>
-        <th>
-            @ForSearchResult.Price
-        </th>
-        <th class="product-count">@ForSearchResult.Available</th>
-        <th>@ForSearchResult.Action</th>
-    </tr>
-    </thead>
+        <div class="col-sm-1">@ForSearchResult.DeliveryTime</div>
+        <div class="col-sm-1">@ForSearchResult.Price</div>
+        <div class="col-sm-2">@ForSearchResult.Available</div>
+        <div class="col-sm-1">@ForSearchResult.Action</div>
 
-
+    </div>
     @foreach (var item in Model.SearchResults as IPagedList<AkbSearchResult>)
     {
-        <tr>
-            <td>
+        <div class="products-list-item row">
+            <div class="col-sm-1 products-list-item__cell">
                 @{
                     string saleImgClass = item.IsSaleProduct ? "sale-img" : "";
                 }
                 <span class="@saleImgClass"></span>
                 <a class="fancybox-btn" href="@Html.FullPathToImage("akb", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("akb", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
 
-            </td>
-            <!--<td>
-                @*Html.DisplayFor(modelItem => item.row_number) *@
-            </td> -->
-            <td>
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
                 @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
-            </td>
-            <td>
-                @Html.ActionLink(item.Name, "Details", new {id = item.ProductId}, new {@id = "ProductName-" + @item.ProductId, @class = "data-table-a-text"})
-            </td>
-            @if (item.Rest != 50)
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rest)
-                </td>
-            }
-            else
-            {
-                <td>
-                    > @Html.DisplayFor(modelItem => item.Rest)
-                </td>
-            }
-            <td>
+            </div>
+            <div class="col-sm-3 product-name products-list-item__cell">
+                @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @{var restMainStock = String.Format("{0}", item.Rest == 50 ? ">50" : item.Rest.ToString());}
+                @restMainStock
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
                 @Html.DisplayFor(modelItem => item.DaysToDepartment) @ForSearchResult.Days
-            </td>
-
-            <td>
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
                 @Html.Price3((decimal)(item.PriceOfClient ?? 0))
-            </td>
-
-            <td>
-                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new {@id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200})
-
-            </td>
-            <td>
+            </div>
+            <div class="col-sm-2 products-list-item__cell">
+                @Html.TextBox("DefaultNumberToOrder", @item.DefaultNumberToOrder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "number", @min = 1, @max = 200 })
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
                 <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,@item.SupplierId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-            </td>
-        </tr>
+            </div>
+        </div>
     }
-
-</table>
+</section>
 
 
 <div class="row m-t-15">

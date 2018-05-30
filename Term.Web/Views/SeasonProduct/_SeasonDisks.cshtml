@@ -6,62 +6,54 @@
 
 
 <div>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>@ForSearchResult.Photo</th>
-                <th class="p-l-25">@ForSearchResult.StockNumber</th>
-                <th>@ForSearchResult.Name</th>
-                <th>@ForSearchResult.Factory</th>
-                <th>@ForSearchResult.Price</th>
-                <th class="product-count">@ForSearchResult.Available</th>
-                <th>@ForSearchResult.Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{int counter = @Model.SearchResults.FirstItemOnPage;}
-            @foreach (var item in Model.SearchResults as IPagedList<DiskSearchResult>)
-            {
-                int numbertoorder = item.DefaultNumberToOrder;
-                if (Model.IsForeign)
-                { numbertoorder = Model.WheelType == WheelType.Steel ? numbertoorder = 200 : 4; }
+    <section class="data-table products-list addon">
+        <div class="thead hidden-xs row">
+            <div class="col-sm-1">№</div>
+            <div class="col-sm-1">@ForSearchResult.Photo</div>
+            <div class="col-sm-1">@ForSearchResult.StockNumber</div>
+            <div class="col-sm-3 product-name">  @ForSearchResult.Name</div>
+            <div class="col-sm-1">@ForSearchResult.Factory</div>
+            <div class="col-sm-1">@ForSearchResult.Price</div>
+            <div class="col-sm-2">@ForSearchResult.Available</div>
+            <div class="col-sm-1">@ForSearchResult.Action</div>
+        </div>
+        @{int counter = @Model.SearchResults.FirstItemOnPage;}
+        @foreach (var item in Model.SearchResults as IPagedList<DiskSearchResult>)
+    {
+        int numbertoorder = item.DefaultNumberToOrder;
+        if (Model.IsForeign)
+        { numbertoorder = Model.WheelType == WheelType.Steel ? numbertoorder = 200 : 4; }
 
-                <tr>
-                    <td>
-                        @(counter++)
-                    </td>
-                    <td>
-                        <a class="fancybox-btn" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
-                    </td>
-                    <td class="p-l-25">
-                        @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.Name, "Details", "Home", new {id = item.ProductId}, new {@id = "ProductName-" + @item.ProductId, @class = "data-table-a-text"})
-                    </td>
-                    
-                    <td>@(((DiskSearchResult)item).Factory)</td>
-                    <td>
-                        @Html.Price(item.Price ?? 0)
-                       
-                    </td>
-
-                    <td>
-                        @Html.TextBox("DefaultNumberToOrder", @numbertoorder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_seasoncart form-control touchspih-podbor-number", @type = "text", @min = @numbertoorder })
-
-                    </td>
-
-                    <td>
-                        <a href="javascript:AddToSeasonCart(@item.ProductId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                        <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                    </td>
-
-
-                </tr>
-            }
-        </tbody>
-    </table>
+        <div class="products-list-item row">
+            
+            <div class="col-sm-1 products-list-item__cell">
+                @(counter++)
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                <a class="fancybox-btn" href="@Html.FullPathToImage("disk", item.PathToImage)" data-title="@item.Name"><img src="@Html.ThumbnailNew("disk", item.PathToImage)" alt="@item.Name" class="min_img" onerror="this.onerror = null; this.src = '/content/img/no-photo.jpg';"></a>
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @Html.DisplayFor(modelItem => item.ProductIdTo7Simbols)
+            </div>
+            <div class="col-sm-3 product-name products-list-item__cell">
+                @Html.ActionLink(item.Name, "Details", "Home", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @(((DiskSearchResult)item).Factory)
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @Html.Price(item.Price ?? 0)
+            </div>
+            <div class="col-sm-2 products-list-item__cell">
+                @Html.TextBox("DefaultNumberToOrder", @numbertoorder, new { @id = "order-" + @item.ProductId, @class = "count_add_to_seasoncart form-control touchspih-podbor-number", @type = "text", @min = @numbertoorder })
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                <a href="javascript:AddToSeasonCart(@item.ProductId);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+            </div>
+        </div>
+}
+    </section>
 
 </div>
 

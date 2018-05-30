@@ -401,10 +401,6 @@
     <Compile Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.Designer.cs">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805170910089_Operator_AddedToPartner.cs" />
-    <Compile Include="Migrations\201805170910089_Operator_AddedToPartner.Designer.cs">
-      <DependentUpon>201805170910089_Operator_AddedToPartner.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\ClaimsViewModels.cs" />
     <Compile Include="Models\DeliveryViewModels.cs" />
     <Compile Include="Models\FakeViewModels.cs" />
@@ -692,6 +688,7 @@
     <Content Include="Content\fancybox\fancybox_sprite%402x.png" />
     <Content Include="Content\fancybox\fancybox_sprite.png" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\assortiment.jpg" />
     <Content Include="Content\img\email.svg" />
     <Content Include="Content\img\icq.svg" />
     <Content Include="Content\img\03490.jpg" />
@@ -1282,9 +1279,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709281315498_PriceIsPrepay2_AddedTocart.resx">
       <DependentUpon>201709281315498_PriceIsPrepay2_AddedTocart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201805170910089_Operator_AddedToPartner.resx">
-      <DependentUpon>201805170910089_Operator_AddedToPartner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

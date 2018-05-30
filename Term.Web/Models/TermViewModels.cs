@@ -565,7 +565,7 @@ namespace YstTerm.Models
                 for (int i = 12; i <= 22; i++)
                 {
                     yield return i.ToString();
-                    if (i == 12 || i == 13 || i == 14 || i == 15 || i == 16)
+                    if (i == 12 || i == 13 || i == 14 || i == 15 || i == 16 || i == 17)
                         yield return String.Format("{0}C", i);
                 }
             }
