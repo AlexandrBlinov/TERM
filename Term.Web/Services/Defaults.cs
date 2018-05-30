@@ -33,6 +33,7 @@ namespace YstProject.Services
             public static int DefaultnumberToOrder = 1;
             public static string TyrePattern = @"^(.*)\/(.*)\s*R(.*)$";
             public static string DiskPattern = @"^(.*)x(.*)\/(.*)x(.*)\s+ET(.*)\s+D(.*)$";
+            public static int DefaultnumberToOrderTyres=4;
         }
 
         public struct CacheSettings {
