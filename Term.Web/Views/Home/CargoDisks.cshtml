@@ -26,31 +26,24 @@
     @Html.Hidden("Brands", Model.Brands)
     <div class="row border-form-podbor">
         <img class="podbor-tyres-title-img" src="~/Content/img/img-disks-podbor.png" /> <span class="podbor-tyres-title">@ForSearchResult.ChooseDisks</span>
-        <a class="a-clear-param" name="clear" href="#">@ForSearchResult.ClearAll <img src="~/Content/img/clear-param.png" /></a>
-        <a href="@Url.Action("Disks", "Home")" class="btn change-cargo-or-all-wheels"><span class="link_item-dashed @(Model.CargoWheels ? "" : "active")">@Header.AllWheels</span></a>
-        <a href="@Url.Action("CargoDisks", "Home")" class="btn change-cargo-or-all-wheels"><span class="link_item-dashed @(Model.CargoWheels ? "active" : "")">@Header.CargoWheels</span></a>
+        <a class="a-clear-param hidden-xs" name="clear" href="#">@ForSearchResult.ClearAll <img src="~/Content/img/clear-param.png" /></a>
+        <a href="@Url.Action("Disks", "Home")" class="btn change-cargo-or-all-wheels hidden-xs"><span class="link_item-dashed @(Model.CargoWheels ? "" : "active")">@Header.AllWheels</span></a>
+        <a href="@Url.Action("CargoDisks", "Home")" class="btn change-cargo-or-all-wheels hidden-xs"><span class="link_item-dashed @(Model.CargoWheels ? "active" : "")">@Header.CargoWheels</span></a>
     </div>
     <div class="row m-t-15">
 
         @{Html.RenderPartial("_SearchFieldbyCodeArticleOrName", Model);}
     </div>
+    
     <div class="row m-t-15">
-
-        <div class="col-xs-6">
-            <span class="podbor-tyres-param">@ForSearchResult.ProducerName</span>
-        </div>
-        <div class="col-xs-3">
-            <span class="podbor-tyres-param">@ForSearchResult.Param</span>
-        </div>
-        <div class="col-xs-3">
-            <span class="podbor-tyres-param">@ForSearchResult.Price</span>
-        </div>
-    </div>
-    <div class="row m-t-15">
-        <div class="col-xs-6">
-
-            <div id="Brands" class="row">
-                @foreach (var producer in Model.Producers)
+        <div class="col-xs-12 col-sm-6">
+            <div class="row">
+                <div class="col-xs-12 m-b-20">
+                    <span class="podbor-tyres-param">@ForSearchResult.ProducerName</span>
+                </div>
+            </div>
+            <div id="Brand" class="row">
+                 @foreach (var producer in Model.Producers)
                 {
                     var brands = Model.Brands != null ? Model.Brands.Split(',') : String.Empty.Split(',');
                     var isChecked = Array.IndexOf(brands, producer.ProducerId.ToString()) != -1 ? " checked" : "";
@@ -61,9 +54,12 @@
                 }
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-12 col-sm-3">
 
             <div class="row">
+                <div class="col-xs-12 m-b-20">
+                    <span class="podbor-tyres-param">@ForSearchResult.Param</span>
+                </div>
                 <div class="col-xs-6 form-disk-podbor-select">
                     @Html.DropDownListFor(p => p.Width, new SelectList(Model.Widths), @ForSearchResult.Width, new { @class = "form-control" })
                 </div>
@@ -86,8 +82,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-3">
-
+        <div class="col-sm-3 hidden-xs">
+            <div class="row">
+                <div class="col-xs-12 m-b-20">
+                    <span class="podbor-tyres-param">@ForSearchResult.Price</span>
+                </div>
+            </div>
             <div class="form-inline">
                 <div class="form-group">
                     @ForSearchResult.From <input type="text" class="form-control input-price-range" id="price-slider-min" /> &mdash;
@@ -171,7 +171,7 @@ new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkTo
 </div>
 
 <div class="row m-t-15">
-    <div class="col-xs-8">
+    <div class="col-xs-12 col-sm-8  m-b-10">
 
         <span class="radio-label-span">@ForSearchResult.SortBy:&nbsp;&nbsp;&nbsp;</span>
 
@@ -340,16 +340,16 @@ new PagedListRenderOptions { LinkToFirstPageFormat = String.Format("<<"), LinkTo
             </div>
         }
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-12 col-sm-4  m-b-10">
         <div class="row">
             <div class="col-xs-8">
                 <div class="psevdo-select">
-                    <label for="ItemsPerPage">@ForSearchResult.PerPage:</label>
+                    <label for="ItemsPerPageForm">@ForSearchResult.PerPage:</label>
                     @Html.DropDownListFor(p => p.ItemsPerPage, HtmlElements.ListItemsPerPage(200, 50), null, new { @id = "ItemsPerPageForm", @class = "form-control" })
                 </div>
 
             </div>
-            <div class="col-xs-4">
+            <div class="col-sm-4 hidden-xs">
                 <div class="btn-group form-podbor-change-view" role="group">
                     <div id="table" class="btn btn-default @(Model.DisplayView == Display.Table ? "active" : "")">
                         @Html.ActionLink(" ", "CargoDisks", new

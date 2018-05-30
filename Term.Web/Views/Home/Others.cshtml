@@ -38,7 +38,7 @@ else
     <div class="row">
         @Html.Hidden("OthersType", Model.OthersType)
         @Html.Hidden("Folder", Model.Folder)
-        <div class="col-xs-3 col-md-3">
+        <div class="col-xs-12 col-md-3 m-t-15">
             <div class="input-group">
                 <input class="form-control" data-val="true" name="Name" placeholder="Код или наименование" type="text" value="@Model.Name">
                 <div class="input-group-btn">
@@ -46,28 +46,26 @@ else
                 </div>
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-12 col-md-3 m-t-15">
             @Html.DropDownListFor(p => p.DepartmentId, new SelectList(Model.Departments, "DepartmentId", "Name", Defaults.MainDepartment), new { @class = "form-control" })
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-12 col-md-3 m-t-15">
             @Html.DropDownListFor(p => p.Width, new SelectList(Model.Widths), @ForSearchResult.SizeOther_1, new { @class = "form-control" })
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-12 col-md-3 m-t-15">
             @Html.DropDownListFor(p => p.Diametr, new SelectList(Model.Diametrs), @ForSearchResult.SizeOther_2, new { @class = "form-control" })
         </div>
     </div>
 
-    <div class="row m-t-15">
-        <div class="col-xs-3 col-md-3">
-            <div class="checkbox-inline">
+    <div class="row">
+            <div class="col-xs-12 col-md-2 m-t-15">
                 @Html.BasicCheckBoxFor(p => p.FromRests, new { @class = "checkbox-form-podbor" })
                 <label class="checkbox-form-podbor-label" for="FromRests">&nbsp;@ForSearchResult.FromStock</label>
             </div>
-            <div class="checkbox-inline">
+            <div class="col-xs-12 col-md-2 m-t-15">
                 @Html.BasicCheckBoxFor(p => p.FromOnWay, new { @class = "checkbox-form-podbor" })
                 <label class="checkbox-form-podbor-label" for="FromOnWay">&nbsp;@ForSearchResult.FromOnWay</label>
             </div>
-        </div>
 
     </div>
     <div class="row text-center border-form-podbor m-t-15">
@@ -77,64 +75,49 @@ else
 
 
 <div>
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>
-                    @ForSearchResult.StockNumber
-                </th>
-                <th class="product-name">
-                    @ForSearchResult.Name
-                </th>
-                <th>
-                    @ForSearchResult.Amount
-                </th>
-                <th>
-                    @ForSearchResult.DeliveryTime
-                </th>
-                <th>
-                    @ForSearchResult.Price
-                </th>
-                <th class="product-count">@ForSearchResult.Available</th>
-                <th>@ForSearchResult.Action</th>
-            </tr>
-        </thead>
+    <section class="data-table products-list addon">
+        <div class="thead hidden-xs row">
+            <div class="col-sm-1">@ForSearchResult.StockNumber</div>
+            <div class="col-sm-4 product-name">  @ForSearchResult.Name</div>
+            <div class="col-sm-1">@ForSearchResult.Amount</div>
+
+            <div class="col-sm-1">@ForSearchResult.DeliveryTime</div>
+            <div class="col-sm-1">@ForSearchResult.Price</div>
+            <div class="col-sm-2">@ForSearchResult.Available</div>
+            <div class="col-sm-1">@ForSearchResult.Action</div>
+
+        </div>
         @{int counter = @Model.SearchResults.FirstItemOnPage;}
-        <tbody>
-            @foreach (var item in Model.SearchResults as IPagedList<SearchResult>)
-            {
-                <tr>
-                    <td>
-                        @item.ProductIdTo7Simbols
-                    </td>
-                    <td>
-                        @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
-                    </td>
+        @foreach (var item in Model.SearchResults as IPagedList<SearchResult>)
+    {
+        <div class="products-list-item row">
+            <div class="col-sm-1 products-list-item__cell">
+                @item.ProductIdTo7Simbols
+            </div>
+            <div class="col-sm-4 product-name products-list-item__cell">
+                @Html.ActionLink(item.Name, "Details", new { id = item.ProductId }, new { @id = "ProductName-" + @item.ProductId, @class = "data-table-a-text" })
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @{
+        var restMainStock = String.Format("{0}", item.Rest == 1000 ? ">1000" : item.Rest.ToString());
+            @restMainStock
 
-                    <td>
-                        @{
-                var restMainStock = String.Format("{0}", item.Rest == 1000 ? ">1000" : item.Rest.ToString());
-                @restMainStock
-
-                        }
-                    </td>
-                    <td>
-                        @item.DaysToDepartment
-                    </td>
-                    <td>
-                        <span class="data-table-price">@item.Price </span>
-                    </td>
-                    <td>
-
-                        @Html.TextBox("DefaultNumberToOrder", 1, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
-
-                    </td>
-                    <td>
-                        <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,0);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                        <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                }
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @Html.DisplayFor(modelItem => item.DaysToDepartment) @ForSearchResult.Days
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                @Html.Price3((decimal)(item.Price ?? 0))
+            </div>
+            <div class="col-sm-2 products-list-item__cell">
+                @Html.TextBox("DefaultNumberToOrder", 1, new { @id = "order-" + @item.ProductId, @class = "count_add_to_cart form-control touchspih-podbor-number", @type = "text", @min = 1, @max = 200 })
+            </div>
+            <div class="col-sm-1 products-list-item__cell">
+                <a href="javascript:AddToCart(@item.ProductId,@item.DepartmentId,0);" class="AddLink data-table-add-to-cart" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                <a href="javascript:RemoveFromCart(@item.ProductId);" class="DelLink data-table-added-to-cart invisible" data-id="@item.ProductId" data-name="@item.Name"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+            </div>
+        </div>
+}
+    </section>
 </div>
